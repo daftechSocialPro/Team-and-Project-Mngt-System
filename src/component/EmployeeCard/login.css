@@ -1,0 +1,138 @@
+body{
+    background-color: aliceblue;
+}
+
+.login-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.input-box{
+    width: 320px;
+    
+
+}
+input{
+    width: 100%;
+    height: 100%;
+    background:#F6F8FF ;
+    border: none;
+    outline: none;
+    box-shadow: 0 2px 12p#C1D0FC;
+    padding: 10px;
+    font-size: 16px;
+    color: #676363;
+    opacity: 0.8;
+}
+.in{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    /* margin-bottom: 20px; */
+    margin-left: 60px;
+    margin-top: 10px;
+    
+}
+.verline1{
+    width: 5px;
+    height: 40px;
+    background-color: blue;
+    margin-left: 1px;
+}
+.verline2{
+    width: 5px;
+    height: 40px;
+    background-color: blue;
+    margin-left: 1px;
+}
+.ptite{
+    text-align: center;
+    margin-left: 60px;
+    margin-bottom: 30px;
+    color: #676363;
+    opacity: 0.8;
+    font-size: 16px;
+}
+.h1tite{
+    color: #3166F9;
+    margin-left: 60px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+}
+.box{
+    margin-right: 100px;
+    float: left;
+}
+.btn{
+    width: 60%;
+    height: 40px;
+    background: #3364F6;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    margin-top: 20px;
+    margin-left: 120px;
+    color: #ffff;
+    font-weight: bold;
+    font-size: 18px;
+   
+}
+.imclas{
+    width: 100px;
+    height: 100px;
+    margin-bottom: 300px;
+    margin-right: 150px;
+    float: right;
+    margin-right: 20px;
+}
+.loginimage{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+.right-login{
+    background-size: cover;
+    margin-top: 100px;
+    width: 500px;
+    height: 500px;
+    box-shadow: 0 2px 12px rgba(32,32,32,.3);
+}
+.left-login{
+    margin-top: 100px;
+    background-color: #ffff;
+    width: 500px;
+    height: 500px;
+}
+.login-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    margin-left: 50px;
+}
+.center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 130px 0;
+}
+.ptitle{
+    margin-bottom: -10px;
+    color: #ffffff;
+    opacity: 0.8;
+}
+.h2wellcome{
+    color: #ffffff;
+    font-size: 30px; 
+
+}
+.h2logo{
+    color: #ffffff;
+    margin: 20px;
+    font-size: 25px; 
+   
+}
+
