@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import CreateProject from './CreateProject';
+import Saidbar from '../component/Saidbar';
 const Project = () => {
   const [isOpen, setIsOpen] =useState(false);
   return (
     <>
+    <Saidbar/>
         <div className='header'>
     <div className='title'>Projects</div>
     <div className='rightHeader'>

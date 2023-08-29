@@ -159,7 +159,7 @@ const BTUNNES={
     display:"flex",
     justifyContent:"end"
 }
-const CreateEmployee = ({open, onClose}) => {
+const CreateUser = ({open, onClose}) => {
     const [file, setFile] = useState(null);
     const handleChange = (file) => {
       setFile(file);
@@ -173,15 +173,15 @@ const CreateEmployee = ({open, onClose}) => {
     
        <div style={MODAL_STAYL}>
         <div style={TOPER}>
-            <div style={COLU}><h1 style={HTITLE}>Add New Employee</h1>
+            <div style={COLU}><h1 style={HTITLE}>Add New </h1>
         <div style={LINE}></div></div>
        <button style={CLOSEBUTTON}  onClick={onClose}><img src='./img/close-3.png'/></button>
         </div>
-        <form action="">
+        {/* <form action="">
             <div style={FORMWRAPP}>
                 <div style={ONECOLE}>
                 <div style={INPUTWRAP}>
-            <label htmlFor="" style={LABEL}>First Name:</label>
+            <label htmlFor="" style={LABEL}>Employee:</label>
             <input style={INPUT} type="text" />
             </div>
             <div style={INPUTWRAP}>
@@ -213,56 +213,17 @@ const CreateEmployee = ({open, onClose}) => {
             <input style={INPUT} type="text" />
             </div>
                 </div>
-                <div style={ONECOLE}>
-                <div style={INPUTWRAP}>
-            <label htmlFor="" style={LABEL}>Email:</label>
-            <input style={INPUT} type="text" />
-            </div>
-            <div style={INPUTWRAP}>
-            <label htmlFor="" style={LABEL}>Address:</label>
-            <input style={INPUT} type="text" />
-            </div>
-                </div>
-                <div style={ONECOLE}>
-                <div style={INPUTWRAP}>
-            <label htmlFor="" style={LABEL}>Hire Date:</label>
-            <input style={INPUT} type="date" id="birthday" name="birthday"></input>
-            </div>
-            <div style={INPUTWRAP}>
-            <label htmlFor="" style={LABEL}>Position:</label>
-            <input style={INPUT} type="text" />
-            </div>
-                </div>
-                <div style={ONECOLE}>
-                <div style={INPUTWRAPS}>
-            <img style={SOCIALIMAGE} src="./img/telegram.png" alt="" />
-            <input style={INPUTT} type="text" ></input>
-            </div>
-            <div style={INPUTWRAPS}>
-            <img style={SOCIALIMAGE} src="./img/twitter.png" alt="" />
-            <input style={INPUTT} type="text" ></input>
-            </div>
-                </div>
-                <div style={ONECOLE}>
-                <div style={INPUTWRAPS}>
-            <img style={SOCIALIMAGE} src="./img/facebook.png" alt="" />
-            <input style={INPUTT} type="text" ></input>
-            </div>
-            <div style={INPUTWRAPS}>
-            <img style={SOCIALIMAGE} src="./img/instagram.png" alt="" />
-            <input style={INPUTT} type="text" ></input>
-            </div>
-                </div>
+             
                 <div style={LINEE}></div>
            <div style={BTUNNES}>
            <input style={SUBMIT} type="submit" value="Submit"/>
-           {/* <input style={CANCEL} type="cancel" value="Cancel" onClick={onClose}/> */}
+          
            </div>
                 
             </div>
            
           
-        </form>
+        </form> */}
 
        </div>
      
@@ -271,4 +232,4 @@ const CreateEmployee = ({open, onClose}) => {
   )
 }
 
-export default CreateEmployee
+export default CreateUser

@@ -1,8 +1,9 @@
 import React from 'react'
-
+import Saidbar from '../component/Saidbar'
 const Profile = () => {
   return (
     <>
+    <Saidbar/>
      <div className='header'>
     <div className='title'>Profile</div>
     <div className='rightHeader'>

@@ -1,9 +1,14 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Ecard} from '../component/EmployeeCard/Ecard'
 import { Link } from 'react-router-dom'
+import Saidbar from '../component/Saidbar'
+import CreateUser from './CreateEmployee'
 function Users() {
+  const [isOpen, setIsOpen] =useState(false);
   return (
+    
     <>
+    <Saidbar/>
     <div className='header'>
     <div className='title'>Users</div>
     <div className='rightHeader'>
@@ -14,7 +19,10 @@ function Users() {
             </div>
             
         </div>
-        <div class="creatnew"> <Link href="#"> <img src="./img/add-user.png" alt="" srcset=""/></Link></div>
+        <div class="creatnew"> <Link href="#" onClick={()=>setIsOpen(true)}> <img src="./img/add-user.png" alt="" srcset=""/></Link></div>
+        <CreateUser open={isOpen} onClose={()=>setIsOpen(false)}>
+
+        </CreateUser>
     </div>
     </div>
     

@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import {Ecard} from '../component/EmployeeCard/Ecard'
 import { Link } from 'react-router-dom'
 import CreateEmployee from './CreateEmployee'
+import Saidbar from '../component/Saidbar'
 const Employee = () => {
   const [isOpen, setIsOpen] =useState(false);
 
   return (
     <>
+    <Saidbar/>
     <div className='header'>
     <div className='title'>Employess</div>
     <div className='rightHeader'>

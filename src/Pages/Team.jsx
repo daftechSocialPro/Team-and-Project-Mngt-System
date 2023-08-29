@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Saidbar from '../component/Saidbar'
 const Team = () => {
   return (
     <>
+    <Saidbar/>
        <div className='header'>
     <div className='title'>Teams</div>
     <div className='rightHeader'>

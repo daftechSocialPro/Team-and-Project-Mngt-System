@@ -1,12 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { SidebarData } from './sidebarData';
-import { AiOutlineDoubleLeft,AiOutlineDoubleRight } from 'react-icons/ai';
-// import './Saidbar.css'
 import { IconContext } from 'react-icons';
 function Saidbar() {
-    // const [sidebar, setSidebar]=useState(false)
-    // const showSidebar =()=>setSidebar(!sidebar)
   return (
     <>
     <IconContext.Provider value={{color:"#fff"}}>

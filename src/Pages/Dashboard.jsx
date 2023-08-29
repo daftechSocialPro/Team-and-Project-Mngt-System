@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import DashCard from '../component/Dashbordcomp/DashCard'
+import Saidbar from '../component/Saidbar'
 const Dashboard = () => {
   return (
     <>
+    <Saidbar/>
        <div className='header'>
     <div className='title'>Dashboard</div>
     <div className='rightHeader'>

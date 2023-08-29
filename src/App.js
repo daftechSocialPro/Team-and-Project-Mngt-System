@@ -12,12 +12,13 @@ import Profile from './Pages/Profile';
 function App() {
   return (
     <>
-    <Router>
+<Router>
+
+   
     <Routes>
       <Route path='/'  element={< Login/>} />
-    </Routes>
-    <Saidbar/>
-    <Routes>
+      
+      
       <Route path='/dashbord'  element={< Dashboard/>} />
       <Route path='/project'  element={< Project/>}/>
       <Route path='/employee' element={< Employee/>}/>
