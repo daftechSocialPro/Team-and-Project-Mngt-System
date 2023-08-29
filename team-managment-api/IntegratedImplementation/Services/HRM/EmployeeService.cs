@@ -1,0 +1,111 @@
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Implementation.Helper;
+using IntegratedImplementation.DTOS.HRM;
+using IntegratedImplementation.Interfaces.Configuration;
+using IntegratedImplementation.Interfaces.HRM;
+using IntegratedInfrustructure.Data;
+using IntegratedInfrustructure.Model.HRM;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static IntegratedInfrustructure.Data.EnumList;
+
+namespace IntegratedImplementation.Services.HRM
+{
+    public class EmployeeService : IEmployeeService
+    {
+
+        private readonly ApplicationDbContext _dbContext;
+        private readonly IGeneralConfigService _generalConfig;
+        private readonly IMapper _mapper;
+        public EmployeeService(ApplicationDbContext dbContext, IGeneralConfigService generalConfig, IMapper mapper)
+        {
+            _dbContext = dbContext;
+            _generalConfig = generalConfig;
+            _mapper = mapper;
+        }
+
+        public async Task<ResponseMessage> AddEmployee(EmployeePostDto addEmployee)
+        {
+            var id = Guid.NewGuid();
+            var path = "";
+
+            if (addEmployee.ImagePath != null)
+                path = _generalConfig.UploadFiles(addEmployee.ImagePath, id.ToString(), "Employee").Result.ToString();
+
+
+            var probationPeriod = await _dbContext.HrmSettings.FirstOrDefaultAsync(x => x.GeneralSetting == GeneralHrmSetting.PROBATIONPERIOD);
+            if (probationPeriod == null)
+                return new ResponseMessage { Success = false, Message = "Could Not Find Prohbation Period" };
+
+
+            var code = await _generalConfig.GenerateCode(GeneralCodeType.EMPLOYEEPREFIX);
+            EmployeeList employee = new EmployeeList
+            {
+                Id = Guid.NewGuid(),
+                CreatedDate = DateTime.Now,
+                CreatedById = addEmployee.CreatedById,
+                EmployeeCode = code,
+               
+                Email = addEmployee.Email,
+                
+                EmploymentStatus = Enum.Parse<EmploymentStatus>(addEmployee.EmploymentStatus),
+                EmploymentPosition = Enum.Parse<EmploymentPosition>(addEmployee.EmploymentPosition),
+                
+                FirstName = addEmployee.FirstName,
+          
+                LastName = addEmployee.LastName,               
+                BirthDate = addEmployee.BirthDate,
+                Gender =Enum.Parse<Gender>(addEmployee.Gender),
+                             
+                BankAccountNo = addEmployee.BankAccountNo,                
+                EmploymentDate = addEmployee.EmploymentDate,
+                ImagePath = path,
+                PhoneNumber = addEmployee.PhoneNumber,
+                    
+                TinNumber = addEmployee.TinNumber,
+                
+                Rowstatus = RowStatus.ACTIVE,
+            
+            };
+            await _dbContext.Employees.AddAsync(employee);
+            await _dbContext.SaveChangesAsync();
+
+         
+
+            return new ResponseMessage
+            {
+                
+                Message = "Added Successfully",
+                Success = true
+            };
+        }
+
+        public async Task<List<EmployeeGetDto>> GetEmployees()
+        {
+            var employeeList = await _dbContext.Employees.AsNoTracking()
+                                    .ProjectTo<EmployeeGetDto>(_mapper.ConfigurationProvider)
+                                    .ToListAsync();
+            return employeeList;
+        }
+
+        public async Task<EmployeeGetDto> GetEmployee(Guid employeeId)
+        {
+            var employee = await _dbContext.Employees
+             
+                .Where(x=>x.Id == employeeId)
+                .AsNoTracking()
+                .ProjectTo<EmployeeGetDto>(_mapper.ConfigurationProvider).FirstAsync();
+
+            return employee;
+        }
+
+     
+
+    }
+}

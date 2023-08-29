@@ -1,0 +1,300 @@
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.csproj.AssemblyReference.cache
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.AssemblyInfoInputs.cache
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.AssemblyInfo.cs
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.csproj.CoreCompileInputs.cache
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.MvcApplicationPartsAssemblyInfo.cs
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.MvcApplicationPartsAssemblyInfo.cache
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\appsettings.Development.json
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\appsettings.json
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.staticwebassets.runtime.json
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.exe
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.deps.json
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.runtimeconfig.json
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.pdb
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\AutoMapper.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Azure.Core.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Azure.Identity.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Humanizer.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Authorization.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Components.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.UI.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Metadata.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Data.SqlClient.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.FileProviders.Embedded.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Identity.Client.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Identity.Client.Extensions.Msal.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.OpenApi.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.SqlServer.Server.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Mono.TextTemplating.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Newtonsoft.Json.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.Newtonsoft.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.CodeDom.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.Drawing.Common.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.Memory.Data.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.Runtime.Caching.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.Security.Permissions.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.Windows.Extensions.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedImplementation.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedInfrustructure.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedInfrustructure.pdb
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedImplementation.pdb
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets\msbuild.IntegratedDigitalAPI.Microsoft.AspNetCore.StaticWebAssets.props
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets\msbuild.build.IntegratedDigitalAPI.props
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.IntegratedDigitalAPI.props
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.IntegratedDigitalAPI.props
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets.pack.json
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets.build.json
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets.development.json
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\scopedcss\bundle\IntegratedDigitalAPI.styles.css
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.csproj.CopyComplete
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\refint\IntegratedDigitalAPI.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.pdb
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.genruntimeconfig.cache
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\ref\IntegratedDigitalAPI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\appsettings.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.staticwebassets.runtime.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.exe
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.deps.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.runtimeconfig.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.pdb
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Azure.Core.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Azure.Identity.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Humanizer.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Authorization.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Components.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Metadata.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Data.SqlClient.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Identity.Client.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.OpenApi.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.SqlServer.Server.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Mono.TextTemplating.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.Newtonsoft.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.Drawing.Common.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.Memory.Data.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.Runtime.Caching.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.Security.Permissions.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\System.Windows.Extensions.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedImplementation.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedInfrustructure.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedInfrustructure.pdb
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedImplementation.pdb
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.csproj.AssemblyReference.cache
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.AssemblyInfoInputs.cache
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.AssemblyInfo.cs
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.csproj.CoreCompileInputs.cache
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets\msbuild.IntegratedDigitalAPI.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets\msbuild.build.IntegratedDigitalAPI.props
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.IntegratedDigitalAPI.props
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.IntegratedDigitalAPI.props
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\scopedcss\bundle\IntegratedDigitalAPI.styles.css
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.csproj.CopyComplete
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\refint\IntegratedDigitalAPI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.pdb
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.genruntimeconfig.cache
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedDigitalAPI\obj\Debug\net7.0\ref\IntegratedDigitalAPI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.csproj.AssemblyReference.cache
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.AssemblyInfoInputs.cache
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.AssemblyInfo.cs
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.csproj.CoreCompileInputs.cache
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\refint\IntegratedDigitalAPI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.pdb
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\appsettings.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.staticwebassets.runtime.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.exe
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.deps.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.runtimeconfig.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedDigitalAPI.pdb
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Azure.Core.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Azure.Identity.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Humanizer.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Authorization.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Components.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Metadata.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Data.SqlClient.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Identity.Client.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.OpenApi.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.SqlServer.Server.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Mono.TextTemplating.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.Newtonsoft.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\System.Drawing.Common.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\System.Memory.Data.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\System.Runtime.Caching.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\System.Security.Permissions.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\System.Windows.Extensions.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedImplementation.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedInfrustructure.dll
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedInfrustructure.pdb
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\bin\Debug\net7.0\IntegratedImplementation.pdb
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets\msbuild.IntegratedDigitalAPI.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets\msbuild.build.IntegratedDigitalAPI.props
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.IntegratedDigitalAPI.props
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.IntegratedDigitalAPI.props
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\scopedcss\bundle\IntegratedDigitalAPI.styles.css
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.csproj.CopyComplete
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\IntegratedDigitalAPI.genruntimeconfig.cache
+C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedDigitalAPI\obj\Debug\net7.0\ref\IntegratedDigitalAPI.dll
