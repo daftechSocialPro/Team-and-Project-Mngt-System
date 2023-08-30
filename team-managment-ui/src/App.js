@@ -1,5 +1,5 @@
 import './App.css';
-import { Suspense } from 'react';
+import  React, { Suspense , useEffect, useState} from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Loading from './component/Loading/Loading';
@@ -11,15 +11,27 @@ import Project from './Pages/Project';
 import Team from './Pages/Team';
 import Users from './Pages/Users';
 import Profile from './Pages/Profile';
+import jwt_decode from "jwt-decode";
+import { useDispatch } from "react-redux";
 
 function App() {
-  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const token = sessionStorage.getItem('token')
+
+
+  useEffect(() => {
+    if (token) {
+      const decoded = jwt_decode(token);
+      dispatch({ type: 'LOGIN_SUCCESS', payload: decoded.userId });
+    }
+  }, [dispatch, token]);
+
 
   return (
     <Suspense fallback={<Loading />}>
       <Router>
         <Routes>
-          {user ? (
+          {token ? (
             <Route path="/">
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/project" element={<Project />} />

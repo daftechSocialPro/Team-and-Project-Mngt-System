@@ -40,3 +40,17 @@ C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-ap
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.pdb
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.genruntimeconfig.cache
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\Infrustructure\obj\Debug\net7.0\ref\IntegratedInfrustructure.dll
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.deps.json
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.runtimeconfig.json
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.dll
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.pdb
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.csproj.AssemblyReference.cache
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.AssemblyInfoInputs.cache
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.AssemblyInfo.cs
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.csproj.CoreCompileInputs.cache
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.dll
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\Infrustructure\obj\Debug\net7.0\refint\IntegratedInfrustructure.dll
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.pdb
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.genruntimeconfig.cache
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\Infrustructure\obj\Debug\net7.0\ref\IntegratedInfrustructure.dll

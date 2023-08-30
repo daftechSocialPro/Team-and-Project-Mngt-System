@@ -29,12 +29,17 @@ namespace IntegratedImplementation.DTOS.HRM
 
         public DateTime? TerminatedDate { get; set; }
 
-        public string EmploymentStatus { get; set; } = null!;
+        public string? EmploymentStatus { get; set; } 
 
         public string EmploymentPosition { get; set; } = null!;
 
-        public string? TinNumber { get; set; } = null!;
-        public string? BankAccountNo { get; set; } = null!;
+        public string? TinNumber { get; set; } 
+        public string? BankAccountNo { get; set; } 
+
+        public string ? Telegram { get; set; }
+        public string? Twitter { get; set; }
+        public string? Facebook { get; set; }
+        public string? Instagram { get; set; }
         public string CreatedById { get; set; } = null!;
 
 

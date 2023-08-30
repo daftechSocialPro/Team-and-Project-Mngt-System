@@ -20,7 +20,7 @@ const Employee = () => {
             
         </div>
         <div class="creatnew"> <Link href="#" onClick={()=>setIsOpen(true)}> <img src="./img/add-user.png" alt="" srcSet=""/></Link></div>
-        <CreateEmployee open={isOpen} onClose={()=>setIsOpen(false)}>
+        <CreateEmployee open={isOpen} onClose={setIsOpen}>
 this
         </CreateEmployee>
     </div>

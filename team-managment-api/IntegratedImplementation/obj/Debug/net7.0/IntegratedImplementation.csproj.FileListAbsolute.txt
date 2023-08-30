@@ -40,3 +40,18 @@ C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-ap
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedImplementation\bin\Debug\net7.0\IntegratedInfrustructure.pdb
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedImplementation\obj\Debug\net7.0\IntegratedImplementation.csproj.CopyComplete
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Social\Team Mangment\team-managment-api\IntegratedImplementation\obj\Debug\net7.0\ref\IntegratedImplementation.dll
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\bin\Debug\net7.0\IntegratedImplementation.deps.json
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\bin\Debug\net7.0\IntegratedImplementation.dll
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\bin\Debug\net7.0\IntegratedImplementation.pdb
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\bin\Debug\net7.0\IntegratedInfrustructure.dll
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\bin\Debug\net7.0\IntegratedInfrustructure.pdb
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\obj\Debug\net7.0\IntegratedImplementation.csproj.AssemblyReference.cache
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\obj\Debug\net7.0\IntegratedImplementation.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\obj\Debug\net7.0\IntegratedImplementation.AssemblyInfoInputs.cache
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\obj\Debug\net7.0\IntegratedImplementation.AssemblyInfo.cs
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\obj\Debug\net7.0\IntegratedImplementation.csproj.CoreCompileInputs.cache
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\obj\Debug\net7.0\IntegratedImplementation.csproj.CopyComplete
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\obj\Debug\net7.0\IntegratedImplementation.dll
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\obj\Debug\net7.0\refint\IntegratedImplementation.dll
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\obj\Debug\net7.0\IntegratedImplementation.pdb
+C:\Users\lilis\OneDrive\Documents\Exercises\Team-and-Project-Mngt-System\team-managment-api\IntegratedImplementation\obj\Debug\net7.0\ref\IntegratedImplementation.dll

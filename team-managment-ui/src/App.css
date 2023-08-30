@@ -12,9 +12,11 @@
 
 }
 
+
 .letsee{
   display: flex;
   height: 90vh;
   align-items: center;
   font-size: 3rem;
+  
 } 
