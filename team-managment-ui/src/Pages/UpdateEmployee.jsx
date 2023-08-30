@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef} from "react";
 import { FileUploader } from "react-drag-drop-files";
-
 import { createEmployee } from "../api/employeeAPi";
-import { useDispatch } from "react-redux";
-import { setLoading } from '../store/loadingReducer';
-
+import { useSelector } from "react-redux";
+import { Toast } from "primereact/toast";
+import { createImagePath } from "../api/commonApi";
 const fileTypes = ["JPG", "PNG", "GIF"];
 const MODAL_STAYL = {
   position: "fixed",
@@ -29,11 +28,9 @@ const OVERLAY = {
   zIndex: 1000,
 };
 const CLOSEBUTTON = {
-  paddingRight: '10px',
-  color: 'red', fontSize: '25px',
-  cursor: 'Pointer',
-  border: '1px solid f4f4f4'
-
+  width: "50px",
+  height: "50px",
+  paddingRight: "20px",
 };
 const LINE = {
   width: "160px",
@@ -129,6 +126,7 @@ const SELECT = {
 const DRAGDROP = {
   marginLeft: "10px",
   width: "70%",
+  marginTop:"30px"
 };
 const SOCIALIMAGE = {
   width: "30px",
@@ -148,44 +146,49 @@ const SUBMIT = {
   marginLeft: "20px",
   marginTop: "30px",
 };
-const CANCEL = {
-  width: "10%",
-  backgroundColor: "#333",
-  color: "#FF5722",
-  padding: "10px 15px",
-  margin: "8px 10",
-  border: "none",
-  borderRadius: "4px",
-  cursor: "pointer",
-  marginLeft: "20px",
-  marginTop: "30px",
+const UPImage = {
+Width:"100px",
+height:"100px",
+borderRadius:"50%"
 };
+
 const BTUNNES = {
   display: "flex",
   justifyContent: "end",
 };
-const CreateEmployee = ({ open, onClose, show, user }) => {
-
-  console.log("user", user)
-  const dispatch = useDispatch()
+const UpdateEmployee = ({ open, onClose ,employee }) => {
 
 
-  const [ImagePath, setFile] = useState(null);
-  const [FirstName, setFirstName] = useState("");
-  const [LastName, setLastName] = useState("");
-  const [Gender, setGender] = useState("male");
-  const [BirthDate, setBirthday] = useState("");
-  const [PhoneNumber, setPhone] = useState("");
-  const [Email, setEmail] = useState("");
-  const [Address, setAddress] = useState("");
-  const [EmploymentDate, setHireDate] = useState("");
-  const [Telegram, setTelegram] = useState("");
-  const [Twitter, setTwitter] = useState("");
-  const [Facebook, setFacebook] = useState("");
-  const [Instagram, setInstagram] = useState("");
-  const [EmploymentPosition, setPosition] = useState("");
-  const CreatedById = user.user && user.user.userId;
+    const getImage = (imagePath) => {
+  
+        return createImagePath(imagePath);
+      };
+  
+  const toast = useRef(null);
 
+  const show = (severity, summary, message) => {
+    toast.current.show({
+      severity: severity,
+      summary: summary,
+      detail: message,
+    });
+  };
+
+  const [ImagePath, setFile] = useState(employee && employee.imagePath);
+  const [FirstName, setFirstName] = useState(employee && employee.firstName);
+  const [LastName, setLastName] = useState(employee && employee.lastName);
+  const [Gender, setGender] = useState(employee && employee.gender);
+  const [BirthDate, setBirthday] = useState(employee && employee.birthDate);
+  const [PhoneNumber, setPhone] = useState(employee && employee.phoneNumber);
+  const [Email, setEmail] = useState(employee && employee.email);
+  const [Address, setAddress] = useState(employee && employee.address);
+  const [EmploymentDate, setHireDate] = useState(employee && employee.employmentDate);
+  const [Telegram, setTelegram] = useState(employee && employee.telegram);
+  const [Twitter, setTwitter] = useState(employee && employee.twitter);
+  const [Facebook, setFacebook] = useState(employee && employee.facebook);
+  const [Instagram, setInstagram] = useState(employee && employee.instagram);
+  const [EmploymentPosition, setPosition] = useState(employee && employee.rmploymentPosition);
+  const CreatedById = useSelector((state) => state.user);
 
   const handleChange = (file) => {
     console.log(file);
@@ -197,10 +200,8 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    dispatch(setLoading(true));
-
-
     // Create a data object with the form field values
+
     const formData = new FormData();
     formData.append("FirstName", FirstName);
     formData.append("LastName", LastName);
@@ -217,54 +218,71 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
     formData.append("Instagram", Instagram);
     formData.append("ImagePath", ImagePath);
     formData.append("CreatedById", CreatedById);
-  
+
     try {
       // Make the Axios request
       const response = await createEmployee(formData);
-  
+
       if (response.success) {
         show("success", "SUCCESS", response.message);
-        onClose(false);
-        dispatch(setLoading(false));
+       
 
+        onClose(false);
       } else {
         show("error", "ERROR", response.message);
-        dispatch(setLoading(false));
-
       }
     } catch (error) {
       // Handle the error
       show("error", "ERROR", error);
-      dispatch(setLoading(false));
-
     }
   };
-  
-  // const handleImageChange = (event) => {
-  //   const file = event.target.files[0];
-  //   setSelectedImage(URL.createObjectURL(file));
-  //   console.log(selectedImage)
-  // };
-  
-  if (!open) return null;
+
   return (
     <>
-
+      <Toast ref={toast} />
       <div style={OVERLAY}></div>
 
       <div style={MODAL_STAYL}>
         <div style={TOPER}>
           <div style={COLU}>
-            <h1 style={HTITLE}>Add New Employee</h1>
+            <h1 style={HTITLE}>Update Employee</h1>
             <div style={LINE}></div>
           </div>
-
-          <span className="pi pi-times" onClick={() => onClose(false)} style={CLOSEBUTTON} />
+          <button style={CLOSEBUTTON} onClick={() => onClose(false)}>
+            <img src="./img/close-3.png" />
+          </button>
         </div>
         <form action="" onSubmit={handleSubmit}>
           <div style={FORMWRAPP}>
+           
+          
+            
             <div style={ONECOLE}>
-            {/* {selectedImage && <><img src={selectedImage} alt="Selected" /> <span>Image</span></>} */}
+            <img style={UPImage} src={getImage(employee.imagePath)} alt="userpic" />
+              <div style={DRAGDROP}>
+                <FileUploader
+                  handleChange={handleChange}
+                  name="file"
+                  types={fileTypes}
+                />
+              </div>
+              <div style={INPUTWRAP}>
+                <label htmlFor="" style={LABEL}>
+                  Gender:
+                </label>
+                <select
+                  style={SELECT}
+                  id="gender"
+                  name="Gender"
+                  value={Gender}
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <option value="MALE">MALE</option>
+                  <option value="FEMALE">FEMALE</option>
+                </select>
+              </div>
+            </div>
+            <div style={ONECOLE}>
               <div style={INPUTWRAP}>
                 <label htmlFor="" style={LABEL}>
                   First Name:
@@ -288,31 +306,11 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
                 />
               </div>
             </div>
-            <div style={ONECOLE}>
-              <div style={DRAGDROP}>
-                <FileUploader
-                // onChange={handleImageChange}
-                  handleChange={handleChange}
-                  name="file"
-                  types={fileTypes}
-                />
-              </div>
-              <div style={INPUTWRAP}>
-                <label htmlFor="" style={LABEL}>
-                  Gender:
-                </label>
-                <select
-                  style={SELECT}
-                  id="gender"
-                  name="Gender"
-                  value={Gender}
-                  onChange={(e) => setGender(e.target.value)}
-                >
-                  <option value="MALE">MALE</option>
-                  <option value="FEMALE">FEMALE</option>
-                </select>
-              </div>
-            </div>
+            
+           
+          
+         
+            
 
             <div style={ONECOLE}>
               <div style={INPUTWRAP}>
@@ -440,7 +438,7 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
             <div style={LINEE}></div>
             <div style={BTUNNES}>
               <input style={SUBMIT} type="submit" value="Submit" />
-              {/* <input style={CANCEL} type="cancel" value="Cancel" onClick={onClose}/> */}
+         
             </div>
           </div>
         </form>
@@ -449,4 +447,4 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
   );
 };
 
-export default CreateEmployee;
+export default UpdateEmployee;

@@ -9,7 +9,10 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import 'primeicons/primeicons.css';
            
 //core
-import "primereact/resources/primereact.min.css";                                       
+import "primereact/resources/primereact.min.css";   
+
+import 'primeicons/primeicons.css';
+                                            
 import { Provider } from 'react-redux';
         
 const root = ReactDOM.createRoot(document.getElementById('root'));

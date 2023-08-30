@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState, useRef } from "react";
 import { Link } from 'react-router-dom'
 import { SidebarData } from './sidebarData';
 import { IconContext } from 'react-icons';
 import {FiLogOut} from 'react-icons/fi'
 import { useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+
+import { Toast } from "primereact/toast";
+import { useDispatch } from "react-redux";
 const SIDBAR={
     backgroundColor: "#161616",
     width: "200px",
@@ -18,35 +22,40 @@ const SIDBAR={
 }
 const NAvLogo={
     width: "100%",
-    maxWidth:"200px"
-   
+    maxWidth:"200px" 
 }
+
 function Saidbar() {
 
     const user = useSelector((state) => state.user);
+    const toast = useRef(null);
+    const dispatch=useDispatch();
+    const show = (severity, summary, message) => {
+      toast.current.show({
+        severity: severity,
+        summary: summary,
+        detail: message,
+      });
+    };
+  
+    const navigate = useNavigate();
+  
+    const handleLogOut = async (e) => {
+      e.preventDefault();
+    
+      try {
+        sessionStorage.removeItem("token");
+        dispatch({type:"LOGOUT"})
+        navigate("/login");
+        
+      } catch (error) {
+        // show('error','ERROR',userData.message)
+      }
+    };
   return (
     <>
-    <IconContext.Provider value={{color:"#fff"}}>
-        {/* <div className='abovenav'></div>
-        <div className='sidebar'>
-            <ul className='nav-menu-items' >
-                <li className='navbar-toggle'>
-                    <Link to="#" className='menu-bars'><img src='/img/logo.png'/></Link>
-                </li>
-                {SidebarData.map((item,index)=>{
-                    return(
-                        <li key={index} className={item.cName}>
-                            <Link to={item.path}>{item.icon}<span className='sidespan'>{item.title}</span></Link>
-                        </li>
-                    )
-                })}
-            </ul>
-            <div className='profileSidebar'>
-           <Link to="/pro"><img className='proimages' src='./img/propic/kira.png'/></Link> 
-            <span className='pronamesidebar'>Kirubel</span>
-            </div>
-        </div> */}
-                
+      <Toast ref={toast} />
+    <IconContext.Provider value={{color:"#fff"}}>              
         <div style={SIDBAR}>
             <ul>
                 <li>
@@ -55,7 +64,7 @@ function Saidbar() {
                 {SidebarData.map((item,index)=>{
                     return(
                         <li key={index} className={item.cName}>
-                            <Link to={item.path}>{item.icon}<span className='sidespan'>{item.title}</span></Link>
+                            <Link to={item.path}><span className='iconcustom'> {item.icon}</span><span className='sidespan'>{item.title}</span></Link>
                         </li>
                     )
                 })}
@@ -65,7 +74,7 @@ function Saidbar() {
             <span className='pronamesidebar'>{user.user&& user.user.fullName}</span>
             </div>
             
-            <div className='profileSidebar'>
+            <div className='profileSidebar2' onClick={handleLogOut}>
            <Link to="/pro"><FiLogOut/></Link> 
             <span className='pronamesidebar'>Logout</span>
             </div>

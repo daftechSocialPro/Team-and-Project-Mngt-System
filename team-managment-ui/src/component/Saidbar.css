@@ -13,7 +13,6 @@
     padding-top: 20px;
     padding-left: 10px;
     /* padding: 30px 0px 38px 18px; */
-
 }
 .mobile{
     padding-top: 30px; 
@@ -34,6 +33,7 @@
     left: 0;
     transition: 350ms;
 }
+<<<<<<< HEAD
 .nav-text{
     display: flex;
     justify-content: start;
@@ -63,6 +63,8 @@
     color: #000;
     opacity: 0.9;
 }
+=======
+>>>>>>> 96b79127b879679acc6fa5050a1178d1e84299dc
 span{
     margin-left: 16px;
 }

@@ -1,14 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Ecard } from '../component/EmployeeCard/Ecard'
 import { Link } from 'react-router-dom'
 import CreateEmployee from './CreateEmployee'
 import Saidbar from '../component/Saidbar'
-import {  useSelector } from "react-redux";
-
+import { useSelector } from "react-redux";
+import {getEmployees} from '../api/employeeAPi'
 
 const Employee = ({show}) => {
+
+  const user = useSelector((state) => state.user)
   const [isOpen, setIsOpen] = useState(false);
-  const user = useSelector((state) => state.user);
+  const [employees, setEmployees] = useState([]);
+  const fetchData = async () => {
+    try {
+      const data = await getEmployees();
+      setEmployees(data);
+      console.log("employee", data);
+    } catch (error) {
+      console.error("Error fetching employees:", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
 
   return (
     <>
@@ -37,10 +52,12 @@ const Employee = ({show}) => {
       </div>
 
       <div className="line"></div>
-      <Ecard />
+      <Ecard employees={employees}/>
     </>
 
   )
 }
+      
 
-export default Employee
+
+export default Employee;

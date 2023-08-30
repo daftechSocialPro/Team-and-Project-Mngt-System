@@ -1,31 +1,41 @@
-import React from 'react'
-import { EcardData } from './ecardData'
-import { Link } from 'react-router-dom'
-import './ecard.css'
- export const Ecard = () => {
+import React, {useState} from "react";
+import { Link } from "react-router-dom";
+import { PrimeIcons } from 'primereact/api';
+import "./ecard.css";
+import { createImagePath } from "../../api/commonApi";
+import UpdateEmployee from "../../Pages/UpdateEmployee";
+export const Ecard = ({ employees}) => {
+  const getImage = (imagePath) => {
+  
+    return createImagePath(imagePath);
+  };
+  const [isOpen, setIsOpen] = useState(false);
+  const [emp, setEmp] = useState(null);
+  const handleUpdate = (employee) => {
+    // updateEmployee(employeeId);
+  
+    setEmp(employee)
+  };
   return (
-    <>
-    <div className='card-cont'>
-   
-                {EcardData.map((item,index)=>{
-                    return(
-                      <>
-                       <div className='Ecard'>
-                       <div className='card-image'>
-                      <img src={item.image} alt='userpic'/>
-                       </div>
-                       <Link to="/empdetail"><p className='Ename'>{item.name}</p></Link>  
-                       <p className='email'>{item.email}</p>
-                       <p className='occu'>{item.occu}</p>
-                       </div>
-                      </>
-                     
-                    )
-                })}
-            
+    <div className="card-cont">
+        {employees.map((item, index) => (
+      <div className="Ecard" key={index}>
+        <div className="card-image">
+          <img src={getImage(item.imagePath)} alt="userpic" />
+        </div>
+        <Link to={`/empdetail/${item.id}`}>
+          <p className="Ename">{item.employeeName}</p>
+        </Link>
+        <p className="email">{item.email}</p>
+        <p className="occu">{item.employmentPosition}</p>
+        {/* <i className="pi-user-edit" style={{ fontSize: '1rem' }}></i> */}
+        <span style={{marginLeft:"50px", cursor:"pointer"}} onClick={() =>{setIsOpen(true); handleUpdate(item)}}  >Edit</span> 
+       
+      </div>
+      
+        ))}
+       {emp && <UpdateEmployee open={isOpen} onClose={setIsOpen} employee={emp} /> }
+
     </div>
-    </>
-  )
-}
-
-
+  );
+};
