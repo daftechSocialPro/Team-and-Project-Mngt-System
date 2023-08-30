@@ -9,7 +9,7 @@ const Profile = () => {
     <div className='rightHeader'>
     </div>
     </div>
-    <div class="line"></div>
+    <div className="line"></div>
     <div className="profileContainer">
         <div className="profiles">
             <div className="profilerightt">

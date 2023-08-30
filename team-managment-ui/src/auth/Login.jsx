@@ -2,21 +2,16 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../component/EmployeeCard/login.css";
 import { login } from "../api/authApi";
-import { Toast } from "primereact/toast";
+
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import jwtDecode from "jwt-decode";
+import { setLoading } from '../store/loadingReducer';
 
-const Login = () => {
+const Login = ({show}) => {
 
-  const toast = useRef(null);
+  const dispatch = useDispatch()
 
-  const show = (severity, summary, message) => {
-    toast.current.show({
-      severity: severity,
-      summary: summary,
-      detail: message,
-    });
-  };
+
 
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -25,20 +20,31 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    dispatch(setLoading(true));
+
+
     try {
       const userData = await login(username, password);
 
       if (userData.success) {
+
         show("success", "SUCCESS", userData.message);
-        // console.log("usedData", userData.data)
-        sessionStorage.setItem("token", userData.data);
-        //dispatch({ type: 'LOGIN_SUCCESS', payload: userData.data });
-        navigate("/dashboard");
+        
+          sessionStorage.setItem('token', userData.data);
+          const decoded = jwtDecode(userData.data);
+          dispatch({ type: 'LOGIN_SUCCESS', payload: decoded });
+          dispatch(setLoading(false));
+          navigate("/dashboard");
+       
+
       } else {
         show("error", "ERROR", userData.message);
+        dispatch(setLoading(false));
       }
     } catch (error) {
-      // show('error','ERROR',userData.message)
+
+      show('error', 'ERROR', error)
+      dispatch(setLoading(false));
     }
   };
 
@@ -47,7 +53,7 @@ const Login = () => {
   };
   return (
     <>
-      <Toast ref={toast} />
+     
       <div className="login-container">
         <div
           className="right-login"

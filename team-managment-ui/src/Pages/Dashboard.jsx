@@ -9,9 +9,9 @@ const Dashboard = () => {
        <div className='header'>
     <div className='title'>Dashboard</div>
     <div className='rightHeader'>
-    <div class="search">
-            <div class="inp">
-                <input type="text" placeholder="search" class="searchh"/>
+    <div className="search">
+            <div className="inp">
+                <input type="text" placeholder="search" className="searchh"/>
             <a href="#" className='searchicon'><img src="./img/search.svg" alt="" srcSet=""/></a>
             </div>
             
@@ -20,53 +20,53 @@ const Dashboard = () => {
     </div>
     </div>
     
-    <div class="line"></div>
+    <div className="line"></div>
    <div className="dashbordcontainer">
     <div className="bashbordleftcont">
         <div className="leftcontupper">
             <div className="dashboardsmallcard">  
-            <div class="cardrigh">
-                    <span class="dashnum">5</span>
-                    <div class="dashh2">All Project</div>
-                    <div class="prog">
-                        <img class="arrowimg" src="./img/downar.png" alt="" srcSet=""/>
-                        <span class="dashh3">37.5%</span>
+            <div className="cardrigh">
+                    <span className="dashnum">5</span>
+                    <div className="dashh2">All Project</div>
+                    <div className="prog">
+                        <img className="arrowimg" src="./img/downar.png" alt="" srcSet=""/>
+                        <span className="dashh3">37.5%</span>
                     </div>
                 </div>
-                 <div class="cardleft">
-                    <img class="barimg" src="./img/bar2.png" alt=""/>
+                 <div className="cardleft">
+                    <img className="barimg" src="./img/bar2.png" alt=""/>
                 </div>
                 </div>
             <div className="dashboardsmallcard">
-            <div class="cardrigh">
-                    <span class="dashnum" style={{color:"#F0C033"}}>2</span>
-                    <div class="dashh2">Completed</div>
-                    <div class="prog">
-                        <img class="arrowimg" src="./img/downar.png" alt="" srcSet=""/>
-                        <span class="dashh3">37.5%</span>
+            <div className="cardrigh">
+                    <span className="dashnum" style={{color:"#F0C033"}}>2</span>
+                    <div className="dashh2">Completed</div>
+                    <div className="prog">
+                        <img className="arrowimg" src="./img/downar.png" alt="" srcSet=""/>
+                        <span className="dashh3">37.5%</span>
                     </div>
                 </div>
-                 <div class="cardleft">
-                    <img class="barimg" src="./img/bar3.png" alt=""/>
+                 <div className="cardleft">
+                    <img className="barimg" src="./img/bar3.png" alt=""/>
                 </div>
             </div>
             <div className="dashboardsmallcard">
-            <div class="cardrigh">
-                    <span class="dashnum"  style={{color:"#FF5722"}}>3</span>
-                    <div class="dashh2">Pending</div>
-                    <div class="prog">
-                        <img class="arrowimg" src="./img/downar.png" alt="" srcSet=""/>
-                        <span class="dashh3">37.5%</span>
+            <div className="cardrigh">
+                    <span className="dashnum"  style={{color:"#FF5722"}}>3</span>
+                    <div className="dashh2">Pending</div>
+                    <div className="prog">
+                        <img className="arrowimg" src="./img/downar.png" alt="" srcSet=""/>
+                        <span className="dashh3">37.5%</span>
                     </div>
                 </div>
-                 <div class="cardleft">
-                    <img class="barimg" src="./img/bar1.png" alt=""/>
+                 <div className="cardleft">
+                    <img className="barimg" src="./img/bar1.png" alt=""/>
                 </div>
             </div>
             <div className="dashboardsmallcard">
-            <div class="cardrigh dashemployee">
-                    <span class="dashnum">25</span>
-                    <div class="dashh2">Employees</div>
+            <div className="cardrigh dashemployee">
+                    <span className="dashnum">25</span>
+                    <div className="dashh2">Employees</div>
                     <div className="proallpic dashallpic">
         <img src="./img/propic/aby.png" alt="" className="contproimg" />
         <img src="./img/propic/habte.png" alt="" className="contproimg2" />
@@ -78,8 +78,8 @@ const Dashboard = () => {
         
         </div>
                 </div>
-                <div class="cardleft">
-                    {/* <img class="barimg" src="./img/bar1.png" alt=""/> */}
+                <div className="cardleft">
+                    {/* <img className="barimg" src="./img/bar1.png" alt=""/> */}
                 </div>
             </div>
         </div>

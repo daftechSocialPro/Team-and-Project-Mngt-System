@@ -10,9 +10,9 @@ const Project = () => {
         <div className='header'>
     <div className='title'>Projects</div>
     <div className='rightHeader'>
-    <div class="search">
-            <div class="inp">
-                <input type="text" placeholder="search" class="searchh"/>
+    <div className="search">
+            <div className="inp">
+                <input type="text" placeholder="search" className="searchh"/>
             <a href="#" className='searchicon'><img src="./img/search.svg" alt="" srcSet=""/></a>
             </div>
             
@@ -20,7 +20,7 @@ const Project = () => {
     </div>
     </div>
     
-    <div class="line"></div>
+    <div className="line"></div>
 <div className="projectContainer">
   <div className="Cpro" onClick={()=>setIsOpen(true)}>
   <span className="plus">+</span>

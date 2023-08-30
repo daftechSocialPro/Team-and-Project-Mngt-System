@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lilis\\OneDrive\\Documents\\Exercises\\Team-and-Project-Mngt-System\\team-managment-api\\Infrustructure\\IntegratedInfrustructure.csproj": {}
+    "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Social\\Team Mangment\\team-managment-api\\Infrustructure\\IntegratedInfrustructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lilis\\OneDrive\\Documents\\Exercises\\Team-and-Project-Mngt-System\\team-managment-api\\Infrustructure\\IntegratedInfrustructure.csproj": {
+    "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Social\\Team Mangment\\team-managment-api\\Infrustructure\\IntegratedInfrustructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lilis\\OneDrive\\Documents\\Exercises\\Team-and-Project-Mngt-System\\team-managment-api\\Infrustructure\\IntegratedInfrustructure.csproj",
+        "projectUniqueName": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Social\\Team Mangment\\team-managment-api\\Infrustructure\\IntegratedInfrustructure.csproj",
         "projectName": "IntegratedInfrustructure",
-        "projectPath": "C:\\Users\\lilis\\OneDrive\\Documents\\Exercises\\Team-and-Project-Mngt-System\\team-managment-api\\Infrustructure\\IntegratedInfrustructure.csproj",
-        "packagesPath": "C:\\Users\\lilis\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lilis\\OneDrive\\Documents\\Exercises\\Team-and-Project-Mngt-System\\team-managment-api\\Infrustructure\\obj\\",
+        "projectPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Social\\Team Mangment\\team-managment-api\\Infrustructure\\IntegratedInfrustructure.csproj",
+        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Social\\Team Mangment\\team-managment-api\\Infrustructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\lilis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -81,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

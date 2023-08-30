@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 
 import { createEmployee } from "../api/employeeAPi";
-import { useSelector } from "react-redux";
-import { Toast } from "primereact/toast";
+import { useDispatch } from "react-redux";
+import { setLoading } from '../store/loadingReducer';
 
 const fileTypes = ["JPG", "PNG", "GIF"];
 const MODAL_STAYL = {
@@ -29,9 +29,11 @@ const OVERLAY = {
   zIndex: 1000,
 };
 const CLOSEBUTTON = {
-  width: "50px",
-  height: "50px",
-  paddingRight: "20px",
+  paddingRight: '10px',
+  color: 'red', fontSize: '25px',
+  cursor: 'Pointer',
+  border: '1px solid f4f4f4'
+
 };
 const LINE = {
   width: "160px",
@@ -162,16 +164,11 @@ const BTUNNES = {
   display: "flex",
   justifyContent: "end",
 };
-const CreateEmployee = ({ open, onClose }) => {
-  const toast = useRef(null);
+const CreateEmployee = ({ open, onClose, show, user }) => {
 
-  const show = (severity, summary, message) => {
-    toast.current.show({
-      severity: severity,
-      summary: summary,
-      detail: message,
-    });
-  };
+  console.log("user", user)
+  const dispatch = useDispatch()
+
 
   const [ImagePath, setFile] = useState(null);
   const [FirstName, setFirstName] = useState("");
@@ -187,7 +184,8 @@ const CreateEmployee = ({ open, onClose }) => {
   const [Facebook, setFacebook] = useState("");
   const [Instagram, setInstagram] = useState("");
   const [EmploymentPosition, setPosition] = useState("");
-  const CreatedById = useSelector((state) => state.user);
+  const CreatedById = user.user && user.user.userId;
+
 
   const handleChange = (file) => {
     console.log(file);
@@ -195,8 +193,12 @@ const CreateEmployee = ({ open, onClose }) => {
   };
   if (!open) return null;
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    dispatch(setLoading(true));
+
 
     // Create a data object with the form field values
 
@@ -223,20 +225,25 @@ const CreateEmployee = ({ open, onClose }) => {
 
       if (response.success) {
         show("success", "SUCCESS", response.message);
-
         onClose(false);
+        dispatch(setLoading(false));
+
       } else {
         show("error", "ERROR", response.message);
+        dispatch(setLoading(false));
+
       }
     } catch (error) {
       // Handle the error
       show("error", "ERROR", error);
+      dispatch(setLoading(false));
+
     }
   };
 
   return (
     <>
-      <Toast ref={toast} />
+
       <div style={OVERLAY}></div>
 
       <div style={MODAL_STAYL}>
@@ -245,9 +252,8 @@ const CreateEmployee = ({ open, onClose }) => {
             <h1 style={HTITLE}>Add New Employee</h1>
             <div style={LINE}></div>
           </div>
-          <button style={CLOSEBUTTON} onClick={() => onClose(false)}>
-            <img src="./img/close-3.png" />
-          </button>
+
+          <span className="pi pi-times" onClick={() => onClose(false)} style={CLOSEBUTTON} />
         </div>
         <form action="" onSubmit={handleSubmit}>
           <div style={FORMWRAPP}>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { SidebarData } from './sidebarData';
 import { IconContext } from 'react-icons';
 import {FiLogOut} from 'react-icons/fi'
+import { useSelector } from 'react-redux';
 const SIDBAR={
     backgroundColor: "#161616",
     width: "200px",
@@ -21,6 +22,8 @@ const NAvLogo={
    
 }
 function Saidbar() {
+
+    const user = useSelector((state) => state.user);
   return (
     <>
     <IconContext.Provider value={{color:"#fff"}}>
@@ -59,7 +62,7 @@ function Saidbar() {
             </ul>
             <div className='profileSidebar'>
            <Link to="/pro"><img className='proimages' src='./img/propic/kira.png'/></Link> 
-            <span className='pronamesidebar'>Kirubel</span>
+            <span className='pronamesidebar'>{user.user&& user.user.fullName}</span>
             </div>
             
             <div className='profileSidebar'>

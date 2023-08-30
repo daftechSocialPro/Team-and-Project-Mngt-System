@@ -45,6 +45,7 @@ namespace IntegratedImplementation.Services.HRM
 
 
             var code = await _generalConfig.GenerateCode(GeneralCodeType.EMPLOYEEPREFIX);
+            addEmployee.EmploymentStatus = EmploymentStatus.ACTIVE.ToString();
             EmployeeList employee = new EmployeeList
             {
                 Id = Guid.NewGuid(),
@@ -58,7 +59,7 @@ namespace IntegratedImplementation.Services.HRM
                 EmploymentPosition = Enum.Parse<EmploymentPosition>(addEmployee.EmploymentPosition),
                 
                 FirstName = addEmployee.FirstName,
-          
+                Address = addEmployee.Address,
                 LastName = addEmployee.LastName,               
                 BirthDate = addEmployee.BirthDate,
                 Gender =Enum.Parse<Gender>(addEmployee.Gender),

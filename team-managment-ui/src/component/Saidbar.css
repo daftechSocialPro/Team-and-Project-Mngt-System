@@ -58,6 +58,11 @@
     color: #000;
     opacity: 0.9;
 }
+.nav-text a span:hover{
+    background-color: aliceblue;
+    color: #000;
+    opacity: 0.9;
+}
 span{
     margin-left: 16px;
 }

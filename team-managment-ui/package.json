@@ -9,8 +9,10 @@
     "axios": "^1.5.0",
     "dotenv": "^16.3.1",
     "jwt-decode": "^3.1.2",
+    "primeicons": "^6.0.1",
     "primereact": "^9.6.2",
     "react": "^18.2.0",
+    "react-cookie": "^6.1.0",
     "react-dom": "^18.2.0",
     "react-drag-drop-files": "^2.3.10",
     "react-icons": "^4.10.1",
@@ -21,10 +23,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build"
   },
   "eslintConfig": {
     "extends": [

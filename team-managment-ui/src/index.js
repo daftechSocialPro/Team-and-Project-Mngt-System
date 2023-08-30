@@ -5,7 +5,9 @@ import store from './store/store';
 
 //theme
 import "primereact/resources/themes/lara-light-indigo/theme.css";     
-    
+ 
+import 'primeicons/primeicons.css';
+           
 //core
 import "primereact/resources/primereact.min.css";                                       
 import { Provider } from 'react-redux';
