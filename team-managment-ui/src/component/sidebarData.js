@@ -7,7 +7,7 @@ import { AiOutlineUser, AiFillFolder} from 'react-icons/ai';
 export const SidebarData=[
     {
         title:'Dashboard',
-        path:'/',
+        path:'/dashboard',
         icon:  <BsGridFill/>,
         cName:'nav-text'
     },

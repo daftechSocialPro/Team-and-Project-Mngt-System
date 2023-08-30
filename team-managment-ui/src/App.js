@@ -31,13 +31,14 @@ function App() {
     <Suspense fallback={<Loading />}>
       <Router>
         <Routes>
+        <Route path="/login" element={<Login/>} />
           {token ? (
-            <Route path="/">
+            <Route path="/" >
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/project" element={<Project />} />
               <Route path="/employee" element={<Employee />} />
               <Route path="/team" element={<Team />} />
-              <Route path="/empdetail" element={<EmpDetail />} />
+              <Route path="/empdetail/:id" element={<EmpDetail />} />
               <Route path="/users" element={<Users />} />
               <Route path="/pro" element={<Profile />} />
             </Route>

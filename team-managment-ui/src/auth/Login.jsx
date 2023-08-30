@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../component/EmployeeCard/login.css";
 import { login } from "../api/authApi";
 import { Toast } from "primereact/toast";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+
 
 const Login = () => {
 

@@ -16,3 +16,33 @@ export const createEmployee = async (data) => {
     throw error;
   }
 };
+
+export const getEmployees = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/Employee`);
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving employees:', error);
+    throw error;
+  }
+};
+
+export const getEmployeeDetails = async (employeeId) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/Employee/getEmployee?employeeId=${employeeId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving employee details:', error);
+    throw error;
+  }
+};
+
+// export const updateEmployee = async (employeeId, updatedData) => {
+//   try {
+//     const response = await axios.put(`${API_BASE_URL}/api/Employee/getEmployee?employeeId=${employeeId}`, updatedData);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error updating employee:', error);
+//     throw error;
+//   }
+// };

@@ -510,7 +510,15 @@ tr:nth-child(odd){
     display: flex;
     align-items: center;
     justify-content: center;
-    /* margin-bottom: 80px; */
+    margin-top:100%;
+    cursor: pointer;
+}
+.profileSidebar2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15%;
+    margin-bottom: 30%;
     cursor: pointer;
 }
 .pronamesidebar{
@@ -519,23 +527,28 @@ tr:nth-child(odd){
     color: #fff;
     margin: 10px;
 }
-.nav-text a{
-    text-decoration: none;
-    color: #fff;
-    font-size: 20px;
-    width: 95%;
-    height:100%;
+.nav-text{
     display: flex;
     align-items: center;
-    padding-top: 20px;
+    justify-content: center;
+}
+.nav-text a{
+    text-decoration: none;
+    width: 95%;
+    height:100%;
+    color: #fff;
+    font-size: 20px;
+    padding-top: 10px;
     padding-left: 15px;
+    margin-top: 10px;
     border-radius:4px;
 }
+
 .nav-text a:hover{
     background-color: aliceblue;
     color: #000;
     opacity: 0.9;
-   /* margin-top: 20px; */
+    text-align: center;
 }
 .plus{
     font-size: 60px;
