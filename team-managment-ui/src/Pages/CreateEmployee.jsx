@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
-
+import { useForm , Controller} from "react-hook-form";
 import { createEmployee } from "../api/employeeAPi";
 import { useDispatch } from "react-redux";
-import { setLoading } from '../store/loadingReducer';
-
+import { setLoading } from "../store/loadingReducer";
+import { Toast } from 'primereact/toast';
+import { InputText } from "primereact/inputtext";
 const fileTypes = ["JPG", "PNG", "GIF"];
+
 const MODAL_STAYL = {
   position: "fixed",
   top: "50%",
@@ -29,11 +31,11 @@ const OVERLAY = {
   zIndex: 1000,
 };
 const CLOSEBUTTON = {
-  paddingRight: '10px',
-  color: 'red', fontSize: '25px',
-  cursor: 'Pointer',
-  border: '1px solid f4f4f4'
-
+  paddingRight: "10px",
+  color: "red",
+  fontSize: "25px",
+  cursor: "Pointer",
+  border: "1px solid f4f4f4",
 };
 const LINE = {
   width: "160px",
@@ -165,11 +167,13 @@ const BTUNNES = {
   justifyContent: "end",
 };
 const CreateEmployee = ({ open, onClose, show, user }) => {
-
-  console.log("user", user)
-  const dispatch = useDispatch()
-
-
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    setValue,
+  } = useForm();
+  const dispatch = useDispatch();
   const [ImagePath, setFile] = useState(null);
   const [FirstName, setFirstName] = useState("");
   const [LastName, setLastName] = useState("");
@@ -186,19 +190,17 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
   const [EmploymentPosition, setPosition] = useState("");
   const CreatedById = user.user && user.user.userId;
 
-
   const handleChange = (file) => {
     console.log(file);
     setFile(file);
   };
+
   if (!open) return null;
 
-
-  const handleSubmit = async (e) => {
+  const handleCreate = async (e) => {
     e.preventDefault();
 
     dispatch(setLoading(true));
-
 
     // Create a data object with the form field values
     const formData = new FormData();
@@ -217,39 +219,51 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
     formData.append("Instagram", Instagram);
     formData.append("ImagePath", ImagePath);
     formData.append("CreatedById", CreatedById);
-  
+
     try {
       // Make the Axios request
       const response = await createEmployee(formData);
-  
+
       if (response.success) {
         show("success", "SUCCESS", response.message);
         onClose(false);
         dispatch(setLoading(false));
-
       } else {
         show("error", "ERROR", response.message);
         dispatch(setLoading(false));
-
       }
     } catch (error) {
       // Handle the error
       show("error", "ERROR", error);
       dispatch(setLoading(false));
-
     }
   };
-  
-  // const handleImageChange = (event) => {
-  //   const file = event.target.files[0];
-  //   setSelectedImage(URL.createObjectURL(file));
-  //   console.log(selectedImage)
-  // };
-  
+
+
+  const handleFirstnameChange = (event) => {
+    const value = event.target.value;
+    setFirstName(value);
+    setValue("FirstName", value);
+  };
+  const handleLastnameChange = (event) => {
+    const value = event.target.value;
+    setLastName(value);
+    setValue("lastName", value);
+  };
+  const handleGenderChange = (event) => {
+    const value = event.target.value;
+    setLastName(value);
+    setValue("lastName", value);
+  };
+  const handleEmailChange = (event) => {
+    const value = event.target.value;
+  setEmail(value);
+    setValue("Email", value);
+  };
+
   if (!open) return null;
   return (
     <>
-
       <div style={OVERLAY}></div>
 
       <div style={MODAL_STAYL}>
@@ -259,12 +273,15 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
             <div style={LINE}></div>
           </div>
 
-          <span className="pi pi-times" onClick={() => onClose(false)} style={CLOSEBUTTON} />
+          <span
+            className="pi pi-times"
+            onClick={() => onClose(false)}
+            style={CLOSEBUTTON}
+          />
         </div>
-        <form action="" onSubmit={handleSubmit}>
+        <form action="" onSubmit={handleCreate}>
           <div style={FORMWRAPP}>
             <div style={ONECOLE}>
-            {/* {selectedImage && <><img src={selectedImage} alt="Selected" /> <span>Image</span></>} */}
               <div style={INPUTWRAP}>
                 <label htmlFor="" style={LABEL}>
                   First Name:
@@ -291,7 +308,7 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
             <div style={ONECOLE}>
               <div style={DRAGDROP}>
                 <FileUploader
-                // onChange={handleImageChange}
+                  // onChange={handleImageChange}
                   handleChange={handleChange}
                   name="file"
                   types={fileTypes}
@@ -346,11 +363,19 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
                   Email:
                 </label>
                 <input
+                    {...register("email", {
+                      required: "Required",
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "invalid email address"
+                      }
+                    })}
                   style={INPUT}
-                  type="text"
+                  type="email"
                   value={Email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleEmailChange}
                 />
+                <span style={{color:"red"}}>{errors.email && errors.email.message}</span>
               </div>
               <div style={INPUTWRAP}>
                 <label htmlFor="" style={LABEL}>
@@ -379,7 +404,7 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
                 ></input>
               </div>
               <div style={INPUTWRAP}>
-              <label htmlFor="" style={LABEL}>
+                <label htmlFor="" style={LABEL}>
                   Employee Position:
                 </label>
                 <select
@@ -440,7 +465,6 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
             <div style={LINEE}></div>
             <div style={BTUNNES}>
               <input style={SUBMIT} type="submit" value="Submit" />
-              {/* <input style={CANCEL} type="cancel" value="Cancel" onClick={onClose}/> */}
             </div>
           </div>
         </form>
