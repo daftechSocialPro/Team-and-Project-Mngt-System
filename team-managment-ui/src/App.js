@@ -1,40 +1,40 @@
-import './App.css';
-import React, { Suspense, useEffect, useRef } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
-import Loading from './component/Loading/Loading';
-import Dashboard from './Pages/Dashboard';
-import EmpDetail from './Pages/EmpDetail';
-import Employee from './Pages/Employee';
-import Login from './auth/Login';
-import Project from './Pages/Project';
-import Team from './Pages/Team';
-import Users from './Pages/Users';
-import Profile from './Pages/Profile';
+import "./App.css";
+import React, { Suspense, useEffect, useRef } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import Loading from "./component/Loading/Loading";
+import Dashboard from "./Pages/Dashboard";
+import EmpDetail from "./Pages/Employee/EmpDetail";
+import Employee from "./Pages/Employee/Employee";
+import Login from "./auth/Login";
+import Project from "./Pages/Project";
+import Team from "./Pages/Team";
+import Users from "./Pages/Users";
+import Profile from "./Pages/Profile";
 import jwt_decode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { Toast } from "primereact/toast";
-
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user);
   const loading = useSelector((state) => state.loading);
   const toast = useRef(null);
 
-  const token = sessionStorage.getItem('token')
+  const token = sessionStorage.getItem("token");
 
   const show = (severity, summary, message) => {
-    toast.current&& toast.current.show({
-       severity: severity,
-       summary: summary,
-       detail: message,
-     });
-   };
+    toast.current &&
+      toast.current.show({
+        severity: severity,
+        summary: summary,
+        detail: message,
+      });
+  };
 
   const performLogin = () => {
     if (token) {
       const decoded = jwt_decode(token);
-      dispatch({ type: 'LOGIN_SUCCESS', payload: decoded });
+      dispatch({ type: "LOGIN_SUCCESS", payload: decoded });
     }
   };
 
@@ -47,11 +47,10 @@ function App() {
   }, [dispatch, token]);
 
   return (
-    <Suspense >
-       <Toast ref={toast} />
-      {loading.loading &&
-
-        <Loading />}
+    <Suspense>
+   
+      <Toast ref={toast} />
+      {loading.loading && <Loading />}     
       
         <Router>
           <Routes>
