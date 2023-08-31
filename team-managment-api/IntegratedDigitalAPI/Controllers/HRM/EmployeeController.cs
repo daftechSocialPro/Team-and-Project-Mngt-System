@@ -31,6 +31,12 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         {
             return Ok(await _employeeService.GetEmployee(employeeId));
         }
+        [HttpGet("getEmployeeNoUser")]
+        [ProducesResponseType(typeof(EmployeeGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeNoUser()
+        {
+            return Ok(await _employeeService.GetEmployeeNoUser());
+        }
 
 
         [HttpPost]

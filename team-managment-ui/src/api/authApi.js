@@ -15,6 +15,28 @@ export const login = async (username, password) => {
   }
 };
 
+export const getUserRoles = async ()=>{
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/Authentication/GetRoleCategory`);
+    return response.data;
+      }
+      catch (error) {
+        console.error('Error feacthing userroles:', error);
+        throw error;
+      }
+}
+
+export const createUser = async (user)=>{
+  try {
+    const response = await axios.post(`${API_BASE_URL}/api/Authentication/AddUser`,user);
+    return response.data;
+      }
+      catch (error) {
+        console.error('Error creating user:', error);
+        throw error;
+      }
+}
+
 export const logout = async () => {
   try {
     const response = await axios.post(`${API_BASE_URL}/logout`);

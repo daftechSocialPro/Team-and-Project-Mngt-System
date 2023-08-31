@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getEmployeeSelectList } from "../api/employeeAPi";
-
+import { getEmployeeNoUser } from "../api/employeeAPi";
+import {getUserRoles,createUser} from '../api/authApi'
+import { useDispatch } from "react-redux";
+import { setLoading } from '../store/loadingReducer'
 const MODAL_STAYL = {
     position: 'fixed',
     top: "50%",
@@ -49,7 +51,9 @@ const TOPER = {
 }
 const INPUTWRAP = {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    marginBottom:'20px'
+    
 }
 const INPUTWRAPP = {
 
@@ -126,22 +130,90 @@ const BTUNNES = {
     display: "flex",
     justifyContent: "end"
 }
-const CreateUser = ({ open, onClose }) => {
-    const [employees, setEmployees] = useState([])
+const ERROR_MESSAGE = {
+    color: 'red',
+    fontSize: '14px',
+    marginTop: '8px',
+  };
+const CreateUser = ({ open, onClose,show }) => {
+
+    const dispatch = useDispatch()
+    const [employees, setEmployees] = useState([{}])
+    const [userRoles, setUserRoles ] = useState([{}])
+    const [employeeId,setEmployeeId]= useState('')
+    const [userName,setUserName]= useState('')
+    const [password,setPassword]= useState('')
+    const [confirmPassword,setConfirmPassword] = useState()
+    const [roles , setRoles] = useState([])
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
-        getEmployees()
-
+        getEmployees()    
     }, [open])
+
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        dispatch(setLoading(true));
+    
+        // Check if the password and confirm password match
+        if (password !== confirmPassword) {
+          setErrorMessage("Password and confirm password do not match");
+          dispatch(setLoading(false));
+          return;
+        }
+    
+        const value ={
+            employeeId:employeeId,
+            userName:userName,
+            password:password,
+            roles :roles,
+        }
+        try {
+            // Make the Axios request
+            const response = await createUser(value);
+        
+            if (response.success) {
+              show("success", "SUCCESS", response.message);
+              onClose(false);
+              dispatch(setLoading(false));
+      
+            } else {
+              show("error", "ERROR", response.message);
+              dispatch(setLoading(false));
+      
+            }
+          } catch (error) {
+            // Handle the error
+            show("error", "ERROR", error);
+            dispatch(setLoading(false));
+      
+          }
+
+        // Rest of the submit logic here, such as creating the user
+    
+        // Reset form fields and error message
+        setEmployeeId('');
+        setUserName('');
+        setPassword('');
+        setConfirmPassword('');
+        setRoles([]);
+        setErrorMessage('');
+    
+        // Close the modal
+        onClose();
+      };
+  
     const getEmployees = async () => {
 
-        const response = await getEmployeeSelectList();
-        setEmployees(response)
+        const response = await getEmployeeNoUser();
+        const response1 = await getUserRoles();
+        setEmployees(response.data)
+        setUserRoles(response1)
     }
-
-
-
-
+ 
 
 
     if (!open) return null
@@ -157,16 +229,17 @@ const CreateUser = ({ open, onClose }) => {
                         <div style={LINE}></div></div>
                     <button style={CLOSEBUTTON} onClick={onClose}><img src='./img/close-3.png' /></button>
                 </div>
-                <form action="">
+                <form action="" onSubmit={handleSubmit}>
                     <div style={FORMWRAPP}>
                         <div style={ONECOLE}>
                             <div style={INPUTWRAP}>
                                 <div style={INPUTWRAP}>
                                     <label htmlFor="" style={LABEL}>Employee:</label>
-                                    <select style={SELECT} id="gender" name="Gender">
-                                        {
-                                         employees.map((item, index) =>
-                                         <option value={item.id}>{item.name}</option>
+                                    <select style={SELECT} id="Employee" name="Employee" value={employeeId} onChange={(e)=>{setEmployeeId(e.target.value)}} >
+                                    <option >--Select User---</option>
+                                        {employees &&
+                                         employees.map((item) =>
+                                         <option key={item.id} value={item.id}>{item.name}</option>
                                             )
                                         }
 
@@ -175,11 +248,12 @@ const CreateUser = ({ open, onClose }) => {
                                 </div>
                                 <div style={INPUTWRAP}>
                                     <label htmlFor="" style={LABEL}>Role:</label>
-                                    <select style={SELECT} id="role" name="role" multiple>
-                                        <option value="admin">Admin</option>
-                                        <option value="hrm">HRM</option>
-                                        <option value="marketing">Marketing</option>
-                                        <option value="dev">Developer</option>
+                                    <select style={SELECT} multiple id="role" name="role" value={roles} onChange={(e)=>{setRoles(e.target.value)}} >
+                                    {userRoles &&
+                                         userRoles.map((item) =>
+                                         <option key={item.id} value={item.id}>{item.name}</option>
+                                            )
+                                        }
                                     </select>
                                 </div>
                             </div>
@@ -187,19 +261,20 @@ const CreateUser = ({ open, onClose }) => {
                             <div >
                                 <div style={INPUTWRAPP}>
                                     <label htmlFor="" style={LABEL}>User Name:</label>
-                                    <input style={INPUT} type="text" />
+                                    <input style={INPUT} type="text" value={userName} onChange={(e)=>{setUserName(e.target.value)}}  />
                                 </div>
                                 <div style={INPUTWRAPP}>
                                     <label htmlFor="" style={LABEL}>Password:</label>
-                                    <input style={INPUT} type="text" />
+                                    <input style={INPUT} type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}}  />
                                 </div>
                                 <div style={INPUTWRAPP}>
                                     <label htmlFor="" style={LABEL}>Confirm Password:</label>
-                                    <input style={INPUT} type="text" />
+                                    <input style={INPUT} type="password" value={confirmPassword} onChange={(e)=>{setConfirmPassword(e.target.value)}} />
                                 </div>
                             </div>
                         </div>
                         <div style={LINEE}></div>
+                        {errorMessage && <p style={ERROR_MESSAGE}>{errorMessage}</p>}
                         <div style={BTUNNES}>
                             <input style={SUBMIT} type="submit" value="Submit" />
 

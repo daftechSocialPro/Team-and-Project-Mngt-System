@@ -121,17 +121,32 @@ namespace Implementation.Services.Authentication
                 RowStatus = RowStatus.ACTIVE,
             };
 
-            await _userManager.CreateAsync(applicationUser, addUSer.Password);
+            var response = await _userManager.CreateAsync(applicationUser, addUSer.Password);
+
+            if (response.Succeeded)
+            {
+                var currentEmployee1 = _dbContext.Users.Where(x => x.EmployeeId.Equals(addUSer.EmployeeId)).FirstOrDefault();
+
+
+
+                if (addUSer.Roles.IsNullOrEmpty()&& currentEmployee1!=null)
+                {
+                    var userRoles = new UserRoleDto();
+                    userRoles.UserId = currentEmployee1.Id;
+                    userRoles.RoleName.Add(addUSer.Roles);
+                    await AssingRole(userRoles);
+                }
+            }
 
             return new ResponseMessage { Success = true, Message = "Succesfully Added User", Data = applicationUser.UserName };
         }
 
         public async Task<List<RoleDropDown>> GetRoleCategory()
         {
-            var roleCategory = await _dbContext.RoleCategories.Select(x => new RoleDropDown
+            var roleCategory = await _dbContext.Roles.Where(x=>x.RoleCategoryId==1).Select(x => new RoleDropDown
             {
                 Id = x.Id.ToString(),
-                Name = x.CategoryName,
+                Name = x.Name,
             }).ToListAsync();
 
             return roleCategory;

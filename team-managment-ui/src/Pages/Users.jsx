@@ -3,7 +3,8 @@ import {Ecard} from '../component/EmployeeCard/Ecard'
 import { Link } from 'react-router-dom'
 import Saidbar from '../component/Saidbar'
 import CreateUser from './CreateUser'
-function Users() {
+
+function Users({show}) {
   const [isOpen, setIsOpen] =useState(false);
   return (
     
@@ -23,7 +24,7 @@ function Users() {
            <Link href="#" onClick={()=>setIsOpen(true)}>      <i className="pi pi-user-plus" style={{ color: '#06ecfe',fontSize:'30px' }}></i>
            </Link>
            </div>
-        <CreateUser open={isOpen} onClose={()=>setIsOpen(false)}>
+        <CreateUser open={isOpen} onClose={()=>setIsOpen(false)} show={show}>
 
         </CreateUser>
     </div>

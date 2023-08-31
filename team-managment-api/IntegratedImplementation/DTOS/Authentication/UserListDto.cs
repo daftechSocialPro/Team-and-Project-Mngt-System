@@ -29,6 +29,8 @@ namespace Implementation.DTOS.Authentication
         public Guid EmployeeId { get; set; }
         public string UserName { get; set; } = null!;
         public string Password { get; set; } = null!;
+
+        public string ? Roles { get; set; }  
     }
 
     public class UserRoleDto

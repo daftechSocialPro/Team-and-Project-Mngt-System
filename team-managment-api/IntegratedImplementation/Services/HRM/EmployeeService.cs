@@ -188,6 +188,21 @@ namespace IntegratedImplementation.Services.HRM
             return employee;
         }
 
+
+
+        public async Task<List<SelectListDto>> GetEmployeeNoUser()
+        {
+            var users = _dbContext.ApplicationUsers.Select(x => x.EmployeeId).ToList();
+                
+            var employees = await _dbContext.Employees
+                .Where(e => !users.Contains(e.Id))
+                .ProjectTo<SelectListDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return employees;
+        }
+        
+
       public async  Task<List<SelectListDto>> GetEmployeeSelectList()
         {
 

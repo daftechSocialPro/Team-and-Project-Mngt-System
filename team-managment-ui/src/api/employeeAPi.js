@@ -47,11 +47,11 @@ export const updateEmployee = async ( updatedData) => {
   }
 };
 
-export const getEmployeeSelectList = async ()=>{
+export const getEmployeeNoUser = async ()=>{
 
   try {
     
-    const response = await axios.get(`${API_BASE_URL}/api/Employee/getEmployeesSelectList`);
+    const response = await axios.get(`${API_BASE_URL}/api/Employee/getEmployeeNoUser`);
 
     return response
   }

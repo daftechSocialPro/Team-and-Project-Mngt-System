@@ -62,7 +62,7 @@ function App() {
                 <Route path="/employee" element={<Employee show={show} />} />
                 <Route path="/team" element={<Team />} />
                 <Route path="/empdetail/:id" element={<EmpDetail />} />
-                <Route path="/users" element={<Users />} />
+                <Route path="/users" element={<Users show={show} />} />
                 <Route path="/pro" element={<Profile />} />
               </Route>
             ) : (
