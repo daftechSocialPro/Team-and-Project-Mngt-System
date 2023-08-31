@@ -33,38 +33,6 @@
     left: 0;
     transition: 350ms;
 }
-<<<<<<< HEAD
-.nav-text{
-    display: flex;
-    justify-content: start;
-    align-items:center;
-    padding: 8px 0px 8px 16px;
-    list-style: none;
-    height: 60px;
-}
-.nav-text a{
-    text-decoration: none;
-    color: #fff;
-    font-size: 18px;
-    width: 95%;
-    height:100%;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    border-radius:4px;
-}
-.nav-text a:hover{
-    background-color: aliceblue;
-    color: #000;
-    opacity: 0.9;
-}
-.nav-text a span:hover{
-    background-color: aliceblue;
-    color: #000;
-    opacity: 0.9;
-}
-=======
->>>>>>> 96b79127b879679acc6fa5050a1178d1e84299dc
 span{
     margin-left: 16px;
 }
@@ -79,4 +47,5 @@ span{
     margin-left: 20px;
     width: 80px;
     height: 80px;
+    border-radius: 40%;
 }

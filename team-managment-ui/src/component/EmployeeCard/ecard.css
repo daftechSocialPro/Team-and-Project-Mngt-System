@@ -504,6 +504,7 @@ tr:nth-child(odd){
 .proimages{
     width: 70px;
     height: 70px;
+    border-radius: 50%;
     
 }
 .profileSidebar{
@@ -581,6 +582,7 @@ tr:nth-child(odd){
     align-items: center;
     justify-content: space-between;
 }
+
 .add-member2{
     width: 30px;
     height: 30px;

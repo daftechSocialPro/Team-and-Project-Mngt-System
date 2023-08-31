@@ -29,8 +29,8 @@ const OVERLAY = {
   zIndex: 1000,
 };
 const CLOSEBUTTON = {
-  paddingRight: '10px',
-  color: 'red', fontSize: '25px',
+  padding: '10px',
+  color: 'black', fontSize: '25px',
   cursor: 'Pointer',
   border: '1px solid f4f4f4'
 
@@ -164,11 +164,17 @@ const BTUNNES = {
   display: "flex",
   justifyContent: "end",
 };
+const UPImage = {
+  Width:"100px",
+  height:"100px",
+  borderRadius:"50%"
+  };
 const CreateEmployee = ({ open, onClose, show, user }) => {
 
   console.log("user", user)
   const dispatch = useDispatch()
 
+  const [selectedImage, setSelectedImage] = useState('');
 
   const [ImagePath, setFile] = useState(null);
   const [FirstName, setFirstName] = useState("");
@@ -188,7 +194,8 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
 
 
   const handleChange = (file) => {
-    console.log(file);
+    const imageURL = URL.createObjectURL(file);
+    setSelectedImage(imageURL);
     setFile(file);
   };
   if (!open) return null;
@@ -258,37 +265,17 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
             <h1 style={HTITLE}>Add New Employee</h1>
             <div style={LINE}></div>
           </div>
-
-          <span className="pi pi-times" onClick={() => onClose(false)} style={CLOSEBUTTON} />
+          <button style={CLOSEBUTTON} onClick={() => onClose(false)}>
+          <span className="pi pi-times" style={{fontSize:'25px'}}/>
+          </button>
+       
         </div>
         <form action="" onSubmit={handleSubmit}>
           <div style={FORMWRAPP}>
-            <div style={ONECOLE}>
-            {/* {selectedImage && <><img src={selectedImage} alt="Selected" /> <span>Image</span></>} */}
-              <div style={INPUTWRAP}>
-                <label htmlFor="" style={LABEL}>
-                  First Name:
-                </label>
-                <input
-                  style={INPUT}
-                  value={FirstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  type="text"
-                />
-              </div>
-              <div style={INPUTWRAP}>
-                <label htmlFor="" style={LABEL}>
-                  Last Name:
-                </label>
-                <input
-                  style={INPUT}
-                  value={LastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  type="text"
-                />
-              </div>
-            </div>
-            <div style={ONECOLE}>
+
+          <div style={ONECOLE}>
+          <img style={UPImage} src={selectedImage?selectedImage:'./img/add-user.png'} alt="userpic" />
+           
               <div style={DRAGDROP}>
                 <FileUploader
                 // onChange={handleImageChange}
@@ -313,6 +300,36 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
                 </select>
               </div>
             </div>
+            <div style={ONECOLE}>
+           
+           
+           
+           
+            {/* {selectedImage && <><img src={selectedImage} alt="Selected" /> <span>Image</span></>} */}
+              <div style={INPUTWRAP}>
+                <label htmlFor="" style={LABEL}>
+                  First Name:
+                </label>
+                <input
+                  style={INPUT}
+                  value={FirstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  type="text"
+                />
+              </div>
+              <div style={INPUTWRAP}>
+                <label htmlFor="" style={LABEL}>
+                  Last Name:
+                </label>
+                <input
+                  style={INPUT}
+                  value={LastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  type="text"
+                />
+              </div>
+            </div>
+        
 
             <div style={ONECOLE}>
               <div style={INPUTWRAP}>

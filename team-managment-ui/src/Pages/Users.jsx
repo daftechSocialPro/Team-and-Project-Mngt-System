@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Ecard} from '../component/EmployeeCard/Ecard'
 import { Link } from 'react-router-dom'
 import Saidbar from '../component/Saidbar'
-import CreateUser from './CreateEmployee'
+import CreateUser from './CreateUser'
 function Users() {
   const [isOpen, setIsOpen] =useState(false);
   return (
@@ -19,7 +19,10 @@ function Users() {
             </div>
             
         </div>
-        <div className="creatnew"> <Link href="#" onClick={()=>setIsOpen(true)}> <img src="./img/add-user.png" alt="" srcSet=""/></Link></div>
+        <div className="creatnew">
+           <Link href="#" onClick={()=>setIsOpen(true)}>      <i className="pi pi-user-plus" style={{ color: '#06ecfe',fontSize:'30px' }}></i>
+           </Link>
+           </div>
         <CreateUser open={isOpen} onClose={()=>setIsOpen(false)}>
 
         </CreateUser>
@@ -27,7 +30,7 @@ function Users() {
     </div>
     
     <div className="line"></div>
-    <Ecard/>
+    {/* <Ecard/> */}
     </>
   )
 }

@@ -4,7 +4,10 @@ import { PrimeIcons } from 'primereact/api';
 import "./ecard.css";
 import { createImagePath } from "../../api/commonApi";
 import UpdateEmployee from "../../Pages/UpdateEmployee";
-export const Ecard = ({ employees}) => {
+export const Ecard = ({ searchResults,show,searchQuery}) => {
+
+
+
   const getImage = (imagePath) => {
   
     return createImagePath(imagePath);
@@ -18,13 +21,13 @@ export const Ecard = ({ employees}) => {
   };
   return (
     <div className="card-cont">
-        {employees.map((item, index) => (
+        {searchResults.map((item, index) => (
       <div className="Ecard" key={index}>
         <div className="card-image">
           <img src={getImage(item.imagePath)} alt="userpic" />
         </div>
         <Link to={`/empdetail/${item.id}`}>
-          <p className="Ename">{item.employeeName}</p>
+          <p className="Ename">{item.firstName} {item.lastName}</p>
         </Link>
         <p className="email">{item.email}</p>
         <p className="occu">{item.employmentPosition}</p>
@@ -34,7 +37,7 @@ export const Ecard = ({ employees}) => {
       </div>
       
         ))}
-       {emp && <UpdateEmployee open={isOpen} onClose={setIsOpen} employee={emp} /> }
+       {emp && <UpdateEmployee open={isOpen} onClose={setIsOpen} employee={emp} show={show} /> }
 
     </div>
   );

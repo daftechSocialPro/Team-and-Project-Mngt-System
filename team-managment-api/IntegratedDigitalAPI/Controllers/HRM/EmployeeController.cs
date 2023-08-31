@@ -1,4 +1,5 @@
 ﻿using Implementation.Helper;
+using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.HRM;
 using Microsoft.AspNetCore.Http;
@@ -45,10 +46,32 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
-      
 
-     
-        
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateEmployee([FromForm] EmployeeGetDto employee)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.UpdateEmployee(employee));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("getEmployeesSelectList")]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeesSelectList()
+        {
+            return Ok(await _employeeService.GetEmployeeSelectList());
+        }
+
+
+
+
 
     }
 }

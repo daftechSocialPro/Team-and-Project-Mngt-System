@@ -243,6 +243,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("EmploymentStatus")
                         .HasColumnType("int");
 
+                    b.Property<string>("Facebook")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -251,6 +254,9 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Instagram")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -264,10 +270,16 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
+                    b.Property<string>("Telegram")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("TerminatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TinNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Twitter")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

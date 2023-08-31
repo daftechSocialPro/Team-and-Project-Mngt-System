@@ -38,9 +38,14 @@ namespace IntegratedInfrustructure.Model.HRM
 
         public string? TinNumber { get; set; } = null!;
         public string? BankAccountNo { get; set; } = null!;
+        public string? Telegram { get; set; }
+        public string? Twitter { get; set; }
+        public string? Facebook { get; set; }
+        public string? Instagram { get; set; }
 
 
-  }
+
+    }
 
     
 }

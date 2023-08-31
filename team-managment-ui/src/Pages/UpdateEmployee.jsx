@@ -1,9 +1,12 @@
 import React, { useState, useRef} from "react";
 import { FileUploader } from "react-drag-drop-files";
-import { createEmployee } from "../api/employeeAPi";
-import { useSelector } from "react-redux";
+import { updateEmployee } from "../api/employeeAPi";
+import { useDispatch, useSelector } from "react-redux";
 import { Toast } from "primereact/toast";
 import { createImagePath } from "../api/commonApi";
+import { setLoading } from "../store/loadingReducer";
+
+
 const fileTypes = ["JPG", "PNG", "GIF"];
 const MODAL_STAYL = {
   position: "fixed",
@@ -28,9 +31,10 @@ const OVERLAY = {
   zIndex: 1000,
 };
 const CLOSEBUTTON = {
-  width: "50px",
-  height: "50px",
-  paddingRight: "20px",
+  padding: '10px',
+  color: 'black', fontSize: '25px',
+  cursor: 'Pointer',
+  border: '1px solid f4f4f4'
 };
 const LINE = {
   width: "160px",
@@ -156,23 +160,15 @@ const BTUNNES = {
   display: "flex",
   justifyContent: "end",
 };
-const UpdateEmployee = ({ open, onClose ,employee }) => {
+const UpdateEmployee = ({ open, onClose ,employee,show }) => {
 
-
+const dispatch = useDispatch()
     const getImage = (imagePath) => {
   
         return createImagePath(imagePath);
       };
-  
-  const toast = useRef(null);
+      const [selectedImage, setSelectedImage] = useState('');
 
-  const show = (severity, summary, message) => {
-    toast.current.show({
-      severity: severity,
-      summary: summary,
-      detail: message,
-    });
-  };
 
   const [ImagePath, setFile] = useState(employee && employee.imagePath);
   const [FirstName, setFirstName] = useState(employee && employee.firstName);
@@ -187,11 +183,12 @@ const UpdateEmployee = ({ open, onClose ,employee }) => {
   const [Twitter, setTwitter] = useState(employee && employee.twitter);
   const [Facebook, setFacebook] = useState(employee && employee.facebook);
   const [Instagram, setInstagram] = useState(employee && employee.instagram);
-  const [EmploymentPosition, setPosition] = useState(employee && employee.rmploymentPosition);
-  const CreatedById = useSelector((state) => state.user);
+  const [EmploymentPosition, setPosition] = useState(employee && employee.employmentPosition);
 
   const handleChange = (file) => {
-    console.log(file);
+    
+    const imageURL = URL.createObjectURL(file);
+    setSelectedImage(imageURL);
     setFile(file);
   };
   if (!open) return null;
@@ -199,6 +196,7 @@ const UpdateEmployee = ({ open, onClose ,employee }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setLoading(true));
 
     // Create a data object with the form field values
 
@@ -216,30 +214,33 @@ const UpdateEmployee = ({ open, onClose ,employee }) => {
     formData.append("Twitter", Twitter);
     formData.append("Facebook", Facebook);
     formData.append("Instagram", Instagram);
-    formData.append("ImagePath", ImagePath);
-    formData.append("CreatedById", CreatedById);
+    formData.append("Image", ImagePath);
+    
+    formData.append("Id", employee && employee.id);
 
     try {
       // Make the Axios request
-      const response = await createEmployee(formData);
+      const response = await updateEmployee(formData);
 
       if (response.success) {
         show("success", "SUCCESS", response.message);
        
-
+        dispatch(setLoading(false));
         onClose(false);
       } else {
         show("error", "ERROR", response.message);
+        dispatch(setLoading(false));
       }
     } catch (error) {
       // Handle the error
       show("error", "ERROR", error);
+      dispatch(setLoading(false));
     }
   };
 
   return (
     <>
-      <Toast ref={toast} />
+      
       <div style={OVERLAY}></div>
 
       <div style={MODAL_STAYL}>
@@ -249,7 +250,7 @@ const UpdateEmployee = ({ open, onClose ,employee }) => {
             <div style={LINE}></div>
           </div>
           <button style={CLOSEBUTTON} onClick={() => onClose(false)}>
-            <img src="./img/close-3.png" />
+          <span className="pi pi-times" style={{fontSize:'25px'}}/>
           </button>
         </div>
         <form action="" onSubmit={handleSubmit}>
@@ -258,7 +259,7 @@ const UpdateEmployee = ({ open, onClose ,employee }) => {
           
             
             <div style={ONECOLE}>
-            <img style={UPImage} src={getImage(employee.imagePath)} alt="userpic" />
+            <img style={UPImage} src={selectedImage?selectedImage:getImage(employee.imagePath)} alt="userpic" />
               <div style={DRAGDROP}>
                 <FileUploader
                   handleChange={handleChange}
@@ -321,7 +322,7 @@ const UpdateEmployee = ({ open, onClose ,employee }) => {
                   value={BirthDate}
                   onChange={(e) => setBirthday(e.target.value)}
                   style={INPUT}
-                  type="date"
+                  type="datetime-local"
                   id="birthday"
                   name="birthday"
                 ></input>
@@ -371,7 +372,7 @@ const UpdateEmployee = ({ open, onClose ,employee }) => {
                   value={EmploymentDate}
                   onChange={(e) => setHireDate(e.target.value)}
                   style={INPUT}
-                  type="date"
+                  type="datetime-local"
                   id="birthday"
                   name="birthday"
                 ></input>
@@ -437,7 +438,7 @@ const UpdateEmployee = ({ open, onClose ,employee }) => {
             </div>
             <div style={LINEE}></div>
             <div style={BTUNNES}>
-              <input style={SUBMIT} type="submit" value="Submit" />
+              <input style={SUBMIT} type="submit" value="Update" />
          
             </div>
           </div>

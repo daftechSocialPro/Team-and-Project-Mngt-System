@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "+JWCvmyHMnNA3UhcVy4gAl9zARjq1EpkYav336XGhAQ=",
+  "Hash": "9JGeQ2aI4+pv9sg0k9VlAXSGTw7+tdRXqgUaAUBZQu4=",
   "Source": "IntegratedDigitalAPI",
   "BasePath": "_content/IntegratedDigitalAPI",
   "Mode": "Default",
@@ -1054,6 +1054,23 @@
       "OriginalItemSpec": "wwwroot\\Employee\\0be2f709-4352-4eb6-90d8-7e1f5e18c2ae.jpg"
     },
     {
+      "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Social\\Team Mangment\\team-managment-api\\IntegratedDigitalAPI\\wwwroot\\Employee\\126c8bb6-fb80-4671-bc87-f36fb67edf43.jpg",
+      "SourceId": "IntegratedDigitalAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Social\\Team Mangment\\team-managment-api\\IntegratedDigitalAPI\\wwwroot\\",
+      "BasePath": "_content/IntegratedDigitalAPI",
+      "RelativePath": "Employee/126c8bb6-fb80-4671-bc87-f36fb67edf43.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Employee\\126c8bb6-fb80-4671-bc87-f36fb67edf43.jpg"
+    },
+    {
       "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Social\\Team Mangment\\team-managment-api\\IntegratedDigitalAPI\\wwwroot\\Employee\\13103dab-8c90-48d5-a0f0-4a6d3bbd057c.jpg",
       "SourceId": "IntegratedDigitalAPI",
       "SourceType": "Discovered",
@@ -1443,6 +1460,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Employee\\bd308e04-73a9-42b7-af8b-b101a33a6cff.png"
+    },
+    {
+      "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Social\\Team Mangment\\team-managment-api\\IntegratedDigitalAPI\\wwwroot\\Employee\\c6eeee4a-b75d-4b04-96b0-69ff0f7efdb6.jpg",
+      "SourceId": "IntegratedDigitalAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Social\\Team Mangment\\team-managment-api\\IntegratedDigitalAPI\\wwwroot\\",
+      "BasePath": "_content/IntegratedDigitalAPI",
+      "RelativePath": "Employee/c6eeee4a-b75d-4b04-96b0-69ff0f7efdb6.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Employee\\c6eeee4a-b75d-4b04-96b0-69ff0f7efdb6.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Social\\Team Mangment\\team-managment-api\\IntegratedDigitalAPI\\wwwroot\\Employee\\c8748fe2-0e0e-436c-b83a-21ba7174d00f.jpg",
+      "SourceId": "IntegratedDigitalAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Social\\Team Mangment\\team-managment-api\\IntegratedDigitalAPI\\wwwroot\\",
+      "BasePath": "_content/IntegratedDigitalAPI",
+      "RelativePath": "Employee/c8748fe2-0e0e-436c-b83a-21ba7174d00f.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Employee\\c8748fe2-0e0e-436c-b83a-21ba7174d00f.jpg"
     },
     {
       "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Social\\Team Mangment\\team-managment-api\\IntegratedDigitalAPI\\wwwroot\\Employee\\d847843d-d4bd-4b6b-9122-76422443e2b7.jpg",

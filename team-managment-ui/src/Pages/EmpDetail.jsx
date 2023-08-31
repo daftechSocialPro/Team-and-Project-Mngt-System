@@ -31,9 +31,9 @@ const EmpDetail = () => {
       
       {employee && (
         <>
-          <Saidbar employee={employee}/>
+          <Saidbar />
           <ProCard employee={employee} />
-          <ProTable employee={employee} />
+          <ProTable />
         </>
       )}
     </>

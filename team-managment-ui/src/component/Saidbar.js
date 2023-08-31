@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 import { Toast } from "primereact/toast";
 import { useDispatch } from "react-redux";
+
+import {createImagePath} from '../api/commonApi'
 const SIDBAR={
     backgroundColor: "#161616",
     width: "200px",
@@ -52,6 +54,11 @@ function Saidbar() {
         // show('error','ERROR',userData.message)
       }
     };
+
+    const getImage = (imagePath) => {
+  
+        return createImagePath(imagePath);
+      };
   return (
     <>
       <Toast ref={toast} />
@@ -70,7 +77,7 @@ function Saidbar() {
                 })}
             </ul>
             <div className='profileSidebar'>
-           <Link to="/pro"><img className='proimages' src='./img/propic/kira.png'/></Link> 
+           <Link to="/pro"><img className='proimages' src={getImage(user.user&&user.user.photo)}/></Link> 
             <span className='pronamesidebar'>{user.user&& user.user.fullName}</span>
             </div>
             

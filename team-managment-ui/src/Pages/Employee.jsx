@@ -8,6 +8,9 @@ import {getEmployees} from '../api/employeeAPi'
 
 const Employee = ({show}) => {
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+
   const user = useSelector((state) => state.user)
   const [isOpen, setIsOpen] = useState(false);
   const [employees, setEmployees] = useState([]);
@@ -15,6 +18,7 @@ const Employee = ({show}) => {
     try {
       const data = await getEmployees();
       setEmployees(data);
+      setSearchResults(data)
       console.log("employee", data);
     } catch (error) {
       console.error("Error fetching employees:", error);
@@ -22,7 +26,16 @@ const Employee = ({show}) => {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [isOpen]);
+  const handleSearch = () => {
+   
+    console.log(searchQuery)
+    const filteredResults = employees.filter(item =>
+      item.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    setSearchResults(filteredResults);
+  };
 
 
   return (
@@ -33,8 +46,10 @@ const Employee = ({show}) => {
         <div className='rightHeader'>
           <div className="search">
             <div className="inp">
-              <input type="text" placeholder="search" className="searchh" />
-              <a href="#" className='searchicon'><img src="./img/search.svg" alt="" srcSet="" /></a>
+              <input type="text" placeholder="search" value={searchQuery}   onChange={(e) => 
+                                {setSearchQuery(e.target.value);
+                                  handleSearch()}} className="searchh" />
+              <a href="#" className='searchicon' onClick={handleSearch}><img src="./img/search.svg" alt="" srcSet="" /></a>
             </div>
 
           </div>
@@ -52,7 +67,7 @@ const Employee = ({show}) => {
       </div>
 
       <div className="line"></div>
-      <Ecard employees={employees}/>
+      <Ecard searchResults={searchResults} show={show}/>
     </>
 
   )
