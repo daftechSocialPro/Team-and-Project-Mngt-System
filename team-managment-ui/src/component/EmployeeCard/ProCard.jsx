@@ -16,7 +16,7 @@ const ProCard = ({employee}) => {
           <div className='cardpro'>
             <div className='images imagepro'><img src={getImage(employee.imagePath)}  /></div>
             <div className='protite'>
-            <h2 className='proname'>{employee.employeeName}</h2>
+            <h2 className='proname'>{employee.firstName} {employee.lastName}</h2>
             <button className='probtn'>{employee.employmentStatus}</button>
             </div>
             

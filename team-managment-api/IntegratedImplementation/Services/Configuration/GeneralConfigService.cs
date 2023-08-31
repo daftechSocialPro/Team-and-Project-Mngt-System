@@ -57,6 +57,9 @@ namespace IntegratedImplementation.Services.Configuration
                     string fileName = $"{Name}{fileExtension}";
                     string filePath = Path.Combine(pathToSave, fileName);
 
+                    if (File.Exists(filePath))
+                        File.Delete(filePath);
+
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         await formFile.CopyToAsync(stream);

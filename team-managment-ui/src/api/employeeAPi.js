@@ -37,12 +37,26 @@ export const getEmployeeDetails = async (employeeId) => {
   }
 };
 
-// export const updateEmployee = async (employeeId, updatedData) => {
-//   try {
-//     const response = await axios.put(`${API_BASE_URL}/api/Employee/getEmployee?employeeId=${employeeId}`, updatedData);
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error updating employee:', error);
-//     throw error;
-//   }
-// };
+export const updateEmployee = async ( updatedData) => {
+  try {
+    const response = await axios.put(`${API_BASE_URL}/api/Employee`, updatedData);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating employee:', error);
+    throw error;
+  }
+};
+
+export const getEmployeeSelectList = async ()=>{
+
+  try {
+    
+    const response = await axios.get(`${API_BASE_URL}/api/Employee/getEmployeesSelectList`);
+
+    return response
+  }
+  catch (error) {
+    console.error('Error getting employee:', error);
+    throw error;
+  }
+}

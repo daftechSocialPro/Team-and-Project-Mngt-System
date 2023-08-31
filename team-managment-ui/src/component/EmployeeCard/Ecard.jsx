@@ -1,41 +1,48 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { PrimeIcons } from 'primereact/api';
 import "./ecard.css";
+import { Button } from 'primereact/button';
 import { createImagePath } from "../../api/commonApi";
-import UpdateEmployee from "../../Pages/UpdateEmployee";
-export const Ecard = ({ employees}) => {
+import UpdateEmployee from "../../Pages/Employee/UpdateEmployee";
+export const Ecard = ({ searchResults, show, searchQuery }) => {
   const getImage = (imagePath) => {
-  
     return createImagePath(imagePath);
   };
   const [isOpen, setIsOpen] = useState(false);
   const [emp, setEmp] = useState(null);
   const handleUpdate = (employee) => {
-    // updateEmployee(employeeId);
-  
-    setEmp(employee)
+    setEmp(employee);
   };
   return (
     <div className="card-cont">
-        {employees.map((item, index) => (
-      <div className="Ecard" key={index}>
-        <div className="card-image">
-          <img src={getImage(item.imagePath)} alt="userpic" />
-        </div>
-        <Link to={`/empdetail/${item.id}`}>
-          <p className="Ename">{item.employeeName}</p>
-        </Link>
-        <p className="email">{item.email}</p>
-        <p className="occu">{item.employmentPosition}</p>
-        {/* <i className="pi-user-edit" style={{ fontSize: '1rem' }}></i> */}
-        <span style={{marginLeft:"50px", cursor:"pointer"}} onClick={() =>{setIsOpen(true); handleUpdate(item)}}  >Edit</span> 
-       
-      </div>
+      {searchResults.map((item, index) => (
+        <div className="Ecard" key={index}>
+          <div className="card-image">
+            <img src={getImage(item.imagePath)} alt="userpic" />
+          </div>
+          <Button icon="pi pi-pencil" rounded text raised severity="warning" aria-label="edit" style={{position:"absolute", top:"5px", right:"5px"}} className=""  onClick={() => {
+              setIsOpen(true);
+              handleUpdate(item);
+            }} />
+          <Link className="LINKE" to={`/empdetail/${item.id}`}>
+            <p className="Ename">
+              {item.firstName} {item.lastName}
+            </p>
+          </Link>
+          <p className="email">{item.email}</p>
+          <p className="occu">{item.employmentPosition}</p>
       
-        ))}
-       {emp && <UpdateEmployee open={isOpen} onClose={setIsOpen} employee={emp} /> }
-
+        
+        </div>
+      ))}
+      {emp && (
+        <UpdateEmployee
+          open={isOpen}
+          onClose={setIsOpen}
+          employee={emp}
+          show={show}
+        />
+      )}
     </div>
   );
 };

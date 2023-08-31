@@ -12,7 +12,7 @@ namespace IntegratedImplementation.DTOS.HRM
     public record EmployeePostDto
     {
 
-      
+     
         public string FirstName { get; set; } = null!;
 
         public string LastName { get; set; } = null!;
@@ -47,14 +47,15 @@ namespace IntegratedImplementation.DTOS.HRM
 
     public class EmployeeGetDto
     {
+       
         public Guid Id { get; set; }
-        public string EmployeeCode { get; set; } = null!;
-        public string EmployeeName { get; set; } = null!;
+        public string? EmployeeCode { get; set; } 
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
 
-     
         public string PhoneNumber { get; set; } = null!;
         public string Email { get; set; } = null!;
-
+        public IFormFile? Image{ get; set; } = null!;
         public string? ImagePath { get; set; } = null!;
         public string Address { get; set; } = null!;
 
@@ -65,13 +66,17 @@ namespace IntegratedImplementation.DTOS.HRM
 
         public DateTime? TerminatedDate { get; set; }
 
-        public string EmploymentStatus { get; set; } = null!;
+        public string? EmploymentStatus { get; set; }
 
         public string EmploymentPosition { get; set; } = null!;
 
         public string? TinNumber { get; set; } = null!;
         public string? BankAccountNo { get; set; } = null!;
 
+        public string? Telegram { get; set; }
+        public string? Twitter { get; set; }
+        public string? Facebook { get; set; }
+        public string? Instagram { get; set; }
 
     }
 
