@@ -109,5 +109,18 @@ namespace IntegratedInfrustructure.Data
             PERFORMANCEENDDATE,
         }
 
+        public enum ProjectStatus
+        {
+            PENDING,
+            ONGOING,
+            COMPLETED,
+            CANCELD
+        }
+
+        public enum AssignedTo
+        {
+            TEAM,
+            EMPLOYEE
+        }
     }
 }

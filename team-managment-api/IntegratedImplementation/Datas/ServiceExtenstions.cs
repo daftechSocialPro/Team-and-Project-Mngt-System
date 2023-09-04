@@ -4,12 +4,16 @@ using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedImplementation.Services.Configuration;
 using IntegratedImplementation.Services.HRM;
+using IntegratedImplementation.Interfaces.Team;
+using IntegratedImplementation.Services.Team;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntegratedImplementation.Interfaces.Project;
+using IntegratedImplementation.Services.Project;
 
 namespace IntegratedImplementation.Datas
 {
@@ -22,7 +26,8 @@ namespace IntegratedImplementation.Datas
          
             services.AddScoped<IGeneralConfigService, GeneralConfigService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
-
+            services.AddScoped<ITeamService, TeamService>();
+            services.AddScoped<IProjectService, ProjectService>();
             return services;
         }
     }
