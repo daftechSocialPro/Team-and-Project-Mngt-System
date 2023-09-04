@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230830132656_add-socialLinks")]
-    partial class addsocialLinks
+    [Migration("20230902212326_InitialCreate5")]
+    partial class InitialCreate5
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,30 +24,6 @@ namespace IntegratedInfrustructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("IntegratedInfrustructure.Model.Authentication.ApplicationRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RoleCategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleCategoryId");
-
-                    b.ToTable("Roles");
-                });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Authentication.ApplicationUser", b =>
                 {
@@ -102,29 +78,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserType")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.ToTable("ApplicationUser");
-                });
-
-            modelBuilder.Entity("IntegratedInfrustructure.Model.Authentication.RoleCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RoleCategories");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.CompanyProfile", b =>
@@ -142,6 +98,7 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedById")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
@@ -176,6 +133,7 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedById")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
@@ -224,6 +182,7 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedById")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
@@ -299,6 +258,7 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedById")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
@@ -318,6 +278,25 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("CreatedById");
 
                     b.ToTable("HrmSettings");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -413,22 +392,13 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("UserTokens");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.Authentication.ApplicationRole", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.RoleCategory", "RoleCategory")
-                        .WithMany()
-                        .HasForeignKey("RoleCategoryId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("RoleCategory");
-                });
-
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.CompanyProfile", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CreatedBy");
                 });
@@ -437,7 +407,9 @@ namespace IntegratedInfrustructure.Migrations
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CreatedBy");
                 });
@@ -446,7 +418,9 @@ namespace IntegratedInfrustructure.Migrations
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CreatedBy");
                 });
@@ -455,7 +429,9 @@ namespace IntegratedInfrustructure.Migrations
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CreatedBy");
                 });

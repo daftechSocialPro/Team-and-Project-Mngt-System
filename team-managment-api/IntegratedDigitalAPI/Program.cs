@@ -13,6 +13,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -32,14 +33,18 @@ builder.Services.AddControllers().AddJsonOptions(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.Configure<ApplicationSetting>(builder.Configuration.GetSection("ApplicationSetting"));
 
+
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-           options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
+
+builder.Services.AddIdentity<ApplicationUser,IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
 
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => options.User.RequireUniqueEmail = false)
-                .AddEntityFrameworkStores<ApplicationDbContext>().
-                AddDefaultTokenProviders();
+
+
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -56,6 +61,9 @@ builder.Services.Configure<FormOptions>(o =>
     o.MultipartBodyLengthLimit = int.MaxValue;
     o.MemoryBufferThreshold = int.MaxValue;
 });
+
+
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 builder.Services.AddMvc().AddJsonOptions(opt => opt.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase);
 builder.Services.AddCoreBusiness();

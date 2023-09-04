@@ -6,52 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace IntegratedInfrustructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class InitialCreate5 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "ApplicationUser",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RowStatus = table.Column<int>(type: "int", nullable: false),
-                    UserType = table.Column<int>(type: "int", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ApplicationUser", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RoleCategories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoleCategories", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "RoleClaims",
                 columns: table => new
@@ -65,6 +24,20 @@ namespace IntegratedInfrustructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RoleClaims", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -107,6 +80,33 @@ namespace IntegratedInfrustructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RowStatus = table.Column<int>(type: "int", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserTokens",
                 columns: table => new
                 {
@@ -130,17 +130,18 @@ namespace IntegratedInfrustructure.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Rowstatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CompanyProfiles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CompanyProfiles_ApplicationUser_CreatedById",
+                        name: "FK_CompanyProfiles_Users_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "ApplicationUser",
-                        principalColumn: "Id");
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -163,18 +164,23 @@ namespace IntegratedInfrustructure.Migrations
                     EmploymentPosition = table.Column<int>(type: "int", nullable: false),
                     TinNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BankAccountNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Telegram = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Twitter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Facebook = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Instagram = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Rowstatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Employees", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Employees_ApplicationUser_CreatedById",
+                        name: "FK_Employees_Users_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "ApplicationUser",
-                        principalColumn: "Id");
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -187,17 +193,18 @@ namespace IntegratedInfrustructure.Migrations
                     Pad = table.Column<int>(type: "int", nullable: false),
                     CurrentNumber = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Rowstatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GeneralCodes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GeneralCodes_ApplicationUser_CreatedById",
+                        name: "FK_GeneralCodes_Users_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "ApplicationUser",
-                        principalColumn: "Id");
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -208,37 +215,18 @@ namespace IntegratedInfrustructure.Migrations
                     GeneralSetting = table.Column<int>(type: "int", nullable: false),
                     Value = table.Column<double>(type: "float", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Rowstatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HrmSettings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HrmSettings_ApplicationUser_CreatedById",
+                        name: "FK_HrmSettings_Users_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "ApplicationUser",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Roles",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleCategoryId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Roles_RoleCategories_RoleCategoryId",
-                        column: x => x.RoleCategoryId,
-                        principalTable: "RoleCategories",
-                        principalColumn: "Id");
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -266,11 +254,6 @@ namespace IntegratedInfrustructure.Migrations
                 name: "IX_HrmSettings_CreatedById",
                 table: "HrmSettings",
                 column: "CreatedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Roles_RoleCategoryId",
-                table: "Roles",
-                column: "RoleCategoryId");
         }
 
         /// <inheritdoc />
@@ -307,10 +290,7 @@ namespace IntegratedInfrustructure.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
-                name: "ApplicationUser");
-
-            migrationBuilder.DropTable(
-                name: "RoleCategories");
+                name: "Users");
         }
     }
 }

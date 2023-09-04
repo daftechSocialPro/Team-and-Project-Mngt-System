@@ -109,7 +109,8 @@ const SELECT = {
     opacity: 0.5,
     borderRadius: "5px",
     width: "300px",
-    marginLeft: "10px"
+    marginLeft: "10px",
+    height:'40px'
 }
 
 
@@ -143,8 +144,8 @@ const CreateUser = ({ open, onClose,show }) => {
     const [employeeId,setEmployeeId]= useState('')
     const [userName,setUserName]= useState('')
     const [password,setPassword]= useState('')
-    const [confirmPassword,setConfirmPassword] = useState()
-    const [roles , setRoles] = useState([])
+    const [confirmPassword,setConfirmPassword] = useState('')
+    const [roles , setRoles] = useState('')
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
@@ -164,6 +165,16 @@ const CreateUser = ({ open, onClose,show }) => {
           dispatch(setLoading(false));
           return;
         }
+        if (!roles) {
+            setErrorMessage("Role is not selected");
+            dispatch(setLoading(false));
+            return;
+          }
+          if (!employeeId) {
+            setErrorMessage("Employee is not selected");
+            dispatch(setLoading(false));
+            return;
+          }
     
         const value ={
             employeeId:employeeId,
@@ -213,16 +224,11 @@ const CreateUser = ({ open, onClose,show }) => {
         setEmployees(response.data)
         setUserRoles(response1)
     }
- 
-
-
     if (!open) return null
 
     return (
         <>
-
-            <div style={OVERLAY} ></div>
-
+            <div style={OVERLAY}></div>
             <div style={MODAL_STAYL}>
                 <div style={TOPER}>
                     <div style={COLU}><h1 style={HTITLE}>Add New User </h1>
@@ -242,16 +248,15 @@ const CreateUser = ({ open, onClose,show }) => {
                                          <option key={item.id} value={item.id}>{item.name}</option>
                                             )
                                         }
-
-
                                     </select>
                                 </div>
                                 <div style={INPUTWRAP}>
-                                    <label htmlFor="" style={LABEL}>Role:</label>
-                                    <select style={SELECT} multiple id="role" name="role" value={roles} onChange={(e)=>{setRoles(e.target.value)}} >
-                                    {userRoles &&
+                                    <label htmlFor="" style={LABEL}>User Roles:</label>
+                                    <select style={SELECT} id="role" name="role" value={roles} onChange={(e)=>{setRoles(e.target.value)}} >
+                                    <option >--Select a role---</option>
+                                        {userRoles &&
                                          userRoles.map((item) =>
-                                         <option key={item.id} value={item.id}>{item.name}</option>
+                                         <option key={item.id} value={item.name}>{item.name}</option>
                                             )
                                         }
                                     </select>
@@ -277,16 +282,10 @@ const CreateUser = ({ open, onClose,show }) => {
                         {errorMessage && <p style={ERROR_MESSAGE}>{errorMessage}</p>}
                         <div style={BTUNNES}>
                             <input style={SUBMIT} type="submit" value="Submit" />
-
                         </div>
-
                     </div>
-
-
                 </form>
-
             </div>
-
         </>
 
     )

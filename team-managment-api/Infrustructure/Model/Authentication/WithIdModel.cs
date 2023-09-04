@@ -11,8 +11,13 @@ namespace IntegratedInfrustructure.Model.Authentication
     {
         public Guid Id { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string? CreatedById { get; set; } = null!;
-        public virtual ApplicationUser CreatedBy { get; set; } = null!;
-        public RowStatus Rowstatus { get; set; }
+        //public string? CreatedById { get; set; } 
+        //public virtual ApplicationUser CreatedBy { get; set; } 
+        public string CreatedById { get; set; }
+
+        // Navigation property
+        public ApplicationUser CreatedBy { get; set; }
+    
+    public RowStatus Rowstatus { get; set; }
     }
 }

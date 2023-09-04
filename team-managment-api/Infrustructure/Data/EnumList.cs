@@ -9,11 +9,7 @@ namespace IntegratedInfrustructure.Data
     public class EnumList
     {
 
-        public enum UserType
-        {
-            ADMIN,
-            USER,
-        }
+       
         public enum RowStatus
         {
             ACTIVE,

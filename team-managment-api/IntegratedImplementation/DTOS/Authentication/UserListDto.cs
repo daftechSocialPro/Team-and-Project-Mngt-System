@@ -1,6 +1,8 @@
-﻿using System;
+﻿using IntegratedImplementation.DTOS.HRM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,8 +13,17 @@ namespace Implementation.DTOS.Authentication
         public string Id { get; set; } = null!;
         public Guid EmployeeId { get; set; }
         public string Name { get; set; } = null!;
+        
+        public string ImagePath { get; set; }
+
+        public List<RoleDropDown> Roles { get; set; }
+
+        public string Email { get; set; }
+
         public string UserName { get; set; } = null!;
         public string Status { get; set; } = null!;
+
+    
 
     }
 
@@ -36,7 +47,7 @@ namespace Implementation.DTOS.Authentication
     public class UserRoleDto
     {
         public string UserId { get; set; } = null!;
-        public List<string> RoleName { get; set; } = null!;
+        public string RoleName { get; set; } = null!;
     }
 
 

@@ -10,9 +10,9 @@ namespace Implementation.Interfaces.Authentication
         Task<List<RoleDropDown>> GetRoleCategory();
         Task<List<RoleDropDown>> GetNotAssignedRole(string userId, int categoryId);
         Task<List<RoleDropDown>> GetAssignedRoles(string userId, int categoryId);
-        Task<ResponseMessage> AssingRole(UserRoleDto userRole);
+        Task<ResponseMessage> AssignRole(UserRoleDto userRole);
         Task<ResponseMessage> RevokeRole(UserRoleDto userRole);
-        Task<ResponseMessage> ChangeStatusOfUser(string userId);
+        //Task<ResponseMessage> ChangeStatusOfUser(string userId);
         Task<ResponseMessage> AddUser(AddUSerDto addUSer);
     }
 }

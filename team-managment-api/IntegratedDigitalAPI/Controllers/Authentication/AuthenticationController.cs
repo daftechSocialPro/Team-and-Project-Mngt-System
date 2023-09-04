@@ -16,6 +16,8 @@ namespace ERPSystems.Controllers.Authentication
     {
         IAuthenticationService _authenticationService;
 
+
+
         public AuthenticationController(IAuthenticationService authenticationService)
         {
             _authenticationService = authenticationService;
@@ -92,7 +94,7 @@ namespace ERPSystems.Controllers.Authentication
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _authenticationService.AssingRole(userRole));
+                return Ok(await _authenticationService.AssignRole(userRole));
             }
             else
             {
@@ -116,19 +118,19 @@ namespace ERPSystems.Controllers.Authentication
             }
         }
 
-        [HttpPost]
-        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> ChangeStatusOfUser(string userId)
-        {
-            if (ModelState.IsValid)
-            {
-                return Ok(await _authenticationService.ChangeStatusOfUser(userId));
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
+        //[HttpPost]
+        //[ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        //public async Task<IActionResult> ChangeStatusOfUser(string userId)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        return Ok(await _authenticationService.ChangeStatusOfUser(userId));
+        //    }
+        //    else
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
 
 
     }

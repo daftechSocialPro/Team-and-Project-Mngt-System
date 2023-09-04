@@ -14,16 +14,14 @@ using IntegratedInfrustructure.Model.HRM;
 
 namespace IntegratedInfrustructure.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, IdentityUserClaim<string>,
-    IdentityUserRole<string>,
-    IdentityUserLogin<string>,
-    IdentityRoleClaim<string>,
-    IdentityUserToken<string>>
-    {
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<RoleCategory> RoleCategories { get; set; }
-              
-        
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+        {
+        }
+
 
         #region configuration
 
@@ -42,34 +40,40 @@ namespace IntegratedInfrustructure.Data
 
 
 
-
-
-
-
-        public ApplicationDbContext(DbContextOptions options) : base(options)
-        {
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var cascadeFKs = modelBuilder.Model.GetEntityTypes()
-                .SelectMany(t => t.GetForeignKeys())
-                .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
-
-            foreach (var fk in cascadeFKs)
-                fk.DeleteBehavior = DeleteBehavior.NoAction;
-            modelBuilder.Entity<IdentityUserLogin<string>>()
-                .HasNoKey();
-            modelBuilder.Entity<IdentityUserRole<string>>()
-               .HasNoKey();
-            modelBuilder.Entity<IdentityUserToken<string>>()
-          .HasNoKey();
+         
             modelBuilder.Entity<GeneralCodes>()
                .HasIndex(b => b.GeneralCodeType).IsUnique();
-    
 
 
+            modelBuilder.Entity<IdentityUserLogin<string>>(entity =>
+            {
+                entity.HasKey(l => new { l.LoginProvider, l.ProviderKey });
+            });
+            modelBuilder.Entity<IdentityUserRole<string>>(entity =>
+            {
+                entity.HasKey(r => new { r.UserId, r.RoleId });
+            });
+            modelBuilder.Entity<IdentityUserToken<string>>(entity =>
+            {
+                entity.HasKey(t => new { t.UserId, t.LoginProvider, t.Name });
+            });
+
+            //modelBuilder.Entity<IdentityUserLogin<string>>(entity =>
+            //{
+            //    entity.HasNoKey();
+            //});
+            //modelBuilder.Entity<IdentityUserRole<string>>(entity =>
+            //{
+            //    entity.HasNoKey();
+            //});
+            //modelBuilder.Entity<IdentityUserToken<string>>(entity =>
+            //{
+            //    entity.HasNoKey();
+            //});
 
         }
     }
 }
+

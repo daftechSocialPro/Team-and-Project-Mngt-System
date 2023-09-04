@@ -6,8 +6,10 @@ using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
+using IntegratedInfrustructure.Model.Authentication;
 using IntegratedInfrustructure.Model.HRM;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,11 +27,15 @@ namespace IntegratedImplementation.Services.HRM
 
         private readonly ApplicationDbContext _dbContext;
         private readonly IGeneralConfigService _generalConfig;
+        private UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
-        public EmployeeService(ApplicationDbContext dbContext, IGeneralConfigService generalConfig, IMapper mapper)
+        public EmployeeService(ApplicationDbContext dbContext,
+            UserManager<ApplicationUser> userManager, 
+            IGeneralConfigService generalConfig, IMapper mapper)
         {
             _dbContext = dbContext;
             _generalConfig = generalConfig;
+            _userManager = userManager;
             _mapper = mapper;
         }
 
@@ -53,7 +59,7 @@ namespace IntegratedImplementation.Services.HRM
             {
                 Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
-                CreatedById = addEmployee.CreatedById,
+               CreatedById = addEmployee.CreatedById,
                 EmployeeCode = code,
 
                 Email = addEmployee.Email,
@@ -192,7 +198,7 @@ namespace IntegratedImplementation.Services.HRM
 
         public async Task<List<SelectListDto>> GetEmployeeNoUser()
         {
-            var users = _dbContext.ApplicationUsers.Select(x => x.EmployeeId).ToList();
+            var users = _userManager.Users.Select(x => x.EmployeeId).ToList();
                 
             var employees = await _dbContext.Employees
                 .Where(e => !users.Contains(e.Id))
