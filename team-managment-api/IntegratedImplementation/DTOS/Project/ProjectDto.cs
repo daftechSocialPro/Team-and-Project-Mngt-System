@@ -1,4 +1,5 @@
-﻿using IntegratedInfrustructure.Model.Team;
+﻿using IntegratedImplementation.DTOS.Configuration;
+using IntegratedInfrustructure.Model.Team;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,14 @@ namespace IntegratedImplementation.DTOS.Project
         public string ProjectStatus { get; set; } 
         public string AssignedTo { get; set; }
 
-        public Guid? TeamId { get; set; }
-        
+        public List<SelectListDto> TeamProjects { get; set; }
+        public List<SelectProjectEmployeeListDto>? ProjectEmployees { get; set; }
+
     }
 
     public record ProjectPostDto
     {
+        public Guid? Id { get; set; }
         public string ProjectName { get; set; } = null!;
         public string Description { get; set; } = null!;
         public DateTime AssignedDate { get; set; }
@@ -34,6 +37,7 @@ namespace IntegratedImplementation.DTOS.Project
         public Guid? TeamId { get; set; }
         
         public string CreatedById { get; set; } = null!;
+        public List<Guid>? ProjectEmployees { get; set; }
 
     }
 }

@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230905071613_projectadded")]
+    partial class projectadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -346,9 +349,14 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("TeamId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
+
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Projects");
                 });
@@ -426,7 +434,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("PTeamId")
+                    b.Property<Guid>("PTeamId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ProjectId")
@@ -619,7 +627,7 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired();
 
                     b.HasOne("IntegratedInfrustructure.Model.Project.ProjectList", "Project")
-                        .WithMany("ProjectEmployees")
+                        .WithMany()
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -639,7 +647,13 @@ namespace IntegratedInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("IntegratedInfrustructure.Model.Team.ProjectTeam", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId");
+
                     b.Navigation("CreatedBy");
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Team.ProjectTeam", b =>
@@ -690,7 +704,9 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasOne("IntegratedInfrustructure.Model.Team.ProjectTeam", "PTeam")
                         .WithMany("TeamProjects")
-                        .HasForeignKey("PTeamId");
+                        .HasForeignKey("PTeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("IntegratedInfrustructure.Model.Project.ProjectList", "Project")
                         .WithMany()
@@ -703,11 +719,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("PTeam");
 
                     b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("IntegratedInfrustructure.Model.Project.ProjectList", b =>
-                {
-                    b.Navigation("ProjectEmployees");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Team.ProjectTeam", b =>

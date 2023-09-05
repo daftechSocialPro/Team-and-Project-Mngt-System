@@ -12,12 +12,12 @@ namespace IntegratedInfrustructure.Model.Team
     public class TeamProject : WithIdModel
     {
         public virtual ProjectList Project { get; set; }
-
-        public Guid PTeamId { get; set; }
+        public Guid ProjectId { get; set; }
+        
 
 
         public virtual ProjectTeam PTeam { get; set; }
+        public Guid ? PTeamId { get; set; }
 
-        public Guid ProjectId { get; set; }
     }
 }

@@ -17,14 +17,18 @@ namespace IntegratedInfrustructure.Model.Team
         public ProjectTeam() 
         {
             TeamMembers = new HashSet<TeamEmployee>();
+            TeamProjects = new HashSet<TeamProject>();
 
         }
-        public string TeamName { get; set; } = null!;
+        
 
         [InverseProperty(nameof(TeamEmployee.PTeam))]
         public ICollection<TeamEmployee> TeamMembers { get; set; }
 
+        [InverseProperty(nameof(TeamProject.PTeam))]
+        public ICollection<TeamProject> TeamProjects { get; set; }
 
+        public string TeamName { get; set; } = null!;
 
     }
 }

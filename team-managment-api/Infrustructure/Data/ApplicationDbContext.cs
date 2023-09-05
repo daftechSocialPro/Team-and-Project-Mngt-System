@@ -44,6 +44,7 @@ namespace IntegratedInfrustructure.Data
 
         public DbSet<ProjectTeam> Teams { get; set; }  
         public DbSet<TeamEmployee> TeamEmployees { get; set; }
+        public DbSet<TeamProject> TeamProjects { get; set; }
 
         #endregion
 

@@ -20,6 +20,7 @@ namespace IntegratedImplementation.Interfaces.Team
         Task<ResponseMessage> EditTeam(TeamGetDto editTeam);
         Task<List<SelectListDto>> GetEmployeeNotInTeam(Guid teamid);
         Task<List<SelectMembersListDto>> GetTeamMembersSelectList(Guid teamid);
+        
 
     }
 }

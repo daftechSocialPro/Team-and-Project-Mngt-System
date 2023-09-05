@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
+using IntegratedImplementation.DTOS.Project;
 using IntegratedImplementation.DTOS.Team;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Team;
@@ -124,14 +125,14 @@ namespace IntegratedImplementation.Services.Team
             }
         }
 
-        public async Task<ResponseMessage> RemoveTeamMember(List<Guid> employeeList, Guid teamid)
+        public async Task<ResponseMessage> RemoveTeamMember(List<Guid> employeeList, Guid teamId)
         {
-            var team = await _dbContext.Teams.Where(a => a.Id.Equals(teamid)).FirstOrDefaultAsync();
+            var team = await _dbContext.Teams.Where(a => a.Id.Equals(teamId)).FirstOrDefaultAsync();
             if (team != null)
             {
                 foreach (var emp in employeeList.Distinct())
                 {
-                    var removed = await _dbContext.TeamEmployees.Where(a => a.Id.Equals(emp) && a.PTeamId.Equals(teamid)).FirstOrDefaultAsync();
+                    var removed = await _dbContext.TeamEmployees.Where(a => a.Id.Equals(emp) && a.PTeamId.Equals(teamId)).FirstOrDefaultAsync();
                     if (removed != null)
                     {
                     
@@ -189,9 +190,9 @@ namespace IntegratedImplementation.Services.Team
             }
         }
 
-        public async Task<List<SelectListDto>> GetEmployeeNotInTeam(Guid teamid)
+        public async Task<List<SelectListDto>> GetEmployeeNotInTeam(Guid teamId)
         {
-            var teams = _dbContext.TeamEmployees.Where(x => x.PTeamId == teamid).Select(x => x.EmployeeId).ToList();
+            var teams = _dbContext.TeamEmployees.Where(x => x.PTeamId == teamId).Select(x => x.EmployeeId).ToList();
 
             var employees = await _dbContext.Employees
                 .Where(e => !teams.Contains(e.Id))
@@ -202,14 +203,14 @@ namespace IntegratedImplementation.Services.Team
         }
 
 
-        public async Task<List<SelectMembersListDto>> GetTeamMembersSelectList(Guid teamid)
+        public async Task<List<SelectMembersListDto>> GetTeamMembersSelectList(Guid teamId)
         {
 
-            var teamMembers = await _dbContext.TeamEmployees.Where(u => u.PTeamId.Equals(teamid)).ProjectTo<SelectMembersListDto>(_mapper.ConfigurationProvider).ToListAsync();
+            var teamMembers = await _dbContext.TeamEmployees.Where(u => u.PTeamId.Equals(teamId)).ProjectTo<SelectMembersListDto>(_mapper.ConfigurationProvider).ToListAsync();
 
             return teamMembers;
         }
 
-
+        
     }
 }

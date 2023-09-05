@@ -22,10 +22,11 @@ namespace IntegratedDigitalAPI.Controllers.Team
         }
         [HttpGet]
         [ProducesResponseType(typeof(TeamGetDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetEmployees()
+        public async Task<IActionResult> GetTeams()
         {
             return Ok(await _teamService.GetTeams());
         }
+        
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddTeam([FromForm] TeamPostDto team)
