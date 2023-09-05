@@ -201,5 +201,13 @@ namespace IntegratedImplementation.Services.Project
             }
         }
 
+        public async Task<List<SelectListDto>> GetProjectSelectList()
+        {
+
+            var projects = await _dbContext.Projects.ProjectTo<SelectListDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            return projects;
+        }
+
     }
 }

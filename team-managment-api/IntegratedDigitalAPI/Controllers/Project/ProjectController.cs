@@ -67,5 +67,11 @@ namespace IntegratedDigitalAPI.Controllers.Project
                 return BadRequest();
             }
         }
+        [HttpGet("GetProjectSelectList")]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetProjectSelectList()
+        {
+            return Ok(await _projectService.GetProjectSelectList());
+        }
     }
 }

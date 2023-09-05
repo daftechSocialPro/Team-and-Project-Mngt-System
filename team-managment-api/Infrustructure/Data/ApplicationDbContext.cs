@@ -12,6 +12,7 @@ using IntegratedInfrustructure.Model.Configuration;
 using IntegratedInfrustructure.Model.HRM;
 using IntegratedInfrustructure.Model.Team;
 using IntegratedInfrustructure.Model.Project;
+using IntegratedInfrustructure.Model.Task;
 
 
 namespace IntegratedInfrustructure.Data
@@ -45,6 +46,12 @@ namespace IntegratedInfrustructure.Data
         public DbSet<ProjectTeam> Teams { get; set; }  
         public DbSet<TeamEmployee> TeamEmployees { get; set; }
         public DbSet<TeamProject> TeamProjects { get; set; }
+
+        #endregion
+
+        #region Task
+
+        public DbSet<TaskList> Tasks { get; set; }
 
         #endregion
 

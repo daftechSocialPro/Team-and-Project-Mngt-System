@@ -34,6 +34,14 @@ namespace IntegratedImplementation.Datas
            .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Id))
            .ForMember(a => a.Name, e => e.MapFrom(mfg => $"{mfg.FirstName} {mfg.LastName}"));
 
+            CreateMap<ProjectList, SelectListDto>()
+           .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Id))
+           .ForMember(a => a.Name, e => e.MapFrom(mfg => mfg.ProjectName));
+
+            CreateMap<ProjectTeam, SelectListDto>()
+           .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Id))
+           .ForMember(a => a.Name, e => e.MapFrom(mfg => mfg.TeamName));
+
             CreateMap<ProjectEmployee, SelectProjectEmployeeListDto>()
            .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Employee.Id))
            .ForMember(a => a.Name, e => e.MapFrom(mfg => $"{mfg.Employee.FirstName} {mfg.Employee.LastName}"))

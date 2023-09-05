@@ -139,7 +139,7 @@ namespace IntegratedImplementation.Services.Team
             {
                 foreach (var emp in removeTeam.employeeList.Distinct())
                 {
-                    var removed = await _dbContext.TeamEmployees.Where(a => a.Id.Equals(emp) && a.PTeamId.Equals(removeTeam.teamId)).FirstOrDefaultAsync();
+                    var removed = await _dbContext.TeamEmployees.Where(a => a.EmployeeId.Equals(emp) && a.PTeamId.Equals(removeTeam.teamId)).FirstOrDefaultAsync();
                     if (removed != null)
                     {
                     
@@ -218,6 +218,13 @@ namespace IntegratedImplementation.Services.Team
             return teamMembers;
         }
 
-        
+        public async Task<List<SelectListDto>> GetTeamSelectList()
+        {
+
+            var teams = await _dbContext.Teams.ProjectTo<SelectListDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            return teams;
+        }
+
     }
 }

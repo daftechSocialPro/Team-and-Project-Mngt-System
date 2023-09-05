@@ -105,5 +105,12 @@ namespace IntegratedDigitalAPI.Controllers.Team
             return Ok(await _teamService.GetEmployeeNotInTeam(teamid));
         }
 
+        [HttpGet("GetTeamSelectList")]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetTeamSelectList()
+        {
+            return Ok(await _teamService.GetTeamSelectList());
+        }
+
     }
 }
