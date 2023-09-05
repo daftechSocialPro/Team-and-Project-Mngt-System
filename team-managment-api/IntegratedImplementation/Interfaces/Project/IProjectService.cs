@@ -15,7 +15,7 @@ namespace IntegratedImplementation.Interfaces.Project
     {
         Task<List<ProjectGetDto>> GetProjects();
         Task<ResponseMessage> AddProject(ProjectPostDto addProject);
-        Task<ResponseMessage> AddEmployeeToProject(List<Guid> employeeList, Guid projectid, string createdBy);
+        Task<ResponseMessage> AddEmployeeToProject(AddToProjectDto addToProject);
         Task<ResponseMessage> EditProject(ProjectPostDto editProject);
 
     }

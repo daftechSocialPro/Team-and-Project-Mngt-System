@@ -42,11 +42,24 @@ namespace IntegratedDigitalAPI.Controllers.Team
         }
         [HttpPost("AddTeamMember")]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddTeamMember(List<Guid> employeeList, Guid teamid, string createdBy)
+        public async Task<IActionResult> AddTeamMember( AddTeamDto addTeam)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _teamService.AddTeamMember(employeeList, teamid,  createdBy));
+                return Ok(await _teamService.AddTeamMember(addTeam));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpPost("RemoveTeamMember")]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> RemoveTeamMember(RemoveTeamDto removeTeam)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _teamService.RemoveTeamMember(removeTeam));
             }
             else
             {

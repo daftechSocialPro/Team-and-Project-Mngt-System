@@ -122,5 +122,21 @@ namespace IntegratedInfrustructure.Data
             TEAM,
             EMPLOYEE
         }
+
+        public enum TaskStatuses
+        {
+            NOTSTARTED,
+            INPROGRESS,
+            COMPLETE,
+            OVERDUE,
+            ONHOLD
+        }
+
+        public enum TaskPriority
+        { 
+            LOW,
+            MEDIUM,
+            HIGH 
+        }   
     }
 }

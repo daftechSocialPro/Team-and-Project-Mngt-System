@@ -66,7 +66,14 @@ namespace IntegratedImplementation.Services.Team
 
             await _dbContext.Teams.AddAsync(team);
             await _dbContext.SaveChangesAsync();
-            await AddTeamMember(addTeam.TeamEmployees,team.Id,addTeam.CreatedById);
+            var AddTeamDto = new AddTeamDto
+            {
+                employeeList = addTeam.TeamEmployees,
+                teamId = team.Id,
+                createdBy = addTeam.CreatedById
+
+            };
+            await AddTeamMember(AddTeamDto);
           
 
             return new ResponseMessage
@@ -77,15 +84,15 @@ namespace IntegratedImplementation.Services.Team
             };
         }
 
-        public async Task<ResponseMessage> AddTeamMember(List<Guid> employeeList, Guid teamid, string createdBy)
+        public async Task<ResponseMessage> AddTeamMember(AddTeamDto addTeam)
         {
-            foreach (var emp in employeeList.Distinct())
+            foreach (var emp in addTeam.employeeList.Distinct())
             {
                 TeamEmployee teamMember = new TeamEmployee
                 {
                     EmployeeId = emp,
-                    PTeamId =teamid,
-                    CreatedById = createdBy
+                    PTeamId =addTeam.teamId,
+                    CreatedById = addTeam.createdBy
                 };
                 await _dbContext.TeamEmployees.AddAsync(teamMember);
                 await _dbContext.SaveChangesAsync();
@@ -125,14 +132,14 @@ namespace IntegratedImplementation.Services.Team
             }
         }
 
-        public async Task<ResponseMessage> RemoveTeamMember(List<Guid> employeeList, Guid teamId)
+        public async Task<ResponseMessage> RemoveTeamMember(RemoveTeamDto removeTeam)
         {
-            var team = await _dbContext.Teams.Where(a => a.Id.Equals(teamId)).FirstOrDefaultAsync();
+            var team = await _dbContext.Teams.Where(a => a.Id.Equals(removeTeam.teamId)).FirstOrDefaultAsync();
             if (team != null)
             {
-                foreach (var emp in employeeList.Distinct())
+                foreach (var emp in removeTeam.employeeList.Distinct())
                 {
-                    var removed = await _dbContext.TeamEmployees.Where(a => a.Id.Equals(emp) && a.PTeamId.Equals(teamId)).FirstOrDefaultAsync();
+                    var removed = await _dbContext.TeamEmployees.Where(a => a.Id.Equals(emp) && a.PTeamId.Equals(removeTeam.teamId)).FirstOrDefaultAsync();
                     if (removed != null)
                     {
                     

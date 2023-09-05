@@ -97,7 +97,13 @@ namespace IntegratedImplementation.Services.Project
 
                 await _dbContext.Projects.AddAsync(project);
                 await _dbContext.SaveChangesAsync();
-                await AddEmployeeToProject(addProject.ProjectEmployees, project.Id, addProject.CreatedById);
+                var addToProject = new AddToProjectDto()
+                {
+                    employeeList = addProject.ProjectEmployees,
+                    projectId = project.Id,
+                    createdBy = addProject.CreatedById
+                };
+                await AddEmployeeToProject(addToProject);
             }
             
 
@@ -112,15 +118,15 @@ namespace IntegratedImplementation.Services.Project
 
 
 
-        public async Task<ResponseMessage> AddEmployeeToProject(List<Guid> employeeList, Guid projectId, string createdBy)
+        public async Task<ResponseMessage> AddEmployeeToProject(AddToProjectDto addToProject)
         {
-            foreach (var emp in employeeList.Distinct())
+            foreach (var emp in addToProject.employeeList.Distinct())
             {
                 ProjectEmployee empInProject = new ProjectEmployee
                 {
                     EmployeeId = emp,
-                    ProjectId = projectId,
-                    CreatedById = createdBy
+                    ProjectId = addToProject.projectId,
+                    CreatedById = addToProject.createdBy
                 };
                 await _dbContext.ProjectEmployees.AddAsync(empInProject);
                 await _dbContext.SaveChangesAsync();
@@ -149,7 +155,13 @@ namespace IntegratedImplementation.Services.Project
                 if (editProject.AssignedTo == "EMPLOYEE")
                 {
                     _dbContext.TeamProjects.RemoveRange(_dbContext.TeamProjects.Where(a => a.ProjectId.Equals(project.Id)));
-                    await AddEmployeeToProject(editProject.ProjectEmployees, project.Id, project.CreatedById);
+                    var addToProject = new AddToProjectDto()
+                    {
+                        employeeList = editProject.ProjectEmployees,
+                        projectId = project.Id,
+                        createdBy = editProject.CreatedById
+                    };
+                    await AddEmployeeToProject(addToProject);
                     await _dbContext.SaveChangesAsync();
 
                 }

@@ -43,11 +43,11 @@ namespace IntegratedDigitalAPI.Controllers.Project
         }
         [HttpPost("AddEmployeeToProject")]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddEmployeeToProject(List<Guid> employeeList, Guid projectId, string createdBy)
+        public async Task<IActionResult> AddEmployeeToProject(AddToProjectDto addToProject)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _projectService.AddEmployeeToProject(employeeList, projectId, createdBy));
+                return Ok(await _projectService.AddEmployeeToProject(addToProject));
             }
             else
             {
