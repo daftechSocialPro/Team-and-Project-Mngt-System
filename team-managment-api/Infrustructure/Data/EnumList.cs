@@ -61,7 +61,8 @@ namespace IntegratedInfrustructure.Data
 
         public enum GeneralCodeType
         {
-            EMPLOYEEPREFIX
+            EMPLOYEEPREFIX,
+            TASKPREFIX
         }
 
         public enum ApplicantStatus

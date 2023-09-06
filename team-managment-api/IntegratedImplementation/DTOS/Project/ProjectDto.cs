@@ -1,4 +1,5 @@
 ﻿using IntegratedImplementation.DTOS.Configuration;
+using IntegratedImplementation.DTOS.Task;
 using IntegratedInfrustructure.Model.Team;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace IntegratedImplementation.DTOS.Project
 
         public List<SelectListDto> TeamProjects { get; set; }
         public List<SelectProjectEmployeeListDto>? ProjectEmployees { get; set; }
+        public List<TaskGetDto> TaskLists { get; set; }
 
     }
 
@@ -38,6 +40,6 @@ namespace IntegratedImplementation.DTOS.Project
         
         public string CreatedById { get; set; } = null!;
         public List<Guid>? ProjectEmployees { get; set; }
-
+        public List<Guid>? TaskLists { get; set; }
     }
 }

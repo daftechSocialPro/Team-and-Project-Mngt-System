@@ -1,6 +1,5 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
-using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.DTOS.Team;
 using IntegratedImplementation.Interfaces.Team;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +28,7 @@ namespace IntegratedDigitalAPI.Controllers.Team
         
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddTeam([FromForm] TeamPostDto team)
+        public async Task<IActionResult> AddTeam( TeamPostDto team)
         {
             if (ModelState.IsValid)
             {

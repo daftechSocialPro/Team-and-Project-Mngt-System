@@ -14,6 +14,8 @@ using IntegratedInfrustructure.Model.Team;
 using IntegratedImplementation.DTOS.Team;
 using IntegratedInfrustructure.Model.Project;
 using IntegratedImplementation.DTOS.Project;
+using IntegratedImplementation.DTOS.Task;
+using IntegratedInfrustructure.Model.Task;
 
 namespace IntegratedImplementation.Datas
 {
@@ -56,6 +58,7 @@ namespace IntegratedImplementation.Datas
                 .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Id))
                 .ForMember(a => a.ProjectEmployees, e => e.MapFrom(mfg => mfg.ProjectEmployees))
                 .ForMember(a => a.TeamProjects, e => e.MapFrom(mfg => mfg.TeamProjects))
+                .ForMember(a => a.TaskLists, e => e.MapFrom(mfg => mfg.TaskLists))
                 .ForMember(a => a.ProjectStatus, e => e.MapFrom(mfg => mfg.ProjectStatus.ToString()))
                 .ForMember(a => a.AssignedTo, e => e.MapFrom(mfg => mfg.AssignedTo.ToString()));
                 
@@ -75,6 +78,11 @@ namespace IntegratedImplementation.Datas
             CreateMap<TeamProject, SelectListDto>()
            .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.PTeamId))
            .ForMember(a => a.Name, e => e.MapFrom(mfg => mfg.PTeam.TeamName));
+
+            CreateMap<TaskList, TaskGetDto>()
+
+                .ForMember(a => a.TaskStatuses, e => e.MapFrom(mfg => mfg.TaskStatuses.ToString()))
+                .ForMember(a => a.TaskPriority, e => e.MapFrom(mfg => mfg.TaskPriority.ToString()));
         }
     }
 }

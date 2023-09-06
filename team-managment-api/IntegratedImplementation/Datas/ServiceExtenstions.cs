@@ -14,6 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 using IntegratedImplementation.Interfaces.Project;
 using IntegratedImplementation.Services.Project;
+using IntegratedImplementation.Interfaces.Task;
+using IntegratedImplementation.Services.Task;
 
 namespace IntegratedImplementation.Datas
 {
@@ -28,6 +30,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<ITaskService, TaskService>();
             return services;
         }
     }

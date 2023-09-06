@@ -30,16 +30,12 @@ namespace IntegratedImplementation.Services.Team
     public class TeamService : ITeamService
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly IGeneralConfigService _generalConfig;
-        private UserManager<ApplicationUser> _userManager;
+        
         private readonly IMapper _mapper;
-        public TeamService(ApplicationDbContext dbContext,
-            UserManager<ApplicationUser> userManager,
-            IGeneralConfigService generalConfig, IMapper mapper)
+        public TeamService(ApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
-            _generalConfig = generalConfig;
-            _userManager = userManager;
+            
             _mapper = mapper;
         }
 
@@ -74,7 +70,20 @@ namespace IntegratedImplementation.Services.Team
 
             };
             await AddTeamMember(AddTeamDto);
-          
+
+            foreach (var a in addTeam.TeamProjects.Distinct())
+            {
+                TeamProject teamProject = new TeamProject
+                {
+                    ProjectId = a,
+                    PTeamId = team.Id,
+                    CreatedById = addTeam.CreatedById
+
+                };
+                await _dbContext.TeamProjects.AddAsync(teamProject);
+                await _dbContext.SaveChangesAsync();
+            }
+
 
             return new ResponseMessage
             {
@@ -83,6 +92,8 @@ namespace IntegratedImplementation.Services.Team
                 Success = true
             };
         }
+
+        
 
         public async Task<ResponseMessage> AddTeamMember(AddTeamDto addTeam)
         {

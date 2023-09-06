@@ -32,14 +32,12 @@ namespace IntegratedImplementation.Services.Project
     public class ProjectService : IProjectService
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly IGeneralConfigService _generalConfig;
-        private UserManager<ApplicationUser> _userManager;
+        
         private readonly IMapper _mapper;
-        public ProjectService(ApplicationDbContext dbContext,UserManager<ApplicationUser> userManager,IGeneralConfigService generalConfig, IMapper mapper)
+        public ProjectService(ApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
-            _generalConfig = generalConfig;
-            _userManager = userManager;
+            
             _mapper = mapper;
         }
 
