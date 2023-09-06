@@ -32,4 +32,11 @@ namespace IntegratedImplementation.DTOS.Team
         public List<Guid> ? TeamProjects { get; set; }
 
     }
+
+    public record TeamEditDto
+    {
+        public Guid Id { get; set; }
+
+        public string TeamName { get; set; } = null;
+    }
 }

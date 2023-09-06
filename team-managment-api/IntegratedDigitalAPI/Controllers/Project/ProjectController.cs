@@ -30,7 +30,7 @@ namespace IntegratedDigitalAPI.Controllers.Project
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddProject([FromForm] ProjectPostDto project)
+        public async Task<IActionResult> AddProject(ProjectPostDto project)
         {
             if (ModelState.IsValid)
             {
@@ -56,7 +56,7 @@ namespace IntegratedDigitalAPI.Controllers.Project
         }
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> EditProject([FromForm] ProjectPostDto project)
+        public async Task<IActionResult> EditProject(ProjectPostDto project)
         {
             if (ModelState.IsValid)
             {
@@ -72,6 +72,12 @@ namespace IntegratedDigitalAPI.Controllers.Project
         public async Task<IActionResult> GetProjectSelectList()
         {
             return Ok(await _projectService.GetProjectSelectList());
+        }
+        [HttpGet("GetProjectProgress")]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetProjectProgress(ProjectGetDto projectProgress)
+        {
+            return Ok(await _projectService.GetProjectProgress(projectProgress));
         }
     }
 }

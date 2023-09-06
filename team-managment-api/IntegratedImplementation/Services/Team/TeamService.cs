@@ -178,7 +178,7 @@ namespace IntegratedImplementation.Services.Team
         }
 
 
-        public async Task<ResponseMessage> EditTeam(TeamGetDto editTeam)
+        public async Task<ResponseMessage> EditTeam(TeamEditDto editTeam)
         {
             var team = _dbContext.Teams.Find(editTeam.Id);
 

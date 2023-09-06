@@ -17,7 +17,7 @@ namespace IntegratedImplementation.Interfaces.Team
         Task<ResponseMessage> AddTeamMember(AddTeamDto addTeam);
         Task<ResponseMessage> RemoveTeam(Guid teamid);
         Task<ResponseMessage> RemoveTeamMember(RemoveTeamDto removeTeam);
-        Task<ResponseMessage> EditTeam(TeamGetDto editTeam);
+        Task<ResponseMessage> EditTeam(TeamEditDto editTeam);
         Task<List<SelectListDto>> GetEmployeeNotInTeam(Guid teamid);
         Task<List<SelectMembersListDto>> GetTeamMembersSelectList(Guid teamid);
         Task<List<SelectListDto>> GetTeamSelectList();

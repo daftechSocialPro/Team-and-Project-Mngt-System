@@ -67,7 +67,7 @@ namespace IntegratedDigitalAPI.Controllers.Team
         }
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateTeam([FromForm] TeamGetDto team)
+        public async Task<IActionResult> UpdateTeam( TeamEditDto team)
         {
             if (ModelState.IsValid)
             {

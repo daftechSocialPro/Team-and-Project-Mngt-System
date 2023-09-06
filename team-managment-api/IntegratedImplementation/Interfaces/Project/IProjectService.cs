@@ -18,6 +18,7 @@ namespace IntegratedImplementation.Interfaces.Project
         Task<ResponseMessage> AddEmployeeToProject(AddToProjectDto addToProject);
         Task<ResponseMessage> EditProject(ProjectPostDto editProject);
         Task<List<SelectListDto>> GetProjectSelectList();
+        Task<double> GetProjectProgress(ProjectGetDto projectProgress);
 
     }
 }

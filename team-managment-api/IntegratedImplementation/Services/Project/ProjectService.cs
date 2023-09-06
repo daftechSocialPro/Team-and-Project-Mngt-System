@@ -8,24 +8,12 @@ using IntegratedImplementation.DTOS.Team;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Project;
 using IntegratedInfrustructure.Data;
-using IntegratedInfrustructure.Migrations;
-using IntegratedInfrustructure.Model.Authentication;
-using IntegratedInfrustructure.Model.HRM;
 using IntegratedInfrustructure.Model.Project;
 using IntegratedInfrustructure.Model.Team;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 namespace IntegratedImplementation.Services.Project
 {
@@ -205,6 +193,44 @@ namespace IntegratedImplementation.Services.Project
             var projects = await _dbContext.Projects.ProjectTo<SelectListDto>(_mapper.ConfigurationProvider).ToListAsync();
 
             return projects;
+        }
+
+        public async Task<double> GetProjectProgress(ProjectGetDto projectProgress)
+        {
+            var tasks = await _dbContext.Tasks.Where(u => u.ProjectId.Equals(projectProgress.Id)).ToListAsync();
+            var completedTasks = await _dbContext.Tasks.Where(u => u.ProjectId.Equals(projectProgress.Id) && u.TaskStatuses.Equals(EnumList.TaskStatuses.COMPLETE)).ToListAsync();
+            var taskSum = 0;
+            var completeTaskSum = 0;
+            foreach (var task in tasks.Distinct())
+            {
+                if (task.TaskPriority == EnumList.TaskPriority.HIGH)
+                {
+                    taskSum += 3;
+                }
+                else if (task.TaskPriority == EnumList.TaskPriority.MEDIUM)
+                {
+                    taskSum += 2;
+                }
+                else { taskSum += 1; }
+
+            }
+            foreach (var task in completedTasks.Distinct())
+            {
+                if (task.TaskPriority == EnumList.TaskPriority.HIGH)
+                {
+                    taskSum += 3;
+                }
+                else if (task.TaskPriority == EnumList.TaskPriority.MEDIUM)
+                {
+                    taskSum += 2;
+                }
+                else { taskSum += 1; }
+
+            }
+
+            return (completeTaskSum / taskSum) * 100;
+
+             
         }
 
     }
