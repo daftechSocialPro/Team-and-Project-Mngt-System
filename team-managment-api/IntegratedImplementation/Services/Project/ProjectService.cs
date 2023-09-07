@@ -61,8 +61,7 @@ namespace IntegratedImplementation.Services.Project
                 {
                     ProjectId = project.Id,
                     PTeamId = addProject.TeamId,
-                             CreatedById = addProject.CreatedById
-
+                    CreatedById = addProject.CreatedById
                 };
                 await _dbContext.TeamProjects.AddAsync(teamProject);
                 await _dbContext.SaveChangesAsync();

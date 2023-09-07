@@ -1,12 +1,9 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
-using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.DTOS.Project;
 using IntegratedImplementation.DTOS.Team;
 using IntegratedImplementation.Interfaces.Project;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Net;
 namespace IntegratedDigitalAPI.Controllers.Project
 {
