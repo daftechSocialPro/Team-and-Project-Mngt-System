@@ -171,7 +171,7 @@ namespace IntegratedImplementation.Services.Project
                 return new ResponseMessage
                 {
 
-                    Message = "Updated Successfully",
+                    Message = "Project Updated Successfully",
                     Success = true
                 };
 
@@ -195,10 +195,10 @@ namespace IntegratedImplementation.Services.Project
             return projects;
         }
 
-        public async Task<double> GetProjectProgress(ProjectGetDto projectProgress)
+        public async Task<double> GetProjectProgress(Guid id)
         {
-            var tasks = await _dbContext.Tasks.Where(u => u.ProjectId.Equals(projectProgress.Id)).ToListAsync();
-            var completedTasks = await _dbContext.Tasks.Where(u => u.ProjectId.Equals(projectProgress.Id) && u.TaskStatuses.Equals(EnumList.TaskStatuses.COMPLETE)).ToListAsync();
+            var tasks = await _dbContext.Tasks.Where(u => u.ProjectId.Equals(id)).ToListAsync();
+            var completedTasks = await _dbContext.Tasks.Where(u => u.ProjectId.Equals(id) && u.TaskStatuses.Equals(EnumList.TaskStatuses.COMPLETE)).ToListAsync();
             var taskSum = 0;
             var completeTaskSum = 0;
             foreach (var task in tasks.Distinct())
@@ -218,13 +218,13 @@ namespace IntegratedImplementation.Services.Project
             {
                 if (task.TaskPriority == EnumList.TaskPriority.HIGH)
                 {
-                    taskSum += 3;
+                    completeTaskSum += 3;
                 }
                 else if (task.TaskPriority == EnumList.TaskPriority.MEDIUM)
                 {
-                    taskSum += 2;
+                    completeTaskSum += 2;
                 }
-                else { taskSum += 1; }
+                else { completeTaskSum += 1; }
 
             }
 

@@ -17,12 +17,12 @@ namespace IntegratedImplementation.DTOS.Project
         public string Description { get; set; } = null!;
         public DateTime AssignedDate { get; set; }
         public DateTime DueDate { get; set; }
-        public string ProjectStatus { get; set; } 
-        public string AssignedTo { get; set; }
+        public string? ProjectStatus { get; set; } 
+        public string? AssignedTo { get; set; }
 
-        public List<SelectListDto> TeamProjects { get; set; }
+        public List<SelectListDto>? TeamProjects { get; set; }
         public List<SelectProjectEmployeeListDto>? ProjectEmployees { get; set; }
-        public List<TaskGetDto> TaskLists { get; set; }
+        public List<TaskGetDto>? TaskLists { get; set; }
 
     }
 
@@ -33,8 +33,8 @@ namespace IntegratedImplementation.DTOS.Project
         public string Description { get; set; } = null!;
         public DateTime AssignedDate { get; set; }
         public DateTime DueDate { get; set; }
-        public string ProjectStatus { get; set; }
-        public string AssignedTo { get; set; }
+        public string? ProjectStatus { get; set; }
+        public string? AssignedTo { get; set; }
 
         public Guid? TeamId { get; set; }
         
@@ -42,4 +42,6 @@ namespace IntegratedImplementation.DTOS.Project
         public List<Guid>? ProjectEmployees { get; set; }
         public List<Guid>? TaskLists { get; set; }
     }
+
+    
 }

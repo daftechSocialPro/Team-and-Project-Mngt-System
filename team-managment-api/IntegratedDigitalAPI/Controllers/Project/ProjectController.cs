@@ -75,9 +75,9 @@ namespace IntegratedDigitalAPI.Controllers.Project
         }
         [HttpGet("GetProjectProgress")]
         [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetProjectProgress(ProjectGetDto projectProgress)
+        public async Task<IActionResult> GetProjectProgress(Guid id)
         {
-            return Ok(await _projectService.GetProjectProgress(projectProgress));
+            return Ok(await _projectService.GetProjectProgress(id));
         }
     }
 }
