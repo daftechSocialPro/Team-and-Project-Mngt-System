@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getEmployeeNoUser } from "../api/employeeAPi";
-import {getUserRoles,createUser} from '../api/authApi'
+import { getEmployeeNoUser } from "../../api/employeeAPi";
+import {getUserRoles,createUser} from '../../api/authApi'
 import { useDispatch } from "react-redux";
-import { setLoading } from '../store/loadingReducer'
+import { setLoading } from '../../store/loadingReducer'
 const MODAL_STAYL = {
     position: 'fixed',
     top: "50%",

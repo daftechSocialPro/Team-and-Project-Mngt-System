@@ -1,10 +1,13 @@
-import React, {useState} from 'react'
-import { MultiSelect } from 'primereact/multiselect';
+import React, { useState} from "react";
+import { createImagePath } from "../../api/commonApi";
+import { setLoading } from "../../store/loadingReducer";
+import { useDispatch} from "react-redux";
+import { updateTeam } from "../../api/teamApi";
 const MODAL_STAYL = {
   position: "fixed",
   top: "50%",
   left: "50%",
-  width: "400px",
+  width: "900px",
   transform: "translate(-50%,-50%)",
   backgroundColor: "#fff",
   zIndex: 1000,
@@ -46,7 +49,6 @@ const TOPER = {
 const INPUTWRAP = {
   display: "flex",
   alignItems: "center",
-  flexDirection:"column"
 };
 const HTITLE = {
   color: "#000",
@@ -69,8 +71,21 @@ const LABEL = {
   color: "#000",
   opacity: 0.9,
 };
+
+const INPUT = {
+  width: "80%",
+  height: "35px",
+  backgroundColor: "#C1D0FC",
+  opacity: 0.3,
+  color: "#000",
+  padding: "3px 10px",
+  margin: "8px 0",
+  border: "none",
+  borderRadius: "5px",
+  cursor: "pointer",
+};
 const SUBMIT = {
-  width: "20%",
+  width: "10%",
   backgroundColor: "#C1D0FC",
   color: "#333",
   padding: "10px 6px",
@@ -78,7 +93,7 @@ const SUBMIT = {
   border: "none",
   borderRadius: "4px",
   cursor: "pointer",
-//   marginLeft: "20px",
+  marginLeft: "20px",
   marginTop: "30px",
 };
 const FORMWRAPP = {
@@ -86,35 +101,43 @@ const FORMWRAPP = {
   flexDirection: "column",
   padding: "30px",
 };
+const ONECOLE = {
+  display: "flex",
+  paddingBottom: "10px",
+  flexDirection:"column"
+};
 const BTUNNES = {
   display: "flex",
   justifyContent: "end",
 };
-const AddMember = ({open, onClose,}) => {
-  const [teammembers, setTeammembers] = useState(null);
-  const members = [
-      { name: 'Ekram kumdin'},
-      { name: 'kirubel gizaw'},
-      { name: 'yonas tatek'},
-      { name: 'habteyes asfaw'},
-  ];
-  const AddMembers = (option) => {
-    return (
-        <div className="flex align-items-center " style={{display:"flex", alignItems:"center",justifyContent:"center"}}>
-            <img alt={option.name} src="./img/propic/kira.png"  style={{ width: '30px', marginRight:"20px",borderRadius:"50%" }} />
-            <div>{option.name}</div>
-        </div>
-    );
-};
-const panelFooterTemplate = () => {
-  const length = teammembers ? teammembers.length : 0;
-
-  return (
-      <div className="py-2 px-3">
-          <b>{length}</b> Employee{length > 1 ? 's' : ''} selected.
-      </div>
-  );
-};
+const UpdateTeam = ({open, onClose,team, show}) => {
+  const dispatch = useDispatch();
+  const [TeamName, setTeamName] = useState(team && team.teamName);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(setLoading(true));
+      var teamPut = {
+        id:team.id,
+        TeamName : TeamName,
+      }
+      console.log(teamPut)
+    try {
+      const response = await updateTeam(teamPut);
+      if (response.success) {
+        show("success", "SUCCESS", response.message);
+        dispatch(setLoading(false));
+        onClose(false);
+      } else {
+        show("error", "ERROR", response.message);
+        dispatch(setLoading(false));
+      }
+    } catch (error) {
+      show("error", "ERROR", error);
+      dispatch(setLoading(false));
+    }
+    
+  };
+  
   if (!open) return null;
   return (
     <>
@@ -123,24 +146,29 @@ const panelFooterTemplate = () => {
       <div style={MODAL_STAYL}>
         <div style={TOPER}>
           <div style={COLU}>
-            <h1 style={HTITLE}>Add New Member</h1>
+            <h1 style={HTITLE}>Update Team</h1>
             <div style={LINE}></div>
           </div>
           <button style={CLOSEBUTTON} onClick={() => onClose(false)}>
             <span className="pi pi-times" style={{ fontSize: "25px" }} />
           </button>
         </div>
-        <form action="" >
+        <form action="" onSubmit={handleSubmit} >
           <div style={FORMWRAPP}>
-            <div style={INPUTWRAP}>
-              <label htmlFor="" style={LABEL}>
-                  Select Team Member:
+            <div style={ONECOLE}>
+              <div style={INPUTWRAP}>
+                <label htmlFor="" style={LABEL}>
+                  Team Name:
                 </label>
-                    <div className="card flex justify-content-center">
-            <MultiSelect value={teammembers} options={members} onChange={(e) => setTeammembers(e.value)} optionLabel="name" 
-                placeholder="Select Team Member" itemTemplate={AddMembers} panelFooterTemplate={panelFooterTemplate} className="w-full md:w-20rem" display="chip" />
-        </div>
-                </div>
+                <input
+                  style={INPUT}
+                  value={TeamName}
+                  onChange={(e) => setTeamName(e.target.value)}
+                  type="text"
+                />
+              </div>
+            </div>
+        
         
             <div style={LINEE}></div>
             <div style={BTUNNES}>
@@ -153,4 +181,4 @@ const panelFooterTemplate = () => {
   )
 }
 
-export default AddMember
+export default UpdateTeam
