@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
 import { Link } from 'react-router-dom'
-import Saidbar from '../component/Saidbar'
+import Saidbar from '../../component/Saidbar'
 import CreateUser from './CreateUser'
-import { getUserList } from '../api/authApi'
-import { createImagePath } from "../api/commonApi";
+import { getUserList } from '../../api/authApi'
+import { createImagePath } from "../../api/commonApi";
 import { useDispatch } from 'react-redux'
-import { setLoading } from '../store/loadingReducer'
+import { setLoading } from '../../store/loadingReducer'
 
 function Users({ show }) {
   const [isOpen, setIsOpen] = useState(false);

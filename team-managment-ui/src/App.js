@@ -7,10 +7,10 @@ import Dashboard from "./Pages/Dashboard";
 import EmpDetail from "./Pages/Employee/EmpDetail";
 import Employee from "./Pages/Employee/Employee";
 import Login from "./auth/Login";
-import Project from "./Pages/Project";
-import Team from "./Pages/Team";
-import Users from "./Pages/Users";
-import Profile from "./Pages/Profile";
+import Project from "./Pages/Project/Project";
+import Team from "./Pages/Team/Team";
+import Users from "./Pages/User/Users";
+import Profile from "./Pages/User/Profile";
 import jwt_decode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { Toast } from "primereact/toast";
@@ -48,27 +48,26 @@ function App() {
 
   return (
     <Suspense>
-   
       <Toast ref={toast} />
-      {loading.loading && <Loading />}     
-      
-        <Router>
-          <Routes>
-            {user.user || token ? (
-              <Route path="/">
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/project" element={<Project />} />
-                <Route path="/employee" element={<Employee show={show} />} />
-                <Route path="/team" element={<Team />} />
-                <Route path="/empdetail/:id" element={<EmpDetail />} />
-                <Route path="/users" element={<Users show={show} />} />
-                <Route path="/pro" element={<Profile />} />
-              </Route>
-            ) : (
-              <Route path="*" element={<Login show={show} />} />
-            )}
-          </Routes>
-        </Router>
+      {loading.loading && <Loading />}
+
+      <Router>
+        <Routes>
+          {user.user || token ? (
+            <Route path="/">
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/project" element={<Project show={show} />} />
+              <Route path="/employee" element={<Employee show={show} />} />
+              <Route path="/team" element={<Team show={show} />} />
+              <Route path="/empdetail/:id" element={<EmpDetail />} />
+              <Route path="/users" element={<Users show={show} />} />
+              <Route path="/pro" element={<Profile />} />
+            </Route>
+          ) : (
+            <Route path="*" element={<Login show={show} />} />
+          )}
+        </Routes>
+      </Router>
     </Suspense>
   );
 }

@@ -332,34 +332,41 @@ tr:nth-child(odd){
 
 .teamcont{
     display: flex;
-    justify-content: center;
+    margin-left: 260px;
+    align-items: center;
+    justify-content: space-between;
+    /* justify-content: center; */
     flex-wrap: wrap;
 
 }
 .teamcar{
-    width: 240px;
+    width:300px;
     background-color: #fff;
     margin: 10px;
+    margin-bottom: 20px;
     padding: 10px 10px 40px 10px;
-    display: flex;
+    border-radius: 4px;
     box-shadow: 0 15px 35px -15px rgba(0,0,0,0.5), 0 5px 20px 0 rgba(0,0,0,0.1);
 }
-.teamcarright{
-    display: flex;
-    flex-direction: column;
-}
-.teams{
+
+/* .teams{
     margin-left: 50px;
     margin-bottom: 20px;
-  }
+  } */
 .teamname{
     font-size: 24px;
     font-weight: 500;
+    margin-top: -30px;
+    
 }
 .add-member{
     width: 40px;
     height: 40px;
     margin-left: 10px;
+}
+.add-teamMember{
+    width: 40px;
+    height: 40px; 
 }
 .dashcont{
     display: flex;
@@ -413,6 +420,7 @@ tr:nth-child(odd){
     width: 40px;
     height: 40px;
     z-index: 20;
+    border-radius: 50%;
 }
 .contproimg2{
     width: 40px;
@@ -464,9 +472,14 @@ tr:nth-child(odd){
 }
 .proallpic{
     display: flex;
-    position: relative;
-    margin-left: 50px;
-    margin-top: -30px;
+    position: absolute;
+    padding: 20px;
+
+    /* margin-left: 20px;
+    margin-top: -30px; */
+}
+.cardContent{
+    flex: 1;
 }
 .tableteam{
     margin-left: 40px;
@@ -475,16 +488,36 @@ tr:nth-child(odd){
 }
 
 .continuespan{
-    background-color: #EFF1FA;
-    width: 40px;
-    height: 40px;
     position: absolute;
     z-index: 16;
     left: 120px;
-    border-radius: 50%;
+   
+}
+.teamTitle{
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: start;
+    flex-direction: column;
+}
+.projects{
+    margin: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+}
+.lisp{
+    margin-right: 5px;
+}
+.assignpro{
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    margin-left: 20px;
+}
+.teamimage{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
 }
 .continuespann{
     background-color: #EFF1FA;
@@ -511,6 +544,7 @@ tr:nth-child(odd){
     border-radius: 50%;
     
 }
+
 .profileSidebar{
     display: flex;
     align-items: center;

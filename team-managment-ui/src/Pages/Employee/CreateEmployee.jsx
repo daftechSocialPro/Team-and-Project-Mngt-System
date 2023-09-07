@@ -178,11 +178,8 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
     formState: { errors },
     setValue,
   } = useForm();
-  console.log("user", user);
   const dispatch = useDispatch();
-
   const [selectedImage, setSelectedImage] = useState("");
-
   const [ImagePath, setFile] = useState(null);
   const [FirstName, setFirstName] = useState("");
   const [LastName, setLastName] = useState("");
@@ -198,8 +195,8 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
   const [Instagram, setInstagram] = useState("");
   const [EmploymentPosition, setPosition] = useState("");
   const CreatedById = user.user && user.user.userId;
-
   const handleChange = (file) => {
+    //
     const imageURL = URL.createObjectURL(file);
     setSelectedImage(imageURL);
     setFile(file);
@@ -248,22 +245,6 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
       dispatch(setLoading(false));
     }
   };
-
-  const handleFirstnameChange = (event) => {
-    const value = event.target.value;
-    setFirstName(value);
-    setValue("FirstName", value);
-  };
-  const handleLastnameChange = (event) => {
-    const value = event.target.value;
-    setLastName(value);
-    setValue("lastName", value);
-  };
-  const handleGenderChange = (event) => {
-    const value = event.target.value;
-    setLastName(value);
-    setValue("lastName", value);
-  };
   const handleEmailChange = (event) => {
     const value = event.target.value;
     setEmail(value);
@@ -296,7 +277,6 @@ const CreateEmployee = ({ open, onClose, show, user }) => {
 
               <div style={DRAGDROP}>
                 <FileUploader
-                  // onChange={handleImageChange}
                   handleChange={handleChange}
                   name="file"
                   types={fileTypes}

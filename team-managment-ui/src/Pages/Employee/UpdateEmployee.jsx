@@ -192,9 +192,6 @@ const UpdateEmployee = ({ open, onClose, employee, show }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(setLoading(true));
-
-    // Create a data object with the form field values
-
     const formData = new FormData();
     formData.append("FirstName", FirstName);
     formData.append("LastName", LastName);
