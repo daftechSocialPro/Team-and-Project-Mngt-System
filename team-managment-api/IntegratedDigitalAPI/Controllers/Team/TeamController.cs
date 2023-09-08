@@ -25,7 +25,13 @@ namespace IntegratedDigitalAPI.Controllers.Team
         {
             return Ok(await _teamService.GetTeams());
         }
-        
+        [HttpGet("GetEmployeesTeams")]
+        [ProducesResponseType(typeof(TeamGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeesTeams(Guid employeeId)
+        {
+            return Ok(await _teamService.GetEmployeesTeams(employeeId));
+        }
+
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddTeam( TeamPostDto team)

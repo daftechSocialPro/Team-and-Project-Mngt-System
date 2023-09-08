@@ -2,16 +2,12 @@
 using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
-using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.DTOS.Project;
-using IntegratedImplementation.DTOS.Team;
-using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Project;
+using IntegratedImplementation.Interfaces.Team;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.Project;
 using IntegratedInfrustructure.Model.Team;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using static IntegratedInfrustructure.Data.EnumList;
@@ -20,12 +16,12 @@ namespace IntegratedImplementation.Services.Project
     public class ProjectService : IProjectService
     {
         private readonly ApplicationDbContext _dbContext;
-        
+        private readonly ITeamService _teamService;
         private readonly IMapper _mapper;
-        public ProjectService(ApplicationDbContext dbContext, IMapper mapper)
+        public ProjectService(ApplicationDbContext dbContext, IMapper mapper, ITeamService teamService)
         {
             _dbContext = dbContext;
-            
+            _teamService= teamService;
             _mapper = mapper;
         }
 
@@ -36,69 +32,95 @@ namespace IntegratedImplementation.Services.Project
                                     .ToListAsync();
             return projectList;
         }
-
+        public async Task<List<ProjectGetDto>> GetEmpolyeesProjects(Guid employeeId)
+        {
+            var projectList = await _dbContext.ProjectEmployees.Where(x => x.EmployeeId.Equals(employeeId)).Select(u => u.Project).AsNoTracking()
+                                    .ProjectTo<ProjectGetDto>(_mapper.ConfigurationProvider)
+                                    .ToListAsync();
+            var employeesTeams = await _teamService.GetEmployeesTeams(employeeId);
+            foreach(var employeeTeam in employeesTeams) 
+            { 
+                var teamProjectList = await _dbContext.TeamProjects.Where(u => u.PTeamId.Equals(employeeTeam.Id)).Select(x => x.Project).AsNoTracking()
+                                        .ProjectTo<ProjectGetDto>(_mapper.ConfigurationProvider).ToListAsync();
+                projectList.AddRange(teamProjectList);
+            }
+            
+            return projectList;
+        }
         public async Task<ResponseMessage> AddProject(ProjectPostDto addProject)
         {
-            
-            if (addProject.TeamId != null)
+            if (addProject.DueDate < DateTime.Now)
             {
-                ProjectList project = new ProjectList
+                return new ResponseMessage
                 {
-                    ProjectName = addProject.ProjectName,
-                    Description = addProject.Description,
-                    DueDate = addProject.DueDate,
-                    ProjectStatus = Enum.Parse<ProjectStatus>(addProject.ProjectStatus),
-                    AssignedTo = Enum.Parse<AssignedTo>(addProject.AssignedTo),
-                    
-                    Id = Guid.NewGuid(),
-                    AssignedDate = DateTime.Now,
-                    CreatedById = addProject.CreatedById,
-                };
 
-                await _dbContext.Projects.AddAsync(project);
-                await _dbContext.SaveChangesAsync();
-                TeamProject teamProject = new TeamProject
-                {
-                    ProjectId = project.Id,
-                    PTeamId = addProject.TeamId,
-                    CreatedById = addProject.CreatedById
+                    Message = "Project Due Date Should Be Later Than Assigned Date.",
+                    Success = false
                 };
-                await _dbContext.TeamProjects.AddAsync(teamProject);
-                await _dbContext.SaveChangesAsync();
             }
             else
             {
-                ProjectList project = new ProjectList
-                {
-                    ProjectName = addProject.ProjectName,
-                    Description = addProject.Description,
-                    DueDate = addProject.DueDate,
-                    ProjectStatus = Enum.Parse<ProjectStatus>(addProject.ProjectStatus),
-                    AssignedTo = Enum.Parse<AssignedTo>(addProject.AssignedTo),
-                    Id = Guid.NewGuid(),
-                    AssignedDate = DateTime.Now,
-                    CreatedById = addProject.CreatedById,
-                };
 
-                await _dbContext.Projects.AddAsync(project);
-                await _dbContext.SaveChangesAsync();
-                var addToProject = new AddToProjectDto()
+                if (addProject.TeamId != null)
                 {
-                    employeeList = addProject.ProjectEmployees,
-                    projectId = project.Id,
-                    createdBy = addProject.CreatedById
+                    ProjectList project = new ProjectList
+                    {
+                        ProjectName = addProject.ProjectName,
+                        Description = addProject.Description,
+                        DueDate = addProject.DueDate,
+                        ProjectStatus = Enum.Parse<ProjectStatus>(addProject.ProjectStatus),
+                        AssignedTo = Enum.Parse<AssignedTo>(addProject.AssignedTo),
+                        GitHubLink = addProject.GitHubLink,
+                        Id = Guid.NewGuid(),
+                        AssignedDate = DateTime.Now,
+                        CreatedById = addProject.CreatedById,
+                    };
+
+                    await _dbContext.Projects.AddAsync(project);
+                    await _dbContext.SaveChangesAsync();
+                    TeamProject teamProject = new TeamProject
+                    {
+                        ProjectId = project.Id,
+                        PTeamId = addProject.TeamId,
+                        CreatedById = addProject.CreatedById
+                    };
+                    await _dbContext.TeamProjects.AddAsync(teamProject);
+                    await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    ProjectList project = new ProjectList
+                    {
+                        ProjectName = addProject.ProjectName,
+                        Description = addProject.Description,
+                        DueDate = addProject.DueDate,
+                        ProjectStatus = Enum.Parse<ProjectStatus>(addProject.ProjectStatus),
+                        AssignedTo = Enum.Parse<AssignedTo>(addProject.AssignedTo),
+                        Id = Guid.NewGuid(),
+                        AssignedDate = DateTime.Now,
+                        CreatedById = addProject.CreatedById,
+                    };
+
+                    await _dbContext.Projects.AddAsync(project);
+                    await _dbContext.SaveChangesAsync();
+                    var addToProject = new AddToProjectDto()
+                    {
+                        employeeList = addProject.ProjectEmployees,
+                        projectId = project.Id,
+                        createdBy = addProject.CreatedById
+                    };
+                    await AddEmployeeToProject(addToProject);
+                }
+
+
+
+                return new ResponseMessage
+                {
+
+                    Message = "Project Added Successfully",
+                    Success = true
                 };
-                await AddEmployeeToProject(addToProject);
             }
-            
-
-
-            return new ResponseMessage
-            {
-
-                Message = "Project Added Successfully",
-                Success = true
-            };
         }
 
 
@@ -136,6 +158,7 @@ namespace IntegratedImplementation.Services.Project
                 project.DueDate = editProject.DueDate;
                 project.ProjectStatus = Enum.Parse<ProjectStatus>(editProject.ProjectStatus);
                 project.AssignedTo = Enum.Parse<AssignedTo>(editProject.AssignedTo);
+                project.GitHubLink= editProject.GitHubLink;
                 await _dbContext.SaveChangesAsync();
                 if (editProject.AssignedTo == "EMPLOYEE")
                 {

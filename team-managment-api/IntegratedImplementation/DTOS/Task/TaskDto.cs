@@ -17,6 +17,7 @@ namespace IntegratedImplementation.DTOS.Task
         public string TaskPriority { get; set; }
         public Guid EmployeeId { get; set; }
         public Guid ProjectId { get; set; }
+        public string TaskDescription { get; set; }
 
 
     }
@@ -30,6 +31,7 @@ namespace IntegratedImplementation.DTOS.Task
         public string TaskPriority { get; set; }
         public Guid EmployeeId { get; set; }
         public Guid ProjectId { get; set; }
+        public string TaskDescription { get; set; }
         public string CreatedById { get; set; } = null!;
 
     }

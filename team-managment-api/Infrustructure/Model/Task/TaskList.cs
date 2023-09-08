@@ -13,6 +13,7 @@ namespace IntegratedInfrustructure.Model.Task
     public class TaskList : WithIdModel
     {
         public string TaskName { get; set; }
+        public string TaskDescription { get; set; }
         public DateTime EndDate { get; set; }
         public TaskStatuses TaskStatuses { get; set; }
         public TaskPriority TaskPriority { get; set; }

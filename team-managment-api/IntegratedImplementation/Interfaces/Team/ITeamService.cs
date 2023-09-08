@@ -21,6 +21,7 @@ namespace IntegratedImplementation.Interfaces.Team
         Task<List<SelectListDto>> GetEmployeeNotInTeam(Guid teamid);
         Task<List<SelectMembersListDto>> GetTeamMembersSelectList(Guid teamid);
         Task<List<SelectListDto>> GetTeamSelectList();
+        Task<List<TeamGetDto>> GetEmployeesTeams(Guid employeeId);
 
 
     }

@@ -56,6 +56,8 @@ namespace IntegratedImplementation.Datas
                 .ForMember(a => a.TeamEmployees, e => e.MapFrom(mfg => mfg.TeamMembers))
                 .ForMember(a => a.TeamProjects, e => e.MapFrom(mfg => mfg.TeamProjects));
 
+            
+
             CreateMap<ProjectList, ProjectGetDto>()
                 .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Id))
                 .ForMember(a => a.ProjectEmployees, e => e.MapFrom(mfg => mfg.ProjectEmployees))

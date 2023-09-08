@@ -2,28 +2,12 @@
 using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
-using IntegratedImplementation.DTOS.HRM;
-using IntegratedImplementation.DTOS.Project;
 using IntegratedImplementation.DTOS.Team;
-using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Team;
 using IntegratedInfrustructure.Data;
-using IntegratedInfrustructure.Model.Authentication;
-using IntegratedInfrustructure.Model.HRM;
 using IntegratedInfrustructure.Model.Team;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.Team
 {
@@ -46,12 +30,16 @@ namespace IntegratedImplementation.Services.Team
                                     .ToListAsync();
             return teamList;
         }
+        public async Task<List<TeamGetDto>> GetEmployeesTeams(Guid employeeId)
+        {
+            var teams = await _dbContext.TeamEmployees.Where(x => x.EmployeeId == employeeId).Select(x => x.PTeam).AsNoTracking()
+                .ProjectTo<TeamGetDto>(_mapper.ConfigurationProvider).ToListAsync();
 
+            return teams;
+        }
         public async Task<ResponseMessage> AddTeam(TeamPostDto addTeam)
         {
-            var id = Guid.NewGuid();
-           
-
+                      
             ProjectTeam team = new ProjectTeam
             {
                 TeamName =addTeam.TeamName,
