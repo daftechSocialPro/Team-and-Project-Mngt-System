@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace IntegratedImplementation.DTOS.Configuration
 {
-    public class SelectListDto
+    public class SelectMembersListDto
     {
 
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
-
-        public string ? ImagePath{ get; set; }
+        public Guid TeamId { get; set; }
+        public string? ImagePath { get; set; }
     }
 }
+

@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230906110227_tasks1")]
+    partial class tasks1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -336,10 +339,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("GitHubLink")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ProjectName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -381,10 +380,6 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
-
-                    b.Property<string>("TaskDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaskName")
                         .IsRequired()

@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\Configuration\" />
+    <Folder Include="wwwroot\swagger-ui\" />
   </ItemGroup>
 
 </Project>

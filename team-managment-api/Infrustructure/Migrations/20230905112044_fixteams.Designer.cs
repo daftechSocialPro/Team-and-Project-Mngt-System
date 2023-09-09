@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230905112044_fixteams")]
+    partial class fixteams
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -336,10 +339,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("GitHubLink")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ProjectName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -355,56 +354,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("CreatedById");
 
                     b.ToTable("Projects");
-                });
-
-            modelBuilder.Entity("IntegratedInfrustructure.Model.Task.TaskList", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TaskDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TaskName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TaskPriority")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TaskStatuses")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Team.ProjectTeam", b =>
@@ -696,31 +645,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.Task.TaskList", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("IntegratedInfrustructure.Model.Project.ProjectList", "Project")
-                        .WithMany("TaskLists")
-                        .HasForeignKey("ProjectId");
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Project");
-                });
-
             modelBuilder.Entity("IntegratedInfrustructure.Model.Team.ProjectTeam", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
@@ -772,7 +696,7 @@ namespace IntegratedInfrustructure.Migrations
                         .HasForeignKey("PTeamId");
 
                     b.HasOne("IntegratedInfrustructure.Model.Project.ProjectList", "Project")
-                        .WithMany("TeamProjects")
+                        .WithMany()
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -787,10 +711,6 @@ namespace IntegratedInfrustructure.Migrations
             modelBuilder.Entity("IntegratedInfrustructure.Model.Project.ProjectList", b =>
                 {
                     b.Navigation("ProjectEmployees");
-
-                    b.Navigation("TaskLists");
-
-                    b.Navigation("TeamProjects");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Team.ProjectTeam", b =>

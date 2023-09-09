@@ -10,6 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using IntegratedInfrustructure.Model.Configuration;
 using IntegratedInfrustructure.Model.HRM;
+using IntegratedInfrustructure.Model.Team;
+using IntegratedInfrustructure.Model.Project;
+using IntegratedInfrustructure.Model.Task;
 
 
 namespace IntegratedInfrustructure.Data
@@ -35,6 +38,27 @@ namespace IntegratedInfrustructure.Data
 
         public DbSet<EmployeeList> Employees { get; set; }
         public DbSet<HrmSetting> HrmSettings { get; set; }
+
+        #endregion
+
+        #region Team
+
+        public DbSet<ProjectTeam> Teams { get; set; }  
+        public DbSet<TeamEmployee> TeamEmployees { get; set; }
+        public DbSet<TeamProject> TeamProjects { get; set; }
+
+        #endregion
+
+        #region Task
+
+        public DbSet<TaskList> Tasks { get; set; }
+
+        #endregion
+
+        #region Project
+
+        public DbSet<ProjectList> Projects { get; set; }
+        public DbSet<ProjectEmployee> ProjectEmployees { get; set; }
 
         #endregion
 

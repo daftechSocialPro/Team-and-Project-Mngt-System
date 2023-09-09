@@ -22,6 +22,7 @@ namespace Implementation.DTOS.Authentication
 
         public string UserName { get; set; } = null!;
         public string Status { get; set; } = null!;
+        
 
     
 
