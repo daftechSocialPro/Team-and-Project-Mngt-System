@@ -11,5 +11,7 @@ namespace IntegratedImplementation.DTOS.Configuration
 
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
+
+        public string ? ImagePath{ get; set; }
     }
 }

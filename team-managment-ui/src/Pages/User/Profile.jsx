@@ -1,6 +1,9 @@
-import React from 'react'
-import Saidbar from '../component/Saidbar'
+import React,{useState} from 'react'
+import Saidbar from '../../component/Saidbar'
+import { Button } from 'primereact/button';
+import EditProOne from './EditProOne';
 const Profile = () => {
+  const [isProOpen, setIsProOpen] =useState(false);
   return (
     <>
     <Saidbar/>
@@ -27,10 +30,12 @@ const Profile = () => {
            
             </div>
             <div className="profileedit passeditt">
-                  <button className='editbutton'> Edit</button>
-                  <img className='editeimage' src="./img/edit.png" alt="" />
+            <Button icon="pi pi-pencil" rounded text raised severity="warning" aria-label="edit" style={{position:"absolute", marginLeft:"340px"}} className=""  onClick={() => {
+              setIsProOpen(true);
+              // handleUpdate(item);
+            }} />
             </div>
-      
+      <EditProOne  open={isProOpen} onClose={()=>setIsProOpen(false)}></EditProOne>
         </div>
         <div className="profiles">
             <div className="profileright">
