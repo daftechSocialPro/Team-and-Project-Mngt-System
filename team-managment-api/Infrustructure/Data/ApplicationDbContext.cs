@@ -22,7 +22,6 @@ namespace IntegratedInfrustructure.Data
         {
         }
 
-
         #region configuration
 
         public DbSet<CompanyProfile> CompanyProfiles { get; set; }
@@ -37,7 +36,6 @@ namespace IntegratedInfrustructure.Data
         public DbSet<HrmSetting> HrmSettings { get; set; }
 
         #endregion
-
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
