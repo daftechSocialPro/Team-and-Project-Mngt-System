@@ -1,0 +1,65 @@
+<div class="card">
+
+    <form [formGroup]="ProjectForm" (submit)="onSubmit()">
+        <div class="p-fluid p-formgrid grid">
+            <div class="field col-12">
+            
+        </div>
+            <div class="field col-12 md:col-4">
+                <label htmlFor="firstname2">Project Name</label>
+                <input pInputText id="firstname2" formControlName="ProjectName" type="text" />
+            </div>
+            <div class="field col-12 md:col-4">
+                <textarea rows="3" cols="15" placeholder="Project Description" formControlName="Description" pInputTextarea></textarea>
+            </div>
+            
+            <div class="field col-12 md:col-4">
+                <label htmlFor="firstname2">Assigned Date</label>
+                <input pInputText id="firstname2" formControlName="AssignedDate" type="date" />
+            </div>
+            <div class="field col-12 md:col-4">
+                <label htmlFor="firstname2">Due Date</label>
+                <input pInputText id="firstname2" formControlName="DueDate" type="date" />
+            </div>
+            
+
+            <div class="field col-12 md:col-4">
+                <label htmlFor="state">Project Status</label>
+                <p-dropdown [options]="projectStatusDropdownItems" optionLabel="name"
+                    formControlName="ProjectStatus"></p-dropdown>
+            </div>
+
+
+
+
+            <div class="field col-12 md:col-4">
+                <label htmlFor="lastname2">GitHub Link</label>
+                <input pInputText id="lastname2" type="text" formControlName="GitHubLink" />
+            </div>
+            <div class="field col-12 md:col-4">
+                <label htmlFor="lastname2">Assigned To</label>
+                <p-dropdown [options]="assignedToDropdownItems" optionLabel="name"
+                    formControlName="AssignedTo"></p-dropdown>
+            </div>
+            <div class="field col-12 md:col-6">
+                <label htmlFor="firstname2">Employees</label>
+                <p-multiSelect #SelectedItem (onChange)="SelectItems($event)" [options]="employeesSelectList" placeholder="Select Employee(s)" optionLabel="name" class="multiselect-custom" display="chip">
+                    <ng-template let-employee pTemplate="item">
+                        <div class="flex align-items-center">
+                            <img src="assets/demo/images/flag/flag_placeholder.png" [class]="'flag flag-'" style="width:21px"/>
+                            <span class="ml-2">{{employee.label}}</span>
+                        </div>
+                    </ng-template>
+                </p-multiSelect>
+
+
+                <!-- <p-dropdown #SelectedItem (onChange)="SelectItems(SelectedItem.value)" [options]="employeesSelectList" formControlName="ProjectEmployees" placeholder="Select a Employee"
+                    [showClear]="true"></p-dropdown> -->
+
+            </div>
+            
+            <hr />
+            <button pButton type="submit" [disabled]="!ProjectForm.valid" label="Submit"></button>
+        </div>
+    </form>
+</div>

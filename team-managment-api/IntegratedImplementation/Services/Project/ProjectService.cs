@@ -49,7 +49,7 @@ namespace IntegratedImplementation.Services.Project
         }
         public async Task<ResponseMessage> AddProject(ProjectPostDto addProject)
         {
-            if (addProject.DueDate < DateTime.Now)
+            if (addProject.DueDate < addProject.AssignedDate)
             {
                 return new ResponseMessage
                 {
@@ -72,7 +72,7 @@ namespace IntegratedImplementation.Services.Project
                         AssignedTo = Enum.Parse<AssignedTo>(addProject.AssignedTo),
                         GitHubLink = addProject.GitHubLink,
                         Id = Guid.NewGuid(),
-                        AssignedDate = DateTime.Now,
+                        AssignedDate = addProject.AssignedDate,
                         CreatedById = addProject.CreatedById,
                     };
 
@@ -98,6 +98,7 @@ namespace IntegratedImplementation.Services.Project
                         AssignedTo = Enum.Parse<AssignedTo>(addProject.AssignedTo),
                         Id = Guid.NewGuid(),
                         AssignedDate = DateTime.Now,
+                        GitHubLink = addProject.GitHubLink,
                         CreatedById = addProject.CreatedById,
                     };
 

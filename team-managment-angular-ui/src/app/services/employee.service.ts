@@ -21,4 +21,7 @@ export class EmployeeService {
   getEmployeeNouser(){
     return this.http.get<any>(this.BaseURI+"/api/Employee/getEmployeeNoUser")
   }
+  getEmployeesSelectList(){
+    return this.http.get<any>(this.BaseURI+"/api/Employee/getEmployeesSelectList")
+  }
 }
