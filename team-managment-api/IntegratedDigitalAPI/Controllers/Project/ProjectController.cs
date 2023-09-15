@@ -24,6 +24,14 @@ namespace IntegratedDigitalAPI.Controllers.Project
         {
             return Ok(await _projectService.GetProjects());
         }
+
+        [HttpGet("GetProject")]
+        [ProducesResponseType(typeof(TeamGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetProject(Guid projectId)
+        {
+            return Ok(await _projectService.GetProject(projectId));
+        }
+
         [HttpGet("GetEmpolyeesProjects")]
         [ProducesResponseType(typeof(TeamGetDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetEmpolyeesProjects(Guid employeeId)

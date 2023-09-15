@@ -19,7 +19,7 @@ namespace IntegratedImplementation.DTOS.Project
         public DateTime DueDate { get; set; }
         public string? ProjectStatus { get; set; } 
         public string? AssignedTo { get; set; }
-        public string GitHubLink { get; set; }
+        public string? GitHubLink { get; set; }
 
         public List<SelectListDto>? TeamProjects { get; set; }
         public List<SelectProjectEmployeeListDto>? ProjectEmployees { get; set; }
@@ -36,7 +36,7 @@ namespace IntegratedImplementation.DTOS.Project
         public DateTime DueDate { get; set; }
         public string? ProjectStatus { get; set; }
         public string? AssignedTo { get; set; }
-        public string GitHubLink { get; set; }
+        public string? GitHubLink { get; set; }
         public Guid? TeamId { get; set; }
         
         public string CreatedById { get; set; } = null!;

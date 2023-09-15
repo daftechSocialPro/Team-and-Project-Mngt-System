@@ -40,10 +40,14 @@ import { TeamComponent } from './pages/team/team.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { AddTeamComponent } from './pages/team/add-team/add-team.component';
 import { UpdateTeamComponent } from './pages/team/update-team/update-team.component';
+import { ProjectComponent } from './pages/project/project.component';
+import { DataViewModule } from 'primeng/dataview';
+import { AddProjectComponent } from './pages/project/add-project/add-project.component';
+import { EditProjectComponent } from './pages/project/edit-project/edit-project.component';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent
+        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent
     ],
     imports: [
         AppRoutingModule,
@@ -68,7 +72,10 @@ import { UpdateTeamComponent } from './pages/team/update-team/update-team.compon
         ListboxModule,
         FormsModule,
         MultiSelectModule,
-        DynamicDialogModule
+        DynamicDialogModule,
+        DataViewModule,
+        NgbModule
+        
         
         
     ],

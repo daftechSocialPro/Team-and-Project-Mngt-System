@@ -14,6 +14,7 @@ namespace IntegratedImplementation.Interfaces.Project
     public interface IProjectService
     {
         Task<List<ProjectGetDto>> GetProjects();
+        Task<ProjectGetDto> GetProject(Guid projectId);
         Task<ResponseMessage> AddProject(ProjectPostDto addProject);
         Task<ResponseMessage> AddEmployeeToProject(AddToProjectDto addToProject);
         Task<ResponseMessage> EditProject(ProjectPostDto editProject);

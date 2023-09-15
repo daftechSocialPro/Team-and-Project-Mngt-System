@@ -6,6 +6,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { EmployeeComponent } from './pages/employee/employee.component';
 import { UsersComponent } from './pages/users/users.component';
 import { TeamComponent } from './pages/team/team.component';
+import { ProjectComponent } from './pages/project/project.component';
 
 @NgModule({
     imports: [
@@ -22,7 +23,7 @@ import { TeamComponent } from './pages/team/team.component';
                     { path: 'employees',component:EmployeeComponent },
                     { path: 'users',component:UsersComponent },
                     { path: 'teams',component:TeamComponent },
-
+                    { path: 'projects',component:ProjectComponent }
                 ]
             },
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
