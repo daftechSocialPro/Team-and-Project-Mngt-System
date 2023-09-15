@@ -35,10 +35,17 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { AddUserComponent } from './pages/users/add-user/add-user.component';
 import { ListboxModule } from 'primeng/listbox';
+import { ProjectComponent } from './pages/project/project.component';
+import { DataViewModule } from 'primeng/dataview';
+import { AddProjectComponent } from './pages/project/add-project/add-project.component';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { EditProjectComponent } from './pages/project/edit-project/edit-project.component';
+
+
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent
+        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent
     ],
     imports: [
         AppRoutingModule,
@@ -60,7 +67,11 @@ import { ListboxModule } from 'primeng/listbox';
         InputTextareaModule,
         DropdownModule,
         FileUploadModule,
-        ListboxModule
+        ListboxModule,
+        DataViewModule,
+        MultiSelectModule,
+        NgbModule
+        
         
         
     ],

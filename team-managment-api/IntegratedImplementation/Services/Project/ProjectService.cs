@@ -32,6 +32,13 @@ namespace IntegratedImplementation.Services.Project
                                     .ToListAsync();
             return projectList;
         }
+        public async Task<ProjectGetDto> GetProject(Guid projectId)
+        {
+            var project = await _dbContext.Projects.Where(x=>x.Id.Equals(projectId)).AsNoTracking()
+                                    .ProjectTo<ProjectGetDto>(_mapper.ConfigurationProvider)
+                                    .FirstAsync();
+            return project;
+        }
         public async Task<List<ProjectGetDto>> GetEmpolyeesProjects(Guid employeeId)
         {
             var projectList = await _dbContext.ProjectEmployees.Where(x => x.EmployeeId.Equals(employeeId)).Select(u => u.Project).AsNoTracking()
@@ -49,7 +56,7 @@ namespace IntegratedImplementation.Services.Project
         }
         public async Task<ResponseMessage> AddProject(ProjectPostDto addProject)
         {
-            if (addProject.DueDate < DateTime.Now)
+            if (addProject.DueDate < addProject.AssignedDate)
             {
                 return new ResponseMessage
                 {
@@ -72,7 +79,7 @@ namespace IntegratedImplementation.Services.Project
                         AssignedTo = Enum.Parse<AssignedTo>(addProject.AssignedTo),
                         GitHubLink = addProject.GitHubLink,
                         Id = Guid.NewGuid(),
-                        AssignedDate = DateTime.Now,
+                        AssignedDate = addProject.AssignedDate,
                         CreatedById = addProject.CreatedById,
                     };
 
@@ -98,6 +105,7 @@ namespace IntegratedImplementation.Services.Project
                         AssignedTo = Enum.Parse<AssignedTo>(addProject.AssignedTo),
                         Id = Guid.NewGuid(),
                         AssignedDate = DateTime.Now,
+                        GitHubLink = addProject.GitHubLink,
                         CreatedById = addProject.CreatedById,
                     };
 
@@ -162,6 +170,7 @@ namespace IntegratedImplementation.Services.Project
                 await _dbContext.SaveChangesAsync();
                 if (editProject.AssignedTo == "EMPLOYEE")
                 {
+                    _dbContext.ProjectEmployees.RemoveRange(_dbContext.ProjectEmployees.Where(a => a.ProjectId.Equals(project.Id)));
                     _dbContext.TeamProjects.RemoveRange(_dbContext.TeamProjects.Where(a => a.ProjectId.Equals(project.Id)));
                     var addToProject = new AddToProjectDto()
                     {
@@ -183,7 +192,7 @@ namespace IntegratedImplementation.Services.Project
 
                     };
                     await _dbContext.TeamProjects.AddAsync(teamProject);
-
+                    _dbContext.TeamProjects.RemoveRange(_dbContext.TeamProjects.Where(a => a.ProjectId.Equals(project.Id)));
                     _dbContext.ProjectEmployees.RemoveRange(_dbContext.ProjectEmployees.Where(a => a.ProjectId.Equals(project.Id)));
                     await _dbContext.SaveChangesAsync();
 
