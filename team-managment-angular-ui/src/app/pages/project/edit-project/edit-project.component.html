@@ -60,9 +60,13 @@
                 </p-multiSelect>
 
 
-                <!-- <p-dropdown #SelectedItem (onChange)="SelectItems(SelectedItem.value)" [options]="employeesSelectList" formControlName="ProjectEmployees" placeholder="Select a Employee"
-                    [showClear]="true"></p-dropdown> -->
+               
 
+            </div>
+            <div class="field col-12 md:col-4">
+                <label htmlFor="lastname2">Team</label>
+			    <p-dropdown [options]="teamsSelectList" placeholder="Select Team" 
+                    formControlName="TeamId"></p-dropdown>
             </div>
             
             <hr />

@@ -26,5 +26,8 @@ export class TeamService {
   getProjectOnTeam() {
     return this.http.get<any>(this.BaseURI +'/api/Project/GetProjectSelectList');
   }
+  getTeamSelectList(){
+    return this.http.get<any>(this.BaseURI +'/api/Team/GetTeamSelectList')
+  }
  
 }

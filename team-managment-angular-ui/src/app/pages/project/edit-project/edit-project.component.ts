@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SelectItem, MessageService } from 'primeng/api';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { ProjectService, ProjectView } from 'src/app/services/project.service';
+import { TeamService } from 'src/app/services/team.service';
 import { UserView, UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -19,6 +20,7 @@ export class EditProjectComponent implements OnInit {
   project : ProjectView
   employeesSelectList: SelectItem[] = []
   employeesSelectedList: SelectItem[] = []
+  teamsSelectList: SelectItem[] = []
   
 
   assignedToDropdownItems = [
@@ -43,7 +45,8 @@ export class EditProjectComponent implements OnInit {
     private messageService: MessageService,
     private projectService: ProjectService,
     private employeeService: EmployeeService,
-    private activeModal: NgbActiveModal 
+    private activeModal: NgbActiveModal,
+    private teamService: TeamService 
       
     ) { }
 
@@ -54,6 +57,7 @@ export class EditProjectComponent implements OnInit {
     
     this.getEmployeesSelectList()
     console.log(this.projectId)
+    this.getTeamSelectList()
     this.ProjectForm = this.formBuilder.group({
       ProjectName: [null, Validators.required],
       Description: [null, Validators.required],
@@ -72,6 +76,7 @@ export class EditProjectComponent implements OnInit {
       console.log(res)
       
       this.project = res
+      console.log(this.project)
       this.ProjectForm.controls['ProjectName'].setValue(this.project.projectName )
       this.ProjectForm.controls['AssignedDate'].setValue(this.project.assignedDate.toString().split('T')[0] )
       this.ProjectForm.controls['Description'].setValue(this.project.description )
@@ -80,8 +85,9 @@ export class EditProjectComponent implements OnInit {
       this.ProjectForm.controls['AssignedTo'].setValue(this.assignedToDropdownItems.find(u => u.name === this.project.assignedTo) )
       this.ProjectForm.controls['ProjectEmployees'].setValue( this.project.projectEmployees.map(item => ({ value: item.id, label: item.name })) )
       this.ProjectForm.controls['GitHubLink'].setValue(this.project.gitHubLink )
+      this.ProjectForm.controls['TeamId'].setValue(this.teamsSelectList.find(u=>u.value === this.project.teamProjects.map(u=>u.id)))
       this.employeesSelectedList =  this.project.projectEmployees.map(u => u.id)
-      console.log(this.employeesSelectedList)  
+      console.log(this.teamsSelectList.find(u=>u.value === this.project.teamProjects.map(u=> ({value: u.id, label: u.name}))))  
     }})
       
   }
@@ -99,7 +105,7 @@ export class EditProjectComponent implements OnInit {
         dueDate:this.ProjectForm.value.DueDate,
         projectStatus:this.ProjectForm.value.ProjectStatus.name,
         assignedTo:this.ProjectForm.value.AssignedTo.name,
-        
+        teamId:this.ProjectForm.value.TeamId,
         projectEmployees:this.employeesSelectedList,
         gitHubLink:this.ProjectForm.value.GitHubLink,
         createdById:this.user.UserID,
@@ -135,6 +141,13 @@ export class EditProjectComponent implements OnInit {
     this.employeeService.getEmployeesSelectList().subscribe({
       next: (res) => {
         this.employeesSelectList = res.map(item => ({ value: item.id, label: item.name }));
+      }
+    })
+  }
+  getTeamSelectList() {
+    this.teamService.getTeamSelectList().subscribe({
+      next: (res) => {
+        this.teamsSelectList = res.map(item => ({ value: item.id, label: item.name }));
       }
     })
   }
