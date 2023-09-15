@@ -54,7 +54,7 @@ namespace IntegratedImplementation.Services.Project
                 return new ResponseMessage
                 {
 
-                    Message = "Project Due Date Should Be Later Than Assigned Date.",
+                    Message = "Project Due Date Should Be Later Than Assigned Date",
                     Success = false
                 };
             }
