@@ -70,6 +70,7 @@ import { EditProjectComponent } from './pages/project/edit-project/edit-project.
         ListboxModule,
         DataViewModule,
         MultiSelectModule,
+        NgbModule
         
         
         

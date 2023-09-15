@@ -43,10 +43,10 @@
             </div>
             <div class="field col-12 md:col-6">
                 <label htmlFor="firstname2">Employees</label>
-                <p-multiSelect #SelectedItem (onChange)="SelectItems($event)" [options]="employeesSelectList" placeholder="Select Employee(s)" optionLabel="name" class="multiselect-custom" display="chip">
+                <p-multiSelect #SelectedItem formControlName ="ProjectEmployees" (onChange)="SelectItems($event)" [options]="employeesSelectList" placeholder="Select Employee(s)" optionLabel="label" class="multiselect-custom" display="chip">
                     <ng-template let-employee pTemplate="item">
                         <div class="flex align-items-center">
-                            <img src="assets/demo/images/flag/flag_placeholder.png" [class]="'flag flag-'" style="width:21px"/>
+                            <img src="assets/demo/images/flag/flag_placeholder.png" [class]="'flag flag-'+ employee.label.toLowerCase()" style="width:21px"/>
                             <span class="ml-2">{{employee.label}}</span>
                         </div>
                     </ng-template>

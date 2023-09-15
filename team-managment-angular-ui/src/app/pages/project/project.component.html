@@ -73,7 +73,7 @@
                                     <p-avatar label="+2" shape="circle" size="large" [style]="{'background-color':'#2563eb', 'color': '#ffffff'}"></p-avatar>
                                 </p-avatarGroup>
 								
-								<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary mr-2" (click)="openEditModal()"></button>
+								<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary mr-2" (click)="editProject(project.id)"></button>
 							</div>
 						</div>
 					</div>
@@ -87,4 +87,9 @@
 <p-dialog header="Add Project" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
     [resizable]="false">
     <app-add-project (employeeAdded)="onProjectAdded($event)" />
+</p-dialog>
+
+<p-dialog *ngIf="selectedId" header="Edit Project" [(visible)]="editVisible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
+    [resizable]="false">
+    <app-edit-project [projectId] = "selectedId"/>
 </p-dialog>

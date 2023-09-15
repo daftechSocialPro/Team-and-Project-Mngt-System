@@ -32,6 +32,13 @@ namespace IntegratedImplementation.Services.Project
                                     .ToListAsync();
             return projectList;
         }
+        public async Task<ProjectGetDto> GetProject(Guid projectId)
+        {
+            var project = await _dbContext.Projects.Where(x=>x.Id.Equals(projectId)).AsNoTracking()
+                                    .ProjectTo<ProjectGetDto>(_mapper.ConfigurationProvider)
+                                    .FirstAsync();
+            return project;
+        }
         public async Task<List<ProjectGetDto>> GetEmpolyeesProjects(Guid employeeId)
         {
             var projectList = await _dbContext.ProjectEmployees.Where(x => x.EmployeeId.Equals(employeeId)).Select(u => u.Project).AsNoTracking()
@@ -163,6 +170,7 @@ namespace IntegratedImplementation.Services.Project
                 await _dbContext.SaveChangesAsync();
                 if (editProject.AssignedTo == "EMPLOYEE")
                 {
+                    _dbContext.ProjectEmployees.RemoveRange(_dbContext.ProjectEmployees.Where(a => a.ProjectId.Equals(project.Id)));
                     _dbContext.TeamProjects.RemoveRange(_dbContext.TeamProjects.Where(a => a.ProjectId.Equals(project.Id)));
                     var addToProject = new AddToProjectDto()
                     {
@@ -184,7 +192,7 @@ namespace IntegratedImplementation.Services.Project
 
                     };
                     await _dbContext.TeamProjects.AddAsync(teamProject);
-
+                    _dbContext.TeamProjects.RemoveRange(_dbContext.TeamProjects.Where(a => a.ProjectId.Equals(project.Id)));
                     _dbContext.ProjectEmployees.RemoveRange(_dbContext.ProjectEmployees.Where(a => a.ProjectId.Equals(project.Id)));
                     await _dbContext.SaveChangesAsync();
 

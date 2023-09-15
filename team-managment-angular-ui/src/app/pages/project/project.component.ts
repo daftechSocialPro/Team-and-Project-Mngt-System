@@ -20,6 +20,8 @@ export class ProjectComponent implements OnInit {
   projects: any
   loading: boolean = true;
   visible: boolean = false;
+  editVisible: boolean = false;
+  selectedId: string
   sortOptions: SelectItem[] = [];
 
     sortOrder: number = 0;
@@ -79,18 +81,21 @@ addProject() {
   this.visible = true
 
 }
+
 onProjectAdded(event: any) {
   
   this.visible = false;
   this.getProjects()
 }
-editProject(){
-  this.visible = true
+editProject(projectId){
+  let modalRef= this.modalSerivce.open(EditProjectComponent,{size:'xl',backdrop:'static'})
+  modalRef.componentInstance.projectId = projectId
+  modalRef.result.then(()=>{this.getProjects()})
 }
 
 onProjectEdited(event: any) {
   
-  this.visible = false;
+  this.editVisible = false;
   this.getProjects()
 }
 }

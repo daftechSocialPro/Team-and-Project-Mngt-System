@@ -15,7 +15,7 @@ export class AddProjectComponent implements OnInit {
   
   @Output() projectAdded = new EventEmitter<any>();
 
-  user !: UserView
+  user : UserView
   employeesSelectList: SelectItem[] = []
   employeesSelectedList: string[] = []
 
@@ -47,7 +47,6 @@ export class AddProjectComponent implements OnInit {
 
     this.user = this.userService.getCurrentUser()
     this.getEmployeesSelectList()
-    console.log(this.user)
     this.ProjectForm = this.formBuilder.group({
       ProjectName: [null, Validators.required],
       Description: [null, Validators.required],
@@ -122,8 +121,8 @@ export class AddProjectComponent implements OnInit {
   SelectItems(event: any)
   {
     
-    this.employeesSelectedList = event.value;
-    
-
+    console.log(event.value.map(item => (item.value)))
+    this.employeesSelectedList = event.value.map(item => (item.value))
+  
   }
 }
