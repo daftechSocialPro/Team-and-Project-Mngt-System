@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
 import { AuthGuard } from './auth/auth.guard';
-
 import { EmployeeComponent } from './pages/employee/employee.component';
 import { UsersComponent } from './pages/users/users.component';
+import { TeamComponent } from './pages/team/team.component';
 
 @NgModule({
     imports: [
@@ -20,7 +20,9 @@ import { UsersComponent } from './pages/users/users.component';
                     { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
                     { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule)},
                     { path: 'employees',component:EmployeeComponent },
-                    { path: 'users',component:UsersComponent }
+                    { path: 'users',component:UsersComponent },
+                    { path: 'teams',component:TeamComponent },
+
                 ]
             },
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
