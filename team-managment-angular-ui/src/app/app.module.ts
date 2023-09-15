@@ -17,7 +17,7 @@ import { AuthHeaderIneterceptor } from './http-interceptors/auth-header-intercep
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-
+import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { EmployeeComponent } from './pages/employee/employee.component';
 import { InputTextModule } from 'primeng/inputtext';
@@ -30,22 +30,24 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { AddEmployeeComponent } from './pages/employee/add-employee/add-employee.component';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { AddUserComponent } from './pages/users/add-user/add-user.component';
 import { ListboxModule } from 'primeng/listbox';
+import { TeamComponent } from './pages/team/team.component';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { AddTeamComponent } from './pages/team/add-team/add-team.component';
+import { UpdateTeamComponent } from './pages/team/update-team/update-team.component';
 import { ProjectComponent } from './pages/project/project.component';
 import { DataViewModule } from 'primeng/dataview';
 import { AddProjectComponent } from './pages/project/add-project/add-project.component';
-import { MultiSelectModule } from 'primeng/multiselect';
 import { EditProjectComponent } from './pages/project/edit-project/edit-project.component';
-
-
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent
+        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent
     ],
     imports: [
         AppRoutingModule,
@@ -68,8 +70,10 @@ import { EditProjectComponent } from './pages/project/edit-project/edit-project.
         DropdownModule,
         FileUploadModule,
         ListboxModule,
-        DataViewModule,
+        FormsModule,
         MultiSelectModule,
+        DynamicDialogModule,
+        DataViewModule,
         NgbModule
         
         

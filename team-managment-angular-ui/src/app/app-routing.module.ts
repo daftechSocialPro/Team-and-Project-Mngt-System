@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
 import { AuthGuard } from './auth/auth.guard';
-
 import { EmployeeComponent } from './pages/employee/employee.component';
 import { UsersComponent } from './pages/users/users.component';
+import { TeamComponent } from './pages/team/team.component';
 import { ProjectComponent } from './pages/project/project.component';
 
 @NgModule({
@@ -22,6 +22,7 @@ import { ProjectComponent } from './pages/project/project.component';
                     { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule)},
                     { path: 'employees',component:EmployeeComponent },
                     { path: 'users',component:UsersComponent },
+                    { path: 'teams',component:TeamComponent },
                     { path: 'projects',component:ProjectComponent }
                 ]
             },

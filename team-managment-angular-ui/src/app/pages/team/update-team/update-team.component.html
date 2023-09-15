@@ -1,0 +1,38 @@
+<div class="card">
+    <form [formGroup]="TeamForm" (ngSubmit)="onSubmit()">
+      <div class="p-fluid p-formgrid grid">
+        <div class="field col-12">
+          <label for="teamName">Team Name</label>
+          <input  pInputText type="text"  id="teamName" formControlName="teamName"/>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="teamProjects">Team Projects</label>
+          <p-multiSelect [options]="getProjectList" formControlName="teamProjects" (onChange)="onProjectChange($event)"    placeholder="Select a Project" optionLabel="name" class="multiselect-custom" display="chip">
+            <ng-template let-project pTemplate="item">
+              <div class="flex align-items-center">
+                <span class="ml-2">{{project.name}}</span>
+              </div>
+            </ng-template>
+          </p-multiSelect>
+        </div>
+        
+        <div class="field col-12 md:col-6">
+          <label for="teamEmployees">Team Employees</label>
+          <p-multiSelect [options]="getEmployeeList"formControlName="teamEmployees" (onChange)="onEmployeeChange($event)"  placeholder="Select a employee" optionLabel="name" class="multiselect-custom" display="chip">
+            <ng-template let-employee pTemplate="item">
+              <div class="flex align-items-center">
+                <p-avatar>
+                <img src="{{getImage(employee.imagePath)}}"   />
+              </p-avatar>
+                <span>{{employee.name}}</span>
+              </div>
+            </ng-template>
+          </p-multiSelect>
+        </div>
+        <hr />
+        <button pButton  type="submit" [disabled]="!TeamForm.valid" label="Submit"></button>
+        </div>
+    </form>
+  </div>
+  
+  
