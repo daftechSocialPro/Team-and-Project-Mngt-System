@@ -28,3 +28,10 @@ export class TeamService {
   }
  
 }
+
+export interface TeamView {
+  id : string ; 
+  teamName : string ;
+  teamEmployees : any [];
+  teamProjects : any [];
+}

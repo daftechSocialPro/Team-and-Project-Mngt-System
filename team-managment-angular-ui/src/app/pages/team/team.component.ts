@@ -4,6 +4,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { TeamService } from 'src/app/services/team.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddTeamComponent } from '../team/add-team/add-team.component';
+import { UpdateTeamComponent } from './update-team/update-team.component';
 
 @Component({
   selector: 'app-team',
@@ -50,8 +51,10 @@ export class TeamComponent implements OnInit {
   addTeam() {
    this.visible=true
   }
-  updateTeam() {
-    this.updateTeamVisible=true
+  updateTeam(team:any) {
+    let modalRef = this.modalService.open(UpdateTeamComponent,{size:'lg',backdrop:'static'})
+    modalRef.componentInstance.team = team
+    
    }
   onTeamAdded(team: any) {
     console.log('Team added:', team);

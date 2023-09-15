@@ -14,13 +14,10 @@ import { UserView, UserService } from 'src/app/services/user.service';
 export class EditProjectComponent implements OnInit {
   
   @Input() projectId: string
-
   user : UserView
   project : ProjectView
   employeesSelectList: SelectItem[] = []
   employeesSelectedList: SelectItem[] = []
-  
-
   assignedToDropdownItems = [
     { name: '', code: '' },
     { name: 'TEAM', code: 'TEAM' },

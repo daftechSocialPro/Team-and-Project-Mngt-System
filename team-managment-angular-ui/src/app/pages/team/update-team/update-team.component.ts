@@ -1,8 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserService, UserView } from 'src/app/services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { TeamService } from 'src/app/services/team.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TeamService, TeamView } from 'src/app/services/team.service';
 import { CommonService } from 'src/app/services/common.service';
 
 @Component({
@@ -11,15 +12,15 @@ import { CommonService } from 'src/app/services/common.service';
   styleUrls: ['./update-team.component.scss']
 })
 export class UpdateTeamComponent implements OnInit {
-  @Output() teamAdded = new EventEmitter<any>();
+
+  @Input() team :TeamView;
+
+  user!: UserView;
 
   getEmployeeList: any[];
   getProjectList: any[];
-  selectedProject: any;
-  user!: UserView;
   selectedEmployees: any[] = [];
   selectedProjects: any[] = [];
-  uploadedFiles: any[] = [];
   TeamForm!: FormGroup;
 
   constructor(
@@ -27,19 +28,25 @@ export class UpdateTeamComponent implements OnInit {
     private formBuilder: FormBuilder,
     private commonService: CommonService,
     private messageService: MessageService,
-    private teamService: TeamService
+    private teamService: TeamService,
+    private activeModal: NgbActiveModal 
   ) { }
 
   ngOnInit(): void {
     this.fetchEmployeeList();
     this.fetchProjectList();
-    this.user = this.userService.getCurrentUser();
+
 
     this.TeamForm = this.formBuilder.group({
       teamName: [null, Validators.required],
       teamEmployees: [null, Validators.required],
       teamProjects: [null, Validators.required]
-    });
+    })
+
+   console.log(this.team)
+   this.TeamForm.controls['teamName'].setValue(this.team.teamName )
+   this.TeamForm.controls['teamEmployees'].setValue( this.team.teamEmployees.map(item => ({ value: item.id, name: item.name })) )
+
   }
 
   fetchEmployeeList() {
@@ -84,7 +91,7 @@ export class UpdateTeamComponent implements OnInit {
 
               this.TeamForm.reset();
           
-              this.teamAdded.emit();
+             
             } else {
               this.messageService.add({
                 severity: 'error',
@@ -118,19 +125,12 @@ export class UpdateTeamComponent implements OnInit {
     this.selectedProjects = event.value;
   }
 
-  onUpload(event: any) {
-    for (const file of event.files) {
-      this.uploadedFiles.push(file);
-    }
 
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Success',
-      detail: 'File Uploaded'
-    });
-  }
 
   getImage(url: string) {
     return this.commonService.createImgPath(url);
+  }
+  closeModal(){
+    this.activeModal.close()
   }
 }

@@ -8,7 +8,7 @@
         <div class="card team-card" *ngFor="let item of teams">
           <div class="toper">  
             <h4 class="teamName">{{ item.teamName }}</h4>
-            <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-warning p-button-outlined" class="editbtn" (click)="updateTeam()"></p-button>
+            <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-warning p-button-outlined" class="editbtn" (click)="updateTeam(item)"></p-button>
           </div>
           <ul class="p-list custom-list">
             <ng-container *ngFor="let pro of item.teamProjects">
@@ -39,7 +39,3 @@
   <app-add-team (teamAdded)="onTeamAdded($event)"></app-add-team>
 </p-dialog>
 
-<p-dialog header="Update Team" [(visible)]="updateTeamVisible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
-[resizable]="false">
-<app-update-team (teamUpdated)=" onTeamUpdate($event)"></app-update-team>
-</p-dialog>
