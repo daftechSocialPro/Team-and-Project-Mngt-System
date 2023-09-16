@@ -41,7 +41,7 @@ export interface ProjectView {
   projectStatus:string;
   assignedTo:string;
   gitHubLink:string;
-  teamProjects: string [];
+  teamProjects: any [];
   projectEmployees: any [];
   taskLists: any[];
 }

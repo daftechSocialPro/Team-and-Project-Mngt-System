@@ -5,6 +5,8 @@ import { CommonService } from 'src/app/services/common.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { UserService, UserView } from 'src/app/services/user.service';
+import { TeamService } from 'src/app/services/team.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-project',
@@ -18,7 +20,7 @@ export class AddProjectComponent implements OnInit {
   user : UserView
   employeesSelectList: SelectItem[] = []
   employeesSelectedList: string[] = []
-
+  teamsSelectList: SelectItem[] = []
 
   assignedToDropdownItems = [
     { name: '', code: '' },
@@ -35,18 +37,25 @@ export class AddProjectComponent implements OnInit {
   selectedState: any = null;
   
   ProjectForm!: FormGroup;
+  
 
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
     private messageService: MessageService,
     private projectService: ProjectService,
-    private employeeService: EmployeeService) { }
+    private employeeService: EmployeeService,
+    private teamService: TeamService,
+    private commonService: CommonService,
+    private activeModal: NgbActiveModal
+    
+    ) { }
 
   ngOnInit(): void {
 
     this.user = this.userService.getCurrentUser()
     this.getEmployeesSelectList()
+    this.getTeamSelectList()
     this.ProjectForm = this.formBuilder.group({
       ProjectName: [null, Validators.required],
       Description: [null, Validators.required],
@@ -74,7 +83,7 @@ export class AddProjectComponent implements OnInit {
         dueDate:this.ProjectForm.value.DueDate,
         projectStatus:this.ProjectForm.value.ProjectStatus.name,
         assignedTo:this.ProjectForm.value.AssignedTo.name,
-        
+        teamId:this.ProjectForm.value.TeamId,
         projectEmployees:this.employeesSelectedList,
         gitHubLink:this.ProjectForm.value.GitHubLink,
         createdById:this.user.UserID
@@ -90,7 +99,7 @@ export class AddProjectComponent implements OnInit {
 
             this.ProjectForm.reset();
             this.projectAdded.emit();
-            //this.closeModal();
+            this.closeModal();
           }
           else {
             this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
@@ -114,7 +123,14 @@ export class AddProjectComponent implements OnInit {
   getEmployeesSelectList() {
     this.employeeService.getEmployeesSelectList().subscribe({
       next: (res) => {
-        this.employeesSelectList = res.map(item => ({ value: item.id, label: item.name }));
+        this.employeesSelectList = res.map(item => ({ value: item.id, label: item.name, imagePath: item.imagePath }));
+      }
+    })
+  }
+  getTeamSelectList() {
+    this.teamService.getTeamSelectList().subscribe({
+      next: (res) => {
+        this.teamsSelectList = res.map(item => ({ value: item.id, label: item.name }));
       }
     })
   }
@@ -124,5 +140,18 @@ export class AddProjectComponent implements OnInit {
     console.log(event.value.map(item => (item.value)))
     this.employeesSelectedList = event.value.map(item => (item.value))
   
+  }
+  
+  showInput()
+  {
+    return this.ProjectForm.value.AssignedTo.name
+
+  }
+  closeModal()
+  {
+    this.activeModal.close()
+  }
+  getImage(url: string) {
+    return this.commonService.createImgPath(url)
   }
 }

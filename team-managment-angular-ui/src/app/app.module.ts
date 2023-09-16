@@ -45,7 +45,11 @@ import { ProjectComponent } from './pages/project/project.component';
 import { DataViewModule } from 'primeng/dataview';
 import { AddProjectComponent } from './pages/project/add-project/add-project.component';
 import { EditProjectComponent } from './pages/project/edit-project/edit-project.component';
+
 import { ManageMembersComponent } from './pages/team/manage-members/manage-members.component';
+
+import { ChipModule } from 'primeng/chip';  
+
 
 @NgModule({
     declarations: [
@@ -77,8 +81,13 @@ import { ManageMembersComponent } from './pages/team/manage-members/manage-membe
         DynamicDialogModule,
         DataViewModule,
         NgbModule,
+
         PickListModule
        
+
+        ChipModule,
+        
+
         
         
         

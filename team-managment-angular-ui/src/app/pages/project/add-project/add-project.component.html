@@ -1,4 +1,11 @@
-<div class="card">
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title"> Add Project</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
 
     <form [formGroup]="ProjectForm" (submit)="onSubmit()">
         <div class="p-fluid p-formgrid grid">
@@ -41,23 +48,23 @@
                 <p-dropdown [options]="assignedToDropdownItems" optionLabel="name"
                     formControlName="AssignedTo"></p-dropdown>
             </div>
-            <div class="field col-12 md:col-6">
+            <div *ngIf="showInput() === 'EMPLOYEE'" class="field col-12 md:col-6">
                 <label htmlFor="firstname2">Employees</label>
                 <p-multiSelect #SelectedItem formControlName ="ProjectEmployees" (onChange)="SelectItems($event)" [options]="employeesSelectList" placeholder="Select Employee(s)" optionLabel="label" class="multiselect-custom" display="chip">
                     <ng-template let-employee pTemplate="item">
                         <div class="flex align-items-center">
-                            <img src="assets/demo/images/flag/flag_placeholder.png" [class]="'flag flag-'+ employee.label.toLowerCase()" style="width:21px"/>
+                            <img [alt]="" [src]="getImage(employee.imagePath)" width="32"
+                            style="vertical-align: middle; border-radius: 20px;" />
                             <span class="ml-2">{{employee.label}}</span>
                         </div>
+                        
                     </ng-template>
                 </p-multiSelect>
-
-
-                <!-- <p-dropdown #SelectedItem (onChange)="SelectItems(SelectedItem.value)" [options]="employeesSelectList" formControlName="ProjectEmployees" placeholder="Select a Employee"
-                    [showClear]="true"></p-dropdown> -->
-
             </div>
-            
+            <div *ngIf="showInput() === 'TEAM'" class="field col-12 md:col-4">
+                <label htmlFor="lastname2">Team</label>
+			    <p-dropdown [options]="teamsSelectList" placeholder="Select Team" [showClear]="true" formControlName="TeamId"></p-dropdown>
+            </div>
             <hr />
             <button pButton type="submit" [disabled]="!ProjectForm.valid" label="Submit"></button>
         </div>
