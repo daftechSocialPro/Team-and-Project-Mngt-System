@@ -6,6 +6,7 @@ import { ProjectService } from 'src/app/services/project.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { UserService, UserView } from 'src/app/services/user.service';
 import { TeamService } from 'src/app/services/team.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-project',
@@ -36,6 +37,7 @@ export class AddProjectComponent implements OnInit {
   selectedState: any = null;
   
   ProjectForm!: FormGroup;
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,7 +45,10 @@ export class AddProjectComponent implements OnInit {
     private messageService: MessageService,
     private projectService: ProjectService,
     private employeeService: EmployeeService,
-    private teamService: TeamService
+    private teamService: TeamService,
+    private commonService: CommonService,
+    private activeModal: NgbActiveModal
+    
     ) { }
 
   ngOnInit(): void {
@@ -94,7 +99,7 @@ export class AddProjectComponent implements OnInit {
 
             this.ProjectForm.reset();
             this.projectAdded.emit();
-            //this.closeModal();
+            this.closeModal();
           }
           else {
             this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
@@ -118,7 +123,7 @@ export class AddProjectComponent implements OnInit {
   getEmployeesSelectList() {
     this.employeeService.getEmployeesSelectList().subscribe({
       next: (res) => {
-        this.employeesSelectList = res.map(item => ({ value: item.id, label: item.name }));
+        this.employeesSelectList = res.map(item => ({ value: item.id, label: item.name, imagePath: item.imagePath }));
       }
     })
   }
@@ -135,5 +140,18 @@ export class AddProjectComponent implements OnInit {
     console.log(event.value.map(item => (item.value)))
     this.employeesSelectedList = event.value.map(item => (item.value))
   
+  }
+  
+  showInput()
+  {
+    return this.ProjectForm.value.AssignedTo.name
+
+  }
+  closeModal()
+  {
+    this.activeModal.close()
+  }
+  getImage(url: string) {
+    return this.commonService.createImgPath(url)
   }
 }

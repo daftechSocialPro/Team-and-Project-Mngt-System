@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { NgModel } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataView } from 'primeng/dataview';
 import { CommonService } from 'src/app/services/common.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { SelectItem } from 'primeng/api';
 import { EditProjectComponent } from './edit-project/edit-project.component';
+import { AddProjectComponent } from './add-project/add-project.component';
 
 
 
@@ -24,9 +24,9 @@ export class ProjectComponent implements OnInit {
   selectedId: string
   sortOptions: SelectItem[] = [];
 
-    sortOrder: number = 0;
+  sortOrder: number = 0;
 
-    sortField: string = '';
+  sortField: string = '';
 
     
 
@@ -40,6 +40,7 @@ export class ProjectComponent implements OnInit {
   ngOnInit(): void {
     this.getProjects()
     
+    
   }
 
   getProjects() {
@@ -47,6 +48,7 @@ export class ProjectComponent implements OnInit {
     this.projectService.getProjects().subscribe({
       next: (res) => {
         this.projects = res
+        console.log(this.projects)
       }, error: (err) => {
         console.log(err)
       }
@@ -77,9 +79,9 @@ getImage(url: string) {
   return this.commonService.createImgPath(url)
 }
 addProject() {
-
-  this.visible = true
-
+  let modalRef= this.modalSerivce.open(AddProjectComponent,{size:'xl',backdrop:'static'})
+  
+  modalRef.result.then(()=>{this.getProjects()})
 }
 
 onProjectAdded(event: any) {

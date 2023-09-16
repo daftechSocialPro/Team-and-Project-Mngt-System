@@ -20,15 +20,23 @@
 				<ng-template let-project pTemplate="listItem">
 					<div class="col-12">
 						<div class="flex flex-column md:flex-row align-items-center p-3 w-full">
-                            <p-avatarGroup styleClass="mb-3">
-                                <p-avatar image="assets/demo/images/avatar/amyelsner.png" size="large" shape="circle"></p-avatar>
-                                <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" size="large" shape="circle"></p-avatar>
-                                <p-avatar image="assets/demo/images/avatar/onyamalimba.png" size="large" shape="circle"></p-avatar>
-                                <p-avatar image="assets/demo/images/avatar/ionibowcher.png" size="large" shape="circle"></p-avatar>
-                                
-                                <p-avatar label="+2" shape="circle" size="large" [style]="{'background-color':'#2563eb', 'color': '#ffffff'}"></p-avatar>
-                            </p-avatarGroup>
-							<div class="flex-1 flex flex-column align-items-center text-center md:text-left">
+                            <p-avatarGroup *ngIf="project.assignedTo === 'EMPLOYEE'" styleClass="mb-3">
+								<ng-container *ngFor="let emp of project.projectEmployees ; let i = index">
+								  <ng-container *ngIf="i < 4">
+									<p-avatar [image]="getImage(emp.imagePath)" size="large" shape="circle"></p-avatar>
+								  </ng-container>
+								  <ng-container *ngIf="i === 4">
+									<p-avatar label="+{{ project.projectEmployees.length - 4 }}" shape="circle" size="large" [style]="{'background-color':'#2563eb', 'color': '#ffffff'}"></p-avatar>
+								  </ng-container>
+								</ng-container>
+							</p-avatarGroup>
+
+
+							<ng-container *ngFor="let emp of project.teamProjects" >
+								
+								<p-tag *ngIf="project.assignedTo === 'TEAM'" icon="pi pi-user" value={{emp.name}} ></p-tag>
+							</ng-container>
+							<div class="flex-1 flex  flex-column align-items-center text-center md:text-left">
 								<div class="font-bold text-2xl">{{project.projectName}}</div>
 								<div class="mb-2">{{project.description}}</div>
 								
@@ -38,8 +46,8 @@
 								</div>
 							</div>
 							<div class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
-								<span class="text-2xl font-semibold mb-2 align-self-center md:align-self-end">{{project.assignedTo}}</span>
-								<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" ></button>
+								<p-chip label={{project.assignedTo}} styleClass="m-1"></p-chip>
+								<div class="align-self-end"><button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary mr-2" (click)="editProject(project.id)"></button></div>
 								<!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{project.projectStatus}}</span> -->
 							</div>
 						</div>
@@ -62,19 +70,39 @@
 								<div class="mb-3">{{project.description}}</div>
 								
 							</div>
-                            <span class="text-2xl font-semibold">{{project.assignedTo}}</span>
-							<div class="flex align-items-center justify-content-between">
-                                <p-avatarGroup styleClass="mb-3">
-                                    <p-avatar image="assets/demo/images/avatar/amyelsner.png" size="large" shape="circle"></p-avatar>
-                                    <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" size="large" shape="circle"></p-avatar>
-                                    <p-avatar image="assets/demo/images/avatar/onyamalimba.png" size="large" shape="circle"></p-avatar>
-                                    <p-avatar image="assets/demo/images/avatar/ionibowcher.png" size="large" shape="circle"></p-avatar>
-                                    
-                                    <p-avatar label="+2" shape="circle" size="large" [style]="{'background-color':'#2563eb', 'color': '#ffffff'}"></p-avatar>
-                                </p-avatarGroup>
-								
-								<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary mr-2" (click)="editProject(project.id)"></button>
+							
+							
+							<!-- <p-tag icon="pi pi-user" value={{project.assignedTo}}></p-tag> -->
+                            
+							<div class="flex flex-column">
+								<!-- <div><p-tag icon="pi pi-user" value={{project.assignedTo}}></p-tag></div> -->
+								<div class="mb-2 mt-2"><p-chip label={{project.assignedTo}} styleClass="m-1"></p-chip></div>
+                                <div class="flex  justify-content-between">
+									<div>
+										
+										<p-avatarGroup *ngIf="project.assignedTo === 'EMPLOYEE'" styleClass="mb-3">
+											<ng-container *ngFor="let emp of project.projectEmployees ; let i = index">
+											  <ng-container *ngIf="i < 4">
+												<p-avatar [image]="getImage(emp.imagePath)" size="large" shape="circle"></p-avatar>
+											  </ng-container>
+											  <ng-container *ngIf="i === 4">
+												<p-avatar label="+{{ project.projectEmployees.length - 4 }}" shape="circle" size="large" [style]="{'background-color':'#2563eb', 'color': '#ffffff'}"></p-avatar>
+											  </ng-container>
+											</ng-container>
+										</p-avatarGroup>
+
+
+										<ng-container *ngFor="let emp of project.teamProjects" >
+											
+											<p-tag *ngIf="project.assignedTo === 'TEAM'" icon="pi pi-user" value={{emp.name}} ></p-tag>
+										</ng-container>
+										  
+									</div>
+									<div class="align-self-end"><button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary mr-2" (click)="editProject(project.id)"></button></div>
+								</div>
+						
 							</div>
+							
 						</div>
 					</div>
 				</ng-template>
@@ -84,12 +112,4 @@
 
 </div>
 
-<p-dialog header="Add Project" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
-    [resizable]="false">
-    <app-add-project (employeeAdded)="onProjectAdded($event)" />
-</p-dialog>
 
-<p-dialog *ngIf="selectedId" header="Edit Project" [(visible)]="editVisible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
-    [resizable]="false">
-    <app-edit-project [projectId] = "selectedId"/>
-</p-dialog>

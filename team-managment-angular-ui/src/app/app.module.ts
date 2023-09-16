@@ -44,6 +44,7 @@ import { ProjectComponent } from './pages/project/project.component';
 import { DataViewModule } from 'primeng/dataview';
 import { AddProjectComponent } from './pages/project/add-project/add-project.component';
 import { EditProjectComponent } from './pages/project/edit-project/edit-project.component';
+import { ChipModule } from 'primeng/chip';  
 
 @NgModule({
     declarations: [
@@ -74,7 +75,9 @@ import { EditProjectComponent } from './pages/project/edit-project/edit-project.
         MultiSelectModule,
         DynamicDialogModule,
         DataViewModule,
-        NgbModule
+        NgbModule,
+        ChipModule,
+        
         
         
         

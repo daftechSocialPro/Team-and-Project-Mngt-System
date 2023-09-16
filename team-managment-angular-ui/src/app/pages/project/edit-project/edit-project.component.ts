@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SelectItem, MessageService } from 'primeng/api';
+import { CommonService } from 'src/app/services/common.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { ProjectService, ProjectView } from 'src/app/services/project.service';
 import { TeamService } from 'src/app/services/team.service';
@@ -46,7 +47,8 @@ export class EditProjectComponent implements OnInit {
     private projectService: ProjectService,
     private employeeService: EmployeeService,
     private activeModal: NgbActiveModal,
-    private teamService: TeamService 
+    private teamService: TeamService,
+    private commonService: CommonService 
       
     ) { }
 
@@ -83,7 +85,7 @@ export class EditProjectComponent implements OnInit {
       this.ProjectForm.controls['DueDate'].setValue(this.project.dueDate.toString().split('T')[0] )
       this.ProjectForm.controls['ProjectStatus'].setValue(this.projectStatusDropdownItems.find(u => u.name === this.project.projectStatus) )
       this.ProjectForm.controls['AssignedTo'].setValue(this.assignedToDropdownItems.find(u => u.name === this.project.assignedTo) )
-      this.ProjectForm.controls['ProjectEmployees'].setValue( this.project.projectEmployees.map(item => ({ value: item.id, label: item.name })) )
+      this.ProjectForm.controls['ProjectEmployees'].setValue( this.project.projectEmployees.map(item => ({ value: item.id, label: item.name, imagePath: item.imagePath })) )
       this.ProjectForm.controls['GitHubLink'].setValue(this.project.gitHubLink )
       this.ProjectForm.controls['TeamId'].setValue(this.teamsSelectList.find(u=>u.value === this.project.teamProjects.map(u=>u.id)))
       this.employeesSelectedList =  this.project.projectEmployees.map(u => u.id)
@@ -140,7 +142,7 @@ export class EditProjectComponent implements OnInit {
   getEmployeesSelectList() {
     this.employeeService.getEmployeesSelectList().subscribe({
       next: (res) => {
-        this.employeesSelectList = res.map(item => ({ value: item.id, label: item.name }));
+        this.employeesSelectList = res.map(item => ({ value: item.id, label: item.name, imagePath: item.imagePath }));
       }
     })
   }
@@ -163,5 +165,12 @@ export class EditProjectComponent implements OnInit {
   {
     this.activeModal.close()
   }
-  
+  showInput()
+  {
+    return this.ProjectForm.value.AssignedTo.name
+
+  }
+  getImage(url: string) {
+    return this.commonService.createImgPath(url)
+  }
 }

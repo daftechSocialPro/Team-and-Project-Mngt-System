@@ -48,22 +48,19 @@
                 <p-dropdown [options]="assignedToDropdownItems" optionLabel="name"
                     formControlName="AssignedTo"></p-dropdown>
             </div>
-            <div class="field col-12 md:col-6">
+            <div *ngIf="showInput() === 'EMPLOYEE'" class="field col-12 md:col-6">
                 <label htmlFor="firstname2">Employees</label>
                 <p-multiSelect  formControlName ="ProjectEmployees" (onChange)="SelectItems($event)" [options]="employeesSelectList" placeholder="Select Employee(s)" optionLabel="label" class="multiselect-custom" display="chip">
                     <ng-template let-employee pTemplate="item">
                         <div class="flex align-items-center">
-                            <img src="assets/demo/images/flag/flag_placeholder.png" [class]="'flag flag-'" style="width:21px"/>
+                            <img [alt]="" [src]="getImage(employee.imagePath)" width="32"
+                            style="vertical-align: middle; border-radius: 20px;" />
                             <span class="ml-2">{{employee.label}}</span>
                         </div>
                     </ng-template>
                 </p-multiSelect>
-
-
-               
-
             </div>
-            <div class="field col-12 md:col-4">
+            <div *ngIf="showInput() === 'TEAM'" class="field col-12 md:col-4">
                 <label htmlFor="lastname2">Team</label>
 			    <p-dropdown [options]="teamsSelectList" placeholder="Select Team" 
                     formControlName="TeamId"></p-dropdown>
