@@ -38,16 +38,18 @@ import { AddUserComponent } from './pages/users/add-user/add-user.component';
 import { ListboxModule } from 'primeng/listbox';
 import { TeamComponent } from './pages/team/team.component';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { PickListModule } from 'primeng/picklist';
 import { AddTeamComponent } from './pages/team/add-team/add-team.component';
 import { UpdateTeamComponent } from './pages/team/update-team/update-team.component';
 import { ProjectComponent } from './pages/project/project.component';
 import { DataViewModule } from 'primeng/dataview';
 import { AddProjectComponent } from './pages/project/add-project/add-project.component';
 import { EditProjectComponent } from './pages/project/edit-project/edit-project.component';
+import { ManageMembersComponent } from './pages/team/manage-members/manage-members.component';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent
+        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent, ManageMembersComponent
     ],
     imports: [
         AppRoutingModule,
@@ -74,7 +76,9 @@ import { EditProjectComponent } from './pages/project/edit-project/edit-project.
         MultiSelectModule,
         DynamicDialogModule,
         DataViewModule,
-        NgbModule
+        NgbModule,
+        PickListModule
+       
         
         
         
