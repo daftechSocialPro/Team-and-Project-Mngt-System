@@ -87,9 +87,10 @@ export class EditProjectComponent implements OnInit {
       this.ProjectForm.controls['AssignedTo'].setValue(this.assignedToDropdownItems.find(u => u.name === this.project.assignedTo) )
       this.ProjectForm.controls['ProjectEmployees'].setValue( this.project.projectEmployees.map(item => ({ value: item.id, label: item.name, imagePath: item.imagePath })) )
       this.ProjectForm.controls['GitHubLink'].setValue(this.project.gitHubLink )
-      this.ProjectForm.controls['TeamId'].setValue(this.teamsSelectList.find(u=>u.value === this.project.teamProjects.map(u=>u.id)))
+      this.ProjectForm.controls['TeamId'].setValue(this.teamsSelectList.find(u=>u.value === this.project.teamProjects.map(u=>u.id)[0]))
       this.employeesSelectedList =  this.project.projectEmployees.map(u => u.id)
-      console.log(this.teamsSelectList.find(u=>u.value === this.project.teamProjects.map(u=> ({value: u.id, label: u.name}))))  
+      console.log(this.teamsSelectList.find(u=>u.value === this.project.teamProjects.map(u=>u.id)[0]))
+      
     }})
       
   }
@@ -107,7 +108,7 @@ export class EditProjectComponent implements OnInit {
         dueDate:this.ProjectForm.value.DueDate,
         projectStatus:this.ProjectForm.value.ProjectStatus.name,
         assignedTo:this.ProjectForm.value.AssignedTo.name,
-        teamId:this.ProjectForm.value.TeamId,
+        teamId:this.ProjectForm.value.TeamId.value,
         projectEmployees:this.employeesSelectedList,
         gitHubLink:this.ProjectForm.value.GitHubLink,
         createdById:this.user.UserID,
@@ -122,7 +123,6 @@ export class EditProjectComponent implements OnInit {
             this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
 
             this.ProjectForm.reset();
-            // this.projectEdited.emit();
             this.closeModal();
           }
           else {

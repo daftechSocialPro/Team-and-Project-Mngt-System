@@ -45,10 +45,13 @@ import { DataViewModule } from 'primeng/dataview';
 import { AddProjectComponent } from './pages/project/add-project/add-project.component';
 import { EditProjectComponent } from './pages/project/edit-project/edit-project.component';
 import { ChipModule } from 'primeng/chip';  
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
+import { TimelineModule } from 'primeng/timeline';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent
+        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent, ProjectDetailComponent
     ],
     imports: [
         AppRoutingModule,
@@ -75,12 +78,10 @@ import { ChipModule } from 'primeng/chip';
         MultiSelectModule,
         DynamicDialogModule,
         DataViewModule,
-        NgbModule,
         ChipModule,
-        
-        
-        
-        
+        ProgressBarModule,
+        TimelineModule
+ 
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

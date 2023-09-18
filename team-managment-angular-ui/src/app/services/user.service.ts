@@ -17,7 +17,7 @@ export class UserService {
     return this.http.get<any>(this.BaseURI+"/api/Authentication/GetUserList")
   }
   roleMatch(allowedRoles: any): boolean {
-    debugger
+    
     var isMatch = false;
     var token = sessionStorage.getItem('token')
 

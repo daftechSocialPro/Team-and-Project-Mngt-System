@@ -7,6 +7,7 @@ namespace IntegratedImplementation.Interfaces.Task
 {
     public interface ITaskService
     {
+        Task<List<TaskGetDto>> GetAllTasks();
         Task<List<TaskGetDto>> GetTasks(Guid employeeId);
         Task<List<TaskGetDto>> GetProjectTasks(Guid employeeId, Guid projectID);
         Task<ResponseMessage> AddTask(TaskPostDto addTask);

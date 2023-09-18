@@ -6,6 +6,7 @@ import { ProjectService } from 'src/app/services/project.service';
 import { SelectItem } from 'primeng/api';
 import { EditProjectComponent } from './edit-project/edit-project.component';
 import { AddProjectComponent } from './add-project/add-project.component';
+import { Router } from '@angular/router';
 
 
 
@@ -23,11 +24,9 @@ export class ProjectComponent implements OnInit {
   editVisible: boolean = false;
   selectedId: string
   sortOptions: SelectItem[] = [];
+  value: 0;
 
-  sortOrder: number = 0;
-
-  sortField: string = '';
-
+  
     
 
   @ViewChild('filter') filter!: ElementRef;
@@ -35,7 +34,8 @@ export class ProjectComponent implements OnInit {
   constructor(
     private projectService: ProjectService,
     private commonService: CommonService,
-    private modalSerivce: NgbModal) { }
+    private modalSerivce: NgbModal,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getProjects()
@@ -57,20 +57,6 @@ export class ProjectComponent implements OnInit {
   }
 
 
- 
-
-onSortChange(event: any) {
-    const value = event.value;
-
-    if (value.indexOf('!') === 0) {
-        this.sortOrder = -1;
-        this.sortField = value.substring(1, value.length);
-    } else {
-        this.sortOrder = 1;
-        this.sortField = value;
-    }
-}
-
 onFilter(dv: DataView, event: Event) {
     dv.filter((event.target as HTMLInputElement).value);
 }
@@ -84,21 +70,26 @@ addProject() {
   modalRef.result.then(()=>{this.getProjects()})
 }
 
-onProjectAdded(event: any) {
-  
-  this.visible = false;
-  this.getProjects()
-}
+
 editProject(projectId){
   let modalRef= this.modalSerivce.open(EditProjectComponent,{size:'xl',backdrop:'static'})
   modalRef.componentInstance.projectId = projectId
   modalRef.result.then(()=>{this.getProjects()})
 }
 
-onProjectEdited(event: any) {
+
+getProjectProgress(id: any){
+  // console.log(this.projectService.getProjectProgress(id))
+  return this.projectService.getProjectProgress(id)
   
-  this.editVisible = false;
-  this.getProjects()
 }
+
+projectDetail(projectId: any)
+{
+  this.router.navigate(['/projectdetail',projectId])
+  
+
+}
+
 }
 

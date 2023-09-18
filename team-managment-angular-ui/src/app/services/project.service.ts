@@ -29,6 +29,10 @@ export class ProjectService {
 
     return this.http.put<any>(this.BaseURI+'/api/Project',projectEdit)
   }
+  getProjectProgress(id : any) {
+    return this.http.get<number>(this.BaseURI + '/api/Project/GetProjectProgress?id='+id);
+  }
+  
 
   
 }

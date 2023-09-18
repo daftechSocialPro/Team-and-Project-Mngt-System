@@ -5,7 +5,7 @@
             <div class="text-right">
                 <button pButton label="Project" class="p-button-outlined mb-2"  icon="pi pi-plus" (click)="addProject()"></button>
             </div>
-			<p-dataView #dv [value]="projects" dataKey="id" [rows]="9" filterBy="name" layout="grid" [paginator]="true" [rows]="9" [sortField]="sortField" [sortOrder]="sortOrder">
+			<p-dataView #dv [value]="projects" dataKey="id" [rows]="9" filterBy="name" layout="grid" [paginator]="true" [rows]="9" >
 				<ng-template pTemplate="header">
 					<div class="flex flex-column md:flex-row md:justify-content-between gap-2">
 						<p-dropdown [options]="sortOptions" placeholder="Sort" (onChange)="onSortChange($event)"></p-dropdown>
@@ -26,7 +26,7 @@
 									<p-avatar [image]="getImage(emp.imagePath)" size="large" shape="circle"></p-avatar>
 								  </ng-container>
 								  <ng-container *ngIf="i === 4">
-									<p-avatar label="+{{ project.projectEmployees.length - 4 }}" shape="circle" size="large" [style]="{'background-color':'#2563eb', 'color': '#ffffff'}"></p-avatar>
+									<p-avatar label="+{{ project.projectEmployees.length - 4 }}" shape="circle" size="large" [style]="{'background-color':'#3B82F6', 'color': '#ffffff'}"></p-avatar>
 								  </ng-container>
 								</ng-container>
 							</p-avatarGroup>
@@ -62,17 +62,19 @@
 									<i class="pi pi-stopwatch mr-2"></i>
 									<span class="font-semibold">{{project.dueDate | date:'yyyy-MM-dd'}}</span>
 								</div>
-								<!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{projects.projectStatus}}</span> -->
+								<span [class]="'project-badge status-'+project.projectStatus.toLowerCase()" >{{project.projectStatus}}</span>
 							</div>
-							<div class="flex flex-column align-items-center text-center mb-3">
+							<div (click)="projectDetail(project.id)" class="flex flex-column align-items-center text-center mb-3">
 								
 								<div class="text-2xl font-bold">{{project.projectName}}</div>
 								<div class="mb-3">{{project.description}}</div>
 								
+								<p-progressBar [value]="getProjectProgress(project.id)" [showValue]="true"></p-progressBar>
+								
 							</div>
 							
 							
-							<!-- <p-tag icon="pi pi-user" value={{project.assignedTo}}></p-tag> -->
+							
                             
 							<div class="flex flex-column">
 								<!-- <div><p-tag icon="pi pi-user" value={{project.assignedTo}}></p-tag></div> -->
@@ -86,7 +88,7 @@
 												<p-avatar [image]="getImage(emp.imagePath)" size="large" shape="circle"></p-avatar>
 											  </ng-container>
 											  <ng-container *ngIf="i === 4">
-												<p-avatar label="+{{ project.projectEmployees.length - 4 }}" shape="circle" size="large" [style]="{'background-color':'#2563eb', 'color': '#ffffff'}"></p-avatar>
+												<p-avatar label="+{{ project.projectEmployees.length - 4 }}" shape="circle" size="large" [style]="{'background-color':'#3B82F6', 'color': '#ffffff'}"></p-avatar>
 											  </ng-container>
 											</ng-container>
 										</p-avatarGroup>
