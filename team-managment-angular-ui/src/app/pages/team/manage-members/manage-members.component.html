@@ -4,15 +4,26 @@
         <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
     </div>
     <div class="card">
-        <p-pickList [source]="getEmployeeList" [target]="selectedEmployees" sourceHeader="Available" targetHeader="Selected" [dragdrop]="true" [responsive]="true"
-            [sourceStyle]="{ height: '30rem' }" [targetStyle]="{ height: '30rem' }" breakpoint="1400px">
-            <ng-template let-employee pTemplate="item">
-                <div class="flex flex-wrap p-2 align-items-center gap-3">
-                    <img class="w-4rem shadow-2 flex-shrink-0 border-round" src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}" alt="{item.name}" />
-                    <div class="flex-1 flex flex-column gap-2">
-                        <span class="font-bold">{{ employee.name }}</span>
-                    </div>
-                </div>
-            </ng-template>
-        </p-pickList>
+      <p-pickList [source]="sourceEmployees" [target]="targetEmployees" sourceHeader="Team Members" targetHeader="Employees"
+      [dragdrop]="true" [responsive]="true" [sourceStyle]="{ height: '30rem' }" [targetStyle]="{ height: '30rem' }"
+      breakpoint="1400px" [showSourceControls]="false" [showTargetControls]="false"
+      [showSourceControls]="false" [showTargetControls]="false"
+      (onMoveToTarget)="removeFromTeam($event)"
+      (onMoveToSource)="addToTeam($event)" >
+        <ng-template let-employee pTemplate="item">
+          <div class="flex flex-wrap p-2 align-items-center gap-3">
+            <img class="w-4rem shadow-2 flex-shrink-0 image" src="{{getImage(employee.imagePath)}}" alt=""
+              style="border-radius: 50%;" />
+            <div class="flex-1 flex flex-column gap-2">
+              <span class="font-bold">{{ employee.name }}</span>
+            </div>
+          </div>
+        </ng-template>
+      </p-pickList>
+
+
+      
+     
+
+
     </div>
