@@ -49,6 +49,7 @@ import { EditProjectComponent } from './pages/project/edit-project/edit-project.
 import { ManageMembersComponent } from './pages/team/manage-members/manage-members.component';
 
 import { ChipModule } from 'primeng/chip';  
+import { TimelineModule } from 'primeng/timeline';
 
 @NgModule({
     declarations: [
@@ -81,6 +82,7 @@ import { ChipModule } from 'primeng/chip';
         DataViewModule,
         NgbModule,
         ChipModule,
+        TimelineModule
         
         
         
