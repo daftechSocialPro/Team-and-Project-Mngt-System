@@ -1,54 +1,158 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
-import { UserService, UserView } from 'src/app/services/user.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SelectItem, MessageService } from 'primeng/api';
+import { Component, Input, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TeamService, TeamView } from 'src/app/services/team.service';
 import { CommonService } from 'src/app/services/common.service';
+import { UserView, UserService } from 'src/app/services/user.service';
+import { ITeamMemberDto } from './ITeamMemberDto';
+
 @Component({
   selector: 'app-manage-members',
   templateUrl: './manage-members.component.html',
   styleUrls: ['./manage-members.component.scss']
 })
-export class ManageMembersComponent implements OnInit{
-  @Input() team :TeamView;
-  user!: UserView;
-  getEmployeeList: any[];
-  selectedEmployees: any[] = [];
-  TeamForm!: FormGroup;
+export class ManageMembersComponent implements OnInit {
+  @Input() team: TeamView;
+  user: UserView;
+  sourceEmployees: any[] = [];
+  targetEmployees: any[] = [];
+  teamId: any;
+
   constructor(
-    private formBuilder: FormBuilder,
     private commonService: CommonService,
     private messageService: MessageService,
+    private userService: UserService,
     private teamService: TeamService,
-    private activeModal: NgbActiveModal 
+    private activeModal: NgbActiveModal
   ) { }
+
   ngOnInit(): void {
-    this.fetchEmployeeList();
-    this.TeamForm = this.formBuilder.group({
-      teamName: [null, Validators.required],
-      teamEmployees: [null, Validators.required],
-      teamProjects: [null, Validators.required]
-    })
-    console.log("employee",this.getEmployeeList)
-   
-    console.log(this.TeamForm.value)
+    this.user = this.userService.getCurrentUser();
+    this.teamId = this.team.id;
+    this.fetchEmployees(this.teamId);
   }
-  fetchEmployeeList() {
-    this.teamService.getSelectedEmployee().subscribe(
-      (data) => {
-        this.getEmployeeList = data;
-      },
-      (error) => {
-        console.error('Failed to fetch employee list:', error);
+
+  fetchEmployees(teamId: any) {
+    this.teamService.getTeamMembersSelectList(teamId).subscribe(
+      {
+        next: (res) => {
+
+          this.sourceEmployees = res
+          console.log("source ", this.sourceEmployees)
+        }, error: (err) => {
+          console.error('Failed to fetch employee list:', err);
+        }
+      }
+
+
+    );
+
+    this.teamService.getEmployeeNotInTeam(teamId).subscribe(
+      {
+        next: (res) => {
+
+          this.targetEmployees = res
+          console.log("targe", this.targetEmployees)
+        }, error: (err) => {
+          console.error('Failed to fetch employee list:', err);
+        }
       }
     );
+  }
+  async addToTeam(event: any) {
+ 
+    const selectedEMployees = event.items.map(i => i.id)
+   
+    if (selectedEMployees) {
+
+      const data = {
+        teamId: this.teamId,
+        employeeList: selectedEMployees,
+        createdBy: this.user.UserID
+      };
+
+      console.log(data)
+
+      this.teamService.addMember(data).subscribe({
+        next: (res) => {
+
+          if (res){
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: res.message
+            });
+
+          }
+          else{
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Something went wrong!!',
+              detail: res.message
+            });
+
+          }
+
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Something went wrong!!',
+            detail: err
+          });
+        }
+      })
+    }
+  }
+  async removeFromTeam(event:any) { 
+    const selectedEMployees = event.items.map(i => i.id)
+   
+    if (selectedEMployees) {
+
+      const data: ITeamMemberDto = {
+        employeeList: selectedEMployees,
+        teamId: this.teamId      
+        
+      };
+
+      console.log(data)
+
+      this.teamService.removeMember(data).subscribe({
+        next: (res) => {
+
+          if (res){
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: res.message
+            });
+
+          }
+          else{
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Something went wrong!!',
+              detail: res.message
+            });
+
+          }
+
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Something went wrong!!',
+            detail: err
+          });
+        }
+      })
+    }
   }
   getImage(url: string) {
     return this.commonService.createImgPath(url);
   }
-  closeModal(){
-    this.activeModal.close()
-  }
 
+  closeModal() {
+    this.activeModal.close();
+  }
 }

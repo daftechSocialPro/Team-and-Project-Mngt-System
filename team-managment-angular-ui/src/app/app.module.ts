@@ -48,12 +48,22 @@ import { EditProjectComponent } from './pages/project/edit-project/edit-project.
 
 import { ManageMembersComponent } from './pages/team/manage-members/manage-members.component';
 
+
+import { ChipModule } from 'primeng/chip';
+import { TaskComponent } from './pages/task/task.component';  
+
+
+@NgModule({
+    declarations: [
+        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent, ManageMembersComponent, TaskComponent
+
 import { ChipModule } from 'primeng/chip';  
 import { TimelineModule } from 'primeng/timeline';
 
 @NgModule({
     declarations: [
         AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent
+
     ],
     imports: [
         AppRoutingModule,
@@ -81,6 +91,12 @@ import { TimelineModule } from 'primeng/timeline';
         DynamicDialogModule,
         DataViewModule,
         NgbModule,
+
+
+        PickListModule,
+       
+
+
         ChipModule,
         TimelineModule
         
