@@ -258,9 +258,11 @@ namespace IntegratedImplementation.Services.Project
                 else { completeTaskSum += 1; }
 
             }
-
-            return (completeTaskSum / taskSum) * 100;
-
+            if (taskSum == 0) { return 0; }
+            else
+            {
+                return (completeTaskSum / taskSum) * 100;
+            }
              
         }
 

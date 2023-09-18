@@ -8,7 +8,10 @@ import { UsersComponent } from './pages/users/users.component';
 import { TeamComponent } from './pages/team/team.component';
 import { ProjectComponent } from './pages/project/project.component';
 import { UserService } from './services/user.service';
+
 import { TaskComponent } from './pages/task/task.component';
+
+import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
 
 @NgModule({
     imports: [
@@ -24,6 +27,8 @@ import { TaskComponent } from './pages/task/task.component';
                     { path: 'tasks',component:TaskComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]}},
                     { path: 'teams',component:TeamComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]}},
                     { path: 'projects',component:ProjectComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]} },
+                    { path: 'projectdetail/:projectId',component:ProjectDetailComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]} },
+                    
                     
                 ]
 

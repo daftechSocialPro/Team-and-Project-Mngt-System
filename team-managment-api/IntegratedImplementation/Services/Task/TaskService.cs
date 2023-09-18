@@ -20,6 +20,14 @@ namespace IntegratedImplementation.Services.Task
             _dbContext = dbContext;
             _mapper = mapper;
         }
+
+        public async Task<List<TaskGetDto>> GetAllTasks()
+        {
+            var alltasks = await _dbContext.Tasks.AsNoTracking()
+                .ProjectTo<TaskGetDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            return alltasks;
+        }
         public async Task<List<TaskGetDto>> GetTasks(Guid employeeId)
         {
             var tasks = await _dbContext.Tasks.Where(x => x.EmployeeId == employeeId).AsNoTracking()

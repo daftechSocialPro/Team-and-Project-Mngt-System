@@ -32,7 +32,7 @@ export class AppMenuComponent implements OnInit {
                     
                     
                 ]
-                ,roleMatch: this.roleMatch(["Developer"]) 
+                ,roleMatch: this.roleMatch(["Developer","Admin"]) 
 
             },
             {

@@ -1,0 +1,21 @@
+<div class="card">
+
+</div>
+<div class="card">
+    <h5>{{project.projectName}}'s Tasks</h5>
+    <p-timeline [value]="project.taskLists" align="alternate" styleClass="customized-timeline"></p-timeline>
+        <ng-template pTemplate="marker" let-task>
+        <!-- <span class="flex z-1 w-2rem h-2rem align-items-center justify-content-center text-white border-circle shadow-2" [style.backgroundColor]="event.color">
+            <i [ngClass]="event.icon"></i>
+        </span> -->
+        </ng-template>
+        <ng-template pTemplate="content" let-task>
+            <p-card [header]="task.taskName" [subheader]="task.endDate | date:'yyyy-MM-dd'">
+                <p-chip label="Amy Elsner" image="assets/demo/images/avatar/amyelsner.png" styleClass="m-1"></p-chip>
+                <!-- <img *ngIf="event.image" [src]="'assets/demo/images/product/' + event.image" [alt]="event.name" width="200" class="shadow-2" /> -->
+                <p class="line-height-3 my-3">{{task.description}}</p>
+                <!-- <button pButton label="Read more" class="p-button-outlined mb-5"></button> -->
+            </p-card>
+        </ng-template>
+    </p-timeline>
+</div>

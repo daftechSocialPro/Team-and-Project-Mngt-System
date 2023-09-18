@@ -1,0 +1,28 @@
+.project-badge{
+    border-radius: var(--border-radius);
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+}
+.project-badge {
+    &.status-completed {
+        background: #C8E6C9;
+        color: #256029;
+    }
+
+    &.status-canceld {
+        background: #FFCDD2;
+        color: #C63737;
+    }
+
+    &.status-pending {
+        background: #FEEDAF;
+        color: #8A5340;
+    }
+    &.status-ongoing {
+        background:#9DD9F3 ;
+        color: #3B82F6 ;
+    }
+}

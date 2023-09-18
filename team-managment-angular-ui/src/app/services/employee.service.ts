@@ -13,6 +13,9 @@ export class EmployeeService {
   getEmployees() {
     return this.http.get<any>(this.BaseURI + '/api/Employee');
   }
+  getEmployee(employeeId:string) {
+    return this.http.get<any>(this.BaseURI + '/api/Employee/getEmployee?employeeId='+employeeId);
+  }
   addEmployee (fromData : FormData){
 
     return this.http.post<any>(this.BaseURI+'/api/Employee',fromData);
