@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -45,24 +45,14 @@ import { ProjectComponent } from './pages/project/project.component';
 import { DataViewModule } from 'primeng/dataview';
 import { AddProjectComponent } from './pages/project/add-project/add-project.component';
 import { EditProjectComponent } from './pages/project/edit-project/edit-project.component';
-
 import { ManageMembersComponent } from './pages/team/manage-members/manage-members.component';
-
-
 import { ChipModule } from 'primeng/chip';
 import { TaskComponent } from './pages/task/task.component';  
-
-
-@NgModule({
-    declarations: [
-        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent, ManageMembersComponent, TaskComponent
-
-import { ChipModule } from 'primeng/chip';  
-import { TimelineModule } from 'primeng/timeline';
+import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent
+        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent,ManageMembersComponent, ProjectDetailComponent, TaskComponent
 
     ],
     imports: [
@@ -91,6 +81,7 @@ import { TimelineModule } from 'primeng/timeline';
         DynamicDialogModule,
         DataViewModule,
         NgbModule,
+        
 
 
         PickListModule,
@@ -98,12 +89,13 @@ import { TimelineModule } from 'primeng/timeline';
 
 
         ChipModule,
-        TimelineModule
+      
         
         
         
         
     ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {
