@@ -45,24 +45,19 @@ import { ProjectComponent } from './pages/project/project.component';
 import { DataViewModule } from 'primeng/dataview';
 import { AddProjectComponent } from './pages/project/add-project/add-project.component';
 import { EditProjectComponent } from './pages/project/edit-project/edit-project.component';
-
 import { ManageMembersComponent } from './pages/team/manage-members/manage-members.component';
-
 
 import { ChipModule } from 'primeng/chip';
 import { TaskComponent } from './pages/task/task.component';  
-
-
-@NgModule({
-    declarations: [
-        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent, ManageMembersComponent, TaskComponent
-
-import { ChipModule } from 'primeng/chip';  
 import { TimelineModule } from 'primeng/timeline';
+import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
+
+
+
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent
+        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent,ProjectDetailComponent,ManageMembersComponent
 
     ],
     imports: [
@@ -91,18 +86,12 @@ import { TimelineModule } from 'primeng/timeline';
         DynamicDialogModule,
         DataViewModule,
         NgbModule,
-
-
         PickListModule,
-       
-
-
         ChipModule,
-        TimelineModule
+        TimelineModule,
         
         
-        
-        
+      
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
