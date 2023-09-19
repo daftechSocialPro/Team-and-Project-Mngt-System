@@ -49,11 +49,13 @@ export class ProjectComponent implements OnInit {
       next: (res) => {
         this.projects = res
         console.log(this.projects)
+        
       }, error: (err) => {
         console.log(err)
       }
 
     })
+    
   }
 
 
@@ -88,7 +90,6 @@ projectDetail(projectId: any)
 {
   this.router.navigate(['/projectdetail',projectId])
   
-
 }
 
 }

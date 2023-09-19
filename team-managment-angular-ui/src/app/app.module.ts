@@ -49,11 +49,12 @@ import { ManageMembersComponent } from './pages/team/manage-members/manage-membe
 import { ChipModule } from 'primeng/chip';
 import { TaskComponent } from './pages/task/task.component';  
 import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
+import { TimelineModule } from 'primeng/timeline';
+
 
 @NgModule({
     declarations: [
         AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent,ManageMembersComponent, ProjectDetailComponent, TaskComponent
-
     ],
     imports: [
         AppRoutingModule,
@@ -81,19 +82,12 @@ import { ProjectDetailComponent } from './pages/project/project-detail/project-d
         DynamicDialogModule,
         DataViewModule,
         NgbModule,
-        
-
-
         PickListModule,
-       
-
-
         ChipModule,
+        TimelineModule,
+        
+        
       
-        
-        
-        
-        
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [

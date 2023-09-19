@@ -93,6 +93,7 @@ export class EditProjectComponent implements OnInit {
       console.log(this.teamsSelectList.find(u=>u.value === this.project.teamProjects.map(u=>u.id)[0]))
       
     }})
+    
       
   }
 
