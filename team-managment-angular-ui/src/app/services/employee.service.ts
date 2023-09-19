@@ -13,7 +13,7 @@ export class EmployeeService {
   getEmployees() {
     return this.http.get<any>(this.BaseURI + '/api/Employee');
   }
-  getEmployee(employeeId:string) {
+  getEmployee(employeeId) {
     return this.http.get<any>(this.BaseURI + '/api/Employee/getEmployee?employeeId='+employeeId);
   }
   addEmployee (fromData : FormData){

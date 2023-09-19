@@ -18,6 +18,8 @@ namespace IntegratedImplementation.DTOS.Task
         public Guid EmployeeId { get; set; }
         public Guid ProjectId { get; set; }
         public string TaskDescription { get; set; }
+        public string? EmployeeImagePath { get; set; }
+        public string? EmployeeName { get; set; }
 
 
     }
