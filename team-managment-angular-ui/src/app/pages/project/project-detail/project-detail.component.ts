@@ -31,22 +31,11 @@ export class ProjectDetailComponent implements OnInit {
   
     this.projectService.getProject(this.projectId).subscribe(res => {    
       this.project = res
-      this.projectTask = res.taskLists
-      this.getEmpolyeeData(this.projectTask)
+           
       })
        
   }
-getEmpolyeeData(projectTask){
-  this.employee = projectTask.map(u => u.employeeId)
-  this.employee= this.employee.toString()
-  console.log(this.employee)
-  this.empolyeeService.getEmployee(this.employee).subscribe(
-      res => {
-        this.employee = res
-        
-      })
 
-}
 
 getImage(url: string) {
   return this.commonServive.createImgPath(url)
