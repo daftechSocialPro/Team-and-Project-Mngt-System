@@ -13,6 +13,9 @@ export class TaskService {
   getAllTask() {
     return this.http.get<any>(this.BaseURI + '/api/Task/GetAllTasks');
   }
+  getTask(employeeId:string) {
+    return this.http.get<any>(this.BaseURI + '/api/Task?employeeId='+employeeId);
+  }
 }
 
 

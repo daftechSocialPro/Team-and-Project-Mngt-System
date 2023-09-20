@@ -1,118 +1,62 @@
-<!-- <div class="col-12">
-    <div class="card">
+<div class="col-12">
+  <div class="card">
+    <h5 style="font-size: 16px; font-weight:700; color: #3366fe;">All Task List</h5>
+    <p-table [value]="tasks" dataKey="id" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem"></th>
+          <th pSortableColumn="employee.name" style="font-size: 16px; font-weight:700;">Employee Name</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-task let-expanded="expanded">
+        <tr>
+          <td>
+              <button type="button" pButton pRipple class="p-button-text p-button-rounded p-button-plain"
+  [pRowToggler]="task" (click)="expandedRow = (expandedRow === task) ? null : task"
+  [icon]="(expandedRow === task) ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
+          <td colspan="5"
+            style="min-width: 200px; font-size: 20px; font-family: Roboto sans-serif; font-weight:700;">
+            <img [alt]="" src="{{getImage(task.employee.imagePath)}}" width="32"
+              style="vertical-align: middle; border-radius: 50%;" />
+            <span class="font-bold ml-2">{{task.employee.name}}</span>
+          </td>
+        </tr>
+      </ng-template>
 
-        <h5>All Task List</h5>
-        <div class="text-right">
-            <button pButton label="Employee" class="p-button-outlined mb-2" (click)="addEmployee()"
-                icon="pi pi-plus"></button>
-        </div>
-        <p-table #dt1 [value]="tasks" [loading]="loading" dataKey="id" [rows]="5" [rowHover]="true"
-            styleClass="p-datatable-gridlines" [paginator]="true"
-            [globalFilterFields]="['firsName','phoneNumber','lastName','email','employmentDate','employmentPosition','employmentStatus']"
-            responsiveLayout="scroll">
-            <ng-template pTemplate="caption">
-                <div class="flex justify-content-between flex-column sm:flex-row">
-                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-                        (click)="clear(dt1)"></button>
-                    <span class="p-input-icon-left mb-2">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)"
-                            placeholder="Search Keyword" class="w-full" />
-                    </span>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th style="min-width: 12rem">
-                        <div class="flex justify-content-between align-items-center">
-                            Name
-                            <p-columnFilter type="text" field="name" display="menu"
-                                placeholder="Search by name"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th style="min-width: 12rem">
-                        <div class="flex justify-content-between align-items-center">
-                            Phone Number
-                            <p-columnFilter type="text" field="country.name" display="menu"
-                                placeholder="Search by country"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th style="min-width: 14rem">
-                        <div class="flex justify-content-between align-items-center">
-                            Email
-
-                        </div>
-                    </th>
-                    <th style="min-width: 10rem">
-                        <div class="flex justify-content-between align-items-center">
-                            Employment Date
-                            <p-columnFilter type="date" field="date" display="menu"
-                                placeholder="mm/dd/yyyy"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th style="min-width: 10rem">
-                        <div class="flex justify-content-between align-items-center">
-                            Position
-                            <p-columnFilter type="numeric" field="balance" display="menu"
-                                currency="USD"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th style="min-width: 12rem">
-                        <div class="flex justify-content-between align-items-center">
-                            Status
-
-                        </div>
-                    </th>
-
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-employee>
-                <tr>
-                    <td>
-
-                        <img [alt]="employee.firstName" [src]="getImage(employee.imagePath)" width="32"
-                            style="vertical-align: middle; border-radius: 20px;" />
-
-                        <span class="image-text ml-2">{{employee.firstName}} {{employee.lastName}}</span>
-
+      <ng-template pTemplate="rowexpansion" let-task>
+        <tr *ngIf="expandedRow === task">
+          <td colspan="7">
+            <div class="p-3">
+              <p-table [value]="task.tasks" dataKey="id" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="taskName" style="font-size: 16px; font-weight:700;">Task Name</th>
+                    <th pSortableColumn="endDate" style="font-size: 16px; font-weight:700;">Deadline</th>
+                    <th pSortableColumn="taskStatus" style="font-size: 16px; font-weight:700;">Status</th>
+                    <th pSortableColumn="taskPriority" style="font-size: 16px; font-weight:700;">Priority</th>
+                    <th style="width: 4rem"></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-innerTask>
+                  <tr>
+                    <td style="min-width: 200px;">
+                      {{innerTask.taskName}}</td>
+                    <td style="min-width: 200px;">
+                      {{innerTask.endDate}}</td>
+                      <td style="width:200px">
+                        <span [class]="'status-badge status-'+innerTask.taskStatuses.toLowerCase()">{{innerTask.taskStatuses}}</span>
                     </td>
-                    <td>
-                        {{employee.phoneNumber}}
+                    <td style="width:200px">
+                        <span [class]="'priority-badge prio-'+innerTask.taskPriority.toLowerCase()">{{innerTask.taskPriority}}</span>
                     </td>
-                    <td>
-                        {{employee.email}}
-                    </td>
-                    <td>
-                        {{employee.employmentDate | date: 'MM/dd/yyyy'}}
-                    </td>
-                    <td>
-                        {{employee.employmentPosition }}
-                    </td>
-                    <td>
-                        <span
-                            [class]="'customer-badge status-' + employee.employmentStatus">{{employee.employmentStatus}}</span>
-                    </td>
-
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="emptymessage">
-                <tr>
-                    <td colspan="8">No employee found.</td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="loadingbody">
-                <tr>
-                    <td colspan="8">Loading customers data. Please wait.</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
-
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>
-
-
-
-<p-dialog header="Add Employee" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
-    [resizable]="false">
-    <app-add-employee (employeeAdded)="onEmployeeAdded($event)" />
-</p-dialog> -->
