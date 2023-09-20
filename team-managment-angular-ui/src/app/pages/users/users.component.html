@@ -22,7 +22,8 @@
                     </div>
 
                     <ng-container *ngFor="let role of user.roles; let last = last">
-                        <span class="text-green-500 font-medium">{{ role.name.toUpperCase() }}</span>
+                        <!-- <span class="text-green-500 font-medium">{{ role.name.toUpperCase() }}</span> -->
+                        <button (click)="manageRoles(user.id)" pButton pRipple type="button" [label]="role.name.toUpperCase()" class="p-button-text"></button>
                         <ng-container *ngIf="!last"><span class="text-green-500 font-medium">, </span></ng-container>
                       </ng-container>
                 </div>

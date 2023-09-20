@@ -16,8 +16,9 @@ export class AddUserComponent implements OnInit {
   user !: UserView
   userForm !: FormGroup;
   employeesNoUsers: SelectItem[] = []
-  userRoles: SelectItem[] = []
-  selectedList
+  userRoles: any[] = []
+  
+  
 
   ngOnInit(): void {
 
@@ -94,6 +95,7 @@ export class AddUserComponent implements OnInit {
     this.userService.getUserRoles().subscribe({
       next: (res) => {
         this.userRoles = res.map(item => ({ value: item.name, label: item.name }));
+        
       }
     })
   }

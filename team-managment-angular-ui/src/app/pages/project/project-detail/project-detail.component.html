@@ -2,8 +2,8 @@
 
 </div>
 <div class="card">
-    <h5>{{project.projectName}}'s Tasks</h5>
-    <p-timeline [value]="project.taskLists" align="alternate" styleClass="customized-timeline">
+    <h5>{{projects.projectName}}'s Tasks</h5>
+    <p-timeline [value]="projects.taskLists" align="alternate" styleClass="customized-timeline">
         <ng-template pTemplate="marker" let-task>
         
         </ng-template>
@@ -12,7 +12,6 @@
                 
                 <p-chip [label]="task.employeeName" [image]="getImage(task.employeeImagePath)" styleClass="m-1"></p-chip>
                     
-                
                 <p class="line-height-3 my-3">{{task.description}}</p>
                 
             </p-card>

@@ -12,6 +12,7 @@ import { ProjectService } from 'src/app/services/project.service';
 export class ProjectDetailComponent implements OnInit {
 
   project:any
+  projects:any
   employee:any
   projectId:string
   projectTask:any
@@ -29,23 +30,22 @@ export class ProjectDetailComponent implements OnInit {
     
     });
   
-    this.projectService.getProject(this.projectId).subscribe(res => {    
-      this.project = res
-      this.projectTask = res.taskLists
-      this.getEmpolyeeData(this.projectTask)
-      })
+    this.getProjects(this.projectId)
+    this.getProject(this.projectId)
        
   }
-getEmpolyeeData(projectTask){
-  this.employee = projectTask.map(u => u.employeeId)
-  this.employee= this.employee.toString()
-  console.log(this.employee)
-  this.empolyeeService.getEmployee(this.employee).subscribe(
-      res => {
-        this.employee = res
-        
-      })
 
+getProjects(projectId){
+  this.projectService.getProject(projectId).subscribe(res => {    
+    this.projects = res
+         
+    })
+}
+getProject(projectId){
+  this.projectService.getProject(projectId).subscribe(res => {    
+    this.project = res
+         
+    })
 }
 
 getImage(url: string) {

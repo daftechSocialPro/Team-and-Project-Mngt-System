@@ -20,6 +20,10 @@ export class EmployeeService {
 
     return this.http.post<any>(this.BaseURI+'/api/Employee',fromData);
   }
+  
+  editEmployee (formData : FormData){
+    return this.http.put<any>(this.BaseURI+'/api/Employee',formData);
+  }
 
   getEmployeeNouser(){
     return this.http.get<any>(this.BaseURI+"/api/Employee/getEmployeeNoUser")
