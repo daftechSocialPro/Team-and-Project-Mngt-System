@@ -1,9 +1,41 @@
 <div class="card">
-
-</div>
-<div class="card">
-    <h5>{{project.projectName}}'s Tasks</h5>
-    <p-timeline [value]="project.taskLists" align="alternate" styleClass="customized-timeline">
+    <h5 style="font-size: 16px; font-weight:700; color: #3366fe;">{{project.projectName}} Details</h5>
+    <div class="" style="display: flex; justify-content: space-between;">
+        <div class=" col-12 md:col-6" >
+            <div class="card">
+				
+							<div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+								<div class="flex align-items-center">
+									<span class="font-semibold">{{project.projectName}}</span>
+								</div>
+								<span [class]="'project-badge status-' + project.projectStatus.toLowerCase()">{{project.projectStatus}}</span>
+							</div>
+							<div class="flex flex-column align-items-center text-center mb-3">
+								<div class="mb-3">{{project.description}}</div>
+                                <h5>Team Members</h5>
+                                <ng-container *ngFor="let employee of projectemp">
+                                  <p-chip [label]="employee.name" [image]="getImage(employee.imagePath)"  styleClass="m-1" class="custom-chip">
+                                  </p-chip>
+                                </ng-container>
+							</div>
+							<div class="flex align-items-center justify-content-between">
+								<!-- <span class="text-2xl font-semibold">${{product.price}}</span> -->
+								<!-- <p-button icon="pi pi-shopping-cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></p-button> -->
+                                <div class="col">
+                                    <p-progressBar [value]="50" [showValue]="false"></p-progressBar>
+                                </div>
+							</div>
+            </div>
+        </div>
+        <div class=" col-6 md:col-4" >
+            <div class="card">
+                <h5>Chat</h5>
+            </div>
+        </div>
+    </div>
+   
+    <h5 class="font-bold" style="margin-left: 20px;">Tasks</h5>
+    <!-- <p-timeline [value]="project.taskLists" align="alternate" styleClass="customized-timeline">
         <ng-template pTemplate="marker" let-task>
         
         </ng-template>
@@ -17,5 +49,35 @@
                 
             </p-card>
         </ng-template>
-    </p-timeline>
+    </p-timeline> -->
+    <div class="card col-12" >
+    <p-table [value]="project.taskLists"  class="col-12"  scrollDirection="both" [scrollable]="true" scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:200px" pFrozenColumn>Name</th>
+                <th style="width:200px">Description </th>
+                <th style="width:200px">Status</th>
+                <th style="width:200px">Priority</th>
+                <th style="width:200px">Owner</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-task>
+            <tr>
+                <td style="width:200px" pFrozenColumn>{{task.taskName}}</td>
+                <td  pFrozenColumn>{{task.taskDescription}}</td>
+                <td style="width:200px" pFrozenColumn >
+                    <span [class]="'status-badge status-'+task.taskStatuses.toLowerCase()">{{task.taskStatuses}}</span>
+                </td>
+                <td style="width:200px" pFrozenColumn >
+                    <span [class]="'priority-badge prio-'+task.taskPriority.toLowerCase()">{{task.taskPriority}}</span>
+                </td>
+                <td colspan="5">
+                <img [alt]="" src="{{getImage(task.employeeImagePath)}}" width="32"
+                  style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
+                <span class="ml-2">{{task.employeeName}}</span>
+              </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    </div>
 </div>
