@@ -19,6 +19,9 @@ export class ProjectService {
   getProject(projectId : any) {
     return this.http.get<ProjectView>(this.BaseURI + '/api/Project/GetProject?projectId='+projectId);
   }
+  getEmployeesProject(employeeId : string) {
+    return this.http.get<any>(this.BaseURI + '/api/Project/GetEmpolyeesProjects?employeeId='+employeeId);
+  }
 
   addProject (projectAdd : any){
 

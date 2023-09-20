@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'src/app/services/common.service';
 import { UserService } from 'src/app/services/user.service';
+import { ManageRolesComponent } from './manage-roles/manage-roles.component';
 
 @Component({
   selector: 'app-users',
@@ -10,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class UsersComponent implements OnInit {
   visible: boolean = false;
   users: any
-  constructor(private userService: UserService, private commonService: CommonService) { }
+  constructor(private userService: UserService, private commonService: CommonService, private modalSerivce: NgbModal, ) { }
 
   ngOnInit(): void {
 
@@ -38,5 +40,10 @@ export class UsersComponent implements OnInit {
 
     this.visible = false;
     this.getUserList()
+  }
+  manageRoles(userId){
+    let modalRef= this.modalSerivce.open(ManageRolesComponent,{size:'xl',backdrop:'static'})
+    modalRef.componentInstance.userId = userId
+    modalRef.result.then(()=>{this.getUserList()})
   }
 }

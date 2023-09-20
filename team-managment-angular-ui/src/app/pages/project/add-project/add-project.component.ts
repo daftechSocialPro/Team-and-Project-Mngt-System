@@ -76,17 +76,33 @@ export class AddProjectComponent implements OnInit {
     
     if (this.ProjectForm.valid) {
       
-      var projectAdd:any ={
-        projectName:this.ProjectForm.value.ProjectName,
-        description:this.ProjectForm.value.Description,
-        assignedDate:this.ProjectForm.value.AssignedDate,
-        dueDate:this.ProjectForm.value.DueDate,
-        projectStatus:this.ProjectForm.value.ProjectStatus.name,
-        assignedTo:this.ProjectForm.value.AssignedTo.name,
-        teamId:this.ProjectForm.value.TeamId,
-        projectEmployees:this.employeesSelectedList,
-        gitHubLink:this.ProjectForm.value.GitHubLink,
-        createdById:this.user.UserID
+      if(this.ProjectForm.value.TeamId !== undefined)
+        {
+        var projectAdd:any ={
+          projectName:this.ProjectForm.value.ProjectName,
+          description:this.ProjectForm.value.Description,
+          assignedDate:this.ProjectForm.value.AssignedDate,
+          dueDate:this.ProjectForm.value.DueDate,
+          projectStatus:this.ProjectForm.value.ProjectStatus.name,
+          assignedTo:this.ProjectForm.value.AssignedTo.name,
+          teamId:this.ProjectForm.value.TeamId.value,
+          projectEmployees:this.employeesSelectedList,
+          gitHubLink:this.ProjectForm.value.GitHubLink,
+          createdById:this.user.UserID,
+        }
+      }
+      else{
+        var projectAdd:any ={
+          projectName:this.ProjectForm.value.ProjectName,
+          description:this.ProjectForm.value.Description,
+          assignedDate:this.ProjectForm.value.AssignedDate,
+          dueDate:this.ProjectForm.value.DueDate,
+          projectStatus:this.ProjectForm.value.ProjectStatus.name,
+          assignedTo:this.ProjectForm.value.AssignedTo.name,
+          projectEmployees:this.employeesSelectedList,
+          gitHubLink:this.ProjectForm.value.GitHubLink,
+          createdById:this.user.UserID,
+        }
       }
 
       console.log(projectAdd)

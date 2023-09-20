@@ -7,6 +7,7 @@ import { SelectItem } from 'primeng/api';
 import { EditProjectComponent } from './edit-project/edit-project.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { Router } from '@angular/router';
+import { UserService, UserView } from 'src/app/services/user.service';
 
 
 
@@ -17,7 +18,8 @@ import { Router } from '@angular/router';
       })
 export class ProjectComponent implements OnInit {
 
-
+  user : UserView
+  project:any
   projects: any
   loading: boolean = true;
   visible: boolean = false;
@@ -35,10 +37,15 @@ export class ProjectComponent implements OnInit {
     private projectService: ProjectService,
     private commonService: CommonService,
     private modalSerivce: NgbModal,
-    private router: Router) { }
+    private router: Router,
+    private userService: UserService
+    ) { }
 
   ngOnInit(): void {
+    this.user = this.userService.getCurrentUser()
     this.getProjects()
+    this.getProject()
+    
     
     
   }
@@ -48,14 +55,25 @@ export class ProjectComponent implements OnInit {
     this.projectService.getProjects().subscribe({
       next: (res) => {
         this.projects = res
-        console.log(this.projects)
-        
+      
       }, error: (err) => {
         console.log(err)
       }
 
     })
     
+  }
+  getProject(){
+    
+    this.projectService.getEmployeesProject(this.user.EmployeeId).subscribe({
+      next: (res) => {
+       this.project = res
+               
+      }, error: (err) => {
+        console.log(err)
+      }
+
+    })
   }
 
 
@@ -90,6 +108,11 @@ projectDetail(projectId: any)
 {
   this.router.navigate(['/projectdetail',projectId])
   
+}
+
+allowedRoles(allowedRoles: any)
+{
+  return this.userService.roleMatch(allowedRoles)
 }
 
 }

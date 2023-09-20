@@ -12,6 +12,7 @@ import { ProjectService } from 'src/app/services/project.service';
 export class ProjectDetailComponent implements OnInit {
 
   project:any
+  projects:any
   employee:any
   projectId:string
   projectTask:any
@@ -54,6 +55,22 @@ getEmpolyeeData(projectTask){
         this.employee = res
         
       })
+    this.getProjects(this.projectId)
+    this.getProject(this.projectId)
+       
+  }
+
+getProjects(projectId){
+  this.projectService.getProject(projectId).subscribe(res => {    
+    this.projects = res
+         
+    })
+}
+getProject(projectId){
+  this.projectService.getProject(projectId).subscribe(res => {    
+    this.project = res
+         
+    })
 }
 
 getImage(url: string) {

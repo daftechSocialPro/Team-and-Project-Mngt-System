@@ -2,31 +2,56 @@
 using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Task;
+using IntegratedImplementation.DTOS.HRM;
+using IntegratedImplementation.Interfaces.HRM;
 using IntegratedImplementation.Interfaces.Task;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.Task;
 using Microsoft.EntityFrameworkCore;
 using static IntegratedInfrustructure.Data.EnumList;
+using IntegratedImplementation.DTOS.Configuration;
 
 namespace IntegratedImplementation.Services.Task
 {
     public class TaskService : ITaskService
     {
+        public class EmployeeTaskDto
+        {
+            public SelectListDto employee { get; set; }
+            public List<TaskGetDto> tasks { get; set; }
+        }
         private readonly ApplicationDbContext _dbContext;
 
         private readonly IMapper _mapper;
-        public TaskService(ApplicationDbContext dbContext, IMapper mapper)
+        private readonly IEmployeeService _employeeService;
+        public TaskService(ApplicationDbContext dbContext, IMapper mapper, IEmployeeService employeeService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _employeeService = employeeService;
         }
 
-        public async Task<List<TaskGetDto>> GetAllTasks()
+        public async Task<List<EmployeeTaskDto>> GetAllTasks()
         {
-            var alltasks = await _dbContext.Tasks.AsNoTracking()
-                .ProjectTo<TaskGetDto>(_mapper.ConfigurationProvider).ToListAsync();
+            var allTasks = new List<EmployeeTaskDto>();
 
-            return alltasks;
+            var allEmployees = await _employeeService.GetEmployees();
+            foreach(var employee in allEmployees.Distinct())
+            {
+                var empTask = new EmployeeTaskDto();
+                empTask.employee = new SelectListDto() { Id= employee.Id , Name = employee.FirstName +" "+employee.LastName, ImagePath = employee.ImagePath};
+                empTask.tasks = new List<TaskGetDto>();
+
+                empTask.tasks = await GetTasks(employee.Id);
+                if (!empTask.tasks.Count.Equals(0)) 
+                { allTasks.Add(empTask); }
+                
+
+            }
+            
+
+            
+            return allTasks;
         }
         public async Task<List<TaskGetDto>> GetTasks(Guid employeeId)
         {
@@ -52,7 +77,6 @@ namespace IntegratedImplementation.Services.Task
             {
                 return new ResponseMessage
                 {
-
                     Message = "Task End Date Should Be Later Than Todays' Date",
                     Success = false
                 };

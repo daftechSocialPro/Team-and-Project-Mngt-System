@@ -99,21 +99,37 @@ export class EditProjectComponent implements OnInit {
 
   onSubmit() {
     console.log(this.ProjectForm.value)
-    
+    debugger
     if (this.ProjectForm.valid) {
-      
-      var projectEdit:any ={
-        id:this.project.id,
-        projectName:this.ProjectForm.value.ProjectName,
-        description:this.ProjectForm.value.Description,
-        assignedDate:this.ProjectForm.value.AssignedDate,
-        dueDate:this.ProjectForm.value.DueDate,
-        projectStatus:this.ProjectForm.value.ProjectStatus.name,
-        assignedTo:this.ProjectForm.value.AssignedTo.name,
-        teamId:this.ProjectForm.value.TeamId.value,
-        projectEmployees:this.employeesSelectedList,
-        gitHubLink:this.ProjectForm.value.GitHubLink,
-        createdById:this.user.UserID,
+      if(this.ProjectForm.value.TeamId !== undefined)
+        {
+        var projectEdit:any ={
+          id:this.project.id,
+          projectName:this.ProjectForm.value.ProjectName,
+          description:this.ProjectForm.value.Description,
+          assignedDate:this.ProjectForm.value.AssignedDate,
+          dueDate:this.ProjectForm.value.DueDate,
+          projectStatus:this.ProjectForm.value.ProjectStatus.name,
+          assignedTo:this.ProjectForm.value.AssignedTo.name,
+          teamId:this.ProjectForm.value.TeamId.value,
+          projectEmployees:this.employeesSelectedList,
+          gitHubLink:this.ProjectForm.value.GitHubLink,
+          createdById:this.user.UserID,
+        }
+      }
+      else{
+        var projectEdit:any ={
+          id:this.project.id,
+          projectName:this.ProjectForm.value.ProjectName,
+          description:this.ProjectForm.value.Description,
+          assignedDate:this.ProjectForm.value.AssignedDate,
+          dueDate:this.ProjectForm.value.DueDate,
+          projectStatus:this.ProjectForm.value.ProjectStatus.name,
+          assignedTo:this.ProjectForm.value.AssignedTo.name,
+          projectEmployees:this.employeesSelectedList,
+          gitHubLink:this.ProjectForm.value.GitHubLink,
+          createdById:this.user.UserID,
+        }
       }
 
       console.log(projectEdit)

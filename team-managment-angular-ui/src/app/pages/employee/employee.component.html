@@ -63,6 +63,7 @@
 
                         </div>
                     </th>
+                    <th></th>
 
                 </tr>
             </ng-template>
@@ -91,6 +92,11 @@
                     <td>
                         <span
                             [class]="'customer-badge status-' + employee.employmentStatus">{{employee.employmentStatus}}</span>
+                    </td>
+                    <td>
+                        
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editEmployee(employee.id)"></button>
+                        
                     </td>
 
                 </tr>
