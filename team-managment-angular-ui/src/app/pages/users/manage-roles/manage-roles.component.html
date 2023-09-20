@@ -1,12 +1,12 @@
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title"> Update Members</h5>
+        <h5 class="modal-title"> Update User Roles</h5>
         <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
     </div>
     <div class="card">
       <p-pickList [source]="sourceRoles" [target]="targetRoles" sourceHeader="User's Roles" targetHeader="All Roles"
-      [dragdrop]="true" [responsive]="true" [sourceStyle]="{ height: '30rem' }" [targetStyle]="{ height: '30rem' }"
-      breakpoint="1400px" [showSourceControls]="false" [showTargetControls]="false"
+      [dragdrop]="true" [responsive]="true" [sourceStyle]="{ 'height': '300px'  }" [targetStyle]="{ 'height': '300px'}"
+      breakpoint="1400px" [showSourceControls]="false" [showTargetControls]="false" 
       (onMoveToTarget)="revokeRole($event)"
       (onMoveToSource)="assignRole($event)"
        >
@@ -20,8 +20,6 @@
         </ng-template>
       </p-pickList>
 
-
-      
     </div>
 </div>
 

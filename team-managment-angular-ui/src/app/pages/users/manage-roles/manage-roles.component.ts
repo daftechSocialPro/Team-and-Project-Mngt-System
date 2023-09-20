@@ -45,6 +45,85 @@ export class ManageRolesComponent implements OnInit {
       }
     })
   }
+
+  revokeRole(event:any)
+  {
+    const selectedRoles = event.items.map(u => u.value)
+    selectedRoles.forEach(role => {
+      const data ={userId:this.userId , roleName:role}
+      this.userService.revokeRole(data).subscribe({
+        next: (res) => {
+
+          if (res){
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: res.message
+            });
+
+          }
+          else{
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Something went wrong!!',
+              detail: res.message
+            });
+
+          }
+
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Something went wrong!!',
+            detail: err
+          });
+        }
+      })
+      
+    });
+
+  }
+
+  assignRole(event:any)
+  {
+    const selectedRoles = event.items.map(u => u.value)
+    selectedRoles.forEach(role => {
+      const data ={userId:this.userId , roleName:role}
+      this.userService.assignRole(data).subscribe({
+        next: (res) => {
+
+          if (res){
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: res.message
+            });
+
+          }
+          else{
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Something went wrong!!',
+              detail: res.message
+            });
+
+          }
+
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Something went wrong!!',
+            detail: err
+          });
+        }
+      })
+      
+    });
+
+  }
+
   closeModal()
   {
     this.activeModal.close()
