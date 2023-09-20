@@ -51,13 +51,15 @@ import { ChipModule } from 'primeng/chip';
 import { TaskComponent } from './pages/task/task.component';  
 import { TimelineModule } from 'primeng/timeline';
 import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
+import { EditEmployeeComponent } from './pages/employee/edit-employee/edit-employee.component';
+import { ManageRolesComponent } from './pages/users/manage-roles/manage-roles.component';
 
 
 
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent,ProjectDetailComponent,ManageMembersComponent
+        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent,ProjectDetailComponent,ManageMembersComponent, EditEmployeeComponent, ManageRolesComponent
 
     ],
     imports: [

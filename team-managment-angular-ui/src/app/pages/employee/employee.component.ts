@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Table } from 'primeng/table';
 import { CommonService } from 'src/app/services/common.service';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 
 @Component({
   selector: 'app-employee',
@@ -62,6 +62,11 @@ export class EmployeeComponent implements OnInit {
     
     this.visible = false;
     this.getEmployees()
+  }
+  editEmployee(employeeId){
+    let modalRef= this.modalSerivce.open(EditEmployeeComponent,{size:'xl',backdrop:'static'})
+    modalRef.componentInstance.employeeId = employeeId
+    modalRef.result.then(()=>{this.getEmployees()})
   }
 }
 

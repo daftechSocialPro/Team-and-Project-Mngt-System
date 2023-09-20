@@ -1,0 +1,68 @@
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title"> Update Project</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+    <form [formGroup]="EmployeeForm" (submit)="onSubmit()">
+        <div class="p-fluid p-formgrid grid">
+            <div class="field col-12">
+            <p-fileUpload   (onSelect)="onUpload($event)" [multiple]="false"
+                accept="image/*" [maxFileSize]="1000000">
+                <ng-template pTemplate="content">
+                    <ul *ngIf="uploadedFiles.length">
+                        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                    </ul>
+                </ng-template>
+            </p-fileUpload>
+        </div>
+            <div class="field col-12 md:col-4">
+                <label htmlFor="firstname2">Firstname</label>
+                <input pInputText id="firstname2" formControlName="FirstName" type="text" />
+            </div>
+            <div class="field col-12 md:col-4">
+                <label htmlFor="lastname2">Lastname</label>
+                <input pInputText id="lastname2" formControlName="LastName" type="text" />
+            </div>
+            <div class="field col-12 md:col-4">
+                <label htmlFor="firstname2">Email </label>
+                <input pInputText id="firstname2" formControlName="Email" type="text" />
+            </div>
+            <div class="field col-12 md:col-4">
+                <label htmlFor="firstname2">Birth Date</label>
+                <input pInputText id="firstname2" formControlName="BirthDate" type="date" />
+            </div>
+            <div class="field col-12 md:col-4">
+                <label htmlFor="lastname2">Phone Number</label>
+                <input pInputText id="lastname2" formControlName="PhoneNumber" type="text" />
+            </div>
+
+            <div class="field col-12 md:col-4">
+                <label htmlFor="state">Employee Position</label>
+                <p-dropdown [options]="positionDropdownItems" optionLabel="name"
+                    formControlName="EmploymentPosition"></p-dropdown>
+            </div>
+
+            <div class="field col-12 md:col-4">
+                <label htmlFor="lastname2">Hired Date</label>
+                <input pInputText id="lastname2" type="date" formControlName="EmploymentDate" />
+            </div>
+            <div class="field col-12 md:col-4">
+                <label htmlFor="lastname2">Address</label>
+                <input pInputText id="lastname2" type="text" formControlName="Address" />
+            </div>
+            <div class="field col-12 md:col-4">
+                <label htmlFor="state">Gender</label>
+                <p-dropdown [options]="genderDropdownItems" optionLabel="name" formControlName="Gender"></p-dropdown>
+            </div>
+            <hr />
+            <button pButton type="submit" [disabled]="!EmployeeForm.valid" label="Submit"></button>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+

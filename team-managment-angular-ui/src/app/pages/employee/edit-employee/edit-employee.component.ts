@@ -1,20 +1,22 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { CommonService } from 'src/app/services/common.service';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { UserService, UserView } from 'src/app/services/user.service';
+import { UserView, UserService } from 'src/app/services/user.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-add-employee',
-  templateUrl: './add-employee.component.html',
-  styleUrls: ['./add-employee.component.scss']
+  selector: 'app-edit-employee',
+  templateUrl: './edit-employee.component.html',
+  styleUrls: ['./edit-employee.component.scss']
 })
-export class AddEmployeeComponent implements OnInit {
+export class EditEmployeeComponent implements OnInit {
 
-  @Output() employeeAdded = new EventEmitter<any>();
+  @Input() employeeId: string
+
 
   user !: UserView
+  employee:any
   genderDropdownItems = [
     { name: '', code: '' },
     { name: 'MALE', code: 'MALE' },
@@ -35,7 +37,8 @@ export class AddEmployeeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private messageService: MessageService,
-    private employeeService: EmployeeService) { }
+    private employeeService: EmployeeService,
+    private activeModal: NgbActiveModal,) { }
 
   ngOnInit(): void {
 
@@ -53,14 +56,34 @@ export class AddEmployeeComponent implements OnInit {
       EmploymentDate: ['', Validators.required],
       EmploymentPosition: ['', Validators.required]
     })
+    this.employeeService.getEmployee(this.employeeId).subscribe({next:(res) => {
+      
+      console.log(res)
+      
+      this.employee = res
+      console.log(this.employee)
+      this.EmployeeForm.controls['FirstName'].setValue(this.employee.firstName )
+      this.EmployeeForm.controls['LastName'].setValue(this.employee.lastName)
+      this.EmployeeForm.controls['Gender'].setValue(this.genderDropdownItems.find(u => u.name === this.employee.gender))
+      this.EmployeeForm.controls['PhoneNumber'].setValue(this.employee.phoneNumber)
+      this.EmployeeForm.controls['BirthDate'].setValue(this.employee.birthDate.split('T')[0])
+      this.EmployeeForm.controls['Email'].setValue(this.employee.email)
+      this.EmployeeForm.controls['Address'].setValue(this.employee.address)
+      this.EmployeeForm.controls['EmploymentDate'].setValue(this.employee.employmentDate.split('T')[0])
+      this.EmployeeForm.controls['EmploymentPosition'].setValue(this.positionDropdownItems.find(u => u.name === this.employee.employmentPosition))
+      this.uploadedFiles.push()
+      
+      
+    }})
   }
 
   onSubmit() {
     console.log(this.EmployeeForm.value)
     console.log(this.uploadedFiles)
     if (this.EmployeeForm.valid) {
-
+      debugger
       const formData = new FormData();
+      formData.append("Id", this.employee.id)
       formData.append("FirstName", this.EmployeeForm.value.FirstName);
       formData.append("LastName", this.EmployeeForm.value.LastName);
       formData.append("Gender", this.EmployeeForm.value.Gender.name);
@@ -73,7 +96,7 @@ export class AddEmployeeComponent implements OnInit {
       formData.append("Image", this.uploadedFiles[0]);
       formData.append("CreatedById", this.user.UserID);
 
-      this.employeeService.addEmployee(formData).subscribe({
+      this.employeeService.editEmployee(formData).subscribe({
         next: (res) => {
 
           if (res.success) {
@@ -81,8 +104,8 @@ export class AddEmployeeComponent implements OnInit {
 
             this.EmployeeForm.reset();
             this.uploadedFiles = []
-            this.employeeAdded.emit();
-            // this.closeModal();
+            
+            this.closeModal();
           }
           else {
             this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
@@ -111,5 +134,8 @@ export class AddEmployeeComponent implements OnInit {
 
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
   }
-
+  closeModal()
+  {
+    this.activeModal.close()
+  }
 }
