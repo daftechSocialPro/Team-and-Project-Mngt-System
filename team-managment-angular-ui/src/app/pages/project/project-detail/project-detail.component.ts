@@ -16,6 +16,7 @@ export class ProjectDetailComponent implements OnInit {
   employee:any
   projectId:string
   projectTask:any
+  projectemp:any
   employeeName: string;
   employeeImage: any;
   constructor (
@@ -30,6 +31,30 @@ export class ProjectDetailComponent implements OnInit {
     
     });
   
+    this.projectService.getProject(this.projectId).subscribe(res => {    
+      this.project = res;
+      this.projectemp = this.project.projectEmployees.map(u => {
+        return {
+          name: u.name,
+          imagePath: u.imagePath
+        };
+      });
+      console.log(this.project)
+      this.projectTask = res.taskLists
+      this.getEmpolyeeData(this.projectTask)
+      console.log("project.taskLists", this.projectTask)
+      })
+       
+  }
+getEmpolyeeData(projectTask){
+  this.employee = projectTask.map(u => u.employeeId)
+  this.employee= this.employee.toString()
+  console.log(this.employee)
+  this.empolyeeService.getEmployee(this.employee).subscribe(
+      res => {
+        this.employee = res
+        
+      })
     this.getProjects(this.projectId)
     this.getProject(this.projectId)
        

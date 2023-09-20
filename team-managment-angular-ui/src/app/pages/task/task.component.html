@@ -1,51 +1,62 @@
 <div class="col-12">
-    <div class="card">
-        <h5 style="font-size: 26px; font-weight:700; color: #3366fe;">All Task List</h5>
-            <p-table [value]="tasks" rowGroupMode="subheader" groupRowsBy="representative.name" sortField="representative.name" sortMode="single" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
-				<ng-template pTemplate="header">
-					<tr>
-						<th style="font-size: 16px;  font-weight:700;"> Task Name </th>
-						<th style="font-size: 16px; font-weight:700;"> Deadline </th>
-						<th style="font-size: 16px;  font-weight:700;"> Status </th>
-						<th style="font-size: 16px;  font-weight:700;"> Priority </th>
-					</tr>
-				</ng-template>
-                <ng-template pTemplate="body" let-task let-rowIndex="rowIndex" >
-					<tr pRowGroupHeader *ngIf="metadata[task.employeeName].index === rowIndex">
-						<td colspan="5" style="min-width: 200px; font-size: 20px; font-family: Roboto sans-serif; font-weight:700;">
-							<img [alt]="" src="{{getImage(task.employeeImagePath)}}" width="32" style="vertical-align: middle; border-radius: 50%;"  />
-							<span class="font-bold ml-2">{{task.employeeName}}</span>
-						</td>
-					</tr>
-                    <tr>
-						<td style="min-width: 200px; font-size: 16px; font-family: Roboto sans-serif; font-weight:700;">
-                            {{task.taskName}}
-						</td>
-						<td style="min-width: 200px; font-size: 16px; font-family: Roboto sans-serif; font-weight:700;">
-                            {{task.endDate | date: 'MM/dd/yyyy'}}
-						</td>
-						<td style="min-width: 200px; font-size: 26px; font-family: Roboto sans-serif; font-weight:700;">
-                            <span [class]="'status-badge status-'+task.taskStatuses.toLowerCase()" >{{task.taskStatuses}}</span>
-						</td>
-						<td style="min-width: 200px; font-size: 26px; font-family: Roboto sans-serif; font-weight:700;">
-							<span [class]="'priority-badge prio-' + task.taskPriority.toLowerCase()"> {{task.taskPriority }}</span>
-						</td>
-					</tr>
-                
-            </ng-template>
-            <ng-template pTemplate="emptymessage">
-                <tr>
-                    <td colspan="8">No Task Found.</td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="loadingbody">
-                <tr>
-                    <td colspan="8">Loading task data. Please wait.</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
+  <div class="card">
+    <h5 style="font-size: 16px; font-weight:700; color: #3366fe;">All Task List</h5>
+    <p-table [value]="tasks" dataKey="id" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem"></th>
+          <th pSortableColumn="employee.name" style="font-size: 16px; font-weight:700;">Employee Name</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-task let-expanded="expanded">
+        <tr>
+          <td>
+              <button type="button" pButton pRipple class="p-button-text p-button-rounded p-button-plain"
+  [pRowToggler]="task" (click)="expandedRow = (expandedRow === task) ? null : task"
+  [icon]="(expandedRow === task) ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
+          <td colspan="5"
+            style="min-width: 200px; font-size: 20px; font-family: Roboto sans-serif; font-weight:700;">
+            <img [alt]="" src="{{getImage(task.employee.imagePath)}}" width="32"
+              style="vertical-align: middle; border-radius: 50%;" />
+            <span class="font-bold ml-2">{{task.employee.name}}</span>
+          </td>
+        </tr>
+      </ng-template>
 
+      <ng-template pTemplate="rowexpansion" let-task>
+        <tr *ngIf="expandedRow === task">
+          <td colspan="7">
+            <div class="p-3">
+              <p-table [value]="task.tasks" dataKey="id" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="taskName" style="font-size: 16px; font-weight:700;">Task Name</th>
+                    <th pSortableColumn="endDate" style="font-size: 16px; font-weight:700;">Deadline</th>
+                    <th pSortableColumn="taskStatus" style="font-size: 16px; font-weight:700;">Status</th>
+                    <th pSortableColumn="taskPriority" style="font-size: 16px; font-weight:700;">Priority</th>
+                    <th style="width: 4rem"></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-innerTask>
+                  <tr>
+                    <td style="min-width: 200px;">
+                      {{innerTask.taskName}}</td>
+                    <td style="min-width: 200px;">
+                      {{innerTask.endDate}}</td>
+                      <td style="width:200px">
+                        <span [class]="'status-badge status-'+innerTask.taskStatuses.toLowerCase()">{{innerTask.taskStatuses}}</span>
+                    </td>
+                    <td style="width:200px">
+                        <span [class]="'priority-badge prio-'+innerTask.taskPriority.toLowerCase()">{{innerTask.taskPriority}}</span>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>
-
-

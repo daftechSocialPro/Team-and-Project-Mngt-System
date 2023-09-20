@@ -15,8 +15,9 @@ import { TaskService } from 'src/app/services/task.service';
 export class TaskComponent implements OnInit {
   @ViewChild('filter') filter!: ElementRef;
   tasks: any;
-  metadata: any;
   loading: boolean = true;
+  expandedRows: expandedRows = {};
+  isExpanded: boolean = false;
   constructor(
     private taskService: TaskService,
     private employeeService: EmployeeService,
@@ -25,37 +26,23 @@ export class TaskComponent implements OnInit {
   ngOnInit(): void {
     this.getTasks()
   }  
+
   getTasks() {
-    this.metadata = {};
     this.taskService.getAllTask().subscribe({
       next: (res) => {
-        this.tasks = res
-        if (this.tasks) {
-          for (let i = 0; i < this.tasks.length; i++) {
-              const rowData = this.tasks[i];
-              const employeeName = rowData.employeeName;
-              console.log(" task.status", rowData.status)
-
-              if (i === 0) {
-                  this.metadata[employeeName] = { index: 0, size: 1 };
-              }
-              else {
-                  const previousRowData = this.tasks[i - 1];
-                  const previousRowGroup = previousRowData.employeeName;
-                  if (employeeName === previousRowGroup) {
-                      this.metadata[employeeName].size++;
-                  }
-                  else {
-                      this.metadata[employeeName] = { index: i, size: 1 };
-                  }
-              }
-          }
+        this.tasks = res;
+        console.log("Tasks:", this.tasks);
+        for (const task of this.tasks) {
+          console.log("Employee Name:", task.employee.name);
+          console.log("Employee Image Path:", task.employee.imagePath);
+        }
+      },
+      error: (err) => {
+        console.log(err);
       }
-     }
-     })
-
-     
+    });
   }
+
 
   getImage(url: string) {
     return this.commonService.createImgPath(url)
@@ -69,7 +56,7 @@ export class TaskComponent implements OnInit {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-
- 
-
+}
+interface expandedRows {
+  [key: string]: boolean;
 }
