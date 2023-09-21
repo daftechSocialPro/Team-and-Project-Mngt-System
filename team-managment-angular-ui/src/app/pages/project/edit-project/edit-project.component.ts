@@ -99,7 +99,7 @@ export class EditProjectComponent implements OnInit {
 
   onSubmit() {
     console.log(this.ProjectForm.value)
-    debugger
+
     if (this.ProjectForm.valid) {
       if(this.ProjectForm.value.TeamId !== undefined)
         {

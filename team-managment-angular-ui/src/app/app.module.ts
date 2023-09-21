@@ -54,6 +54,7 @@ import { EditEmployeeComponent } from './pages/employee/edit-employee/edit-emplo
 import { ManageRolesComponent } from './pages/users/manage-roles/manage-roles.component';
 
 import { TimelineModule } from 'primeng/timeline';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 
 
@@ -93,6 +94,7 @@ import { TimelineModule } from 'primeng/timeline';
         PickListModule,
         ChipModule,
         TimelineModule,
+        ProgressBarModule
         
         
       
