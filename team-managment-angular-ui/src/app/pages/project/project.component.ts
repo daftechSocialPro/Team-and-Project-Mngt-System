@@ -48,8 +48,6 @@ export class ProjectComponent implements OnInit {
     this.getProjects()
     this.getProject()
     
-    
-    
   }
 
   getProjects() {

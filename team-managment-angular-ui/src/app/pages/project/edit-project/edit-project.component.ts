@@ -74,12 +74,11 @@ export class EditProjectComponent implements OnInit {
       
     
     })
+
     this.projectService.getProject(this.projectId).subscribe({next:(res) => {
-      
-      console.log(res)
-      
+               
       this.project = res
-      console.log(this.project)
+      
       this.ProjectForm.controls['ProjectName'].setValue(this.project.projectName )
       this.ProjectForm.controls['AssignedDate'].setValue(this.project.assignedDate.toString().split('T')[0] )
       this.ProjectForm.controls['Description'].setValue(this.project.description )

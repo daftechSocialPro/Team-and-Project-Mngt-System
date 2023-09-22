@@ -16,9 +16,7 @@
                 <label htmlFor="firstname2">Project Name</label>
                 <input pInputText id="firstname2" formControlName="ProjectName" type="text" />
             </div>
-            <div class="field col-12 md:col-4">
-                <textarea rows="3" cols="15" placeholder="Project Description" formControlName="Description" pInputTextarea></textarea>
-            </div>
+            
             
             <div class="field col-12 md:col-4">
                 <label htmlFor="firstname2">Assigned Date</label>
@@ -33,7 +31,7 @@
             <div class="field col-12 md:col-4">
                 <label htmlFor="state">Project Status</label>
                 <p-dropdown [options]="projectStatusDropdownItems" optionLabel="name"
-                    formControlName="ProjectStatus"></p-dropdown>
+                    formControlName="ProjectStatus" placeholder="Select Project Progress" [showClear]="true"></p-dropdown>
             </div>
 
 
@@ -64,6 +62,9 @@
             <div *ngIf="showInput() === 'TEAM'" class="field col-12 md:col-4">
                 <label htmlFor="lastname2">Team</label>
 			    <p-dropdown [options]="teamsSelectList" placeholder="Select Team" [showClear]="true" formControlName="TeamId"></p-dropdown>
+            </div>
+            <div class="field col-12">
+                <textarea rows="3" cols="15" placeholder="Project Description" formControlName="Description" pInputTextarea></textarea>
             </div>
             <hr />
             <button pButton type="submit" [disabled]="!ProjectForm.valid" label="Submit"></button>

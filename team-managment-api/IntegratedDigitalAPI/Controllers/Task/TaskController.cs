@@ -23,6 +23,12 @@ namespace IntegratedDigitalAPI.Controllers.Task
         {
             return Ok(await _taskService.GetTasks(employeeId));
         }
+        [HttpGet("GetTask")]
+        [ProducesResponseType(typeof(TaskGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetTask(Guid taskId)
+        {
+            return Ok(await _taskService.GetTask(taskId));
+        }
         [HttpGet("GetAllTasks")]
         [ProducesResponseType(typeof(TaskGetDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllTasks()
