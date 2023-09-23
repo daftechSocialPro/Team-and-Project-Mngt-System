@@ -21,7 +21,6 @@ export class ProjectDetailComponent implements OnInit {
   constructor (
     private route: ActivatedRoute,
     private projectService: ProjectService,
-    private empolyeeService: EmployeeService,
     private commonServive: CommonService,
     private userService: UserService
       ) {}
@@ -55,8 +54,8 @@ getProject(projectId){
     })
 }
 
-getImage(url: string) {
-  return this.commonServive.createImgPath(url)
-}
+  getImage(url: string) {
+    return this.commonServive.createImgPath(url)
+  }
 
 }
