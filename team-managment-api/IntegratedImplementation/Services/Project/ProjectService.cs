@@ -232,6 +232,7 @@ namespace IntegratedImplementation.Services.Project
             var completedTasks = await _dbContext.Tasks.Where(u => u.ProjectId.Equals(id) && u.TaskStatuses.Equals(EnumList.TaskStatuses.COMPLETE)).ToListAsync();
             var taskSum = 0;
             var completeTaskSum = 0;
+            double projectProgress = 0;
             foreach (var task in tasks.Distinct())
             {
                 if (task.TaskPriority == EnumList.TaskPriority.HIGH)
@@ -261,7 +262,8 @@ namespace IntegratedImplementation.Services.Project
             if (taskSum == 0) { return 0; }
             else
             {
-                return (completeTaskSum / taskSum) * 100;
+                projectProgress = (double)completeTaskSum / taskSum * 100;
+                return projectProgress;
             }
              
         }

@@ -54,13 +54,20 @@ import { EditEmployeeComponent } from './pages/employee/edit-employee/edit-emplo
 import { ManageRolesComponent } from './pages/users/manage-roles/manage-roles.component';
 
 import { TimelineModule } from 'primeng/timeline';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { AddTaskComponent } from './pages/task/add-task/add-task.component';
+import { DividerModule } from 'primeng/divider';
+import { EditTaskComponent } from './pages/task/edit-task/edit-task.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ChartModule } from 'primeng/chart';
+
 
 
 
 @NgModule({
     declarations: [
 
-        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent,ProjectDetailComponent,ManageMembersComponent, EditEmployeeComponent, ManageRolesComponent, TaskComponent
+        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent,ProjectDetailComponent,ManageMembersComponent, EditEmployeeComponent, ManageRolesComponent, TaskComponent, AddTaskComponent, EditTaskComponent, DashboardComponent
 
 
     ],
@@ -93,6 +100,11 @@ import { TimelineModule } from 'primeng/timeline';
         PickListModule,
         ChipModule,
         TimelineModule,
+        ProgressBarModule,
+        DividerModule,
+        
+		ChartModule
+		
         
         
       

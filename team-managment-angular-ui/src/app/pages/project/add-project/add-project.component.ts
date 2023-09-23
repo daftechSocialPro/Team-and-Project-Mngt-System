@@ -33,7 +33,7 @@ export class AddProjectComponent implements OnInit {
     { name: 'COMPLETED', code: 'COMPLETED' },
     { name: 'CANCELD', code: 'CANCELD' },
     
-  ];
+  ]
   selectedState: any = null;
   
   ProjectForm!: FormGroup;

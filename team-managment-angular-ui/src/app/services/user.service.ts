@@ -64,6 +64,15 @@ export class UserService {
     return this.http.get<any>(this.BaseURI+`/api/Authentication/GetNotAssignedRole?userId=${userId}&categoryId=1`)
     
   }
+  assignRole (data : any){
+
+    return this.http.post<any>(this.BaseURI+"/api/Authentication/AssingRole",data)
+  }
+  revokeRole (data : any){
+
+    return this.http.post<any>(this.BaseURI+"/api/Authentication/RevokeRole",data)
+  }
+
   addUser (value : any){
 
     return this.http.post<any>(this.BaseURI+"/api/Authentication/AddUser",value)

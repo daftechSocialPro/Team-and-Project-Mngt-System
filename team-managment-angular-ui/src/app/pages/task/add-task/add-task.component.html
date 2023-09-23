@@ -1,0 +1,55 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title"> Create Task</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+
+    <form [formGroup]="TaskForm" (submit)="onSubmit()">
+        <div class="p-fluid p-formgrid grid">
+            <div class="field col-12">
+            
+        </div>
+            <div class="field col-12 md:col-4">
+                <label htmlFor="firstname2">Task Name</label>
+                <input pInputText id="firstname2" formControlName="TaskName" type="text" />
+            </div>
+            
+            
+            <!-- <div class="field col-12 md:col-4">
+                <label htmlFor="firstname2">Assigned Date</label>
+                <input pInputText id="firstname2" formControlName="AssignedDate" type="date" />
+            </div> -->
+            <div class="field col-12 md:col-4">
+                <label htmlFor="firstname2">Due Date</label>
+                <input pInputText id="firstname2" formControlName="EndDate" type="date" />
+            </div>
+            
+
+            <div class="field col-12 md:col-4">
+                <label htmlFor="state">Task Status</label>
+                <p-dropdown [options]="taskStatusDropDown" optionLabel="name"
+                    formControlName="TaskStatus" placeholder="Select Task Status" [showClear]="true"></p-dropdown>
+            </div>
+       
+            <div class="field col-12 md:col-4">
+                <label htmlFor="lastname2">Task Priority</label>
+                <p-dropdown [options]="taskPriorityDropDown" optionLabel="name"
+                    formControlName="TaskPriority" placeholder="Select Task Priority" [showClear]="true"></p-dropdown>
+            </div>
+            <div class="field col-12 md:col-4">
+                <label htmlFor="lastname2">Project</label>
+                <p-dropdown [options]="projectSelectList" optionLabel="label"
+                    formControlName="ProjectId" placeholder="Select Project" [showClear]="true"></p-dropdown>
+            </div>
+            <div class="field col-12 ">
+                <textarea rows="3" cols="15" placeholder="Task Description" formControlName="TaskDescription" pInputTextarea></textarea>
+            </div>
+            
+            <hr />
+            <button pButton type="submit" [disabled]="!TaskForm.valid" label="Submit"></button>
+        </div>
+    </form>
+</div>

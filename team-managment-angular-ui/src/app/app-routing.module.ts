@@ -12,6 +12,7 @@ import { UserService } from './services/user.service';
 import { TaskComponent } from './pages/task/task.component';
 
 import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 @NgModule({
     imports: [
@@ -20,15 +21,13 @@ import { ProjectDetailComponent } from './pages/project/project-detail/project-d
                 path: '', component: AppLayoutComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin","Developer"]}, 
                  
                 children: [
-                    { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
-                    { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
+                    { path: '', component:DashboardComponent },
                     { path: 'employees',component:EmployeeComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]}},
                     { path: 'users',component:UsersComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]} },
-                    { path: 'tasks',component:TaskComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]}},
+                    { path: 'tasks',component:TaskComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin","Developer"]}},
                     { path: 'teams',component:TeamComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]}},
                     { path: 'projects',component:ProjectComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]} },
                     { path: 'projectdetail/:projectId',component:ProjectDetailComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]} },
-                    
                     
                 ]
 
