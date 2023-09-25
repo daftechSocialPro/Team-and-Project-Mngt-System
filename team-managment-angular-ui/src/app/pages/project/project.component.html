@@ -1,11 +1,19 @@
 <div class="grid">
 	<div class="col-12">
 		<div class="card">
-			<h5>Projects List</h5>
-            <div class="text-right">
-                <button *ngIf="allowedRoles(['Admin'])" pButton label="Project" class="p-button-outlined mb-2"  icon="pi pi-plus" (click)="addProject()"></button>
+			
+			
+            <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
+                <p-dropdown *ngIf="allowedRoles(['Admin'])" [(ngModel)]="selectedValue" [options]="dropdownOptions" (onChange)="onDataViewChange()" class="">
+					
+				</p-dropdown>
+				<button *ngIf="allowedRoles(['Admin'])" pButton label="Project" class="p-button-outlined mb-2"  icon="pi pi-plus" (click)="addProject()"></button>
             </div>
-			<p-dataView #dv [value]="allowedRoles(['Admin']) ? projects: project" dataKey="id" [rows]="9" filterBy="name" layout="grid" [paginator]="true" [rows]="9" >
+			
+			<!-- <select [(ngModel)]="selectedValue" (change)="onDataViewChange()">
+				<option *ngFor="let option of dropdownOptions" [value]="option.value">{{ option.label }}</option>
+			  </select> -->
+			<p-dataView #dv [value]="allowedRoles(['Admin']) ? dataViewValue: project" dataKey="id" [loading]="loading" [rows]="9" filterBy="name" layout="grid" [paginator]="true" [rows]="9" >
 				<ng-template pTemplate="header">
 					<div class="flex flex-column md:flex-row md:justify-content-between gap-2">
 						<p-dropdown *ngIf="allowedRoles(['Admin'])" [options]="sortOptions" placeholder="Sort" (onChange)="onSortChange($event)"></p-dropdown>
@@ -106,6 +114,11 @@
 							
 						</div>
 					</div>
+				</ng-template>
+				<ng-template pTemplate="loadingbody">
+					<tr>
+						<td colspan="8">Loading projects data. Please wait.</td>
+					</tr>
 				</ng-template>
 			</p-dataView>
 		</div>

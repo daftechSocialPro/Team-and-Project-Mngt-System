@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataView } from 'primeng/dataview';
 import { CommonService } from 'src/app/services/common.service';
@@ -28,8 +28,14 @@ export class ProjectComponent implements OnInit {
   selectedId: string
   sortOptions: SelectItem[] = [];
   value: 0;
+  selectedValue: string;
+  dataViewValue: any[];
 
-  
+  dropdownOptions = [
+    { label: 'All Projects', value: 'AP' },
+    { label: 'My Projects', value: 'MP' }
+    
+  ];
     
 
   @ViewChild('filter') filter!: ElementRef;
@@ -48,9 +54,14 @@ export class ProjectComponent implements OnInit {
     this.getProjects()
     this.getProject()
     
+    
   }
 
+
   getProjects() {
+    if (this.projects) {
+      return;
+    }
     this.projectService.getProjects().subscribe({
       next: (res) => {
         this.projects = res;
@@ -59,6 +70,8 @@ export class ProjectComponent implements OnInit {
             this.projectProgressMap.set(project.id, progress);
           });
         });
+        this.loading = false
+        this.dataViewValue = this.projects;
       },
       error: (err) => {
         console.log(err);
@@ -118,6 +131,15 @@ export class ProjectComponent implements OnInit {
   {
     return this.userService.roleMatch(allowedRoles)
   }
+  onDataViewChange() {
+    
+    if (this.selectedValue === 'AP') {
+      this.dataViewValue = this.projects;
+    } else if (this.selectedValue === 'MP') {
+      this.dataViewValue = this.project;
+    
+  }
+}
 
 }
 
