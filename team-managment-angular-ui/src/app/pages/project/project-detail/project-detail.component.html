@@ -32,24 +32,28 @@
                 <div class="flex flex-column mb-3" style="margin-top: 10px;">
                     <div class="flex flex-wrap gap-4" style="margin-left: 30px;">
                         <div class="">
-                            <span class="number">1</span>
-                            <span style="margin-left: 10px;">Tasks</span> 
+                            <span class="number">{{allTask}}</span>
+                            <span style="margin-left: 4px;">Tasks</span> 
                         </div>
                         <div class="">
-                            <span class="number">1</span>
-                            <p-tag severity="success" value="Completed" style="margin-left: 10px;"></p-tag> 
+                            <span class="number">{{completeCount}}</span>
+                            <p-tag severity="success" value="Completed" ></p-tag> 
                         </div>
                         <div class="">
-                            <span class="number">0</span>
-                            <p-tag severity="info" value="inprogress"  style="margin-left: 10px;"></p-tag>
+                            <span class="number">{{inprogresCount}}</span>
+                            <p-tag severity="info" value="inprogress"  ></p-tag>
                         </div>
                         <div class="">
-                            <span class="number">0</span>
-                            <p-tag severity="warning" value="onhold"  style="margin-left: 10px;"></p-tag>
+                            <span class="number">{{notstartedCount}}</span>
+                            <p-tag severity="warning" value="notStarted" ></p-tag>
                         </div>
                         <div class="">
-                            <span class="number">0</span>
-                            <p-tag severity="danger" value="Overdue" style="margin-left: 10px;"></p-tag> 
+                            <span class="number" >{{onholdCount}}</span>
+                            <p-tag severity="danger" value="OnHold"></p-tag> 
+                        </div>
+                        <div class="">
+                            <span class="number">{{overdueCount}}</span>
+                            <p-tag severity="danger" value="Overdue"></p-tag> 
                         </div>
                     </div>
                     <div class="col">

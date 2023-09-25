@@ -26,6 +26,10 @@ export class TaskService {
   editTask(editTask:any){
     return this.http.put<any>(this.BaseURI + '/api/Task',editTask)
   }
+  updateStatus(data:any){
+    return this.http.put<any>(this.BaseURI + '/api/Task/ChangeStatus', data)
+  }
+  
 }
 
 

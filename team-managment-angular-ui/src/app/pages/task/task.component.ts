@@ -21,6 +21,9 @@ export class TaskComponent implements OnInit {
   expandedRows: expandedRows = {};
   isExpanded: boolean = false;
   employeeTask: any;
+  taskArray:any = [];
+  curentTask:any;
+
   constructor(
     private taskService: TaskService,
     private employeeService: EmployeeService,
@@ -45,11 +48,19 @@ export class TaskComponent implements OnInit {
       }
     })
   }
+
   getTasks() {
+ 
     this.taskService.getAllTask().subscribe({
       next: (res) => {
         this.tasks = res;
         console.log("Tasks:", this.tasks);
+        this.tasks.forEach((item) => {
+          item.tasks.forEach((task) => {
+            this.taskArray.push(task);
+          });
+        });
+        console.log("TaskArray:", this.taskArray);
       },
       error: (err) => {
         console.log(err);
@@ -57,6 +68,12 @@ export class TaskComponent implements OnInit {
     });
   }
 
+  filterdTask(status:string){
+     return this.taskArray.filter(m=>m.taskStatuses == status)
+  }
+  filterdTaskArr(statuses: string[]) {
+    return this.taskArray.filter(m => statuses.includes(m.taskStatuses));
+  }
 
   getImage(url: string) {
     return this.commonService.createImgPath(url)
@@ -85,7 +102,39 @@ export class TaskComponent implements OnInit {
     modalRef.componentInstance.taskId = taskId
     modalRef.result.then(()=>{this.getEmployeeTask(this.user.EmployeeId)})
   }
- 
+  onDragStart(item:any){
+    this.curentTask=item;
+    console.log("onDragStart")
+
+  }
+  onDrop(event:any, status:string){
+    console.log("onDrop")
+    event.preventDefault();
+    const record=this.taskArray.find(m=>m.id == this.curentTask.id)
+    if(record != undefined){
+      record.taskStatuses = status;
+      console.log(record.id,status,"sending data")
+     let data={
+        "id":record.id,
+        "taskStatuses":status
+      }
+      this.taskService.updateStatus(data).subscribe({
+        next: (res) => {
+          console.log("Task status updated successfully:", res);
+        },
+        error: (err) => {
+          console.log("Error updating task status:", err);
+        }
+      });
+    }
+    this.curentTask=null;
+  }
+  dragOver(event:any){
+  event.preventDefault();
+  console.log("dragOver")
+  }
+  
+
 }
 interface expandedRows {
   [key: string]: boolean;
