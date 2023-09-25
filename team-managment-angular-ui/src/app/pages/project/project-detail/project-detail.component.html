@@ -1,82 +1,101 @@
 <div class="card">
     <h5 style="font-size: 16px; font-weight:700; color: #3366fe;">{{project.projectName}} Details</h5>
-    <div class="" style="display: flex; justify-content: space-between;">
-        <div class=" col-12 md:col-6" >
+    <div style="display: flex;  gap: 20px;" >
+        <div style="flex: 3;">
             <div class="card">
-				
-							<div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
-								<div class="flex align-items-center">
-									<span class="font-semibold">{{project.projectName}}</span>
-								</div>
-								<span [class]="'project-badge status-' + project.projectStatus.toLowerCase()">{{project.projectStatus}}</span>
-							</div>
-							<div class="flex flex-column align-items-center text-center mb-3">
-								<div class="mb-3">{{project.description}}</div>
-                                <h5>Team Members</h5>
-                                <ng-container *ngFor="let employee of projectemp">
-                                  <p-chip [label]="employee.name" [image]="getImage(employee.imagePath)"  styleClass="m-1" class="custom-chip">
-                                  </p-chip>
-                                </ng-container>
-							</div>
-							<div class="flex align-items-center justify-content-between">
-								<!-- <span class="text-2xl font-semibold">${{product.price}}</span> -->
-								<!-- <p-button icon="pi pi-shopping-cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></p-button> -->
-                                <div class="col">
-                                    <p-progressBar [value]="50" [showValue]="false"></p-progressBar>
-                                </div>
-							</div>
+                <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+                    <div class="flex align-items-center">
+                        <span class="font-semibold" style="margin-right: 20px;">{{project.projectName}}</span>
+                        <span
+                        [class]="'project-badge status-' + project.projectStatus.toLowerCase()">{{project.projectStatus}}</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <span>Starting date:  {{project.assignedDate  | date: 'MM/dd/yyyy'}}</span>
+                        <span>Deadline:  {{project.dueDate  | date: 'MM/dd/yyyy'}}</span>
+                    </div>
+                </div>
+                <div class="flex flex-column align-items-center text-center mb-3">
+                    <div class="mb-3" style="text-align: justify; margin-left: 30px; margin-right: 30px;">
+                        {{project.description}}<a href="{{project.gitHubLink}}" target="_blank" class="btn btn-outline-info" style=" margin-left: 10px;">GitLink</a>
+                    </div>
+                    <h5>Team Members</h5>
+                    <div class="flex-row" style="display: flex; justify-content: space-between;">
+                        <ng-container *ngFor="let employee of projectemp">
+                          <div class="flex flex-column align-items-center" style="margin-right: 20px;">
+                            <img [alt]="" src="{{getImage(employee.imagePath)}}" width="32"
+                                 style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
+                            <span class="ml-2">{{employee.name}}</span>
+                          </div>
+                        </ng-container>
+                      </div>
+                </div>
+                <div class="flex flex-column mb-3" style="margin-top: 10px;">
+                    <div class="flex flex-wrap gap-4" style="margin-left: 30px;">
+                        <div class="">
+                            <span class="number">1</span>
+                            <span style="margin-left: 10px;">Tasks</span> 
+                        </div>
+                        <div class="">
+                            <span class="number">1</span>
+                            <p-tag severity="success" value="Completed" style="margin-left: 10px;"></p-tag> 
+                        </div>
+                        <div class="">
+                            <span class="number">0</span>
+                            <p-tag severity="info" value="inprogress"  style="margin-left: 10px;"></p-tag>
+                        </div>
+                        <div class="">
+                            <span class="number">0</span>
+                            <p-tag severity="warning" value="onhold"  style="margin-left: 10px;"></p-tag>
+                        </div>
+                        <div class="">
+                            <span class="number">0</span>
+                            <p-tag severity="danger" value="Overdue" style="margin-left: 10px;"></p-tag> 
+                        </div>
+                    </div>
+                    <div class="col">
+                        <p-progressBar [value]="50" [showValue]="false"></p-progressBar>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class=" col-6 md:col-4" >
+        <div style="flex: 1;">
             <div class="card">
                 <h5>Chat</h5>
             </div>
         </div>
+        </div>
+        <h5 class="font-bold" style="margin-left: 20px;">Tasks</h5>
+        <div class="card col-12">
+            <p-table [value]="project.taskLists" class="col-12" scrollDirection="both" [scrollable]="true"
+                scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:200px" pFrozenColumn>Name</th>
+                        <th style="width:200px">Description </th>
+                        <th style="width:200px">Status</th>
+                        <th style="width:200px">Priority</th>
+                        <th style="width:200px">Owner</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-task>
+                    <tr>
+                        <td style="width:200px" pFrozenColumn>{{task.taskName}}</td>
+                        <td pFrozenColumn>{{task.taskDescription}}</td>
+                        <td style="width:200px" pFrozenColumn>
+                            <span
+                                [class]="'status-badge status-'+task.taskStatuses.toLowerCase()">{{task.taskStatuses}}</span>
+                        </td>
+                        <td style="width:200px" pFrozenColumn>
+                            <span
+                                [class]="'priority-badge prio-'+task.taskPriority.toLowerCase()">{{task.taskPriority}}</span>
+                        </td>
+                        <td colspan="5">
+                            <img [alt]="" src="{{getImage(task.employeeImagePath)}}" width="32"
+                                style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
+                            <span class="ml-2">{{task.employeeName}}</span>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
     </div>
-   
-    <h5 class="font-bold" style="margin-left: 20px;">Tasks</h5>
-    <!-- <p-timeline [value]="project.taskLists" align="alternate" styleClass="customized-timeline">
-        <ng-template pTemplate="marker" let-task>
-        
-        </ng-template>
-        <ng-template pTemplate="content" let-task>
-            <p-card [header]="task.taskName" [subheader]="task.endDate | date:'yyyy-MM-dd'">
-                
-                <p-chip [label]="task.employeeName" [image]="getImage(task.employeeImagePath)" styleClass="m-1"></p-chip>
-                    
-                <p class="line-height-3 my-3">{{task.description}}</p>
-                
-            </p-card>
-        </ng-template>
-    </p-timeline> -->
-    <div class="card col-12" >
-    <p-table [value]="project.taskLists"  class="col-12"  scrollDirection="both" [scrollable]="true" scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="width:200px" pFrozenColumn>Name</th>
-                <th style="width:200px">Description </th>
-                <th style="width:200px">Status</th>
-                <th style="width:200px">Priority</th>
-                <th style="width:200px">Owner</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-task>
-            <tr>
-                <td style="width:200px" pFrozenColumn>{{task.taskName}}</td>
-                <td  pFrozenColumn>{{task.taskDescription}}</td>
-                <td style="width:200px" pFrozenColumn >
-                    <span [class]="'status-badge status-'+task.taskStatuses.toLowerCase()">{{task.taskStatuses}}</span>
-                </td>
-                <td style="width:200px" pFrozenColumn >
-                    <span [class]="'priority-badge prio-'+task.taskPriority.toLowerCase()">{{task.taskPriority}}</span>
-                </td>
-                <td colspan="5">
-                <img [alt]="" src="{{getImage(task.employeeImagePath)}}" width="32"
-                  style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
-                <span class="ml-2">{{task.employeeName}}</span>
-              </td>
-            </tr>
-        </ng-template>
-    </p-table>
-    </div>
-</div>

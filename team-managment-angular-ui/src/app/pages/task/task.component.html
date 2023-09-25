@@ -43,7 +43,7 @@
                     <td style="min-width: 200px;">
                       {{innerTask.taskName}}</td>
                     <td style="min-width: 200px;">
-                      {{innerTask.endDate}}</td>
+                      {{innerTask.endDate  | date: 'MM/dd/yyyy'}}</td>
                       <td style="width:200px">
                         <span [class]="'status-badge status-'+innerTask.taskStatuses.toLowerCase()">{{innerTask.taskStatuses}}</span>
                     </td>

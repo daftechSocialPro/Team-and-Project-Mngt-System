@@ -28,6 +28,7 @@ export class ProjectComponent implements OnInit {
   selectedId: string
   sortOptions: SelectItem[] = [];
   value: 0;
+  truncatedDescription: string;
 
   
     
@@ -70,7 +71,7 @@ export class ProjectComponent implements OnInit {
     
     this.projectService.getEmployeesProject(this.user.EmployeeId).subscribe({
       next: (res) => {
-       this.project = res
+       this.project = res      
        this.project.forEach((project) => {
         this.getProjectProgress(project.id).subscribe((progress: number) => {
           this.projectProgressMap.set(project.id, progress);

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AnyComponent } from '@fullcalendar/core/preact';
 import { CommonService } from 'src/app/services/common.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { ProjectService } from 'src/app/services/project.service';
@@ -13,7 +14,7 @@ import { UserService, UserView } from 'src/app/services/user.service';
 export class ProjectDetailComponent implements OnInit {
   user: UserView
   project:any
-  employeeTasks
+  employeeTasks:any
   projectId:string
   
   projectemp:any
@@ -39,6 +40,7 @@ export class ProjectDetailComponent implements OnInit {
           imagePath: u.imagePath
         };
       });
+      console.log(this.project)
       this.employeeTasks = res.taskLists.filter(u=> u.employeeId === this.user.EmployeeId )
       console.log("My Tasks",this.employeeTasks)
       
@@ -49,13 +51,16 @@ export class ProjectDetailComponent implements OnInit {
 
 getProject(projectId){
   this.projectService.getProject(projectId).subscribe(res => {    
-    this.project = res
-         
+    this.project = res   
     })
 }
 
-  getImage(url: string) {
-    return this.commonServive.createImgPath(url)
-  }
+openLink(): void {
+  const link = this.project.gitHubLink; 
+  window.open(link, '_blank');
+}
+getImage(url: string) {
+  return this.commonServive.createImgPath(url)
+}
 
 }
