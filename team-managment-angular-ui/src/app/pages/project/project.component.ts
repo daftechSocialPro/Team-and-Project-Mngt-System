@@ -28,8 +28,12 @@ export class ProjectComponent implements OnInit {
   selectedId: string
   sortOptions: SelectItem[] = [];
   value: 0;
+<<<<<<< HEAD
   selectedValue: string;
   dataViewValue: any[];
+=======
+  truncatedDescription: string;
+>>>>>>> 3e339ddbc61309ec7c7f7127c82871f413061832
 
   dropdownOptions = [
     { label: 'All Projects', value: 'AP' },
@@ -83,7 +87,7 @@ export class ProjectComponent implements OnInit {
     
     this.projectService.getEmployeesProject(this.user.EmployeeId).subscribe({
       next: (res) => {
-       this.project = res
+       this.project = res      
        this.project.forEach((project) => {
         this.getProjectProgress(project.id).subscribe((progress: number) => {
           this.projectProgressMap.set(project.id, progress);
