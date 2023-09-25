@@ -8,6 +8,7 @@ import { EditProjectComponent } from './edit-project/edit-project.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { Router } from '@angular/router';
 import { UserService, UserView } from 'src/app/services/user.service';
+import { Observable } from 'rxjs';
 
 
 
@@ -33,6 +34,7 @@ export class ProjectComponent implements OnInit {
     
 
   @ViewChild('filter') filter!: ElementRef;
+  projectProgressMap: Map<number, number> = new Map<number, number>();
 
   constructor(
     private projectService: ProjectService,
@@ -47,28 +49,35 @@ export class ProjectComponent implements OnInit {
     this.getProjects()
     this.getProject()
     
-    
-    
   }
 
   getProjects() {
-
     this.projectService.getProjects().subscribe({
       next: (res) => {
-        this.projects = res
-      
-      }, error: (err) => {
-        console.log(err)
+        this.projects = res;
+        this.projects.forEach((project) => {
+          this.getProjectProgress(project.id).subscribe((progress: number) => {
+            this.projectProgressMap.set(project.id, progress);
+          });
+        });
+      },
+      error: (err) => {
+        console.log(err);
       }
-
-    })
-    
+    });
   }
+
   getProject(){
     
     this.projectService.getEmployeesProject(this.user.EmployeeId).subscribe({
       next: (res) => {
        this.project = res      
+       this.project.forEach((project) => {
+        this.getProjectProgress(project.id).subscribe((progress: number) => {
+          this.projectProgressMap.set(project.id, progress);
+        });
+      });
+               
       }, error: (err) => {
         console.log(err)
       }
@@ -77,45 +86,39 @@ export class ProjectComponent implements OnInit {
   }
 
 
-onFilter(dv: DataView, event: Event) {
-    dv.filter((event.target as HTMLInputElement).value);
-}
+  onFilter(dv: DataView, event: Event) {
+      dv.filter((event.target as HTMLInputElement).value);
+  }
 
-getImage(url: string) {
-  return this.commonService.createImgPath(url)
-}
-addProject() {
-  let modalRef= this.modalSerivce.open(AddProjectComponent,{size:'xl',backdrop:'static'})
-  
-  modalRef.result.then(()=>{this.getProjects()})
-}
-
-
-editProject(projectId){
-  let modalRef= this.modalSerivce.open(EditProjectComponent,{size:'xl',backdrop:'static'})
-  modalRef.componentInstance.projectId = projectId
-  modalRef.result.then(()=>{this.getProjects()})
-}
+  getImage(url: string) {
+    return this.commonService.createImgPath(url)
+  }
+  addProject() {
+    let modalRef= this.modalSerivce.open(AddProjectComponent,{size:'xl',backdrop:'static'})
+    
+    modalRef.result.then(()=>{this.getProjects()})
+  }
 
 
+  editProject(projectId){
+    let modalRef= this.modalSerivce.open(EditProjectComponent,{size:'xl',backdrop:'static'})
+    modalRef.componentInstance.projectId = projectId
+    modalRef.result.then(()=>{this.getProjects()})
+  }
 
+  getProjectProgress(id: any): Observable<number> {
+    return this.projectService.getProjectProgress(id);
+  }
 
-getProjectProgress(id: any){
-  // console.log(this.projectService.getProjectProgress(id))
-  return this.projectService.getProjectProgress(id)
-  
-}
+  projectDetail(projectId: any)
+  {
+    this.router.navigate(['/projectdetail',projectId])
+  }
 
-projectDetail(projectId: any)
-{
-  this.router.navigate(['/projectdetail',projectId])
-  
-}
-
-allowedRoles(allowedRoles: any)
-{
-  return this.userService.roleMatch(allowedRoles)
-}
+  allowedRoles(allowedRoles: any)
+  {
+    return this.userService.roleMatch(allowedRoles)
+  }
 
 }
 

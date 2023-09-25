@@ -10,6 +10,8 @@ using IntegratedInfrustructure.Model.Task;
 using Microsoft.EntityFrameworkCore;
 using static IntegratedInfrustructure.Data.EnumList;
 using IntegratedImplementation.DTOS.Configuration;
+using System.ComponentModel;
+using IntegratedImplementation.DTOS.Project;
 
 namespace IntegratedImplementation.Services.Task
 {
@@ -31,6 +33,14 @@ namespace IntegratedImplementation.Services.Task
             _employeeService = employeeService;
         }
 
+        public async Task<TaskGetDto> GetTask(Guid taskId)
+        {
+            var task = await _dbContext.Tasks.Where(x => x.Id.Equals(taskId)).AsNoTracking()
+                                    .ProjectTo<TaskGetDto>(_mapper.ConfigurationProvider)
+                                    .FirstAsync();
+
+            return task;
+        }
         public async Task<List<EmployeeTaskDto>> GetAllTasks()
         {
             var allTasks = new List<EmployeeTaskDto>();
@@ -46,11 +56,8 @@ namespace IntegratedImplementation.Services.Task
                 if (!empTask.tasks.Count.Equals(0)) 
                 { allTasks.Add(empTask); }
                 
-
             }
-            
-
-            
+          
             return allTasks;
         }
         public async Task<List<TaskGetDto>> GetTasks(Guid employeeId)

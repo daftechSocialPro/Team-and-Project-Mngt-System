@@ -69,13 +69,13 @@
 								<div class="text-2xl font-bold">{{project.projectName}}</div>
 								<div class="mb-3">{{project.description}</div>
 								
-								<!-- <p-progressBar [value]= 50 [showValue]="true"></p-progressBar> -->
+								<!-- <p-progressBar [value]= 50 [showValue]="true"></p-progressBar> 
+								
 								
 							</div>
+							<p-progressBar [value]="projectProgressMap.get(project.id)" [showValue]="true"></p-progressBar>
 							
 							
-							
-                            
 							<div class="flex flex-column">
 								<!-- <div><p-tag icon="pi pi-user" value={{project.assignedTo}}></p-tag></div> -->
 								<div class="mb-2 mt-2"><p-chip label={{project.assignedTo}} styleClass="m-1"></p-chip></div>

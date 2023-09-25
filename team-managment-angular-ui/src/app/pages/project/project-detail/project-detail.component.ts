@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AnyComponent } from '@fullcalendar/core/preact';
 import { CommonService } from 'src/app/services/common.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { ProjectService } from 'src/app/services/project.service';
+import { UserService, UserView } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -10,22 +12,21 @@ import { ProjectService } from 'src/app/services/project.service';
   styleUrls: ['./project-detail.component.scss']
 })
 export class ProjectDetailComponent implements OnInit {
-
+  user: UserView
   project:any
-  projects:any
-  employee:any
+  employeeTasks:any
   projectId:string
-  projectTask:any
+  
   projectemp:any
-  employeeName: string;
-  employeeImage: any;
+ 
   constructor (
     private route: ActivatedRoute,
     private projectService: ProjectService,
-    private empolyeeService: EmployeeService,
-    private commonServive: CommonService
+    private commonServive: CommonService,
+    private userService: UserService
       ) {}
   ngOnInit(): void {
+    this.user = this.userService.getCurrentUser()
     this.route.paramMap.subscribe(params => {
     this.projectId = params.get('projectId');
     
@@ -40,31 +41,14 @@ export class ProjectDetailComponent implements OnInit {
         };
       });
       console.log(this.project)
-      this.projectTask = res.taskLists
-      this.getEmpolyeeData(this.projectTask)
+      this.employeeTasks = res.taskLists.filter(u=> u.employeeId === this.user.EmployeeId )
+      console.log("My Tasks",this.employeeTasks)
+      
       })
-       
-  }
-getEmpolyeeData(projectTask){
-  this.employee = projectTask.map(u => u.employeeId)
-  this.employee= this.employee.toString()
-  console.log(this.employee)
-  this.empolyeeService.getEmployee(this.employee).subscribe(
-      res => {
-        this.employee = res
-        
-      })
-    this.getProjects(this.projectId)
-    this.getProject(this.projectId)
        
   }
 
-getProjects(projectId){
-  this.projectService.getProject(projectId).subscribe(res => {    
-    this.projects = res
-         
-    })
-}
+
 getProject(projectId){
   this.projectService.getProject(projectId).subscribe(res => {    
     this.project = res   
@@ -75,10 +59,6 @@ openLink(): void {
   const link = this.project.gitHubLink; 
   window.open(link, '_blank');
 }
-
-
-
-
 getImage(url: string) {
   return this.commonServive.createImgPath(url)
 }

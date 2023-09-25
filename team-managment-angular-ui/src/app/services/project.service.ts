@@ -35,7 +35,9 @@ export class ProjectService {
   getProjectProgress(id : any) {
     return this.http.get<number>(this.BaseURI + '/api/Project/GetProjectProgress?id='+id);
   }
-  
+  getProjectSelectList(){
+    return this.http.get<any>( this.BaseURI + '/api/Project/GetProjectSelectList')
+  }
 
   
 }
