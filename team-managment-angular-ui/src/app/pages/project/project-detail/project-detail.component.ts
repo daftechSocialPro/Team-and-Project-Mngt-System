@@ -42,7 +42,6 @@ export class ProjectDetailComponent implements OnInit {
       console.log(this.project)
       this.projectTask = res.taskLists
       this.getEmpolyeeData(this.projectTask)
-      console.log("project.taskLists", this.projectTask)
       })
        
   }
@@ -68,10 +67,17 @@ getProjects(projectId){
 }
 getProject(projectId){
   this.projectService.getProject(projectId).subscribe(res => {    
-    this.project = res
-         
+    this.project = res   
     })
 }
+
+openLink(): void {
+  const link = this.project.gitHubLink; 
+  window.open(link, '_blank');
+}
+
+
+
 
 getImage(url: string) {
   return this.commonServive.createImgPath(url)

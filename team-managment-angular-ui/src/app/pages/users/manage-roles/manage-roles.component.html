@@ -7,8 +7,7 @@
       <p-pickList [source]="sourceRoles" [target]="targetRoles" sourceHeader="User's Roles" targetHeader="All Roles"
       [dragdrop]="true" [responsive]="true" [sourceStyle]="{ height: '30rem' }" [targetStyle]="{ height: '30rem' }"
       breakpoint="1400px" [showSourceControls]="false" [showTargetControls]="false"
-      (onMoveToTarget)="revokeRole($event)"
-      (onMoveToSource)="assignRole($event)"
+    
        >
         <ng-template let-roles pTemplate="item">
           <div class="flex flex-wrap p-2 align-items-center gap-3">
