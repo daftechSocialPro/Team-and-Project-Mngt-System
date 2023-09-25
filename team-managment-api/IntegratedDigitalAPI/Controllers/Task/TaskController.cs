@@ -68,5 +68,18 @@ namespace IntegratedDigitalAPI.Controllers.Task
                 return BadRequest(ModelState);
             }
         }
+        [HttpPut("ChangeStatus")]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ChangeStatus(TaskStatusDto editStatus)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _taskService.ChangeStatus(editStatus));
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
     }
 }

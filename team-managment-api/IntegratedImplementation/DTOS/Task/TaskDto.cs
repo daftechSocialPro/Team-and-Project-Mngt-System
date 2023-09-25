@@ -38,4 +38,10 @@ namespace IntegratedImplementation.DTOS.Task
 
     }
 
+    public record TaskStatusDto
+    {
+        public Guid? Id { get; set; }
+        public string TaskStatuses { get; set; }
+    }
+
 }

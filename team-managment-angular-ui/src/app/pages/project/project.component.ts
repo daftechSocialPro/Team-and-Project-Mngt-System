@@ -9,6 +9,7 @@ import { AddProjectComponent } from './add-project/add-project.component';
 import { Router } from '@angular/router';
 import { UserService, UserView } from 'src/app/services/user.service';
 import { Observable } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -26,14 +27,19 @@ export class ProjectComponent implements OnInit {
   visible: boolean = false;
   editVisible: boolean = false;
   selectedId: string
-  sortOptions: SelectItem[] = [];
-  value: 0;
-<<<<<<< HEAD
+  sortOrder: number = 0;
+  sortField: string = '';
   selectedValue: string;
   dataViewValue: any[];
-=======
+  sortOptions: any[] = [
+    { label: 'Name', value: 'projectName' },
+    { label: 'Status', value: 'projectStatus' },
+    { label: 'Date', value: 'dueDate'}
+    // Add more sorting options as needed
+  ];
+
   truncatedDescription: string;
->>>>>>> 3e339ddbc61309ec7c7f7127c82871f413061832
+  currentDate:Date 
 
   dropdownOptions = [
     { label: 'All Projects', value: 'AP' },
@@ -42,18 +48,23 @@ export class ProjectComponent implements OnInit {
   ];
     
 
-  @ViewChild('filter') filter!: ElementRef;
+  
   projectProgressMap: Map<number, number> = new Map<number, number>();
+  expProjectProgressMap: Map<number, any> = new Map<number, any>();
+  expectedProgress: number;
 
   constructor(
     private projectService: ProjectService,
     private commonService: CommonService,
     private modalSerivce: NgbModal,
     private router: Router,
-    private userService: UserService
-    ) { }
+    private userService: UserService,
+   
+    
+    ) {}
 
   ngOnInit(): void {
+    this.currentDate= new Date()
     this.user = this.userService.getCurrentUser()
     this.getProjects()
     this.getProject()
@@ -74,6 +85,18 @@ export class ProjectComponent implements OnInit {
             this.projectProgressMap.set(project.id, progress);
           });
         });
+        this.projects.forEach((p) => {
+          const dueDate = new Date(p.dueDate);
+          const createdDate = new Date(p.assignedDate);
+          const totalDuration = dueDate.getTime() - createdDate.getTime();
+          const elapsedDuration = this.currentDate.getTime() - createdDate.getTime();
+          const expectedProgress = ((elapsedDuration / totalDuration) * 100).toFixed(2);
+          this.expProjectProgressMap.set(p.id,expectedProgress)
+          
+        })
+        
+          
+  
         this.loading = false
         this.dataViewValue = this.projects;
       },
@@ -100,11 +123,11 @@ export class ProjectComponent implements OnInit {
 
     })
   }
-
+  
 
   onFilter(dv: DataView, event: Event) {
-      dv.filter((event.target as HTMLInputElement).value);
-  }
+    dv.filter((event.target as HTMLInputElement).value);
+}
 
   getImage(url: string) {
     return this.commonService.createImgPath(url)
@@ -144,6 +167,35 @@ export class ProjectComponent implements OnInit {
     
   }
 }
+onSortChange(event: any): void {
+  const value = event.value;
+
+  if (value.indexOf('!') === 0) {
+    this.sortOrder = -1;
+    this.sortField = value.substring(1);
+  } else {
+    this.sortOrder = 1;
+    this.sortField = value;
+  }
+
+  // Perform the actual sorting
+  this.projects.sort((a, b) => {
+    return a[this.sortField].localeCompare(b[this.sortField]) * this.sortOrder;
+  });
+}
+calculateProgressBarColor(id): string {
+  const progressDifference = this.projectProgressMap.get(id) - this.expProjectProgressMap.get(id);
+  const percentageDifference = progressDifference / this.expProjectProgressMap.get(id);
+
+  
+  const red = Math.round(255 * Math.max(0, percentageDifference));
+  const green = Math.round(255 * Math.max(0, -percentageDifference));
+  const blue = 0;
+
+  console.log(percentageDifference)
+  return `background-color: rgb(${red}, ${green}, ${blue})`;
+}
+
 
 }
 
