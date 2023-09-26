@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit, AfterViewInit{
   pieData:any
   pieOptions:any
   projectStatuses: any;
+  totalTaskCount: any;
 
 
 
@@ -91,6 +92,7 @@ export class DashboardComponent implements OnInit, AfterViewInit{
     this.taskService.getAllTask().subscribe({
       next: (res) => {
         this.tasks = res;
+        this.totalTaskCount = this.tasks.reduce((count, obj) => count + obj.tasks.length, 0);
       },
       error: (err) => {
         console.log(err);

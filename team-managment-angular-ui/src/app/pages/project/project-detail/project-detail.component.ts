@@ -16,6 +16,7 @@ export class ProjectDetailComponent implements OnInit {
   employeeTasks
   projectId:string
   projectemp:any
+
   completeCount:any = 0;
   inprogresCount:any = 0;
   notstartedCount:any = 0;
@@ -23,6 +24,17 @@ export class ProjectDetailComponent implements OnInit {
  onholdCount:any=0;
  allTask:any=0;
  tasksArray:any;
+
+  selectedValue: string;
+  dataViewValue: any[];
+  dropdownOptions = [
+    { label: 'All Tasks', value: 'AT' },
+    { label: 'My Tasks', value: 'MT' }
+    
+  ];
+  projectProgress: any;
+    
+
  
   constructor (
     private route: ActivatedRoute,
@@ -30,21 +42,37 @@ export class ProjectDetailComponent implements OnInit {
     private commonServive: CommonService,
     private userService: UserService
       ) {}
+
+
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser()
     this.route.paramMap.subscribe(params => {
     this.projectId = params.get('projectId');
-    
     });
-    this.projectService.getProject(this.projectId).subscribe(res => {    
-      this.project = res;
-      this.projectemp = this.project.projectEmployees.map(u => {
-        return {
-          name: u.name,
-          imagePath: u.imagePath
-        };
-      });
-      this.project.taskLists.forEach(task => {
+
+  
+    this.getProject(this.projectId)
+       
+  }
+
+
+
+  
+getProject(projectId){
+  this.projectService.getProject(projectId).subscribe(res => {    
+    this.project = res;
+    this.projectemp = this.project.projectEmployees.map(u => {
+      return {
+        name: u.name,
+        imagePath: u.imagePath
+      };
+    });
+    this.dataViewValue = this.project.taskLists;
+    this.employeeTasks = res.taskLists.filter(u=> u.employeeId === this.user.EmployeeId )
+    this.projectService.getProjectProgress(res.id).subscribe((progress: number) => {
+      this.projectProgress = progress
+    });
+     this.project.taskLists.forEach(task => {
         console.log("foreachstatus", task.taskStatuses);
         switch (task.taskStatuses) {
           case 'COMPLETE':
@@ -68,23 +96,29 @@ export class ProjectDetailComponent implements OnInit {
         // Increment the task count regardless of the status
         this.allTask++;
       });
-      }) 
-      
-
-  }
-getProject(projectId){
-  this.projectService.getProject(projectId).subscribe(res => {    
-    this.project = res   
+        
     })
+     
 }
+
 openLink(): void {
   const link = this.project.gitHubLink; 
   window.open(link, '_blank');
 }
 
 
+
 getImage(url: string) {
   return this.commonServive.createImgPath(url)
+}
+onDataViewChange() {
+    
+  if (this.selectedValue === 'AT') {
+    this.dataViewValue = this.project.taskLists;
+  } else if (this.selectedValue === 'MT') {
+    this.dataViewValue = this.employeeTasks;
+  
+}
 }
 
 

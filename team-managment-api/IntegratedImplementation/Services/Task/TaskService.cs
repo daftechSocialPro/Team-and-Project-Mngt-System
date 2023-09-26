@@ -138,5 +138,19 @@ namespace IntegratedImplementation.Services.Task
                 Success = true 
             };
         }
+
+        public async Task<ResponseMessage>ChangeStatus(TaskStatusDto editStatus)
+        {
+            var task = _dbContext.Tasks.Find(editStatus.Id);
+            if(task != null)
+            {
+                task.TaskStatuses = Enum.Parse<TaskStatuses>(editStatus.TaskStatuses);
+            }
+            return new ResponseMessage
+            {
+                Message = "Task Status Updated Successfully",
+                Success = true
+            };
+        }
     }
 }

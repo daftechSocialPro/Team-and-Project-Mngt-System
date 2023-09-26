@@ -1,3 +1,4 @@
+<div *ngIf="project">
 <div class="card">
     <h5 style="font-size: 16px; font-weight:700; color: #3366fe;">{{project.projectName}} Details</h5>
     <div style="display: flex;  gap: 20px;" >
@@ -22,7 +23,7 @@
                     <div class="flex-row" style="display: flex; justify-content: space-between;">
                         <ng-container *ngFor="let employee of projectemp">
                           <div class="flex flex-column align-items-center" style="margin-right: 20px;">
-                            <img [alt]="" src="{{getImage(employee.imagePath)}}" width="32"
+                            <img [alt]="" [src]="getImage(employee.imagePath)" width="32"
                                  style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
                             <span class="ml-2">{{employee.name}}</span>
                           </div>
@@ -32,6 +33,7 @@
                 <div class="flex flex-column mb-3" style="margin-top: 10px;">
                     <div class="flex flex-wrap gap-4" style="margin-left: 30px;">
                         <div class="">
+
                             <span class="number">{{allTask}}</span>
                             <span style="margin-left: 4px;">Tasks</span> 
                         </div>
@@ -53,11 +55,12 @@
                         </div>
                         <div class="">
                             <span class="number">{{overdueCount}}</span>
+
                             <p-tag severity="danger" value="Overdue"></p-tag> 
                         </div>
                     </div>
                     <div class="col">
-                        <p-progressBar [value]="50" [showValue]="false"></p-progressBar>
+                        <p-progressBar [value]="projectProgress" [showValue]="true"></p-progressBar>
                     </div>
                 </div>
             </div>
@@ -70,7 +73,10 @@
         </div>
         <h5 class="font-bold" style="margin-left: 20px;">Tasks</h5>
         <div class="card col-12">
-            <p-table [value]="project.taskLists" class="col-12" scrollDirection="both" [scrollable]="true"
+            <p-dropdown [(ngModel)]="selectedValue" [options]="dropdownOptions" (onChange)="onDataViewChange()" class="">
+					
+            </p-dropdown>
+            <p-table [value]="dataViewValue" class="col-12" scrollDirection="both" [scrollable]="true"
                 scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
                 <ng-template pTemplate="header">
                     <tr>
@@ -94,7 +100,7 @@
                                 [class]="'priority-badge prio-'+task.taskPriority.toLowerCase()">{{task.taskPriority}}</span>
                         </td>
                         <td colspan="5">
-                            <img [alt]="" src="{{getImage(task.employeeImagePath)}}" width="32"
+                            <img [alt]="" [src]="getImage(task.employeeImagePath)" width="32"
                                 style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
                             <span class="ml-2">{{task.employeeName}}</span>
                         </td>
@@ -103,3 +109,4 @@
             </p-table>
         </div>
     </div>
+</div>
