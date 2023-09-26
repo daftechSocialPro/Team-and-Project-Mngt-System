@@ -9,8 +9,6 @@ export class TaskService {
 
   constructor(private http: HttpClient) { }
   readonly BaseURI = environment.baseUrl;
-
-  
   getAllTask() {
     return this.http.get<any>(this.BaseURI + '/api/Task/GetAllTasks');
   }

@@ -7,6 +7,7 @@ import { TaskService } from 'src/app/services/task.service';
 import { UserService, UserView } from 'src/app/services/user.service';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { EditTaskComponent } from './edit-task/edit-task.component';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-task',
@@ -23,9 +24,12 @@ export class TaskComponent implements OnInit {
   employeeTask: any;
   taskArray:any = [];
   curentTask:any;
+  taskproject:any;
+
 
   constructor(
     private taskService: TaskService,
+    private messageService:MessageService,
     private employeeService: EmployeeService,
     private commonService:CommonService,
     private userService:UserService,
@@ -36,31 +40,44 @@ export class TaskComponent implements OnInit {
     this.getTasks()
     this.getEmployeeTask(this.user.EmployeeId)
   }  
-
-  getEmployeeTask(id){
+  getEmployeeTask(id) {
     this.taskService.getTask(id).subscribe({
       next: (res) => {
         this.employeeTask = res;
-        console.log("Employee Tasks",this.employeeTask)
+        this.taskArray = [];
+        console.log(this.taskArray,"taskaaaaa")
+        this.employeeTask.forEach((item) => {
+          this.taskArray.push(item);
+        });
+        this.taskArray.forEach((task) => {
+          this.checkTaskOverdue(task);
+         
+        });
       },
-      error:(err) => {
-        console.log(err)
+      error: (err) => {
+        console.log(err);
       }
-    })
+    });
+  }
+  checkTaskOverdue(task) {
+    const endDate = new Date(task.endDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+  }
+  
+  isTaskOverdue(endDate: Date): boolean {
+    const endDateObj = new Date(endDate);
+    const todayObj = new Date();
+    endDateObj.setHours(0, 0, 0, 0);
+    todayObj.setHours(0, 0, 0, 0);
+    return endDateObj < todayObj;
   }
 
+
   getTasks() {
- 
     this.taskService.getAllTask().subscribe({
       next: (res) => {
         this.tasks = res;
-        console.log("Tasks:", this.tasks);
-        this.tasks.forEach((item) => {
-          item.tasks.forEach((task) => {
-            this.taskArray.push(task);
-          });
-        });
-        console.log("TaskArray:", this.taskArray);
       },
       error: (err) => {
         console.log(err);
@@ -71,10 +88,6 @@ export class TaskComponent implements OnInit {
   filterdTask(status:string){
      return this.taskArray.filter(m=>m.taskStatuses == status)
   }
-  filterdTaskArr(statuses: string[]) {
-    return this.taskArray.filter(m => statuses.includes(m.taskStatuses));
-  }
-
   getImage(url: string) {
     return this.commonService.createImgPath(url)
   }
@@ -107,17 +120,20 @@ export class TaskComponent implements OnInit {
     console.log("onDragStart")
 
   }
-  onDrop(event:any, status:string){
-    console.log("onDrop")
+  onDrop(event: any, status: string) {
+    console.log("onDrop");
     event.preventDefault();
-    const record=this.taskArray.find(m=>m.id == this.curentTask.id)
-    if(record != undefined){
+    const record = this.taskArray.find(m => m.id == this.curentTask.id);
+    if (record !== undefined) {
       record.taskStatuses = status;
-      console.log(record.id,status,"sending data")
-     let data={
-        "id":record.id,
-        "taskStatuses":status
-      }
+      console.log(record.id, status, "sending data");
+  
+      const data = {
+        id: record.id,
+        taskStatuses: status,
+        isOnHold: record.isOnHold 
+      };
+  
       this.taskService.updateStatus(data).subscribe({
         next: (res) => {
           console.log("Task status updated successfully:", res);
@@ -127,8 +143,40 @@ export class TaskComponent implements OnInit {
         }
       });
     }
-    this.curentTask=null;
+    this.curentTask = null;
   }
+  onSwitchToggled(event:any,item:any) {
+let checked=event.checked;
+const data = {
+  id: item.id,
+  taskStatuses: item.taskStatuses,
+  isOnHold: checked
+};
+
+this.taskService.updateStatus(data).subscribe({
+  next: (res) => {
+    this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
+
+    // console.log("Task status updated successfully:", res);
+  },
+  error: (err) => {
+    console.log("Error updating task status:", err);
+  }
+});
+}
+
+getStyleee(item:any){
+
+  if(item.isOnHold)
+  return 'bg-warning'
+
+  if(!item.isOnHold && this.isTaskOverdue(item.endDate))
+
+  return 'bg-red'
+
+  return ''
+}
+
   dragOver(event:any){
   event.preventDefault();
   console.log("dragOver")

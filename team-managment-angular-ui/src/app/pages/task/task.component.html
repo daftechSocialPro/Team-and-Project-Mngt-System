@@ -71,36 +71,59 @@
       <div class="board">
         <div class="column" (dragover)="dragOver($event)" (drop)="onDrop($event,'NOTSTARTED')">
           <h4>Tasks</h4>
-          <div class="card" draggable="true" *ngFor="let item of filterdTaskArr(['NOTSTARTED', 'OVERDUE', 'ONHOLD'])" (dragstart)="onDragStart(item)" [ngClass]="{
-            'border-red': item.taskStatuses === 'OVERDUE',
-            'border-yellow': item.taskStatuses === 'ONHOLD'
-          }">
+          <div class="card" draggable="true" *ngFor="let item of filterdTask('NOTSTARTED')" (dragstart)="onDragStart(item)"
+          [class]="getStyleee(item)">
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
               <div class="flex align-items-left">
                 <i class="pi pi-stopwatch mr-2"></i>
-                <span class="font-semibold ">{{item.endDate | date:'yyyy-MM-dd'}}</span>
+                <span class="font-semibold">{{item.endDate | date:'yyyy-MM-dd'}}</span>
               </div>
+              <div class="flex align-items-right">
+                <span style="font-size: 16px; margin-right: 5px;">OnHold</span>
+                <p-inputSwitch [(ngModel)]="item.isOnHold" (onChange)="onSwitchToggled($event,item)"></p-inputSwitch>
+              </div>
+           
             </div>
-            <div (click)="editTask(item.id)"  class="flex flex-column align-items-center text-center mb-3" >
-              
+            <div (click)="editTask(item.id)" class="flex flex-column align-items-center text-center mb-3">
               <div class="text-xl font-bold">{{item.taskName}}</div>
               <div class="mb-3">{{item.taskDescription}}</div>
+            </div>
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+              <div class="flex align-items-left">
+                <span [class]="'priority-badge prio-'+item.taskPriority.toLowerCase()">{{item.taskPriority}}</span>
+              </div>
+              <div class="flex align-items-right">
+                <div class="mb-3">{{item.projectName}}</div>
+              </div>
             </div>
           </div>
         </div>
         <div class="column" (dragover)="dragOver($event)" (drop)="onDrop($event,'INPROGRESS')">
           <h4>IN PROGRESS</h4>
-          <div class="card" draggable="true"  *ngFor="let item of filterdTask('INPROGRESS')" (dragstart)="onDragStart(item)" >  
+          <div class="card" draggable="true"  *ngFor="let item of filterdTask('INPROGRESS')" (dragstart)="onDragStart(item)"  
+          [class]="getStyleee(item)">  
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
             <div class="flex align-items-left">
               <i class="pi pi-stopwatch mr-2"></i>
               <span class="font-semibold ">{{item.endDate | date:'yyyy-MM-dd'}}</span>
+            </div>
+            <div class="flex align-items-right">
+              <span style="font-size: 16px; margin-right: 5px;">OnHold</span>
+              <p-inputSwitch [(ngModel)]="item.isOnHold" (onChange)="onSwitchToggled($event,item)"></p-inputSwitch>
             </div>
           </div>
           <div (click)="editTask(item.id)"  class="flex flex-column align-items-center text-center mb-3">
             
             <div class="text-xl font-bold">{{item.taskName}}</div>
             <div class="mb-3">{{item.taskDescription}}</div>
+          </div>
+          <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+            <div class="flex align-items-left">
+              <span [class]="'priority-badge prio-'+item.taskPriority.toLowerCase()">{{item.taskPriority}}</span>
+            </div>
+            <div class="flex align-items-right">
+              <div class="mb-3">{{item.projectName}}</div>
+            </div>
           </div>
         </div>
         </div>
@@ -117,6 +140,14 @@
               
               <div class="text-xl font-bold">{{item.taskName}}</div>
               <div class="mb-3">{{item.taskDescription}}</div>
+            </div>
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+              <div class="flex align-items-left">
+                <span [class]="'priority-badge prio-'+item.taskPriority.toLowerCase()">{{item.taskPriority}}</span>
+              </div>
+                   <div class="flex align-items-right">
+                <div class="mb-3">{{item.projectName}}</div>
+              </div>
             </div>
           </div>
         </div>
