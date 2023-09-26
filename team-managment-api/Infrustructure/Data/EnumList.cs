@@ -128,9 +128,8 @@ namespace IntegratedInfrustructure.Data
         {
             NOTSTARTED,
             INPROGRESS,
-            COMPLETE,
-            OVERDUE,
-            ONHOLD
+            COMPLETE
+            
         }
 
         public enum TaskPriority

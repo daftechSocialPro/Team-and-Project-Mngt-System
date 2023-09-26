@@ -1,6 +1,6 @@
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title"> Create Task</h5>
+        <h5 class="modal-title"> {{projectId !== undefined && allowedRoles(['Admin']) ? "Assign Task": "Create Task"}}</h5>
         <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
     </div>
 
@@ -39,10 +39,15 @@
                 <p-dropdown [options]="taskPriorityDropDown" optionLabel="name"
                     formControlName="TaskPriority" placeholder="Select Task Priority" [showClear]="true"></p-dropdown>
             </div>
-            <div class="field col-12 md:col-4">
+            <div *ngIf="projectId === undefined" class="field col-12 md:col-4">
                 <label htmlFor="lastname2">Project</label>
                 <p-dropdown [options]="projectSelectList" optionLabel="label"
                     formControlName="ProjectId" placeholder="Select Project" [showClear]="true"></p-dropdown>
+            </div>
+            <div *ngIf="projectId !== undefined && allowedRoles(['Admin'])" class="field col-12 md:col-4">
+                <label htmlFor="lastname2">Employee</label>
+                <p-dropdown [options]="employeeSelectList" optionLabel="label"
+                    formControlName="EmployeeId" placeholder="Select Employee" [showClear]="true"></p-dropdown>
             </div>
             <div class="field col-12 ">
                 <textarea rows="3" cols="15" placeholder="Task Description" formControlName="TaskDescription" pInputTextarea></textarea>

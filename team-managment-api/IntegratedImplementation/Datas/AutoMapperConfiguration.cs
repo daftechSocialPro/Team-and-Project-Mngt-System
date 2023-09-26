@@ -78,8 +78,10 @@ namespace IntegratedImplementation.Datas
             CreateMap<TaskList, TaskGetDto>()
                 .ForMember(a => a.EmployeeName, e => e.MapFrom(mfg => $"{mfg.Employee.FirstName} {mfg.Employee.LastName}"))
                 .ForMember(a => a.EmployeeImagePath, e => e.MapFrom(mfg => mfg.Employee.ImagePath))
+                .ForMember(a => a.ProjectName, e => e.MapFrom(mfg => mfg.Project.ProjectName))
                 .ForMember(a => a.TaskStatuses, e => e.MapFrom(mfg => mfg.TaskStatuses.ToString()))
                 .ForMember(a => a.TaskPriority, e => e.MapFrom(mfg => mfg.TaskPriority.ToString()));
+            
 
             
         }

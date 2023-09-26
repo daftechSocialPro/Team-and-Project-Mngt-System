@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'src/app/services/common.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService, UserView } from 'src/app/services/user.service';
+import { AddTaskComponent } from '../../task/add-task/add-task.component';
+import { TeamService } from 'src/app/services/team.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -40,7 +43,9 @@ export class ProjectDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private commonServive: CommonService,
-    private userService: UserService
+    private userService: UserService,
+    private modalSerivce: NgbModal,
+    private teamService: TeamService
       ) {}
 
 
@@ -67,13 +72,18 @@ getProject(projectId){
         imagePath: u.imagePath
       };
     });
+    this.teamService.getTeamMembersSelectList(this.project.teamProjects.map(i => i.id)).subscribe({
+      next: (res) => {
+        this.projectemp = res.map(i => ({value: i.id, name: i.name,imagePath:i.imagePath }))
+      }
+    })
     this.dataViewValue = this.project.taskLists;
     this.employeeTasks = res.taskLists.filter(u=> u.employeeId === this.user.EmployeeId )
     this.projectService.getProjectProgress(res.id).subscribe((progress: number) => {
       this.projectProgress = progress
     });
      this.project.taskLists.forEach(task => {
-        console.log("foreachstatus", task.taskStatuses);
+        
         switch (task.taskStatuses) {
           case 'COMPLETE':
             this.completeCount++;
@@ -93,7 +103,6 @@ getProject(projectId){
           default:
             break;
         }
-        // Increment the task count regardless of the status
         this.allTask++;
       });
         
@@ -120,6 +129,17 @@ onDataViewChange() {
   
 }
 }
+assignTask(projectId,teamProject,projectEmployees){
+  let modalRef= this.modalSerivce.open(AddTaskComponent,{size:'xl',backdrop:'static'})
+  modalRef.componentInstance.projectId = projectId
+  modalRef.componentInstance.teamProject = teamProject
+  modalRef.componentInstance.projectEmployees = projectEmployees
+  modalRef.result.then(()=>{this.getProject(this.projectId)})
+}
+allowedRoles(allowedRoles: any)
+  {
+    return this.userService.roleMatch(allowedRoles)
+  }
 
 
 }

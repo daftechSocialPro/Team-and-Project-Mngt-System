@@ -57,7 +57,7 @@ namespace IntegratedImplementation.Services.HRM
             addEmployee.EmploymentStatus = EmploymentStatus.ACTIVE.ToString();
             EmployeeList employee = new EmployeeList
             {
-                Id = Guid.NewGuid(),
+                Id = id,
                 CreatedDate = DateTime.Now,
                CreatedById = addEmployee.CreatedById,
                 EmployeeCode = code,

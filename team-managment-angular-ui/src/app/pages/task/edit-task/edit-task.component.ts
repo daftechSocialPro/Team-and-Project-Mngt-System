@@ -20,9 +20,8 @@ export class EditTaskComponent implements OnInit {
   taskStatusDropDown = [
     { name: 'NOTSTARTED', code: 'NOTSTARTED' },
     { name: 'INPROGRESS', code: 'INPROGRESS' },
-    { name: 'COMPLETE', code: 'COMPLETE' },
-    { name: 'OVERDUE', code: 'OVERDUE' },
-    { name: 'ONHOLD', code: 'ONHOLD'}
+    { name: 'COMPLETE', code: 'COMPLETE' }
+    
   ]
   taskPriorityDropDown = [
     { name: 'LOW', code: 'LOW'},

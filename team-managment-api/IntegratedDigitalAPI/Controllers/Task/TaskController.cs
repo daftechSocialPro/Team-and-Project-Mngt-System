@@ -43,7 +43,7 @@ namespace IntegratedDigitalAPI.Controllers.Task
         }
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddTask(TaskPostDto addTask)
+        public async Task<IActionResult> AddTask([FromForm] TaskPostDto addTask)
         {
             if (ModelState.IsValid) 
             {
@@ -57,7 +57,7 @@ namespace IntegratedDigitalAPI.Controllers.Task
         }
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> EditTask(TaskPostDto editTask)
+        public async Task<IActionResult> EditTask([FromForm] TaskGetDto editTask)
         {
             if (ModelState.IsValid)
             {

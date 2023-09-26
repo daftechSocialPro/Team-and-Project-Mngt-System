@@ -78,7 +78,7 @@
 								
 								
 							</div>
-							<p-progressBar [value]="projectProgressMap.get(project.id)" [showValue]="true" [styleClass]="calculateProgressBarColor(project.id)"></p-progressBar>
+							<p-progressBar [value]="projectProgressMap.get(project.id)| number: '1.2-2'" [showValue]="true" [styleClass]="calculateProgressBarColor(project.id)"></p-progressBar>
 							<!-- <p-progressBar [value]="expProjectProgressMap.get(project.id)" [showValue]="true"></p-progressBar> -->
 							
 							<div class="flex flex-column">

@@ -12,6 +12,7 @@ using static IntegratedInfrustructure.Data.EnumList;
 using IntegratedImplementation.DTOS.Configuration;
 using System.ComponentModel;
 using IntegratedImplementation.DTOS.Project;
+using IntegratedImplementation.Interfaces.Configuration;
 
 namespace IntegratedImplementation.Services.Task
 {
@@ -26,11 +27,14 @@ namespace IntegratedImplementation.Services.Task
 
         private readonly IMapper _mapper;
         private readonly IEmployeeService _employeeService;
-        public TaskService(ApplicationDbContext dbContext, IMapper mapper, IEmployeeService employeeService)
+        private readonly IGeneralConfigService _generalConfig;
+
+        public TaskService(ApplicationDbContext dbContext, IMapper mapper, IEmployeeService employeeService,IGeneralConfigService generalConfigService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _employeeService = employeeService;
+            _generalConfig = generalConfigService;
         }
 
         public async Task<TaskGetDto> GetTask(Guid taskId)
@@ -79,7 +83,7 @@ namespace IntegratedImplementation.Services.Task
         public async Task<ResponseMessage> AddTask(TaskPostDto addTask)
         {
 
-            //var code = await _generalConfig.GenerateCode(GeneralCodeType.TASKPREFIX);
+
             if (addTask.EndDate < DateTime.Now)
             {
                 return new ResponseMessage
@@ -90,10 +94,27 @@ namespace IntegratedImplementation.Services.Task
             }
             else
             {
+                var id = Guid.NewGuid();
+                var path = "";
+                 
+                if (addTask.ProjectId != null)
+                {
+                    var name = $"{Path.GetFileNameWithoutExtension(addTask.FilePath.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.EmployeeName}";
+                    if (addTask.FilePath != null)
+                        path = _generalConfig.UploadFiles(addTask.FilePath, name, $"Files/Projects/{addTask.ProjectName}").Result.ToString();
+                }
+                else
+                {
+                    var name = $"{Path.GetFileNameWithoutExtension(addTask.FilePath.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.TaskName}";
+                    if (addTask.FilePath != null)
+                        path = _generalConfig.UploadFiles(addTask.FilePath, name, $"Files/Tasks/{addTask.EmployeeName}").Result.ToString();
+
+                }
+
                 TaskList task = new TaskList
                 {
                     TaskName = addTask.TaskName,
-                    Id = Guid.NewGuid(),
+                    Id = id,
                     CreatedDate = DateTime.Now,
                     EndDate = addTask.EndDate,
                     TaskStatuses = Enum.Parse<TaskStatuses>(addTask.TaskStatuses),
@@ -101,7 +122,8 @@ namespace IntegratedImplementation.Services.Task
                     CreatedById = addTask.CreatedById,
                     TaskDescription = addTask.TaskDescription,
                     EmployeeId = addTask.EmployeeId,
-                    ProjectId = addTask.ProjectId
+                    ProjectId = addTask.ProjectId,
+                    FilePath= path,
 
                 };
 
@@ -118,8 +140,24 @@ namespace IntegratedImplementation.Services.Task
             }
         }
 
-        public async Task<ResponseMessage> EditTask(TaskPostDto editTask)
+        public async Task<ResponseMessage> EditTask(TaskGetDto editTask)
         {
+            var path = "";
+
+            if (editTask.ProjectId != null)
+            {
+                var name = $"{Path.GetFileNameWithoutExtension(editTask.File.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editTask.EmployeeName}";
+                if (editTask.File != null)
+                    path = _generalConfig.UploadFiles(editTask.File, name, $"Files/Projects/{editTask.ProjectName}").Result.ToString();
+            }
+            else
+            {
+                var name = $"{Path.GetFileNameWithoutExtension(editTask.File.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editTask.TaskName}";
+                if (editTask.File != null)
+                    path = _generalConfig.UploadFiles(editTask.File, name, $"Files/Tasks/{editTask.EmployeeName}").Result.ToString();
+
+            }
+
             var task = _dbContext.Tasks.Find(editTask.Id);
 
             if (task != null)
@@ -129,6 +167,10 @@ namespace IntegratedImplementation.Services.Task
                 task.TaskPriority = Enum.Parse<TaskPriority>(editTask.TaskPriority);
                 task.TaskStatuses = Enum.Parse<TaskStatuses>(editTask.TaskStatuses);
                 task.TaskDescription = editTask.TaskDescription;
+                if (editTask.File != null)
+                {
+                    task.FilePath = path;
+                }
                 await _dbContext.SaveChangesAsync();
             }
 
@@ -145,6 +187,8 @@ namespace IntegratedImplementation.Services.Task
             if(task != null)
             {
                 task.TaskStatuses = Enum.Parse<TaskStatuses>(editStatus.TaskStatuses);
+                task.IsOnHold= editStatus.IsOnHold;
+                await _dbContext.SaveChangesAsync();
             }
             return new ResponseMessage
             {
