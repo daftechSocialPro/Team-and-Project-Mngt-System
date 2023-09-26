@@ -67,46 +67,64 @@
     </div>
 
     <div class="grid">
-      <div class="col-5">
-        <p-dataView [value]="employeeTask" #dv [paginator]="true" [rows]="6" filterBy="name" layout="list">
-          <ng-template let-emptask pTemplate="listItem">
-            <div class="col-12 ">
-              <div  class="card m-3 border-1 surface-border" >
-                <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
-                  <div class="flex align-items-left">
-                    <i class="pi pi-stopwatch mr-2"></i>
-                    <span class="font-semibold ">{{emptask.endDate | date:'yyyy-MM-dd'}}</span>
-                  </div>
-                  <!-- <p-chip [label]="emptask.employeeName" [image]="getImage(emptask.employeeImagePath)" styleClass="m-1"></p-chip> -->
-                  <!-- <span [class]="'project-badge status-'+project.projectStatus.toLowerCase()" >{{project.projectStatus}}</span> -->
-                </div>
-                <div (click)="editTask(emptask.id)"  class="flex flex-column align-items-center text-center mb-3">
-                  
-                  <div class="text-xl font-bold">{{emptask.taskName}}</div>
-                  <div class="mb-3">{{emptask.taskDescription}}</div>
-                  
-                  
-                  
-                </div>
-                
-                
-                
-                <div class="flex flex-column">
-                  
-                  task
-              
-                </div>
-                
+      <div class="col-12">
+      <div class="board">
+        <div class="column" (dragover)="dragOver($event)" (drop)="onDrop($event,'NOTSTARTED')">
+          <h4>Tasks</h4>
+          <div class="card" draggable="true" *ngFor="let item of filterdTaskArr(['NOTSTARTED', 'OVERDUE', 'ONHOLD'])" (dragstart)="onDragStart(item)" [ngClass]="{
+            'border-red': item.taskStatuses === 'OVERDUE',
+            'border-yellow': item.taskStatuses === 'ONHOLD'
+          }">
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+              <div class="flex align-items-left">
+                <i class="pi pi-stopwatch mr-2"></i>
+                <span class="font-semibold ">{{item.endDate | date:'yyyy-MM-dd'}}</span>
               </div>
             </div>
-          </ng-template>
-        </p-dataView>  
-      </div>  
-      <div class="col-2">
-        <p-divider layout="vertical">
+            <div (click)="editTask(item.id)"  class="flex flex-column align-items-center text-center mb-3" >
+              
+              <div class="text-xl font-bold">{{item.taskName}}</div>
+              <div class="mb-3">{{item.taskDescription}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="column" (dragover)="dragOver($event)" (drop)="onDrop($event,'INPROGRESS')">
+          <h4>IN PROGRESS</h4>
+          <div class="card" draggable="true"  *ngFor="let item of filterdTask('INPROGRESS')" (dragstart)="onDragStart(item)" >  
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+            <div class="flex align-items-left">
+              <i class="pi pi-stopwatch mr-2"></i>
+              <span class="font-semibold ">{{item.endDate | date:'yyyy-MM-dd'}}</span>
+            </div>
+          </div>
+          <div (click)="editTask(item.id)"  class="flex flex-column align-items-center text-center mb-3">
             
-        </p-divider>
+            <div class="text-xl font-bold">{{item.taskName}}</div>
+            <div class="mb-3">{{item.taskDescription}}</div>
+          </div>
+        </div>
+        </div>
+        <div class="column" (dragover)="dragOver($event)" (drop)="onDrop($event,'COMPLETE')">
+          <h4>COMPLETE</h4>
+          <div class="card green-border" draggable="true"  *ngFor="let item of filterdTask('COMPLETE')" (dragstart)="onDragStart(item)">
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+              <div class="flex align-items-left">
+                <i class="pi pi-stopwatch mr-2"></i>
+                <span class="font-semibold ">{{item.endDate | date:'yyyy-MM-dd'}}</span>
+              </div>
+            </div>
+            <div (click)="editTask(item.id)"  class="flex flex-column align-items-center text-center mb-3">
+              
+              <div class="text-xl font-bold">{{item.taskName}}</div>
+              <div class="mb-3">{{item.taskDescription}}</div>
+            </div>
+          </div>
+        </div>
+      
       </div>
+     
+ 
+      </div>  
     </div>
 
   </div>

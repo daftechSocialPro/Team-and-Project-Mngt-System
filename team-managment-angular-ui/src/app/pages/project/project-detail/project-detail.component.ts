@@ -15,8 +15,16 @@ export class ProjectDetailComponent implements OnInit {
   project:any
   employeeTasks
   projectId:string
-  
   projectemp:any
+
+  completeCount:any = 0;
+  inprogresCount:any = 0;
+  notstartedCount:any = 0;
+ overdueCount:any = 0;
+ onholdCount:any=0;
+ allTask:any=0;
+ tasksArray:any;
+
   selectedValue: string;
   dataViewValue: any[];
   dropdownOptions = [
@@ -26,6 +34,7 @@ export class ProjectDetailComponent implements OnInit {
   ];
   projectProgress: any;
     
+
  
   constructor (
     private route: ActivatedRoute,
@@ -40,12 +49,15 @@ export class ProjectDetailComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
     this.projectId = params.get('projectId');
     });
+
   
     this.getProject(this.projectId)
        
   }
 
 
+
+  
 getProject(projectId){
   this.projectService.getProject(projectId).subscribe(res => {    
     this.project = res;
@@ -60,10 +72,41 @@ getProject(projectId){
     this.projectService.getProjectProgress(res.id).subscribe((progress: number) => {
       this.projectProgress = progress
     });
+     this.project.taskLists.forEach(task => {
+        console.log("foreachstatus", task.taskStatuses);
+        switch (task.taskStatuses) {
+          case 'COMPLETE':
+            this.completeCount++;
+            break;
+          case 'INPROGRESS':
+            this.inprogresCount++;
+            break;
+          case 'NOTSTARTED':
+            this.notstartedCount++;
+            break;
+          case 'OVERDUE':
+            this.overdueCount++;
+            break;
+          case 'ONHOLD':
+            this.onholdCount++;
+            break;
+          default:
+            break;
+        }
+        // Increment the task count regardless of the status
+        this.allTask++;
+      });
         
     })
      
 }
+
+openLink(): void {
+  const link = this.project.gitHubLink; 
+  window.open(link, '_blank');
+}
+
+
 
 getImage(url: string) {
   return this.commonServive.createImgPath(url)
@@ -77,5 +120,6 @@ onDataViewChange() {
   
 }
 }
+
 
 }
