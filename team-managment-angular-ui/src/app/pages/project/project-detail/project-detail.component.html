@@ -1,67 +1,50 @@
 <div *ngIf="project">
-    <div class="card">
-        <h5 style="font-size: 16px; font-weight:700; color: #3366fe;">{{project.projectName}} Details</h5>
-        <div style="display: flex;  gap: 20px;" >
-            <div style="flex: 3;">
-                <div class="card">
-                    <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
-                        <div class="flex align-items-center">
-                            <span class="font-semibold" style="margin-right: 20px;">{{project.projectName}}</span>
-                            <span
-                            [class]="'project-badge status-' + project.projectStatus.toLowerCase()">{{project.projectStatus}}</span>
-                        </div>
-                        <div style="display: flex; flex-direction: column;">
-                            <span>Starting date:  {{project.assignedDate  | date: 'MM/dd/yyyy'}}</span>
-                            <span>Deadline:  {{project.dueDate  | date: 'MM/dd/yyyy'}}</span>
-                        </div>
+
+<div class="card">
+    <h5 style="font-size: 16px; font-weight:700; color: #3366fe;">{{project.projectName}} Details</h5>
+    <div style="display: flex;  gap: 20px;" >
+        <div style="flex: 3;">
+            <div class="card">
+                <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+                    <div class="flex align-items-center">
+                        <span class="font-semibold" style="margin-right: 20px;">{{project.projectName}}</span>
+                        <span
+                        [class]="'project-badge status-' + project.projectStatus.toLowerCase()">{{project.projectStatus}}</span>
                     </div>
-                    <div class="flex flex-column align-items-center text-center mb-3">
-                        <div class="mb-3" style="text-align: justify; margin-left: 30px; margin-right: 30px;">
-                            {{project.description}}<a href="{{project.gitHubLink}}" target="_blank" class="btn btn-outline-info" style=" margin-left: 10px;">GitLink</a>
-                        </div>
-                        <h5>Team Members</h5>
-                        <div class="flex-row" style="display: flex; justify-content: space-between;">
-                            <ng-container *ngFor="let employee of projectemp">
-                                <div class="flex flex-column align-items-center" style="margin-right: 20px;">
-                                    <img [alt]="" [src]="getImage(employee.imagePath)" width="32"
-                                    style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
-                                    <span class="ml-2">{{employee.name}}</span>
-                                </div>
-                            </ng-container>
-                        </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <span>Starting date:  {{project.assignedDate  | date: 'MM/dd/yyyy'}}</span>
+                        <span>Deadline:  {{project.dueDate  | date: 'MM/dd/yyyy'}}</span>
                     </div>
-                    <div class="flex flex-column mb-3" style="margin-top: 10px;">
-                        <div class="flex flex-wrap gap-4" style="margin-left: 30px;">
-                            <div class="">
-                                
-                                <span class="number">{{allTask}}</span>
-                                <span style="margin-left: 4px;">Tasks</span> 
+                </div>
+                <div class="flex flex-column align-items-center text-center mb-3">
+                    <div class="mb-3" style="text-align: justify; margin-left: 30px; margin-right: 30px;">
+                        {{project.description}}<a href="{{project.gitHubLink}}" target="_blank" class="btn btn-outline-info" style=" margin-left: 10px;">GitLink</a>
+                    </div>
+                    <h5>Team Members</h5>
+                    <div class="flex-row" style="display: flex; justify-content: space-between;">
+                        <ng-container *ngFor="let employee of projectemp">
+                          <div class="flex flex-column align-items-center" style="margin-right: 20px;">
+                            <img [alt]="" [src]="getImage(employee.imagePath)" width="32"
+                                 style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
+                            <span class="ml-2">{{employee.name}}</span>
+                          </div>
+                        </ng-container>
+                      </div>
+                </div>
+                <div class="flex flex-column mb-3" style="margin-top: 10px;">
+                    <div class="flex flex-wrap gap-4" >
+                        <div class="" style="margin-left: 160px;">
+                            <div class="flex flex-wrap gap-2 align-items-center justify-content-center">
+                                <p-button label="Tasks" badge="{{allTask}}"></p-button>
+                                <p-button label="Completed" styleClass="p-button-success" badge="{{completeCount}}"></p-button>
+                                <p-button label="Inprogress" styleClass="p-button-info" badge="{{inprogresCount}}"></p-button>
+                                <p-button label="NotStarted" styleClass="p-button-warning" badge="{{notstartedCount}}"></p-button>
+
                             </div>
-                            <div class="">
-                                <span class="number">{{completeCount}}</span>
-                                <p-tag severity="success" value="Completed" ></p-tag> 
-                            </div>
-                            <div class="">
-                                <span class="number">{{inprogresCount}}</span>
-                                <p-tag severity="info" value="inprogress"  ></p-tag>
-                            </div>
-                            <div class="">
-                                <span class="number">{{notstartedCount}}</span>
-                                <p-tag severity="warning" value="notStarted" ></p-tag>
-                            </div>
-                            <div class="">
-                                <span class="number" >{{onholdCount}}</span>
-                                <p-tag severity="danger" value="OnHold"></p-tag> 
-                            </div>
-                            <div class="">
-                                <span class="number">{{overdueCount}}</span>
-                                
-                                <p-tag severity="danger" value="Overdue"></p-tag> 
-                            </div>
+
                         </div>
-                        <div  class="col">
-                            <p-progressBar  [value]="projectProgress| number: '1.2-2'" [showValue]="true"></p-progressBar>
-                        </div>
+                        
+                   
                     </div>
                 </div>
             </div>

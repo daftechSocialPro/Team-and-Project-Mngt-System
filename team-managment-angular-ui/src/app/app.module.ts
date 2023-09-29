@@ -60,6 +60,8 @@ import { DividerModule } from 'primeng/divider';
 import { EditTaskComponent } from './pages/task/edit-task/edit-task.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ChartModule } from 'primeng/chart';
+import { InputSwitchModule } from 'primeng/inputswitch';
+
 
 
 
@@ -103,7 +105,8 @@ import { ChartModule } from 'primeng/chart';
         ProgressBarModule,
         DividerModule,
         
-		ChartModule
+		ChartModule,
+        InputSwitchModule
 		
         
         
