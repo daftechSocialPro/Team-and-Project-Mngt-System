@@ -13,5 +13,6 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<string> GenerateCode(GeneralCodeType GeneralCodeType);
         Task<string> UploadFiles(IFormFile formFile, string Name, string FolderName);
         Task<string> GetFiles(string path);
+       
     }
 }

@@ -1,4 +1,5 @@
 ﻿using IntegratedImplementation.DTOS.Configuration;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,15 @@ namespace IntegratedImplementation.DTOS.Task
         public string TaskStatuses { get; set; }
         public string TaskPriority { get; set; }
         public Guid EmployeeId { get; set; }
-        public Guid ProjectId { get; set; }
+        public Guid? ProjectId { get; set; }
         public string TaskDescription { get; set; }
         public string? EmployeeImagePath { get; set; }
         public string? EmployeeName { get; set; }
+        public bool? IsOnHold { get; set; }
+        public IFormFile? File { get; set; } = null!;
+        public string? FilePath { get; set; } = null!;
+        public string? ProjectName { get; set; }
+        public string CreatedById { get; set; } = null!;
 
 
     }
@@ -32,9 +38,12 @@ namespace IntegratedImplementation.DTOS.Task
         public string TaskStatuses { get; set; }
         public string TaskPriority { get; set; }
         public Guid EmployeeId { get; set; }
-        public Guid ProjectId { get; set; }
+        public Guid? ProjectId { get; set; }
         public string TaskDescription { get; set; }
         public string CreatedById { get; set; } = null!;
+        public IFormFile? FilePath { get; set; } = null!;
+        public string? ProjectName { get; set; }
+        public string? EmployeeName { get; set; }
 
     }
 
@@ -42,6 +51,7 @@ namespace IntegratedImplementation.DTOS.Task
     {
         public Guid? Id { get; set; }
         public string TaskStatuses { get; set; }
+        public bool IsOnHold { get; set; }
     }
 
 }

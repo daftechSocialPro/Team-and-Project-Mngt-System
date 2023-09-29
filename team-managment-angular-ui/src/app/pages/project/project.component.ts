@@ -74,15 +74,14 @@ export class ProjectComponent implements OnInit {
 
 
   getProjects() {
-    if (this.projects) {
-      return;
-    }
+    
     this.projectService.getProjects().subscribe({
       next: (res) => {
         this.projects = res;
         this.projects.forEach((project) => {
           this.getProjectProgress(project.id).subscribe((progress: number) => {
             this.projectProgressMap.set(project.id, progress);
+            
           });
         });
         this.projects.forEach((p) => {
@@ -192,7 +191,7 @@ calculateProgressBarColor(id): string {
   const green = Math.round(255 * Math.max(0, -percentageDifference));
   const blue = 0;
 
-  console.log(percentageDifference)
+  
   return `background-color: rgb(${red}, ${green}, ${blue})`;
 }
 

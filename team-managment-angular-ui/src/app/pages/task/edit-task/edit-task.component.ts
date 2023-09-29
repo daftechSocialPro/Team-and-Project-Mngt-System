@@ -17,12 +17,12 @@ export class EditTaskComponent implements OnInit {
   user : UserView
   projectSelectList: SelectItem[] = []
   TaskForm : FormGroup;
+  uploadedFiles: any[] = [];
   taskStatusDropDown = [
     { name: 'NOTSTARTED', code: 'NOTSTARTED' },
     { name: 'INPROGRESS', code: 'INPROGRESS' },
-    { name: 'COMPLETE', code: 'COMPLETE' },
-    { name: 'OVERDUE', code: 'OVERDUE' },
-    { name: 'ONHOLD', code: 'ONHOLD'}
+    { name: 'COMPLETE', code: 'COMPLETE' }
+    
   ]
   taskPriorityDropDown = [
     { name: 'LOW', code: 'LOW'},
@@ -40,6 +40,7 @@ export class EditTaskComponent implements OnInit {
     private taskService:TaskService ){}
   
   ngOnInit(): void {
+    
     this.user = this.userService.getCurrentUser()
     this.getProjectList()
 
@@ -86,8 +87,15 @@ export class EditTaskComponent implements OnInit {
         createdById:this.user.UserID
       }
       console.log(taskEdit)
+      var formData = new FormData();
+      for (let key in taskEdit) {
+        if (taskEdit.hasOwnProperty(key)) {
+          formData.append(key, (taskEdit as any)[key]);
+        }
+      }
+      formData.append("FilePath", this.uploadedFiles[0]);
 
-      this.taskService.editTask(taskEdit).subscribe({
+      this.taskService.editTask(formData).subscribe({
         next: (res) => {
 
           if (res.success) {
@@ -123,6 +131,14 @@ export class EditTaskComponent implements OnInit {
   closeModal()
   {
     this.activeModal.close()
+  }
+  onUpload(event: any) {
+    console.log(event)
+    for (const file of event.files) {
+      this.uploadedFiles.push(file);
+    }
+
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
   }
 
 }

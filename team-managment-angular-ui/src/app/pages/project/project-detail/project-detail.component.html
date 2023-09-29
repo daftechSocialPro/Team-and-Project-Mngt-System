@@ -1,4 +1,5 @@
 <div *ngIf="project">
+
 <div class="card">
     <h5 style="font-size: 16px; font-weight:700; color: #3366fe;">{{project.projectName}} Details</h5>
     <div style="display: flex;  gap: 20px;" >
@@ -40,58 +41,64 @@
                                 <p-button label="NotStarted" styleClass="p-button-warning" badge="{{notstartedCount}}"></p-button>
 
                             </div>
+
                         </div>
                         
                    
                     </div>
-                    <div class="col">
-                        <p-progressBar [value]="projectProgress" [showValue]="true"></p-progressBar>
-                    </div>
+                </div>
+            </div>
+            <div style="flex: 1;">
+                <div class="card">
+                    <h5>Chat</h5>
                 </div>
             </div>
         </div>
-        <div style="flex: 1;">
-            <div class="card">
-                <h5>Chat</h5>
-            </div>
-        </div>
-        </div>
         <h5 class="font-bold" style="margin-left: 20px;">Tasks</h5>
         <div class="card col-12">
-            <p-dropdown [(ngModel)]="selectedValue" [options]="dropdownOptions" (onChange)="onDataViewChange()" class="">
-					
-            </p-dropdown>
-            <p-table [value]="dataViewValue" class="col-12" scrollDirection="both" [scrollable]="true"
-                scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th style="width:200px" pFrozenColumn>Name</th>
-                        <th style="width:200px">Description </th>
-                        <th style="width:200px">Status</th>
-                        <th style="width:200px">Priority</th>
-                        <th style="width:200px">Owner</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-task>
-                    <tr>
-                        <td style="width:200px" pFrozenColumn>{{task.taskName}}</td>
-                        <td pFrozenColumn>{{task.taskDescription}}</td>
-                        <td style="width:200px" pFrozenColumn>
-                            <span
-                                [class]="'status-badge status-'+task.taskStatuses.toLowerCase()">{{task.taskStatuses}}</span>
-                        </td>
-                        <td style="width:200px" pFrozenColumn>
-                            <span
-                                [class]="'priority-badge prio-'+task.taskPriority.toLowerCase()">{{task.taskPriority}}</span>
-                        </td>
-                        <td colspan="5">
-                            <img [alt]="" [src]="getImage(task.employeeImagePath)" width="32"
-                                style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
-                            <span class="ml-2">{{task.employeeName}}</span>
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
+            <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
+                <p-dropdown [(ngModel)]="selectedValue" [options]="dropdownOptions" (onChange)="onDataViewChange()" class=""></p-dropdown>
+                <button  pButton [label]="allowedRoles(['Admin']) ? 'Assign Task': 'Create Task'" class="p-button-outlined mb-2"  icon="pi pi-plus" (click)="assignTask(project.id,project.teamProjects,project.projectEmployees)"></button>
+            </div>
+            
+            
+            
+            <p-table [value]="dataViewValue" class="col-12" scrollDirection="both" [scrollable]="true" [paginator]="true" [rows]="10"
+            scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width:200px" pFrozenColumn>Name</th>
+                    <th style="width:200px">Description </th>
+                    <th style="width:200px">Status</th>
+                    <th style="width:200px">Priority</th>
+                    <th style="width: 200px">Due Date</th>
+                    <th style="width:200px">Owner</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-task>
+                <tr>
+                    <td style="width:200px" pFrozenColumn>{{task.taskName}}</td>
+                    <td pFrozenColumn>{{task.taskDescription}}</td>
+                    <td style="width:200px" pFrozenColumn>
+                        <span
+                        [class]="'status-badge status-'+task.taskStatuses.toLowerCase()">{{task.taskStatuses}}</span>
+                    </td>
+                    <td style="width:200px" pFrozenColumn>
+                        <span
+                        [class]="'priority-badge prio-'+task.taskPriority.toLowerCase()">{{task.taskPriority}}</span>
+                    </td>
+                    <td style="width:200px" pFrozenColumn>
+                        
+                        {{task.endDate | date:'dd/MM/yyyy'}}
+                    </td>
+                    <td colspan="5">
+                        <img [alt]="" [src]="getImage(task.employeeImagePath)" width="32"
+                        style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
+                        <span class="ml-2">{{task.employeeName}}</span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
+</div>
 </div>

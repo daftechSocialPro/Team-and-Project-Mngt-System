@@ -14,7 +14,7 @@ namespace IntegratedImplementation.Interfaces.Task
         Task<List<TaskGetDto>> GetTasks(Guid employeeId);
         Task<List<TaskGetDto>> GetProjectTasks(Guid employeeId, Guid projectID);
         Task<ResponseMessage> AddTask(TaskPostDto addTask);
-        Task<ResponseMessage> EditTask(TaskPostDto editTask);
+        Task<ResponseMessage> EditTask(TaskGetDto editTask);
         Task<ResponseMessage> ChangeStatus(TaskStatusDto editStatus);
 
     }
