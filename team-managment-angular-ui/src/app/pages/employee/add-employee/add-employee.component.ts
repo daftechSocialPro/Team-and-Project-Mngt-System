@@ -70,7 +70,7 @@ export class AddEmployeeComponent implements OnInit {
       formData.append("Address", this.EmployeeForm.value.Address);
       formData.append("EmploymentDate", this.EmployeeForm.value.EmploymentDate);
       formData.append("EmploymentPosition", this.EmployeeForm.value.EmploymentPosition.name);
-      formData.append("Image", this.uploadedFiles[0]);
+      formData.append("ImagePath", this.uploadedFiles[0]);
       formData.append("CreatedById", this.user.UserID);
 
       this.employeeService.addEmployee(formData).subscribe({

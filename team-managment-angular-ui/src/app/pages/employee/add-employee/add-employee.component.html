@@ -2,15 +2,15 @@
     <form [formGroup]="EmployeeForm" (submit)="onSubmit()">
         <div class="p-fluid p-formgrid grid">
             <div class="field col-12">
-            <p-fileUpload   (onSelect)="onUpload($event)" [multiple]="false"
-                accept="image/*" [maxFileSize]="1000000">
-                <ng-template pTemplate="content">
-                    <ul *ngIf="uploadedFiles.length">
-                        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                    </ul>
-                </ng-template>
-            </p-fileUpload>
-        </div>
+                <p-fileUpload   (onSelect)="onUpload($event)" [multiple]="false"
+                    accept="image/*" [maxFileSize]="1000000">
+                    <ng-template pTemplate="content">
+                        <ul *ngIf="uploadedFiles.length">
+                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                        </ul>
+                    </ng-template>
+                </p-fileUpload>
+            </div>
             <div class="field col-12 md:col-4">
                 <label htmlFor="firstname2">Firstname</label>
                 <input pInputText id="firstname2" formControlName="FirstName" type="text" />

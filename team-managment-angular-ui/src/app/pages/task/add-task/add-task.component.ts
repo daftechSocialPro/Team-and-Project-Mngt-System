@@ -21,6 +21,7 @@ export class AddTaskComponent implements OnInit{
   projectSelectList: SelectItem[] = []
   employeeSelectList: SelectItem[] =[]
   TaskForm : FormGroup;
+  uploadedFiles: any[] = [];
 
   taskStatusDropDown = [
     { name: 'NOTSTARTED', code: 'NOTSTARTED' },
@@ -82,55 +83,69 @@ export class AddTaskComponent implements OnInit{
 
   onSubmit(){
     console.log(this.TaskForm.value)
-
+    console.log(this.uploadedFiles)
+    
     if(this.TaskForm.valid){
       if (this.projectId === undefined){
         var taskAdd:any = {
-          taskName:this.TaskForm.value.TaskName,
-          endDate:this.TaskForm.value.EndDate,
-          taskStatuses:this.TaskForm.value.TaskStatus.name,
-          taskPriority:this.TaskForm.value.TaskPriority.name,
-          employeeId:this.user.EmployeeId,
-          projectId:this.TaskForm.value.ProjectId.value,
-          taskDescription:this.TaskForm.value.TaskDescription,
-          createdById:this.user.UserID
+          TaskName:this.TaskForm.value.TaskName,
+          EndDate:this.TaskForm.value.EndDate,
+          TaskStatuses:this.TaskForm.value.TaskStatus.name,
+          TaskPriority:this.TaskForm.value.TaskPriority.name,
+          EmployeeId:this.user.EmployeeId,
+          ProjectId:this.TaskForm.value.ProjectId.value,
+          TaskDescription:this.TaskForm.value.TaskDescription,
+          CreatedById:this.user.UserID,
+          EmployeeName:this.user.FullName,
+          ProjectName:this.TaskForm.value.ProjectId.label
+
         }
       
       }
       else if (this.allowedRoles(["Admin"])){
         var taskAdd:any = {
-          taskName:this.TaskForm.value.TaskName,
-          endDate:this.TaskForm.value.EndDate,
-          taskStatuses:this.TaskForm.value.TaskStatus.name,
-          taskPriority:this.TaskForm.value.TaskPriority.name,
-          employeeId:this.TaskForm.value.EmployeeId.value,
-          projectId:this.projectId,
-          taskDescription:this.TaskForm.value.TaskDescription,
-          createdById:this.user.UserID
+          TaskName:this.TaskForm.value.TaskName,
+          EndDate:this.TaskForm.value.EndDate,
+          TaskStatuses:this.TaskForm.value.TaskStatus.name,
+          TaskPriority:this.TaskForm.value.TaskPriority.name,
+          EmployeeId:this.TaskForm.value.EmployeeId.value,
+          ProjectId:this.projectId,
+          TaskDescription:this.TaskForm.value.TaskDescription,
+          CreatedById:this.user.UserID,
+          EmployeeName:this.TaskForm.value.EmployeeId.label
         }            
       }
       else{
         var taskAdd:any = {
-          taskName:this.TaskForm.value.TaskName,
-          endDate:this.TaskForm.value.EndDate,
-          taskStatuses:this.TaskForm.value.TaskStatus.name,
-          taskPriority:this.TaskForm.value.TaskPriority.name,
-          employeeId:this.user.EmployeeId,
-          projectId:this.projectId,
-          taskDescription:this.TaskForm.value.TaskDescription,
-          createdById:this.user.UserID
+          TaskName:this.TaskForm.value.TaskName,
+          EndDate:this.TaskForm.value.EndDate,
+          TaskStatuses:this.TaskForm.value.TaskStatus.name,
+          TaskPriority:this.TaskForm.value.TaskPriority.name,
+          EmployeeId:this.user.EmployeeId,
+          ProjectId:this.projectId,
+          TaskDescription:this.TaskForm.value.TaskDescription,
+          CreatedById:this.user.UserID,
+          EmployeeName:this.user.FullName
         }
 
       }
-      console.log(taskAdd)
+      var formData = new FormData();
+      for (let key in taskAdd) {
+        if (taskAdd.hasOwnProperty(key)) {
+          formData.append(key, (taskAdd as any)[key]);
+        }
+      }
+      formData.append("FilePath", this.uploadedFiles[0]);
+      
 
-      this.taskService.addTask(taskAdd).subscribe({
+      this.taskService.addTask(formData).subscribe({
         next: (res) => {
 
           if (res.success) {
             this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
 
             this.TaskForm.reset();
+            this.uploadedFiles = []
             this.closeModal();
           }
           else {
@@ -180,5 +195,12 @@ export class AddTaskComponent implements OnInit{
   {
     return this.userService.roleMatch(allowedRoles)
   }
+  onUpload(event: any) {
+    console.log(event)
+    for (const file of event.files) {
+      this.uploadedFiles.push(file);
+    }
 
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
+  }
 }

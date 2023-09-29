@@ -17,14 +17,14 @@ export class TaskService {
   getTask(employeeId:string) {
     return this.http.get<any>(this.BaseURI + '/api/Task?employeeId='+employeeId);
   }
-  addTask(addTask:any){
-    return this.http.post<any>(this.BaseURI + '/api/Task',addTask)
+  addTask(fromData : FormData){
+    return this.http.post<any>(this.BaseURI + '/api/Task',fromData)
   }
   getSingleTask(taskId:any){
     return this.http.get<any>(this.BaseURI + '/api/Task/GetTask?taskId='+taskId)
   }
-  editTask(editTask:any){
-    return this.http.put<any>(this.BaseURI + '/api/Task',editTask)
+  editTask(fromData : FormData){
+    return this.http.put<any>(this.BaseURI + '/api/Task',fromData)
   }
   updateStatus(data:any){
     return this.http.put<any>(this.BaseURI + '/api/Task/ChangeStatus', data)
