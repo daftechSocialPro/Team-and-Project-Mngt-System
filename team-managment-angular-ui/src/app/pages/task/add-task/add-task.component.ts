@@ -22,6 +22,12 @@ export class AddTaskComponent implements OnInit{
   employeeSelectList: SelectItem[] =[]
   TaskForm : FormGroup;
   uploadedFiles: any[] = [];
+  selectedValue:string 
+  dropdownOptions = [
+    { label: 'Project Task', value: 'PT' },
+    { label: 'Personal Task', value: 'PET' }
+    
+  ];
 
   taskStatusDropDown = [
     { name: 'NOTSTARTED', code: 'NOTSTARTED' },
@@ -59,8 +65,9 @@ export class AddTaskComponent implements OnInit{
         EndDate:[null,Validators.required],
         TaskStatus:[null,Validators.required],
         TaskPriority:[null,Validators.required],
-        ProjectId:[null,Validators.required],
-        TaskDescription:['']
+        ProjectId:[null],
+        TaskDescription:[''],
+        TasKType:[null,Validators.required]
       })
     }
     else{
@@ -72,7 +79,8 @@ export class AddTaskComponent implements OnInit{
         TaskStatus:[null,Validators.required],
         TaskPriority:[null,Validators.required],
         EmployeeId:[null],
-        TaskDescription:['']
+        TaskDescription:[''],
+        
       })
     }
      console.log("projectId",this.projectId)
@@ -202,5 +210,14 @@ export class AddTaskComponent implements OnInit{
     }
 
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
+  }
+  showInput()
+  {
+    if (this.TaskForm.value.TasKType !== null){
+
+      return this.TaskForm.value.TasKType.value
+    }
+    
+
   }
 }

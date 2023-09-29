@@ -160,7 +160,9 @@ export class AddProjectComponent implements OnInit {
   
   showInput()
   {
-    return this.ProjectForm.value.AssignedTo.name
+    if (this.ProjectForm.value.AssignedTo !== null){
+      return this.ProjectForm.value.AssignedTo.name
+    }
 
   }
   closeModal()

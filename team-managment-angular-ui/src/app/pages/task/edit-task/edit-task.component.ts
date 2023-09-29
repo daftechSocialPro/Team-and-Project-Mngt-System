@@ -55,6 +55,7 @@ export class EditTaskComponent implements OnInit {
 
      this.taskService.getSingleTask(this.taskId).subscribe({next:(res)=> 
       {
+        
         this.task = res
         console.log(this.task)
         this.TaskForm.controls['TaskName'].setValue(this.task.taskName)
@@ -63,6 +64,7 @@ export class EditTaskComponent implements OnInit {
         this.TaskForm.controls['TaskPriority'].setValue(this.taskPriorityDropDown.find(u => u.name === this.task.taskPriority))
         this.TaskForm.controls['ProjectId'].setValue(this.projectSelectList.find(u => u.value === this.task.projectId))
         this.TaskForm.controls['TaskDescription'].setValue(this.task.taskDescription)
+        
            
       }
       
@@ -141,4 +143,7 @@ export class EditTaskComponent implements OnInit {
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
   }
 
+  getFile(url: string) {
+    return this.commonService.getPdf(url)
+  }
 }
