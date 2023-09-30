@@ -49,7 +49,7 @@ export class EditTaskComponent implements OnInit {
       EndDate:[null,Validators.required],
       TaskStatus:[null,Validators.required],
       TaskPriority:[null,Validators.required],
-      ProjectId:[null,Validators.required],
+      ProjectId:[null],
       TaskDescription:['']
      })
 
@@ -77,16 +77,36 @@ export class EditTaskComponent implements OnInit {
     console.log(this.TaskForm.value)
 
     if(this.TaskForm.valid){
-      var taskEdit:any = {
-        id:this.task.id,
-        taskName:this.TaskForm.value.TaskName,
-        endDate:this.TaskForm.value.EndDate,
-        taskStatuses:this.TaskForm.value.TaskStatus.name,
-        taskPriority:this.TaskForm.value.TaskPriority.name,
-        employeeId:this.user.EmployeeId,
-        projectId:this.TaskForm.value.ProjectId.value,
-        taskDescription:this.TaskForm.value.TaskDescription,
-        createdById:this.user.UserID
+      if (this.TaskForm.value.ProjectId === undefined){
+        var taskEdit:any = {
+          id:this.task.id,
+          taskName:this.TaskForm.value.TaskName,
+          endDate:this.TaskForm.value.EndDate,
+          taskStatuses:this.TaskForm.value.TaskStatus.name,
+          taskPriority:this.TaskForm.value.TaskPriority.name,
+          employeeId:this.user.EmployeeId,
+          
+          taskDescription:this.TaskForm.value.TaskDescription,
+          createdById:this.user.UserID,
+          EmployeeName:this.user.FullName,
+          
+        }
+
+      }
+      else{
+        var taskEdit:any = {
+          id:this.task.id,
+          taskName:this.TaskForm.value.TaskName,
+          endDate:this.TaskForm.value.EndDate,
+          taskStatuses:this.TaskForm.value.TaskStatus.name,
+          taskPriority:this.TaskForm.value.TaskPriority.name,
+          employeeId:this.user.EmployeeId,
+          projectId:this.TaskForm.value.ProjectId.value,
+          taskDescription:this.TaskForm.value.TaskDescription,
+          createdById:this.user.UserID,
+          EmployeeName:this.user.FullName,
+          ProjectName:this.TaskForm.value.ProjectId.label
+        }
       }
       console.log(taskEdit)
       var formData = new FormData();
@@ -95,7 +115,7 @@ export class EditTaskComponent implements OnInit {
           formData.append(key, (taskEdit as any)[key]);
         }
       }
-      formData.append("FilePath", this.uploadedFiles[0]);
+      formData.append("File", this.uploadedFiles[0]);
 
       this.taskService.editTask(formData).subscribe({
         next: (res) => {
@@ -123,9 +143,9 @@ export class EditTaskComponent implements OnInit {
 
   }
   getProjectList(){
-    this.projectService.getProjectSelectList().subscribe({
+    this.projectService.getEmployeesProject(this.user.EmployeeId).subscribe({
       next: (res) => {
-        this.projectSelectList = res.map(item => ({ value: item.id, label: item.name }));
+        this.projectSelectList = res.map(item => ({ value: item.id, label: item.projectName }));
       }
     })
 

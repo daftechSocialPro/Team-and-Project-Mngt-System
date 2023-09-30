@@ -106,7 +106,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
         DividerModule,
         
 		ChartModule,
-        InputSwitchModule
+        InputSwitchModule,
+        
 		
         
         

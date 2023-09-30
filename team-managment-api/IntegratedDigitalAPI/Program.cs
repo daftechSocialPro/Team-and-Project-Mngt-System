@@ -42,7 +42,7 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-
+builder.Services.AddSignalR();
 
 
 

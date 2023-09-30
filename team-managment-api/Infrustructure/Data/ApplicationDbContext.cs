@@ -13,7 +13,7 @@ using IntegratedInfrustructure.Model.HRM;
 using IntegratedInfrustructure.Model.Team;
 using IntegratedInfrustructure.Model.Project;
 using IntegratedInfrustructure.Model.Task;
-
+using IntegratedInfrustructure.Model.Chat;
 
 namespace IntegratedInfrustructure.Data
 {
@@ -61,6 +61,11 @@ namespace IntegratedInfrustructure.Data
 
         #endregion
 
+        #region Chat
+
+        public DbSet<ChatList> Chats { get; set; }
+
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

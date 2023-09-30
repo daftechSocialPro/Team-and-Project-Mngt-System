@@ -92,9 +92,22 @@ export class AddTaskComponent implements OnInit{
   onSubmit(){
     console.log(this.TaskForm.value)
     console.log(this.uploadedFiles)
-    
     if(this.TaskForm.valid){
-      if (this.projectId === undefined){
+      if (this.TaskForm.value.ProjectId === null){
+        var taskAdd:any = {
+          TaskName:this.TaskForm.value.TaskName,
+          EndDate:this.TaskForm.value.EndDate,
+          TaskStatuses:this.TaskForm.value.TaskStatus.name,
+          TaskPriority:this.TaskForm.value.TaskPriority.name,
+          EmployeeId:this.user.EmployeeId,
+          TaskDescription:this.TaskForm.value.TaskDescription,
+          CreatedById:this.user.UserID,
+          EmployeeName:this.user.FullName,
+          
+
+        }
+      }
+      else if (this.projectId === undefined){
         var taskAdd:any = {
           TaskName:this.TaskForm.value.TaskName,
           EndDate:this.TaskForm.value.EndDate,
@@ -173,9 +186,10 @@ export class AddTaskComponent implements OnInit{
 
   }
   getProjectList(){
-    this.projectService.getProjectSelectList().subscribe({
+    
+    this.projectService.getEmployeesProject(this.user.EmployeeId).subscribe({
       next: (res) => {
-        this.projectSelectList = res.map(item => ({ value: item.id, label: item.name }));
+        this.projectSelectList = res.map(item => ({ value: item.id, label: item.projectName }));
       }
     })
 

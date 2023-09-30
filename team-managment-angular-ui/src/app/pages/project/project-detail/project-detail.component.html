@@ -56,6 +56,15 @@
                 <div style="flex: 1;">
                     <div class="card">
                         <h5>Chat</h5>
+                        <div class="chat-container">
+                            <div class="chat-messages">
+                              <p-message *ngFor="let message of messages" [severity]="message.severity" [text]="message.summary" [detail]="message.detail"></p-message>
+                            </div>
+                            <div class="input-container">
+                              <input pInputText [(ngModel)]="newMessage" placeholder="Type your message..." />
+                              <button pButton label="Send" (click)="sendMessage()"></button>
+                            </div>
+                          </div>
                     </div>
                 </div>
             
