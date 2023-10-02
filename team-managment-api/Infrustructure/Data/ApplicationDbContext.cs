@@ -14,6 +14,7 @@ using IntegratedInfrustructure.Model.Team;
 using IntegratedInfrustructure.Model.Project;
 using IntegratedInfrustructure.Model.Task;
 using IntegratedInfrustructure.Model.Chat;
+using IntegratedInfrustructure.Model.Notice;
 
 namespace IntegratedInfrustructure.Data
 {
@@ -65,6 +66,10 @@ namespace IntegratedInfrustructure.Data
 
         public DbSet<ChatList> Chats { get; set; }
 
+        #endregion
+
+        #region Notice
+        public DbSet<NoticeList> Notices { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

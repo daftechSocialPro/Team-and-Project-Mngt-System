@@ -1,4 +1,5 @@
 ﻿using IntegratedImplementation.DTOS.Chat;
+using IntegratedImplementation.DTOS.Notice;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace IntegratedImplementation.Helper.ChatHub
     {
         Task getNotification(List<ChatGetDto> notifications, string employeeId);
         Task AddDirectorToGroup(string employeeId);
+        Task getNotice(NoticeGetDto notice, string employeeId);
     }
 }
