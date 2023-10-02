@@ -109,42 +109,42 @@
                     (click)="assignTask(project.id,project.teamProjects,project.projectEmployees)"></button>
             </div>
 
-            <p-table [value]="dataViewValue" class="col-12" scrollDirection="both" [scrollable]="true"
-                [paginator]="true" [rows]="10" scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th style="width:200px" pFrozenColumn>Name</th>
-                        <th style="width:200px">Description </th>
-                        <th style="width:200px">Status</th>
-                        <th style="width:200px">Priority</th>
-                        <th style="width: 200px">Due Date</th>
-                        <th style="width:200px">Owner</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-task>
-                    <tr>
-                        <td style="width:200px" pFrozenColumn>{{task.taskName}}</td>
-                        <td pFrozenColumn>{{task.taskDescription}}</td>
-                        <td style="width:200px" pFrozenColumn>
-                            <span
-                                [class]="'status-badge status-'+task.taskStatuses.toLowerCase()">{{task.taskStatuses}}</span>
-                        </td>
-                        <td style="width:200px" pFrozenColumn>
-                            <span
-                                [class]="'priority-badge prio-'+task.taskPriority.toLowerCase()">{{task.taskPriority}}</span>
-                        </td>
-                        <td style="width:200px" pFrozenColumn>
-
-                            {{task.endDate | date:'dd/MM/yyyy'}}
-                        </td>
-                        <td colspan="5">
-                            <img [alt]="" [src]="getImage(task.employeeImagePath)" width="32"
-                                style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
-                            <span class="ml-2">{{task.employeeName}}</span>
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-
-        </div>
+            <p-table [value]="dataViewValue" class="col-12" scrollDirection="both" [scrollable]="true" [paginator]="true" [rows]="10"
+            scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width:200px" pFrozenColumn>Name</th>
+                    <th style="width:200px">Description </th>
+                    <th style="width:200px">Status</th>
+                    <th style="width:200px">Priority</th>
+                    <th style="width: 200px">Due Date</th>
+                    <th style="width:200px">Owner</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-task>
+                <tr>
+                    <td style="width:200px" pFrozenColumn>{{task.taskName}}</td>
+                    <td pFrozenColumn>{{task.taskDescription}}</td>
+                    <td style="width:200px" pFrozenColumn>
+                        <span
+                        [class]="'status-badge status-'+task.taskStatuses.toLowerCase()">{{task.taskStatuses}}</span>
+                    </td>
+                    <td style="width:200px" pFrozenColumn>
+                        <span
+                        [class]="'priority-badge prio-'+task.taskPriority.toLowerCase()">{{task.taskPriority}}</span>
+                    </td>
+                    <td style="width:200px" pFrozenColumn>
+                        
+                        {{task.endDate | date:'dd/MM/yyyy'}}
+                    </td>
+                    <td colspan="5">
+                        <img [alt]="" [src]="getImage(task.employeeImagePath)" width="32"
+                        style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
+                        <span class="ml-2">{{task.employeeName}}</span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+      </div>
     </div>
+</div>

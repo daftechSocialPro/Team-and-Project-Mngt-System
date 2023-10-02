@@ -15,8 +15,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AddProjectComponent implements OnInit {
   
-  @Output() projectAdded = new EventEmitter<any>();
-
   user : UserView
   employeesSelectList: SelectItem[] = []
   employeesSelectedList: string[] = []

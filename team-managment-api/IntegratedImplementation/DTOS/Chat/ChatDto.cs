@@ -13,7 +13,7 @@ namespace IntegratedImplementation.DTOS.Chat
         public Guid EmployeeId { get; set; }
         public Guid ProjectId { get; set; }
         public string Message { get; set; }
-        private DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         public SelectListDto Employee { get; set; }
     }
     public class ChatPostDto
