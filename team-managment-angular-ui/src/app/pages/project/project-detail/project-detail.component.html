@@ -3,7 +3,7 @@
     <div class="card">
         <h5 style="font-size: 16px; font-weight:700; color: #3366fe;">{{project.projectName}} Details</h5>
         <div style="display: flex;  gap: 20px;">
-            <div style="flex: 3;">
+            <div style="flex: 2.5;">
                 <div class="card">
                     <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
                         <div class="flex align-items-center">
@@ -54,22 +54,49 @@
                 </div>
             </div>
 
-                <div style="flex: 1;">
-                    <div class="card">
-                        <h5>Chat</h5>
-                        <div class="chat-container">
-                            <div class="chat-messages">
-                              <span *ngFor="let message of messages"> {{message.message}} <br></span>
-                            </div>
-                            <div class="input-container">
-                              <input pInputText [(ngModel)]="newMessage" placeholder="Type your message..." />
-                              <button pButton label="Send" (click)="sendMessage()"></button>
-                            </div>
-                          </div>
-                    </div>
+            <div style="flex: 1.5;">
+                <div class="">
+                    <div class="card chat-container">
 
+                        <div class="chat-messages message-list">
+                            <div *ngFor="let message of messages" >
+
+                                <div class="message">
+
+                                
+                                <div class="avatar-lef" *ngIf="message.employeeId !== user.EmployeeId">
+                                    <img class="avatar-image" [src]="getImage(message.employee.imagePath)"
+                                        alt="User Avatar" />
+                                </div>
+                                <div class="other-message" *ngIf="message.employeeId !== user.EmployeeId">
+                                    <div class="employee-name">{{ message.employee.name }}</div>
+                                    <div class="message-content">{{ message.message }}</div>
+                                    <div class="message-time">{{ message.createdDate|date:"dd MMM HH:MM a" }}</div>
+                                </div>
+                                <div class="my-message" *ngIf="message.employeeId === user.EmployeeId">
+                                    <div class="employee-name">{{ message.employee.name }}</div>
+                                    <div class="message-content">{{ message.message }}</div>
+                                    <div class="message-time">{{ message.createdDate|date:"dd MMM HH:MM a" }}</div>
+                           
+                                </div>
+                                <div class="avatar" *ngIf="message.employeeId === user.EmployeeId">
+                                    <img class="avatar-image" [src]="getImage(message.employee.imagePath)"
+                                        alt="User Avatar" />
+                                </div>
+                            </div>
+                          
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <input pInputText [(ngModel)]="newMessage" placeholder="Type your message..." />
+                        <button pButton label="Send" (click)="sendMessage()"></button>
+                    </div>
                 </div>
-            
+
+            </div>
+
         </div>
 
         <h5 class="font-bold" style="margin-left: 20px;">Tasks</h5>
@@ -82,42 +109,42 @@
                     (click)="assignTask(project.id,project.teamProjects,project.projectEmployees)"></button>
             </div>
 
-            <p-table [value]="dataViewValue" class="col-12" scrollDirection="both" [scrollable]="true" [paginator]="true" [rows]="10"
-            scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th style="width:200px" pFrozenColumn>Name</th>
-                    <th style="width:200px">Description </th>
-                    <th style="width:200px">Status</th>
-                    <th style="width:200px">Priority</th>
-                    <th style="width: 200px">Due Date</th>
-                    <th style="width:200px">Owner</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-task>
-                <tr>
-                    <td style="width:200px" pFrozenColumn>{{task.taskName}}</td>
-                    <td pFrozenColumn>{{task.taskDescription}}</td>
-                    <td style="width:200px" pFrozenColumn>
-                        <span
-                        [class]="'status-badge status-'+task.taskStatuses.toLowerCase()">{{task.taskStatuses}}</span>
-                    </td>
-                    <td style="width:200px" pFrozenColumn>
-                        <span
-                        [class]="'priority-badge prio-'+task.taskPriority.toLowerCase()">{{task.taskPriority}}</span>
-                    </td>
-                    <td style="width:200px" pFrozenColumn>
-                        
-                        {{task.endDate | date:'dd/MM/yyyy'}}
-                    </td>
-                    <td colspan="5">
-                        <img [alt]="" [src]="getImage(task.employeeImagePath)" width="32"
-                        style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
-                        <span class="ml-2">{{task.employeeName}}</span>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
+            <p-table [value]="dataViewValue" class="col-12" scrollDirection="both" [scrollable]="true"
+                [paginator]="true" [rows]="10" scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:200px" pFrozenColumn>Name</th>
+                        <th style="width:200px">Description </th>
+                        <th style="width:200px">Status</th>
+                        <th style="width:200px">Priority</th>
+                        <th style="width: 200px">Due Date</th>
+                        <th style="width:200px">Owner</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-task>
+                    <tr>
+                        <td style="width:200px" pFrozenColumn>{{task.taskName}}</td>
+                        <td pFrozenColumn>{{task.taskDescription}}</td>
+                        <td style="width:200px" pFrozenColumn>
+                            <span
+                                [class]="'status-badge status-'+task.taskStatuses.toLowerCase()">{{task.taskStatuses}}</span>
+                        </td>
+                        <td style="width:200px" pFrozenColumn>
+                            <span
+                                [class]="'priority-badge prio-'+task.taskPriority.toLowerCase()">{{task.taskPriority}}</span>
+                        </td>
+                        <td style="width:200px" pFrozenColumn>
 
+                            {{task.endDate | date:'dd/MM/yyyy'}}
+                        </td>
+                        <td colspan="5">
+                            <img [alt]="" [src]="getImage(task.employeeImagePath)" width="32"
+                                style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
+                            <span class="ml-2">{{task.employeeName}}</span>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </div>
     </div>
-</div>
