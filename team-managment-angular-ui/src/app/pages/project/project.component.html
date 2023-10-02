@@ -24,7 +24,7 @@
 
 				<ng-template let-project pTemplate="listItem">
 					<div class="col-12">
-						<div class="flex flex-column md:flex-row align-items-center p-3 w-full">
+						<div class="flex flex-column md:flex-row align-items-center p-3 w-full ">
                             <p-avatarGroup *ngIf="project.assignedTo === 'EMPLOYEE'" styleClass="mb-3">
 								<ng-container *ngFor="let emp of project.projectEmployees ; let i = index">
 								  <ng-container *ngIf="i < 4">
@@ -41,10 +41,11 @@
 								
 								<p-tag *ngIf="project.assignedTo === 'TEAM'" icon="pi pi-user" value={{emp.name}} ></p-tag>
 							</ng-container>
-							<div class="flex-1 flex  flex-column align-items-center text-center md:text-left">
+							<div class="flex-1 flex  flex-column align-items-center text-center md:text-left ">
 								<div class="font-bold text-2xl">{{project.projectName}}</div>
-								<div class="mb-2">{{project.description}}</div>
-								
+								<div class="text-2xl font-bold">{{getDescription(project)}}</div>
+								<p class="description mb-3">{{ project.description }}</p>
+
 								<div class="flex align-items-center mt-2">
 									<i class="pi pi-stopwatch mr-2"></i>
 									<span class="font-semibold">{{project.dueDate | date:'yyyy-MM-dd'}}</span>
@@ -61,55 +62,49 @@
 
 				<ng-template let-project pTemplate="gridItem">
 					<div class="col-12 md:col-4">
-						<div class="card m-3 border-1 surface-border">
+							<div class="card m-3 border-2 surface-border pro-card"  [class]="getStyleee(project) ">
 							<div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
 								<div class="flex align-items-center">
 									<i class="pi pi-stopwatch mr-2"></i>
 									<span class="font-semibold">{{project.dueDate | date:'yyyy-MM-dd'}}</span>
 								</div>
-								<span [class]="'project-badge status-'+project.projectStatus.toLowerCase()" >{{project.projectStatus}}</span>
+								<span [class]="'project-badge status-'+project.projectStatus.toLowerCase()">{{project.projectStatus}}</span>
 							</div>
 							<div (click)="projectDetail(project.id)" class="flex flex-column align-items-center text-center mb-3">
 								
 								<div class="text-2xl font-bold">{{project.projectName}}</div>
-								<div class="mb-3">{{project.description}}</div>
+								<div class="text-2xl font-bold">{{getDescription(project)}}</div>
+								<p class="description mb-3">{{ project.description }}</p>
+								
 
-								
-								
-								
 							</div>
 							<p-progressBar [value]="projectProgressMap.get(project.id)| number: '1.2-2'" [showValue]="true" [styleClass]="calculateProgressBarColor(project.id)"></p-progressBar>
 							<!-- <p-progressBar [value]="expProjectProgressMap.get(project.id)" [showValue]="true"></p-progressBar> -->
-							
 							<div class="flex flex-column">
-								
-								<div class="mb-2 mt-2"><p-chip label={{project.assignedTo}} styleClass="m-1"></p-chip></div>
-                                <div class="flex  justify-content-between">
+								<div class="mb-2 mt-2">
+									<p-chip label={{project.assignedTo}} styleClass="m-1"></p-chip>
+								</div>
+								<div class="flex justify-content-between">
 									<div>
-										
 										<p-avatarGroup *ngIf="project.assignedTo === 'EMPLOYEE'" styleClass="mb-3">
-											<ng-container *ngFor="let emp of project.projectEmployees ; let i = index">
-											  <ng-container *ngIf="i < 4">
-												<p-avatar [image]="getImage(emp.imagePath)" size="large" shape="circle"></p-avatar>
-											  </ng-container>
-											  <ng-container *ngIf="i === 4">
-												<p-avatar label="+{{ project.projectEmployees.length - 4 }}" shape="circle" size="large" [style]="{'background-color':'#3B82F6', 'color': '#ffffff'}"></p-avatar>
-											  </ng-container>
+											<ng-container *ngFor="let emp of project.projectEmployees; let i = index">
+												<ng-container *ngIf="i < 4">
+													<p-avatar [image]="getImage(emp.imagePath)" size="large" shape="circle"></p-avatar>
+												</ng-container>
+												<ng-container *ngIf="i === 4">
+													<p-avatar label="+{{ project.projectEmployees.length - 4 }}" shape="circle" size="large" [style]="{'background-color':'#3B82F6', 'color': '#ffffff'}"></p-avatar>
+												</ng-container>
 											</ng-container>
 										</p-avatarGroup>
-
-
-										<ng-container *ngFor="let emp of project.teamProjects" >
-											
-											<p-tag *ngIf="project.assignedTo === 'TEAM'" icon="pi pi-user" value={{emp.name}} ></p-tag>
+										<ng-container *ngFor="let emp of project.teamProjects">
+											<p-tag *ngIf="project.assignedTo === 'TEAM'" icon="pi pi-user" value={{emp.name}}></p-tag>
 										</ng-container>
-										  
 									</div>
-									<div class="align-self-end"><button *ngIf="allowedRoles(['Admin'])" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary mr-2" (click)="editProject(project.id)"></button></div>
+									<div class="align-self-end">
+										<button *ngIf="allowedRoles(['Admin'])" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary mr-2" (click)="editProject(project.id)"></button>
+									</div>
 								</div>
-						
 							</div>
-							
 						</div>
 					</div>
 				</ng-template>
