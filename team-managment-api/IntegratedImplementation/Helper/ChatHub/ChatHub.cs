@@ -1,5 +1,6 @@
 ﻿
 using IntegratedImplementation.DTOS.Chat;
+using IntegratedImplementation.DTOS.Notice;
 using Microsoft.AspNetCore.SignalR;
 
 namespace IntegratedImplementation.Helper.ChatHub
@@ -32,6 +33,15 @@ namespace IntegratedImplementation.Helper.ChatHub
 
             await Clients.Group(employeeId).getNotification(notifcations, employeeId);
         }
+
+        public async Task getNotice(NoticeGetDto notice, string employeeId)
+        {
+
+            await Clients.Group(employeeId).getNotice(notice, employeeId);
+        }
+
+
+
 
     }
 }

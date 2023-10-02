@@ -3,12 +3,6 @@ using IntegratedImplementation.Interfaces.HRM;
 using IntegratedImplementation.Interfaces.Project;
 using IntegratedInfrustructure.Data;
 using IntegratedImplementation.Interfaces.Chat;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using IntegratedImplementation.DTOS.Chat;
 using Implementation.Helper;
 using IntegratedInfrustructure.Model.Chat;
@@ -41,11 +35,11 @@ namespace IntegratedImplementation.Services.Chat
             ChatList chat = new ChatList
             {
                 Id = Guid.NewGuid(),
-                CreatedDate= DateTime.Now,
-                EmployeeId= sendChat.EmployeeId,
-                ProjectId= sendChat.ProjectId,
-                Message= sendChat.Message,
-                CreatedById =sendChat.CreatedById
+                CreatedDate = DateTime.Now,
+                EmployeeId = sendChat.EmployeeId,
+                ProjectId = sendChat.ProjectId,
+                Message = sendChat.Message,
+                CreatedById = sendChat.CreatedById
 
             };
             await _dbContext.Chats.AddAsync(chat);

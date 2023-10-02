@@ -7,17 +7,14 @@ using IntegratedImplementation.Services.HRM;
 using IntegratedImplementation.Interfaces.Team;
 using IntegratedImplementation.Services.Team;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using IntegratedImplementation.Interfaces.Project;
 using IntegratedImplementation.Services.Project;
 using IntegratedImplementation.Interfaces.Task;
 using IntegratedImplementation.Services.Task;
 using IntegratedImplementation.Interfaces.Chat;
 using IntegratedImplementation.Services.Chat;
+using IntegratedImplementation.Interfaces.Notice;
+using IntegratedImplementation.Services.Notice;
 
 namespace IntegratedImplementation.Datas
 {
@@ -34,6 +31,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<INoticeService, NoticeService>();
             return services;
         }
     }

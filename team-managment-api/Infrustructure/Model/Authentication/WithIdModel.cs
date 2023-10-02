@@ -18,6 +18,6 @@ namespace IntegratedInfrustructure.Model.Authentication
         // Navigation property
         public ApplicationUser CreatedBy { get; set; }
     
-    public RowStatus Rowstatus { get; set; }
+        public RowStatus Rowstatus { get; set; }
     }
 }
