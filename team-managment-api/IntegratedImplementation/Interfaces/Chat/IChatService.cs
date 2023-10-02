@@ -11,5 +11,6 @@ namespace IntegratedImplementation.Interfaces.Chat
     public interface IChatService
     {
         Task<ResponseMessage> SendMessage(ChatPostDto sendChat);
+        Task<List<ChatGetDto>> GetProjectMessages(Guid projectId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegratedImplementation.DTOS.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ namespace IntegratedImplementation.DTOS.Chat
         public Guid EmployeeId { get; set; }
         public Guid ProjectId { get; set; }
         public string Message { get; set; }
+        private DateTime CreatedDate { get; set; }
+        public SelectListDto Employee { get; set; }
     }
     public class ChatPostDto
     {
@@ -19,5 +22,7 @@ namespace IntegratedImplementation.DTOS.Chat
         public Guid ProjectId { get; set; }
         public string Message { get; set; }
         public string CreatedById { get; set; }
+        public List<string> EmployeeIds { get; set;}
+
     }
 }

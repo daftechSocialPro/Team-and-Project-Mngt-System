@@ -58,7 +58,7 @@
                         <h5>Chat</h5>
                         <div class="chat-container">
                             <div class="chat-messages">
-                              <p-message *ngFor="let message of messages" [severity]="message.severity" [text]="message.summary" [detail]="message.detail"></p-message>
+                              <span *ngFor="let message of messages"> {{message.message}} <br></span>
                             </div>
                             <div class="input-container">
                               <input pInputText [(ngModel)]="newMessage" placeholder="Type your message..." />

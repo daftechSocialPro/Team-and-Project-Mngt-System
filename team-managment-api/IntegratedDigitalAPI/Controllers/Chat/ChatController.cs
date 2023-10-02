@@ -1,5 +1,6 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Chat;
+using IntegratedImplementation.DTOS.Task;
 using IntegratedImplementation.Interfaces.Chat;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -27,6 +28,13 @@ namespace IntegratedDigitalAPI.Controllers.Chat
                 return BadRequest();
             }
         }
+        [HttpGet]
+        [ProducesResponseType(typeof(ChatGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetTasks(Guid projectId)
+        {
+            return Ok(await _chatService.GetProjectMessages(projectId));
+        }
+
 
     }
 }
