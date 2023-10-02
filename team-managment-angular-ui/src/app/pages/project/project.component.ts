@@ -114,11 +114,20 @@ export class ProjectComponent implements OnInit {
         this.getProjectProgress(project.id).subscribe((progress: number) => {
           this.projectProgressMap.set(project.id, progress);
         });
+        this.project.forEach((project) => {
+          this.checkTaskOverdue(project);
+          this.getDescription(project);
+        });
+   
+    
       });
+ 
                
       }, error: (err) => {
         console.log(err)
       }
+
+      
 
     })
   }
@@ -195,6 +204,40 @@ calculateProgressBarColor(id): string {
   return `background-color: rgb(${red}, ${green}, ${blue})`;
 }
 
+  isTaskOverdue(dueDate: Date): boolean {
+    const endDateObj = new Date(dueDate);
+    const todayObj = new Date();
+    endDateObj.setHours(0, 0, 0, 0);
+    todayObj.setHours(0, 0, 0, 0);
+    return endDateObj < todayObj;
+  }
+  checkTaskOverdue(project) {
+    const endDate = new Date(project.dueDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+   
+  }
+
+  getDescription(project){
+    if (project.description.length > 100) {
+      project.description = project.description.substring(0, 100) + '...';
+    }
+  }
+
+getStyleee(project:any){
+
+  if(this.isTaskOverdue(project.dueDate) && !(project.projectStatus === "COMPLETED") && !(project.projectStatus === "CANCELD") )
+  return 'border-overdue'
+  if(project.projectStatus === "CANCELD")
+  return 'border-cancle'
+
+  if(project.projectStatus === "COMPLETED" )
+
+  return 'border-success'
+
+  return ''
+}
 
 }
 

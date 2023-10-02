@@ -25,6 +25,10 @@
         background:#9DD9F3 ;
         color: #3B82F6 ;
     }
+    &.status-notstarted {
+        background: #FEEDAF;
+        color: #8A5340;
+    }
 }
 .status-badge{
     border-radius: var(--border-radius);
@@ -52,6 +56,10 @@
     &.status-inprogress {
         background:#9DD9F3 ;
         color: #3B82F6 ;
+    }
+    &.status-notstarted {
+        background: #FEEDAF;
+        color: #8A5340;
     }
 }
 .priority-badge{

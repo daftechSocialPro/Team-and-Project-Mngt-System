@@ -34,3 +34,22 @@
     font-size: 12px;
     letter-spacing: .3px;
 }
+.green-border {
+    border-color: green;
+}
+
+.bg-red {
+    background-color: #ff0000b8;
+  }
+.border-success{
+    border: 2px solid green !important;
+}
+.border-cancle {
+    border: 2px solid #ffcc00b8 !important;
+}
+.border-overdue{
+    border: 2px solid #ff0000b8 !important;
+}
+.pro-card{
+    height: 330px;
+}
