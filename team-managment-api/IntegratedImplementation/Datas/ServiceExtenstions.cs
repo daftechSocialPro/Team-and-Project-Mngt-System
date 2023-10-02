@@ -16,6 +16,8 @@ using IntegratedImplementation.Interfaces.Project;
 using IntegratedImplementation.Services.Project;
 using IntegratedImplementation.Interfaces.Task;
 using IntegratedImplementation.Services.Task;
+using IntegratedImplementation.Interfaces.Chat;
+using IntegratedImplementation.Services.Chat;
 
 namespace IntegratedImplementation.Datas
 {
@@ -31,6 +33,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<IChatService, ChatService>();
             return services;
         }
     }

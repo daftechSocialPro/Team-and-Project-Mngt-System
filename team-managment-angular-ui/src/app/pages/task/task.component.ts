@@ -25,6 +25,12 @@ export class TaskComponent implements OnInit {
   taskArray:any = [];
   curentTask:any;
   taskproject:any;
+  selectedValue:string = 'AT'
+  dropdownOptions = [
+    { label: 'All Tasks', value: 'AT' },
+    { label: 'My Tasks', value: 'MT' }
+    
+  ];
 
 
   constructor(
@@ -91,7 +97,9 @@ export class TaskComponent implements OnInit {
   getImage(url: string) {
     return this.commonService.createImgPath(url)
   }
-  
+  getFile(url: string) {
+    return this.commonService.getPdf(url)
+  }
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }

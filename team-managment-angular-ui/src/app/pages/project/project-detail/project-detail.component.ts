@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'src/app/services/common.service';
@@ -7,13 +7,17 @@ import { ProjectService } from 'src/app/services/project.service';
 import { UserService, UserView } from 'src/app/services/user.service';
 import { AddTaskComponent } from '../../task/add-task/add-task.component';
 import { TeamService } from 'src/app/services/team.service';
+import { Message, MessageService } from 'primeng/api';
+import { ChatService } from 'src/app/services/chat.sercive';
+import * as signalR from '@microsoft/signalr';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-project-detail',
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.scss']
 })
-export class ProjectDetailComponent implements OnInit {
+export class ProjectDetailComponent implements OnInit, AfterViewInit {
   user: UserView
   project:any
   employeeTasks
@@ -23,11 +27,12 @@ export class ProjectDetailComponent implements OnInit {
   completeCount:any = 0;
   inprogresCount:any = 0;
   notstartedCount:any = 0;
- overdueCount:any = 0;
- onholdCount:any=0;
- allTask:any=0;
- tasksArray:any;
-
+  overdueCount:any = 0;
+  onholdCount:any=0;
+  allTask:any=0;
+  tasksArray:any;
+  messages: Message[] = [];
+  newMessage: string;
   selectedValue: string;
   dataViewValue: any[];
   dropdownOptions = [
@@ -36,6 +41,8 @@ export class ProjectDetailComponent implements OnInit {
     
   ];
   projectProgress: any;
+  public connection!: signalR.HubConnection;
+  urlHub : string = environment.baseUrl+"/ws/Chat"
     
 
  
@@ -45,7 +52,9 @@ export class ProjectDetailComponent implements OnInit {
     private commonServive: CommonService,
     private userService: UserService,
     private modalSerivce: NgbModal,
-    private teamService: TeamService
+    private teamService: TeamService,
+    private chatService: ChatService,
+    private messageService: MessageService
       ) {}
 
 
@@ -57,8 +66,37 @@ export class ProjectDetailComponent implements OnInit {
 
   
     this.getProject(this.projectId)
-       
-  }
+    this.getMessages(this.projectId)
+    
+      
+}
+ngAfterViewInit(): void {
+  this.connection = new signalR.HubConnectionBuilder()
+    .withUrl(this.urlHub, {
+      skipNegotiation: true,
+      transport: signalR.HttpTransportType.WebSockets
+    })
+    .configureLogging(signalR.LogLevel.Debug)
+    .build();
+
+  this.connection.start()
+    .then((res) => {
+     
+     this.connection.invoke('addDirectorToGroup', this.projectemp.map(u=>u.value));
+     
+    })
+    .catch((err) => console.log('Error while connecting to the server', err));
+
+  
+
+  if (this.connection){
+
+  this.connection.on('getNotification', (result) => {
+    this.getMessages(this.projectId)
+  });
+
+  } 
+}
 
 
 
@@ -69,14 +107,18 @@ getProject(projectId){
     this.projectemp = this.project.projectEmployees.map(u => {
       return {
         name: u.name,
-        imagePath: u.imagePath
+        imagePath: u.imagePath,
+        value:u.id
       };
     });
-    this.teamService.getTeamMembersSelectList(this.project.teamProjects.map(i => i.id)).subscribe({
-      next: (res) => {
-        this.projectemp = res.map(i => ({value: i.id, name: i.name,imagePath:i.imagePath }))
-      }
-    })
+    if( res.teamProjects.length > 0){
+      this.teamService.getTeamMembersSelectList(this.project.teamProjects.map(i => i.id)).subscribe({
+        next: (res) => {
+          this.projectemp = res.map(i => ({value: i.id, name: i.name,imagePath:i.imagePath }))
+        }
+      })
+    }
+    
     this.dataViewValue = this.project.taskLists;
     this.employeeTasks = res.taskLists.filter(u=> u.employeeId === this.user.EmployeeId )
     this.projectService.getProjectProgress(res.id).subscribe((progress: number) => {
@@ -140,6 +182,45 @@ allowedRoles(allowedRoles: any)
   {
     return this.userService.roleMatch(allowedRoles)
   }
+  
 
+  sendMessage() {
+    if (this.newMessage) {
+      this.messages.push({ severity: 'info', detail: this.newMessage });
+      var sendChat:any = {
+        employeeId:this.user.EmployeeId,
+        projectId:this.projectId,
+        message:this.newMessage,
+        createdById:this.user.UserID,
+        employeeIds:this.projectemp.map(u=>u.value)
+      }
+      this.chatService.sendChat(sendChat).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
+          }
+          else {
+            this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
+
+          }
+
+        }, error: (err) => {
+          this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
+        }
+      })
+
+      this.newMessage = '';
+    }
+  }
+  getMessages(projectId){
+    this.chatService.getProjectChat(projectId).subscribe({
+      next: (res)=> {
+        console.log("chat",res)
+        this.messages = res
+        console.log("message",this.messages)
+      }
+    })
+  }
 
 }

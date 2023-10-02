@@ -114,7 +114,6 @@ export class AddProjectComponent implements OnInit {
             this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
 
             this.ProjectForm.reset();
-            this.projectAdded.emit();
             this.closeModal();
           }
           else {
@@ -160,7 +159,9 @@ export class AddProjectComponent implements OnInit {
   
   showInput()
   {
-    return this.ProjectForm.value.AssignedTo.name
+    if (this.ProjectForm.value.AssignedTo !== null){
+      return this.ProjectForm.value.AssignedTo.name
+    }
 
   }
   closeModal()

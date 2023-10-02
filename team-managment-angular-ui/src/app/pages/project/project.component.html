@@ -4,7 +4,7 @@
 			
 			
             <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
-                <p-dropdown *ngIf="allowedRoles(['Admin'])" [(ngModel)]="selectedValue" [options]="dropdownOptions" (onChange)="onDataViewChange()" class="">
+                <p-dropdown *ngIf="allowedRoles(['Admin'])" [(ngModel)]="selectedValue" [options]="dropdownOptions" (onChange)="onDataViewChange()" >
 					
 				</p-dropdown>
 				<button *ngIf="allowedRoles(['Admin'])" pButton label="Project" class="p-button-outlined mb-2"  icon="pi pi-plus" (click)="addProject()"></button>

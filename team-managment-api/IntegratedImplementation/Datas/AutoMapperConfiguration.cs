@@ -16,6 +16,8 @@ using IntegratedInfrustructure.Model.Project;
 using IntegratedImplementation.DTOS.Project;
 using IntegratedImplementation.DTOS.Task;
 using IntegratedInfrustructure.Model.Task;
+using IntegratedInfrustructure.Model.Chat;
+using IntegratedImplementation.DTOS.Chat;
 
 namespace IntegratedImplementation.Datas
 {
@@ -81,7 +83,8 @@ namespace IntegratedImplementation.Datas
                 .ForMember(a => a.ProjectName, e => e.MapFrom(mfg => mfg.Project.ProjectName))
                 .ForMember(a => a.TaskStatuses, e => e.MapFrom(mfg => mfg.TaskStatuses.ToString()))
                 .ForMember(a => a.TaskPriority, e => e.MapFrom(mfg => mfg.TaskPriority.ToString()));
-            
+            CreateMap<ChatList, ChatGetDto>();
+                            
 
             
         }

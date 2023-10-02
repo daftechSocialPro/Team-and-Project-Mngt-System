@@ -95,3 +95,22 @@
 .customProgress .ui-progressbar .ui-progressbar-label {
     color: yellow;
 }
+.chat-container {
+    height: 400px;
+  }
+  
+  .chat-messages {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .input-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .input-container input {
+    flex-grow: 1;
+    margin-right: 10px;
+  }

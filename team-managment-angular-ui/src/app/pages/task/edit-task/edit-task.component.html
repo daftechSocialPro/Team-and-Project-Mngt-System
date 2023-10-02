@@ -10,12 +10,13 @@
     <form [formGroup]="TaskForm" (submit)="onSubmit()">
         <div class="p-fluid p-formgrid grid">
             <div class="field col-12">
-                <p-fileUpload   (onSelect)="onUpload($event)" [multiple]="false"
+                <p-fileUpload   (onSelect)="onUpload($event)" [multiple]="false" 
                  [maxFileSize]="50000000">
                 <ng-template pTemplate="content">
                     <ul *ngIf="uploadedFiles.length">
                         <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
                     </ul>
+                    <div></div>
                 </ng-template>
                 </p-fileUpload>
             
@@ -47,7 +48,7 @@
                 <p-dropdown [options]="taskPriorityDropDown" optionLabel="name"
                     formControlName="TaskPriority" placeholder="Select Task Priority" [showClear]="true"></p-dropdown>
             </div>
-            <div class="field col-12 md:col-4">
+            <div *ngIf="task && task.projectId !== null" class="field col-12 md:col-4">
                 <label htmlFor="lastname2">Project</label>
                 <p-dropdown [options]="projectSelectList" optionLabel="label"
                     formControlName="ProjectId" placeholder="Select Project" [showClear]="true"></p-dropdown>

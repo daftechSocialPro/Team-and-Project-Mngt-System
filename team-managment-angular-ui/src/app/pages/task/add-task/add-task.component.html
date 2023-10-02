@@ -46,7 +46,15 @@
                 <p-dropdown [options]="taskPriorityDropDown" optionLabel="name"
                     formControlName="TaskPriority" placeholder="Select Task Priority" [showClear]="true"></p-dropdown>
             </div>
-            <div *ngIf="projectId === undefined" class="field col-12 md:col-4">
+            <div class="field col-12 md:col-4">
+                <label htmlFor="lastname2">Task Type</label>
+                <p-dropdown [options]="dropdownOptions" placeholder="Select Task Type" optionLabel="label"
+                     formControlName="TasKType">
+      
+                </p-dropdown>
+            </div>
+            
+            <div *ngIf="projectId === undefined && showInput() === 'PT' " class="field col-12 md:col-4">
                 <label htmlFor="lastname2">Project</label>
                 <p-dropdown [options]="projectSelectList" optionLabel="label"
                     formControlName="ProjectId" placeholder="Select Project" [showClear]="true"></p-dropdown>

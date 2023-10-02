@@ -1,5 +1,10 @@
 <div class="col-12">
-  <div *ngIf="allowedRoles(['Admin'])" class="card">
+  <div class="mb-2" *ngIf="allowedRoles(['Admin'])">
+    <p-dropdown [(ngModel)]="selectedValue" [options]="dropdownOptions" >
+      
+    </p-dropdown>
+  </div>
+  <div *ngIf="allowedRoles(['Admin']) && selectedValue === 'AT'" class="card">
     <h5 style="font-size: 16px; font-weight:700; color: #3366fe;">All Task List</h5>
     <p-table [value]="tasks" dataKey="id" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
       <ng-template pTemplate="header">
@@ -60,7 +65,7 @@
     </p-table>
   </div>
 
-  <div class="card">
+  <div class="card" *ngIf="selectedValue === 'MT' || !allowedRoles(['Admin'])">
     <h5>My Tasks</h5>
     <div class="text-right">
       <button pButton label="NEW TASK" class="p-button-outlined mb-2"  icon="pi pi-plus" (click)="addTask()"></button>

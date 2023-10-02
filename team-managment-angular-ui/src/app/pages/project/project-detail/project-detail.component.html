@@ -1,66 +1,87 @@
 <div *ngIf="project">
 
-<div class="card">
-    <h5 style="font-size: 16px; font-weight:700; color: #3366fe;">{{project.projectName}} Details</h5>
-    <div style="display: flex;  gap: 20px;" >
-        <div style="flex: 3;">
-            <div class="card">
-                <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
-                    <div class="flex align-items-center">
-                        <span class="font-semibold" style="margin-right: 20px;">{{project.projectName}}</span>
-                        <span
-                        [class]="'project-badge status-' + project.projectStatus.toLowerCase()">{{project.projectStatus}}</span>
+    <div class="card">
+        <h5 style="font-size: 16px; font-weight:700; color: #3366fe;">{{project.projectName}} Details</h5>
+        <div style="display: flex;  gap: 20px;">
+            <div style="flex: 3;">
+                <div class="card">
+                    <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+                        <div class="flex align-items-center">
+                            <span class="font-semibold" style="margin-right: 20px;">{{project.projectName}}</span>
+                            <span
+                                [class]="'project-badge status-' + project.projectStatus.toLowerCase()">{{project.projectStatus}}</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column;">
+                            <span>Starting date: {{project.assignedDate | date: 'MM/dd/yyyy'}}</span>
+                            <span>Deadline: {{project.dueDate | date: 'MM/dd/yyyy'}}</span>
+                        </div>
                     </div>
-                    <div style="display: flex; flex-direction: column;">
-                        <span>Starting date:  {{project.assignedDate  | date: 'MM/dd/yyyy'}}</span>
-                        <span>Deadline:  {{project.dueDate  | date: 'MM/dd/yyyy'}}</span>
+                    <div class="flex flex-column align-items-center text-center mb-3">
+                        <div class="mb-3" style="text-align: justify; margin-left: 30px; margin-right: 30px;">
+                            {{project.description}}<a href="{{project.gitHubLink}}" target="_blank"
+                                class="btn btn-outline-info" style=" margin-left: 10px;">GitLink</a>
+                        </div>
+                        <h5>Team Members</h5>
+                        <div class="flex-row" style="display: flex; justify-content: space-between;">
+                            <ng-container *ngFor="let employee of projectemp">
+                                <div class="flex flex-column align-items-center" style="margin-right: 20px;">
+                                    <img [alt]="" [src]="getImage(employee.imagePath)" width="32"
+                                        style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
+                                    <span class="ml-2">{{employee.name}}</span>
+                                </div>
+                            </ng-container>
+                        </div>
                     </div>
-                </div>
-                <div class="flex flex-column align-items-center text-center mb-3">
-                    <div class="mb-3" style="text-align: justify; margin-left: 30px; margin-right: 30px;">
-                        {{project.description}}<a href="{{project.gitHubLink}}" target="_blank" class="btn btn-outline-info" style=" margin-left: 10px;">GitLink</a>
-                    </div>
-                    <h5>Team Members</h5>
-                    <div class="flex-row" style="display: flex; justify-content: space-between;">
-                        <ng-container *ngFor="let employee of projectemp">
-                          <div class="flex flex-column align-items-center" style="margin-right: 20px;">
-                            <img [alt]="" [src]="getImage(employee.imagePath)" width="32"
-                                 style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
-                            <span class="ml-2">{{employee.name}}</span>
-                          </div>
-                        </ng-container>
-                      </div>
-                </div>
-                <div class="flex flex-column mb-3" style="margin-top: 10px;">
-                    <div class="flex flex-wrap gap-4" >
-                        <div class="" style="margin-left: 160px;">
-                            <div class="flex flex-wrap gap-2 align-items-center justify-content-center">
-                                <p-button label="Tasks" badge="{{allTask}}"></p-button>
-                                <p-button label="Completed" styleClass="p-button-success" badge="{{completeCount}}"></p-button>
-                                <p-button label="Inprogress" styleClass="p-button-info" badge="{{inprogresCount}}"></p-button>
-                                <p-button label="NotStarted" styleClass="p-button-warning" badge="{{notstartedCount}}"></p-button>
+                    <div class="flex flex-column mb-3" style="margin-top: 10px;">
+                        <div class="flex flex-wrap gap-4">
+                            <div class="" style="margin-left: 160px;">
+                                <div class="flex flex-wrap gap-2 align-items-center justify-content-center">
+                                    <p-button label="Tasks" badge="{{allTask}}"></p-button>
+                                    <p-button label="Completed" styleClass="p-button-success"
+                                        badge="{{completeCount}}"></p-button>
+                                    <p-button label="Inprogress" styleClass="p-button-info"
+                                        badge="{{inprogresCount}}"></p-button>
+                                    <p-button label="NotStarted" styleClass="p-button-warning"
+                                        badge="{{notstartedCount}}"></p-button>
+
+                                </div>
 
                             </div>
 
+
                         </div>
-                        
-                   
                     </div>
                 </div>
             </div>
-        </div>
-            <div style="flex: 1;">
-                <div class="card">
-                    <h5>Chat</h5>
+
+                <div style="flex: 1;">
+                    <div class="card">
+                        <h5>Chat</h5>
+                        <div class="chat-container">
+                            <div class="chat-messages">
+                              <span *ngFor="let message of messages"> {{message.message}} <br></span>
+                            </div>
+                            <div class="input-container">
+                              <input pInputText [(ngModel)]="newMessage" placeholder="Type your message..." />
+                              <button pButton label="Send" (click)="sendMessage()"></button>
+                            </div>
+                          </div>
+                    </div>
+
                 </div>
-            </div>
+            
         </div>
+
         <h5 class="font-bold" style="margin-left: 20px;">Tasks</h5>
         <div class="card col-12">
             <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
-                <p-dropdown [(ngModel)]="selectedValue" [options]="dropdownOptions" (onChange)="onDataViewChange()" class=""></p-dropdown>
-                <button  pButton [label]="allowedRoles(['Admin']) ? 'Assign Task': 'Create Task'" class="p-button-outlined mb-2"  icon="pi pi-plus" (click)="assignTask(project.id,project.teamProjects,project.projectEmployees)"></button>
+                <p-dropdown [(ngModel)]="selectedValue" [options]="dropdownOptions" (onChange)="onDataViewChange()"
+                    class=""></p-dropdown>
+                <button pButton [label]="allowedRoles(['Admin']) ? 'Assign Task': 'Create Task'"
+                    class="p-button-outlined mb-2" icon="pi pi-plus"
+                    (click)="assignTask(project.id,project.teamProjects,project.projectEmployees)"></button>
             </div>
+
             <p-table [value]="dataViewValue" class="col-12" scrollDirection="both" [scrollable]="true" [paginator]="true" [rows]="10"
             scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
             <ng-template pTemplate="header">
@@ -97,6 +118,6 @@
                 </tr>
             </ng-template>
         </p-table>
+
     </div>
-</div>
 </div>

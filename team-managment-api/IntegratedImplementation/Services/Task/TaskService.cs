@@ -99,16 +99,19 @@ namespace IntegratedImplementation.Services.Task
                  
                 if (addTask.ProjectId != null)
                 {
-                    var name = $"{Path.GetFileNameWithoutExtension(addTask.FilePath.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.EmployeeName}";
-                    if (addTask.FilePath != null)
+                    
+                    if (addTask.FilePath != null) {
+                        var name = $"{Path.GetFileNameWithoutExtension(addTask.FilePath.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.EmployeeName}";
                         path = _generalConfig.UploadFiles(addTask.FilePath, name, $"Files/Projects/{addTask.ProjectName}").Result.ToString();
+                    }
                 }
                 else
                 {
-                    var name = $"{Path.GetFileNameWithoutExtension(addTask.FilePath.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.TaskName}";
-                    if (addTask.FilePath != null)
+                    
+                    if (addTask.FilePath != null) { 
+                        var name = $"{Path.GetFileNameWithoutExtension(addTask.FilePath.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.TaskName}";
                         path = _generalConfig.UploadFiles(addTask.FilePath, name, $"Files/Tasks/{addTask.EmployeeName}").Result.ToString();
-
+                    }
                 }
 
                 TaskList task = new TaskList
@@ -146,16 +149,21 @@ namespace IntegratedImplementation.Services.Task
 
             if (editTask.ProjectId != null)
             {
-                var name = $"{Path.GetFileNameWithoutExtension(editTask.File.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editTask.EmployeeName}";
+
                 if (editTask.File != null)
+                {
+                    var name = $"{Path.GetFileNameWithoutExtension(editTask.File.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editTask.EmployeeName}";
                     path = _generalConfig.UploadFiles(editTask.File, name, $"Files/Projects/{editTask.ProjectName}").Result.ToString();
+                }
             }
             else
             {
-                var name = $"{Path.GetFileNameWithoutExtension(editTask.File.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editTask.TaskName}";
-                if (editTask.File != null)
-                    path = _generalConfig.UploadFiles(editTask.File, name, $"Files/Tasks/{editTask.EmployeeName}").Result.ToString();
 
+                if (editTask.File != null)
+                {
+                    var name = $"{Path.GetFileNameWithoutExtension(editTask.File.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editTask.TaskName}";
+                    path = _generalConfig.UploadFiles(editTask.File, name, $"Files/Tasks/{editTask.EmployeeName}").Result.ToString();
+                }
             }
 
             var task = _dbContext.Tasks.Find(editTask.Id);
