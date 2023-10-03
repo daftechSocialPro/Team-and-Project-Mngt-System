@@ -4,6 +4,7 @@ import { LayoutService } from "./service/app.layout.service";
 import { AuthGuard } from '../auth/auth.guard';
 import { UserService, UserView } from '../services/user.service';
 import { CommonService } from '../services/common.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-topbar',
@@ -20,12 +21,20 @@ export class AppTopBarComponent {
 
     @ViewChild('topbarmenu') menu!: ElementRef;
 
-    constructor(public layoutService: LayoutService,private authGuard:AuthGuard,private userService:UserService,private commonService:CommonService) { }
+    constructor(public layoutService: LayoutService,private authGuard:AuthGuard,private userService:UserService,private commonService:CommonService,   private messageService: MessageService) { }
 
 
     logOut(){
         this.authGuard.logout()
     }
+    showAnnouncement(): void {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Important Announcement',
+          detail: 'This is the announcement message.',
+          sticky: true
+        });
+      }
     
     user = this.userService.getCurrentUser()
     getImage(url: string) {

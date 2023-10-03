@@ -5,6 +5,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { NoticeService } from 'src/app/services/notice.sercive';
 import { AddNoticeComponent } from './add-notice/add-notice.component';
 
+
 @Component({
   selector: 'app-notice',
   templateUrl: './notice.component.html',
@@ -23,7 +24,8 @@ export class NoticeComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private modalSerivce: NgbModal,
-    private noticeService: NoticeService) { }
+    private noticeService: NoticeService,
+  ) { }
 
   ngOnInit(): void {
     this.getNotices()
