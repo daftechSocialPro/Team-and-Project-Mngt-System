@@ -7,67 +7,71 @@
     <div class="card">
         <div class="card-body">
 
-    <form [formGroup]="NoticeForm" (submit)="onSubmit()">
-        <div class="p-fluid p-formgrid grid">
-            <div class="field col-12">
-            
+            <form [formGroup]="NoticeForm" (submit)="onSubmit()">
+                <div class="p-fluid p-formgrid grid">
+                    
+                    <div class="field col-12 md:col-4">
+                        <label htmlFor="firstname2">Subject</label>
+                        <input pInputText id="firstname2" formControlName="Subject" type="text" />
+                    </div>
+                    <div class="field col-12">
+                        <textarea rows="3" cols="15" placeholder="Notice Content" formControlName="Content" pInputTextarea></textarea>
+                    </div>
+                    
+                    <!-- <div class="field col-12 md:col-4">
+                        <label htmlFor="firstname2">Assigned Date</label>
+                        <input pInputText id="firstname2" formControlName="AssignedDate" type="date" />
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label htmlFor="firstname2">Due Date</label>
+                        <input pInputText id="firstname2" formControlName="DueDate" type="date" />
+                    </div>
+                    
+
+                    <div class="field col-12 md:col-4">
+                        <label htmlFor="state">Project Status</label>
+                        <p-dropdown [options]="" optionLabel="name"
+                            formControlName="ProjectStatus" placeholder="Select Project Progress" [showClear]="true"></p-dropdown>
+                    </div>
+
+
+
+
+                    <div class="field col-12 md:col-4">
+                        <label htmlFor="lastname2">GitHub Link</label>
+                        <input pInputText id="lastname2" type="text" formControlName="GitHubLink" />
+                    </div> -->
+                    <div class="field col-12 md:col-4">
+                        <label htmlFor="lastname2">Notice To</label>
+                        <p-dropdown [options]="noticeToDropdownItems" optionLabel="name"
+                            formControlName="NoticeTo" [showClear]="true" placeholder="Select Who To Send Notice To"></p-dropdown>
+                    </div>
+                    <div *ngIf="showInput() === 'E'" class="field col-12 md:col-6">
+                        <label htmlFor="firstname2">Employees</label>
+                        <p-multiSelect #SelectedItem formControlName ="ProjectEmployees" (onChange)="SelectItems($event)" [options]="employeesSelectList" placeholder="Select Employee(s)" optionLabel="label" class="multiselect-custom" display="chip">
+                            <ng-template let-employee pTemplate="item">
+                                <div class="flex align-items-center">
+                                    <img [alt]="" [src]="getImage(employee.imagePath)" width="32"
+                                    style="vertical-align: middle; border-radius: 20px;" />
+                                    <span class="ml-2">{{employee.label}}</span>
+                                </div>
+                                
+                            </ng-template>
+                        </p-multiSelect>
+                    </div>
+                    <div *ngIf="showInput() === 'T'" class="field col-12 md:col-4">
+                        <label htmlFor="lastname2">Team</label>
+                        <p-dropdown [options]="teamsSelectList" placeholder="Select Team" [showClear]="true" formControlName="TeamId"></p-dropdown>
+                    </div>
+                    <div *ngIf="showInput() === 'P'" class="field col-12 md:col-4">
+                        <label htmlFor="lastname2">Project</label>
+                        <p-dropdown [options]="projectSelectList" placeholder="Select Project" [showClear]="true" formControlName="ProjectId"></p-dropdown>
+                    </div>
+                    
+                    <hr />
+                    <button pButton type="submit" [disabled]="!NoticeForm.valid" label="Submit"></button>
+                </div>
+            </form>
         </div>
-            <div class="field col-12 md:col-4">
-                <label htmlFor="firstname2">Project Name</label>
-                <input pInputText id="firstname2" formControlName="ProjectName" type="text" />
-            </div>
-            
-            
-            <div class="field col-12 md:col-4">
-                <label htmlFor="firstname2">Assigned Date</label>
-                <input pInputText id="firstname2" formControlName="AssignedDate" type="date" />
-            </div>
-            <div class="field col-12 md:col-4">
-                <label htmlFor="firstname2">Due Date</label>
-                <input pInputText id="firstname2" formControlName="DueDate" type="date" />
-            </div>
-            
-
-            <div class="field col-12 md:col-4">
-                <label htmlFor="state">Project Status</label>
-                <p-dropdown [options]="" optionLabel="name"
-                    formControlName="ProjectStatus" placeholder="Select Project Progress" [showClear]="true"></p-dropdown>
-            </div>
-
-
-
-
-            <div class="field col-12 md:col-4">
-                <label htmlFor="lastname2">GitHub Link</label>
-                <input pInputText id="lastname2" type="text" formControlName="GitHubLink" />
-            </div>
-            <div class="field col-12 md:col-4">
-                <label htmlFor="lastname2">Assigned To</label>
-                <p-dropdown [options]="" optionLabel="name"
-                    formControlName="AssignedTo"></p-dropdown>
-            </div>
-            <div *ngIf="showInput() === 'EMPLOYEE'" class="field col-12 md:col-6">
-                <label htmlFor="firstname2">Employees</label>
-                <p-multiSelect #SelectedItem formControlName ="ProjectEmployees" (onChange)="SelectItems($event)" [options]="employeesSelectList" placeholder="Select Employee(s)" optionLabel="label" class="multiselect-custom" display="chip">
-                    <ng-template let-employee pTemplate="item">
-                        <div class="flex align-items-center">
-                            <img [alt]="" [src]="getImage(employee.imagePath)" width="32"
-                            style="vertical-align: middle; border-radius: 20px;" />
-                            <span class="ml-2">{{employee.label}}</span>
-                        </div>
-                        
-                    </ng-template>
-                </p-multiSelect>
-            </div>
-            <div *ngIf="showInput() === 'TEAM'" class="field col-12 md:col-4">
-                <label htmlFor="lastname2">Team</label>
-			    <p-dropdown [options]="teamsSelectList" placeholder="Select Team" [showClear]="true" formControlName="TeamId"></p-dropdown>
-            </div>
-            <div class="field col-12">
-                <textarea rows="3" cols="15" placeholder="Project Description" formControlName="Description" pInputTextarea></textarea>
-            </div>
-            <hr />
-            <button pButton type="submit" [disabled]="!NoticeForm.valid" label="Submit"></button>
-        </div>
-    </form>
+    </div>
 </div>

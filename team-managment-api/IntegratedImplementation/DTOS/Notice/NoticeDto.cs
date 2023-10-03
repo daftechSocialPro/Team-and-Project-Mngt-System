@@ -26,6 +26,7 @@ namespace IntegratedImplementation.DTOS.Notice
         public Guid? ProjectId { get; set; }
         public Guid? TeamId { get; set; }
         public Guid EmployeeId { get; set; }
+        public string CreatedById { get; set; }
         public List<string> EmployeeIds { get; set; }
 
     }
