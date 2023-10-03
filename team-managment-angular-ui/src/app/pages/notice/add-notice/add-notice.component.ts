@@ -8,6 +8,8 @@ import { NoticeService } from 'src/app/services/notice.sercive';
 import { ProjectService } from 'src/app/services/project.service';
 import { TeamService } from 'src/app/services/team.service';
 import { UserService, UserView } from 'src/app/services/user.service';
+import * as signalR from '@microsoft/signalr';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-notice',
@@ -30,6 +32,9 @@ export class AddNoticeComponent implements OnInit {
   ]
   NoticeForm!: FormGroup;
   projectemp: any;
+  public connection!: signalR.HubConnection;
+  urlHub : string = environment.baseUrl+"/ws/Chat"
+
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -52,8 +57,8 @@ export class AddNoticeComponent implements OnInit {
         Subject: [null, Validators.required],
         Content: [null, Validators.required],
         NoticeTo: [null, Validators.required],
-        ProjectId: [null, Validators.required],
-        TeamId: [null, Validators.required],
+        ProjectId: [null],
+        TeamId: [null],
         
       })
       
@@ -64,8 +69,52 @@ export class AddNoticeComponent implements OnInit {
       console.log(this.NoticeForm.value)
       
       if (this.NoticeForm.valid) {
-        
-        
+        if(this.NoticeForm.value.ProjectId !== null){
+          this.projectService.getProject(this.NoticeForm.value.ProjectId.value).subscribe(res => {    
+            
+            this.projectemp = res.projectEmployees.map(u => {
+              return {
+                name: u.name,
+                imagePath: u.imagePath,
+                value:u.id
+              };
+            });
+          });
+
+        }
+        else if(this.NoticeForm.value.TeamId !== null){
+          this.teamService.getTeamMembersSelectList(this.NoticeForm.value.TeamId.value).subscribe(res => {    
+            
+            this.projectemp = res.map(u => {
+              return {
+                name: u.name,
+                imagePath: u.imagePath,
+                value:u.id
+              };
+            });
+          });
+          
+
+        }
+        else if(this.employeesSelectedList !== null){
+          this.projectemp = this.employeesSelectedList
+
+        }
+        else{
+          this.employeeService.getEmployeesSelectList().subscribe({
+            next:(res) =>{
+              this.projectemp = res.map(u => {
+                return {
+                  name: u.name,
+                  imagePath: u.imagePath,
+                  value:u.id
+                };
+              });
+            }
+          })
+
+        }
+                
         var postNotice:any ={
           subject:this.NoticeForm.value.Subject,
           content:this.NoticeForm.value.Content,
@@ -73,8 +122,7 @@ export class AddNoticeComponent implements OnInit {
           teamId:this.NoticeForm.value.TeamId,
           employeeId:this.user.EmployeeId,
           employeeIds:this.projectemp.map(u=>u.value)
-          
-        }
+          }
         
         
         
@@ -85,7 +133,22 @@ export class AddNoticeComponent implements OnInit {
   
             if (res.success) {
               this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
-            }
+              this.connection = new signalR.HubConnectionBuilder()
+                .withUrl(this.urlHub, {
+                  skipNegotiation: true,
+                  transport: signalR.HttpTransportType.WebSockets
+                })
+                .configureLogging(signalR.LogLevel.Debug)
+                .build();
+
+              this.connection.start()
+                .then((res) => {
+                
+                this.connection.invoke('addDirectorToGroup', this.projectemp.map(u=>u.value));
+                
+                })
+                .catch((err) => console.log('Error while connecting to the server', err));
+                        }
             else {
               this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
   
@@ -128,6 +191,13 @@ export class AddNoticeComponent implements OnInit {
           this.projectSelectList = res.map(i => ({value: i.id , label:i.projectName}));
         }
       })
+    }
+    SelectItems(event: any)
+    {
+    
+    
+    this.employeesSelectedList = event.value.map(item => (item.value))
+  
     }
     showInput()
     {
