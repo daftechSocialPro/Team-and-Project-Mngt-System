@@ -40,6 +40,7 @@ export class AppMenuComponent implements OnInit {
                 items: [
                     { label: 'Users', icon: 'pi pi-fw pi-user-plus', routerLink: ['/users'] },
                     { label: 'Employees', icon: 'pi pi-fw pi-users', routerLink: ['/employees'] },
+                    { label: 'Announcement', icon: 'pi pi-fw pi-megaphone', routerLink: ['/notice'] },
                 ]
                 ,roleMatch: this.roleMatch(["Admin"])
 

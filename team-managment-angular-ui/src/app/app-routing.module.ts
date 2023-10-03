@@ -13,6 +13,7 @@ import { TaskComponent } from './pages/task/task.component';
 
 import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { NoticeComponent } from './pages/notice/notice.component';
 
 @NgModule({
     imports: [
@@ -24,6 +25,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
                     { path: '', component:DashboardComponent },
                     { path: 'employees',component:EmployeeComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]}},
                     { path: 'users',component:UsersComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]} },
+                    { path: 'notice',component:NoticeComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]} },
                     { path: 'tasks',component:TaskComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin","Developer"]}},
                     { path: 'teams',component:TeamComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]}},
                     { path: 'projects',component:ProjectComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]} },

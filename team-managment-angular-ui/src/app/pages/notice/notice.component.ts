@@ -15,6 +15,8 @@ export class NoticeComponent implements OnInit {
   notices: any
   loading: boolean = true;
   visible: boolean = false;
+  sortOrder: number = 0;
+  sortField: string = '';
 
   @ViewChild('filter') filter!: ElementRef;
 
@@ -33,6 +35,7 @@ export class NoticeComponent implements OnInit {
       next: (res) => {
         this.notices = res
         this.loading = false
+        console.log("noticeeee", res)
       }, error: (err) => {
         console.log(err)
       }
