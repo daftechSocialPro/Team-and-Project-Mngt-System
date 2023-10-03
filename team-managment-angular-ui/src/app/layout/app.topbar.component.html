@@ -15,8 +15,8 @@
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
         <p-chip [label]="user.FullName" [image]="getImage(user.Photo)" styleClass="m-1"></p-chip>
         <button class="p-link layout-topbar-button">
-            <i class="pi pi-calendar"></i>
-            <span>Calendar</span>
+            <i class="pi pi-bell"></i>
+            <span>Announcement</span>
         </button>
                     
         <button class="p-link layout-topbar-button" (click)="logOut()">
