@@ -49,10 +49,8 @@ import { ManageMembersComponent } from './pages/team/manage-members/manage-membe
 import { ChipModule } from 'primeng/chip';
 import { TaskComponent } from './pages/task/task.component';  
 import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
-
 import { EditEmployeeComponent } from './pages/employee/edit-employee/edit-employee.component';
 import { ManageRolesComponent } from './pages/users/manage-roles/manage-roles.component';
-
 import { TimelineModule } from 'primeng/timeline';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { AddTaskComponent } from './pages/task/add-task/add-task.component';
