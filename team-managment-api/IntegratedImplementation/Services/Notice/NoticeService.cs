@@ -48,6 +48,7 @@ namespace IntegratedImplementation.Services.Notice
                 Subject = sendNotice.Subject,
                 Content = sendNotice.Content,
                 TeamId = sendNotice.TeamId,
+                CreatedById = sendNotice.CreatedById
 
 
             };

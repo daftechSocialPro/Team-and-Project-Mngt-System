@@ -8,6 +8,8 @@ import { NoticeService } from 'src/app/services/notice.sercive';
 import { ProjectService } from 'src/app/services/project.service';
 import { TeamService } from 'src/app/services/team.service';
 import { UserService, UserView } from 'src/app/services/user.service';
+import * as signalR from '@microsoft/signalr';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-notice',
@@ -15,9 +17,9 @@ import { UserService, UserView } from 'src/app/services/user.service';
   styleUrls: ['./add-notice.component.scss']
 })
 export class AddNoticeComponent implements OnInit {
-  
-  
-  user : UserView
+
+
+  user: UserView
   employeesSelectList: SelectItem[] = []
   employeesSelectedList: string[] = []
   teamsSelectList: SelectItem[] = []
@@ -30,6 +32,9 @@ export class AddNoticeComponent implements OnInit {
   ]
   NoticeForm!: FormGroup;
   projectemp: any;
+  public connection!: signalR.HubConnection;
+  urlHub: string = environment.baseUrl + "/ws/Chat"
+
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -40,105 +45,174 @@ export class AddNoticeComponent implements OnInit {
     private commonService: CommonService,
     private activeModal: NgbActiveModal,
     private noticeService: NoticeService
-    ){}
-    
-    
-    ngOnInit(): void {
-      this.user = this.userService.getCurrentUser()
-      this.getProjectSelectList()
-      this.getEmployeesSelectList()
-      this.getTeamSelectList()
-      this.NoticeForm = this.formBuilder.group({
-        Subject: [null, Validators.required],
-        Content: [null, Validators.required],
-        NoticeTo: [null, Validators.required],
-        ProjectId: [null, Validators.required],
-        TeamId: [null, Validators.required],
-        
-      })
-      
-    }
-    
-    
-    onSubmit() {
-      console.log(this.NoticeForm.value)
-      
-      if (this.NoticeForm.valid) {
-        
-        
-        var postNotice:any ={
-          subject:this.NoticeForm.value.Subject,
-          content:this.NoticeForm.value.Content,
-          projectId:this.NoticeForm.value.ProjectId,
-          teamId:this.NoticeForm.value.TeamId,
-          employeeId:this.user.EmployeeId,
-          employeeIds:this.projectemp.map(u=>u.value)
-          
-        }
-        
-        
-        
-        console.log(postNotice)
-        
-        this.noticeService.postNotice(postNotice).subscribe({
-          next: (res) => {
-  
-            if (res.success) {
-              this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
-            }
-            else {
-              this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
-  
-            }
-  
-          }, error: (err) => {
-            this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
-          }
-        })
-        
-        
-        
+  ) { }
+
+
+  ngOnInit(): void {
+    this.user = this.userService.getCurrentUser()
+    this.getProjectSelectList()
+    this.getEmployeesSelectList()
+    this.getTeamSelectList()
+    this.NoticeForm = this.formBuilder.group({
+      Subject: [null, Validators.required],
+      Content: [null, Validators.required],
+      NoticeTo: [null, Validators.required],
+      ProjectId: [null],
+      TeamId: [null],
+
+    })
+
+  }
+
+
+  onSubmit() {
+    console.log(this.NoticeForm.value)
+    //debugger
+
+    if (this.NoticeForm.valid) {
+
+      var postNotice: any = {
+        subject: this.NoticeForm.value.Subject,
+        content: this.NoticeForm.value.Content,
+        projectId: this.NoticeForm.value.ProjectId,
+        teamId: this.NoticeForm.value.TeamId,
+        employeeId: this.user.EmployeeId,
+        createdById: this.user.UserID,
+        // employeeIds:this.projectemp.map(u=>u.value)
       }
-      else {
-        this.messageService.add({ severity: 'error', summary: 'Form Submit failed.', detail: "Please fil required inputs !!" });
+      this.setProjEmp(postNotice)
+     
+    }
+    else {
+      this.messageService.add({ severity: 'error', summary: 'Form Submit failed.', detail: "Please fil required inputs !!" });
+    }
+
+
+  }
+
+
+
+  getEmployeesSelectList() {
+    this.employeeService.getEmployeesSelectList().subscribe({
+      next: (res) => {
+        this.employeesSelectList = res.map(item => ({ value: item.id, label: item.name, imagePath: item.imagePath }));
       }
-      
-      
-    }
-    
-    
-    
-    getEmployeesSelectList() {
-      this.employeeService.getEmployeesSelectList().subscribe({
-        next: (res) => {
-          this.employeesSelectList = res.map(item => ({ value: item.id, label: item.name, imagePath: item.imagePath }));
-        }
-      })
-    }
-    getTeamSelectList() {
-      this.teamService.getTeamSelectList().subscribe({
-        next: (res) => {
-          this.teamsSelectList = res.map(item => ({ value: item.id, label: item.name }));
-        }
-      })
-    }
-    getProjectSelectList(){
-      this.projectService.getProjects().subscribe({
-        next:(res) => {
-          this.projectSelectList = res.map(i => ({value: i.id , label:i.projectName}));
-        }
-      })
-    }
-    showInput()
-    {
-      if (this.NoticeForm.value.NoticeTo !== null){
-        return this.NoticeForm.value.NoticeTo.code
+    })
+  }
+
+  getTeamSelectList() {
+    this.teamService.getTeamSelectList().subscribe({
+      next: (res) => {
+        this.teamsSelectList = res.map(item => ({ value: item.id, label: item.name }));
       }
-      
-    }
-    closeModal()
-    {
-      this.activeModal.close()
+    })
+  }
+
+  getProjectSelectList() {
+    this.projectService.getProjects().subscribe({
+      next: (res) => {
+        this.projectSelectList = res.map(i => ({ value: i.id, label: i.projectName }));
+      }
+    })
+  }
+
+  SelectItems(event: any) {
+    this.employeesSelectedList = event.value.map(item => (item.value))
+  }
+
+  showInput() {
+    if (this.NoticeForm.value.NoticeTo !== null) {
+      return this.NoticeForm.value.NoticeTo.code
     }
   }
-  
+
+  closeModal() {
+    this.activeModal.close()
+  }
+
+  setProjEmp(postNotice) {
+    
+    if (postNotice.projectId !== null) {
+      this.projectService.getProject(postNotice.projectId).subscribe(res => {
+
+        this.projectemp = res.projectEmployees.map(u => {
+          return {
+            name: u.name,
+            imagePath: u.imagePath,
+            value: u.id
+          };
+        });
+        postNotice.employeeIds = this.projectemp.map(u => u.value)
+        this.PostNotice(postNotice)
+      });
+
+    }
+    else if (postNotice.teamId !== null) {
+      this.teamService.getTeamMembersSelectList(postNotice.teamId).subscribe(res => {
+
+        this.projectemp = res.map(u => {
+          return {
+            name: u.name,
+            imagePath: u.imagePath,
+            value: u.id
+          };
+        });
+        postNotice.employeeIds = this.projectemp.map(u => u.value)
+        this.PostNotice(postNotice)
+      });
+    }
+    else if (this.employeesSelectedList.length > 0) {
+      this.projectemp = this.employeesSelectedList
+      postNotice.employeeIds = this.projectemp
+      this.PostNotice(postNotice)
+    }
+    else {
+      this.employeeService.getEmployeesSelectList().subscribe({
+        next: (res) => {
+          console.log("res",res)
+          this.projectemp = res
+          postNotice.employeeIds = this.projectemp.map(u => u.id)
+          this.PostNotice(postNotice)
+        }
+      })
+
+    }
+  }
+
+  PostNotice(postNotice) {
+    this.noticeService.postNotice(postNotice).subscribe({
+      next: (res) => {
+
+        if (res.success) {
+          this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
+          this.connection = new signalR.HubConnectionBuilder()
+            .withUrl(this.urlHub, {
+              skipNegotiation: true,
+              transport: signalR.HttpTransportType.WebSockets
+            })
+            .configureLogging(signalR.LogLevel.Debug)
+            .build();
+
+          this.connection.start()
+            .then((res) => {
+
+              this.connection.invoke('addDirectorToGroup', this.projectemp.map(u => u.value));
+
+            })
+            .catch((err) => console.log('Error while connecting to the server', err));
+        }
+        else {
+          this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
+
+        }
+
+      }, error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
+      }
+    })
+  }
+
+  getImage(url: string) {
+    return this.commonService.createImgPath(url)
+  }
+}
