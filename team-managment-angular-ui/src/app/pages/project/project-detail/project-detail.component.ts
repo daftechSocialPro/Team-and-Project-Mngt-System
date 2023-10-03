@@ -213,14 +213,17 @@ allowedRoles(allowedRoles: any)
       this.newMessage = '';
     }
   }
+
   getMessages(projectId){
     this.chatService.getProjectChat(projectId).subscribe({
       next: (res)=> {
         console.log("chat",res)
         this.messages = res
-        console.log("message",this.messages)
+        
+        console.log("message",res)
       }
     })
   }
+
 
 }
