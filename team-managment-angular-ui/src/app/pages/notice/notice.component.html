@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <div class="col-12">
     <div class="card">
 
@@ -33,7 +33,14 @@
                     </th>
                     <th style="min-width: 12rem">
                         <div class="flex justify-content-between align-items-center">
-                            Message
+                            Title
+                            <p-columnFilter type="text" field="country.name" display="menu"
+                                placeholder="Search by country"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width: 12rem">
+                        <div class="flex justify-content-between align-items-center">
+                            Content
                             <p-columnFilter type="text" field="country.name" display="menu"
                                 placeholder="Search by country"></p-columnFilter>
                         </div>
@@ -57,6 +64,9 @@
 
                     </td>
                     <td>
+                        {{notice.subject}}
+                    </td>
+                    <td>
                         {{notice.content}}
                     </td>
                     <td>
@@ -77,11 +87,6 @@
         </p-table>
     </div>
 
-=======
 
-<div class="text-right">
-    <button pButton label="notice" class="p-button-outlined mb-2" (click)="addNotice()"
-        icon="pi pi-plus"></button>
->>>>>>> ee60e655201c77f95c28c13aa571c0f7ff62b95f
-</div>
+
 

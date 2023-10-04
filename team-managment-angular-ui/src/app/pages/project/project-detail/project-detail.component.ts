@@ -82,7 +82,7 @@ ngAfterViewInit(): void {
   this.connection.start()
     .then((res) => {
      
-     this.connection.invoke('addDirectorToGroup', this.projectemp.map(u=>u.value));
+     this.connection.invoke('addDirectorToGroup', this.projectId);
      
     })
     .catch((err) => console.log('Error while connecting to the server', err));
@@ -92,7 +92,9 @@ ngAfterViewInit(): void {
   if (this.connection){
 
   this.connection.on('getNotification', (result) => {
-    this.getMessages(this.projectId)
+    console.log("result of getNotification",result,"jhgghfghfghf")
+    //this.getMessages(this.projectId)
+    this.messages.push(result)
   });
 
   } 
@@ -219,9 +221,7 @@ allowedRoles(allowedRoles: any)
       next: (res)=> {
         console.log("chat",res)
         this.messages = res
-        
-        console.log("message",res)
-      }
+        }
     })
   }
 
