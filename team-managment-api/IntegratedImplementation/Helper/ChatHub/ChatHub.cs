@@ -13,32 +13,18 @@ namespace IntegratedImplementation.Helper.ChatHub
 
             await base.OnConnectedAsync();
         }
-        public async Task AddDirectorToGroup(string[] employeeIds)
+        public async Task AddDirectorToGroup(string employeeId)
         {
-            foreach (var employee in employeeIds)
-            {
-                await Groups.AddToGroupAsync(Context.ConnectionId, employee);
-            }
-            //var directorUserId = employeeId; // Replace with the actual director's user ID
-
-            // Add the director to the specified group
             
-
-            // Call the client-side method 'getNotification' on all clients
+            await Groups.AddToGroupAsync(Context.ConnectionId, employeeId);
+                      
 
         }
 
-        public async Task getNotification(List<ChatGetDto> notifcations, string employeeId)
-        {
 
-            await Clients.Group(employeeId).getNotification(notifcations, employeeId);
-        }
 
-        public async Task getNotice(NoticeGetDto notice, string employeeId)
-        {
 
-            await Clients.Group(employeeId).getNotice(notice, employeeId);
-        }
+
 
 
 

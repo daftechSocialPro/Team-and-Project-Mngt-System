@@ -32,8 +32,4 @@
     <ProjectReference Include="..\IntegratedImplementation\IntegratedImplementation.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\swagger-ui\" />
-  </ItemGroup>
-
 </Project>
