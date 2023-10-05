@@ -138,5 +138,11 @@ namespace IntegratedInfrustructure.Data
             MEDIUM,
             HIGH 
         }   
+        public enum TaskApproval
+        {
+            PENDING,
+            APPROVED,
+            REJECTED
+        }
     }
 }

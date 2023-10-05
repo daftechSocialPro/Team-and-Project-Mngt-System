@@ -19,5 +19,7 @@ namespace IntegratedInfrustructure.Model.Task
         public virtual ProjectList Project { get; set; }
         public Guid? ProjectId { get; set; }
         public string? FilePath { get; set; }
+        public TaskApproval TaskApproval { get; set; }
+        public string? RejectionRemark { get; set; }
     }
 }

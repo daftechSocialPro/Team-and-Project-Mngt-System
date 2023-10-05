@@ -16,6 +16,7 @@ namespace IntegratedImplementation.Interfaces.Task
         Task<ResponseMessage> AddTask(TaskPostDto addTask);
         Task<ResponseMessage> EditTask(TaskGetDto editTask);
         Task<ResponseMessage> ChangeStatus(TaskStatusDto editStatus);
+        Task<List<TaskGetDto>> GetPendingCompletedTasks();
 
     }
 }

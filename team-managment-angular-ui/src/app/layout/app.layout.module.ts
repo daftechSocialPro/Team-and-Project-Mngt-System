@@ -18,6 +18,8 @@ import { AppConfigModule } from './config/config.module';
 import { AppSidebarComponent } from "./app.sidebar.component";
 import { AppLayoutComponent } from "./app.layout.component";
 import { ChipModule } from 'primeng/chip';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { DataViewModule } from 'primeng/dataview';
 
 @NgModule({
     declarations: [
@@ -41,7 +43,9 @@ import { ChipModule } from 'primeng/chip';
         RippleModule,
         RouterModule,
         AppConfigModule,
-        ChipModule
+        ChipModule,
+        OverlayPanelModule,
+        DataViewModule
     ],
     exports: [AppLayoutComponent]
 })

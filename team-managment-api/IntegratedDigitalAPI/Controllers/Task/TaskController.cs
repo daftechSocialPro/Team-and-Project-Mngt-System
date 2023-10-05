@@ -81,5 +81,11 @@ namespace IntegratedDigitalAPI.Controllers.Task
                 return BadRequest(ModelState);
             }
         }
+        [HttpGet("GetPendingCompletedTasks")]
+        [ProducesResponseType(typeof(TaskGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetPendingCompletedTasks()
+        {
+            return Ok(await _taskService.GetPendingCompletedTasks());
+        }
     }
 }

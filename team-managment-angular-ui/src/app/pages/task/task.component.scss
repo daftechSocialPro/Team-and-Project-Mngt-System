@@ -75,10 +75,24 @@
     background-color: #ffffff;
     padding: 10px;
     margin-bottom: 10px;
+    border: 1px;
   }
   .green-border {
     background-color: #28a7458a;
   }
   .bg-red {
     background-color: #ff0000b8;
+  }
+  .bg-gradient {
+    background-color: green; 
+  }
+  .gradient {
+    background: linear-gradient(109.6deg, rgb(255, 230, 109) 11.2%, rgb(87, 232, 107) 100.2%); 
+  }
+
+
+
+  .p-overlaypanel {
+    --overlayArrowLeft: 403px; /* Set the desired value for --overlayArrowLeft */
+    background-color: rebeccapurple;
   }

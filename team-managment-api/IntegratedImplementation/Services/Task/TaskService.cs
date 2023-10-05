@@ -13,6 +13,8 @@ using IntegratedImplementation.DTOS.Configuration;
 using System.ComponentModel;
 using IntegratedImplementation.DTOS.Project;
 using IntegratedImplementation.Interfaces.Configuration;
+using IntegratedImplementation.Helper.ChatHub;
+using Microsoft.AspNetCore.SignalR;
 
 namespace IntegratedImplementation.Services.Task
 {
@@ -28,13 +30,15 @@ namespace IntegratedImplementation.Services.Task
         private readonly IMapper _mapper;
         private readonly IEmployeeService _employeeService;
         private readonly IGeneralConfigService _generalConfig;
+        private IHubContext<ChatHub, IChatHubInterface> _chatService;
 
-        public TaskService(ApplicationDbContext dbContext, IMapper mapper, IEmployeeService employeeService,IGeneralConfigService generalConfigService)
+        public TaskService(ApplicationDbContext dbContext, IMapper mapper, IEmployeeService employeeService,IGeneralConfigService generalConfigService, IHubContext<ChatHub, IChatHubInterface> chatService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _employeeService = employeeService;
             _generalConfig = generalConfigService;
+            _chatService = chatService;
         }
 
         public async Task<TaskGetDto> GetTask(Guid taskId)
@@ -127,6 +131,7 @@ namespace IntegratedImplementation.Services.Task
                     EmployeeId = addTask.EmployeeId,
                     ProjectId = addTask.ProjectId,
                     FilePath= path,
+                    TaskApproval= Enum.Parse<TaskApproval>("PENDING")
 
                 };
 
@@ -180,6 +185,11 @@ namespace IntegratedImplementation.Services.Task
                     task.FilePath = path;
                 }
                 await _dbContext.SaveChangesAsync();
+               
+                if (editTask.TaskStatuses == "COMPLETE")
+                {
+                    await _chatService.Clients.Group("task").getTaskNotice(editTask, "task");
+                }
             }
 
             return new ResponseMessage 
@@ -196,13 +206,31 @@ namespace IntegratedImplementation.Services.Task
             {
                 task.TaskStatuses = Enum.Parse<TaskStatuses>(editStatus.TaskStatuses);
                 task.IsOnHold= editStatus.IsOnHold;
+                task.TaskApproval = Enum.Parse<TaskApproval>(editStatus.TaskApproval);
+                task.RejectionRemark = editStatus.RejectionRemark;
                 await _dbContext.SaveChangesAsync();
+            }
+           
+            if (editStatus.TaskStatuses == "COMPLETE" && editStatus.TaskApproval =="PENDING")
+            {
+                var task2 = await GetTask(editStatus.Id);
+                await _chatService.Clients.Group("task").getTaskNotice(task2, "task");
             }
             return new ResponseMessage
             {
                 Message = "Task Status Updated Successfully",
                 Success = true
             };
+        }
+
+        public async Task<List<TaskGetDto>> GetPendingCompletedTasks()
+        {
+            var tasks = await _dbContext.Tasks.Where(x => x.TaskStatuses.Equals(TaskStatuses.COMPLETE)
+            && x.TaskApproval.Equals(TaskApproval.PENDING)).AsNoTracking()
+                .ProjectTo<TaskGetDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            return tasks;
+
         }
     }
 }

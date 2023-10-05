@@ -84,11 +84,15 @@ namespace IntegratedImplementation.Datas
                 .ForMember(a => a.EmployeeImagePath, e => e.MapFrom(mfg => mfg.Employee.ImagePath))
                 .ForMember(a => a.ProjectName, e => e.MapFrom(mfg => mfg.Project.ProjectName))
                 .ForMember(a => a.TaskStatuses, e => e.MapFrom(mfg => mfg.TaskStatuses.ToString()))
-                .ForMember(a => a.TaskPriority, e => e.MapFrom(mfg => mfg.TaskPriority.ToString()));
+                .ForMember(a => a.TaskPriority, e => e.MapFrom(mfg => mfg.TaskPriority.ToString()))
+                ;
             
             CreateMap<ChatList, ChatGetDto>();
 
             CreateMap<NoticeList, NoticeGetDto>();
+
+            CreateMap<TaskList, TaskStatusDto>()
+                ; 
                             
 
             

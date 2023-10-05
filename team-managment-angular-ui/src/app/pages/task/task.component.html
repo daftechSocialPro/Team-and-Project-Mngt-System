@@ -134,7 +134,7 @@
         </div>
         <div class="column" (dragover)="dragOver($event)" (drop)="onDrop($event,'COMPLETE')">
           <h4>COMPLETE</h4>
-          <div class="card green-border" draggable="true"  *ngFor="let item of filterdTask('COMPLETE')" (dragstart)="onDragStart(item)">
+          <div  draggable="true"  *ngFor="let item of filterdTask('COMPLETE')" (dragstart)="onDragStart(item)" [class]="item.taskApproval === 'APPROVED' ? 'card green-border':'card gradient'">
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
               <div class="flex align-items-left">
                 <i class="pi pi-stopwatch mr-2"></i>
