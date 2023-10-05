@@ -1,0 +1,94 @@
+testimonials 
+
+	image
+	name 
+	message 
+	company name 
+
+
+team 
+	photo 
+	name 
+	position
+	social links 
+
+
+projects 
+
+	pitcure 
+	description 
+	title 
+
+
+Clients 
+
+	logo 
+	Name 
+	
+Award & Recognition 
+	
+	castegory 
+		recognition 
+		certfication
+
+	image 
+	name 
+
+
+partner 
+	logo 
+	name 
+
+blog 
+
+	image 
+	tilte 
+	description 
+	createdby 
+	created at 
+
+total counts
+	number of clients 
+	number of porjects 
+	number of certfication 
+	number of awards 
+
+	 
+
+	
+
+chat with us 
+
+
+
+
+
+about us 	
+
+	who we are 
+	our values 
+	what makes us differnt 
+
+
+vaccancy 
+
+	jobtitle 
+	description 
+	
+
+applicants 
+	name 	
+	email 
+	phonenumber 	
+	file 
+	vaccancyId 
+
+Contactus 
+
+	name 
+	email 
+	subject
+	message
+
+
+

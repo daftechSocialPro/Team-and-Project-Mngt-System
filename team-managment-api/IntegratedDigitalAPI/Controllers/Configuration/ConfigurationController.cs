@@ -30,5 +30,15 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
                 return BadRequest();
             }
         }
+        [HttpGet("pdf")]
+        public async Task<IActionResult> GetPdf(string path)
+        {
+
+            var fullpath = Path.Combine(Directory.GetCurrentDirectory(), path);
+
+            var bytes = System.IO.File.ReadAllBytes(fullpath);
+            return File(bytes, "application/pdf");
+
+        }
     }
 }

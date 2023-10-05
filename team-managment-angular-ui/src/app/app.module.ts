@@ -61,6 +61,7 @@ import { ChartModule } from 'primeng/chart';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { NoticeComponent } from './pages/notice/notice.component';
 import { AddNoticeComponent } from './pages/notice/add-notice/add-notice.component';
+import { ViewPdfComponent } from './components/view-pdf/view-pdf.component';
 
 
 
@@ -70,7 +71,7 @@ import { AddNoticeComponent } from './pages/notice/add-notice/add-notice.compone
 @NgModule({
     declarations: [
 
-        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent,ProjectDetailComponent,ManageMembersComponent, EditEmployeeComponent, ManageRolesComponent, TaskComponent, AddTaskComponent, EditTaskComponent, DashboardComponent, NoticeComponent, AddNoticeComponent
+        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent,ProjectDetailComponent,ManageMembersComponent, EditEmployeeComponent, ManageRolesComponent, TaskComponent, AddTaskComponent, EditTaskComponent, DashboardComponent, NoticeComponent, AddNoticeComponent, ViewPdfComponent
 
 
     ],

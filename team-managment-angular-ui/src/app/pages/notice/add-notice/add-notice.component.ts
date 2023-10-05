@@ -61,6 +61,17 @@ export class AddNoticeComponent implements OnInit {
       TeamId: [null],
 
     })
+    this.connection = new signalR.HubConnectionBuilder()
+            .withUrl(this.urlHub, {
+              skipNegotiation: true,
+              transport: signalR.HttpTransportType.WebSockets
+            })
+            .configureLogging(signalR.LogLevel.Debug)
+            .build();
+
+          this.connection.start()
+            
+            .catch((err) => console.log('Error while connecting to the server', err));
 
   }
 
@@ -142,7 +153,9 @@ export class AddNoticeComponent implements OnInit {
             value: u.id
           };
         });
+        
         postNotice.employeeIds = this.projectemp.map(u => u.value)
+        console.log("Notice",postNotice)
         this.PostNotice(postNotice)
       });
 
@@ -158,12 +171,14 @@ export class AddNoticeComponent implements OnInit {
           };
         });
         postNotice.employeeIds = this.projectemp.map(u => u.value)
+        console.log("Notice",postNotice)
         this.PostNotice(postNotice)
       });
     }
     else if (this.employeesSelectedList.length > 0) {
       this.projectemp = this.employeesSelectedList
       postNotice.employeeIds = this.projectemp
+      console.log("Notice",postNotice)
       this.PostNotice(postNotice)
     }
     else {
@@ -172,6 +187,7 @@ export class AddNoticeComponent implements OnInit {
           console.log("res",res)
           this.projectemp = res
           postNotice.employeeIds = this.projectemp.map(u => u.id)
+          console.log("Notice",postNotice)
           this.PostNotice(postNotice)
         }
       })
@@ -184,22 +200,9 @@ export class AddNoticeComponent implements OnInit {
       next: (res) => {
 
         if (res.success) {
-          this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
-          this.connection = new signalR.HubConnectionBuilder()
-            .withUrl(this.urlHub, {
-              skipNegotiation: true,
-              transport: signalR.HttpTransportType.WebSockets
-            })
-            .configureLogging(signalR.LogLevel.Debug)
-            .build();
-
-          this.connection.start()
-            .then((res) => {
-
-              this.connection.invoke('addDirectorToGroup', this.projectemp.map(u => u.value));
-
-            })
-            .catch((err) => console.log('Error while connecting to the server', err));
+          this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });              
+            
+            this.closeModal();
         }
         else {
           this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });

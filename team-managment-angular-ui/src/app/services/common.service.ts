@@ -35,12 +35,12 @@ export class CommonService {
 
   getPdf (path : string ):any{
    
-    var url = this.baseUrlPdf + "/pdf?path="+path 
+    var url = this.baseUrlPdf + "/api/Configuration/pdf?path="+path 
     
     return this.sanitizer.bypassSecurityTrustResourceUrl(url)
   }
 
-
+  
   getCurrentLocation() {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {

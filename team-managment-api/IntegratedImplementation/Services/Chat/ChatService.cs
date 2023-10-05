@@ -45,14 +45,15 @@ namespace IntegratedImplementation.Services.Chat
             await _dbContext.Chats.AddAsync(chat);
             await _dbContext.SaveChangesAsync();
 
-            var chatMsg = await GetProjectMessages(sendChat.ProjectId);
+            var msgs = await _dbContext.Chats.Include(c => c.Employee).Where(u => u.Id == chat.Id).OrderBy(x => x.CreatedDate).AsNoTracking()
+                .ProjectTo<ChatGetDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
 
-            foreach (var employee in sendChat.EmployeeIds)
-            {
-                await _chatService.Clients.Group(employee).getNotification(chatMsg, employee);
-            }
 
+
+               await _chatService.Clients.Group(sendChat.ProjectId.ToString()).getNotification(msgs, sendChat.ProjectId.ToString());
             
+
+
 
             return new ResponseMessage
             {

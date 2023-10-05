@@ -8,17 +8,25 @@
     <div class="card">
         <div class="card-body">
     <form [formGroup]="EmployeeForm" (submit)="onSubmit()">
-        <div class="p-fluid p-formgrid grid">
-            <div class="field col-12">
-            <p-fileUpload   (onSelect)="onUpload($event)" [multiple]="false"
-                accept="image/*" [maxFileSize]="1000000">
-                <ng-template pTemplate="content">
-                    <ul *ngIf="uploadedFiles.length">
-                        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                    </ul>
-                </ng-template>
-            </p-fileUpload>
+        <div class="row">
+        <div class="col-md-3 ">
+            <img  [src]="getImage2()" alt="Profile"
+                style="width: 230px; border-radius: 50%; height: 230px;">
+            <input #file (change)="onUpload2($event)" type="file" style="display: none;" accept="image/*" />
+            <div class="pt-2">
+                <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
+                    title="Upload new profile image">
+                    <i class="bi bi-upload"></i> Upload Image
+                </a>
+            </div>
         </div>
+        <div class="col-md-9">
+        <div class="p-fluid p-formgrid grid">
+            
+        
+
+        
+
             <div class="field col-12 md:col-4">
                 <label htmlFor="firstname2">Firstname</label>
                 <input pInputText id="firstname2" formControlName="FirstName" type="text" />
@@ -59,8 +67,11 @@
                 <p-dropdown [options]="genderDropdownItems" optionLabel="name" formControlName="Gender"></p-dropdown>
             </div>
             <hr />
-            <button pButton type="submit" [disabled]="!EmployeeForm.valid" label="Submit"></button>
+            
         </div>
+        </div>
+        <button pButton type="submit" [disabled]="!EmployeeForm.valid" label="Submit"></button>
+    </div>
     </form>
 </div>
 </div>

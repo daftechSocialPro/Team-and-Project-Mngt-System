@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { UserView, UserService } from 'src/app/services/user.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-edit-employee',
@@ -14,9 +15,10 @@ export class EditEmployeeComponent implements OnInit {
 
   @Input() employeeId: string
 
-
+  imagePath: any=null;
   user !: UserView
   employee:any
+  fileGH! : File;
   genderDropdownItems = [
     { name: '', code: '' },
     { name: 'MALE', code: 'MALE' },
@@ -38,7 +40,8 @@ export class EditEmployeeComponent implements OnInit {
     private userService: UserService,
     private messageService: MessageService,
     private employeeService: EmployeeService,
-    private activeModal: NgbActiveModal,) { }
+    private activeModal: NgbActiveModal,
+    private commonService: CommonService) { }
 
   ngOnInit(): void {
 
@@ -93,7 +96,7 @@ export class EditEmployeeComponent implements OnInit {
       formData.append("Address", this.EmployeeForm.value.Address);
       formData.append("EmploymentDate", this.EmployeeForm.value.EmploymentDate);
       formData.append("EmploymentPosition", this.EmployeeForm.value.EmploymentPosition.name);
-      formData.append("Image", this.uploadedFiles[0]);
+      formData.append("Image", this.fileGH);
       formData.append("CreatedById", this.user.UserID);
 
       this.employeeService.editEmployee(formData).subscribe({
@@ -137,5 +140,31 @@ export class EditEmployeeComponent implements OnInit {
   closeModal()
   {
     this.activeModal.close()
+  }
+  getImage (url:string){
+
+    return this.commonService.createImgPath(url)
+  }
+  getImage2() {
+
+    if (this.imagePath != null) {
+      return this.imagePath
+    }
+    if (this.employee != null) {
+      return this.getImage(this.employee.imagePath!)
+    }
+    else {
+      return 'assets/img/company.jpg'
+    }
+  }
+  onUpload2(event: any) {
+
+    var file: File = event.target.files[0];
+    this.fileGH = file
+    var myReader: FileReader = new FileReader();
+    myReader.onloadend = (e) => {
+      this.imagePath = myReader.result;
+    }
+    myReader.readAsDataURL(file);
   }
 }

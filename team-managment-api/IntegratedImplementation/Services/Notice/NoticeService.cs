@@ -59,13 +59,15 @@ namespace IntegratedImplementation.Services.Notice
 
             foreach (var employee in sendNotice.EmployeeIds)
             {
+                //await _chatService.Clients.Group(employee).getNotice(note, employee);
                 await _chatService.Clients.Group(employee).getNotice(note, employee);
+
             }
 
 
             return new ResponseMessage
             {
-                Message = "Notice Send Successfully",
+                Message = "Notice Sent Successfully",
                 Success = true
             };
 

@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService, SelectItem } from 'primeng/api';
+import { ViewPdfComponent } from 'src/app/components/view-pdf/view-pdf.component';
 import { CommonService } from 'src/app/services/common.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { TaskService } from 'src/app/services/task.service';
@@ -37,7 +38,8 @@ export class EditTaskComponent implements OnInit {
     private projectService: ProjectService,
     private commonService: CommonService,
     private activeModal: NgbActiveModal,
-    private taskService:TaskService ){}
+    private taskService:TaskService,
+    private modalService: NgbModal ){}
   
   ngOnInit(): void {
     
@@ -163,7 +165,13 @@ export class EditTaskComponent implements OnInit {
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
   }
 
-  getFile(url: string) {
+  getPdfFile(url: string) {
     return this.commonService.getPdf(url)
+  }
+  viewPdf(link: string) {
+
+    let pdfLink = this.getPdfFile(link)
+    let modalRef = this.modalService.open(ViewPdfComponent, { size: 'lg', backdrop: 'static' })
+    modalRef.componentInstance.pdflink = pdfLink
   }
 }
