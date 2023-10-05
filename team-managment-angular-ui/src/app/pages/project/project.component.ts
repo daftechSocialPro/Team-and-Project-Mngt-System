@@ -238,6 +238,15 @@ getStyleee(project:any){
 
   return ''
 }
+getColor(progress) {
+  if (progress >= 70) {
+    return 'bg-success';
+  } else if (progress >= 30) {
+    return 'bg-warning';
+  } else {
+    return 'bg-danger';
+  }
+};
 
 }
 
