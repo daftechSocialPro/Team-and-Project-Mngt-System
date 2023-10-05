@@ -6,7 +6,7 @@
   </div>
   <div *ngIf="allowedRoles(['Admin']) && selectedValue === 'AT'" class="card">
     <h5 style="font-size: 16px; font-weight:700; color: #3366fe;">All Task List</h5>
-    <p-table [value]="tasks" dataKey="id" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
+    <p-table [value]="tasks"  dataKey="id" [expandedRowKeys]="expandedRows" responsiveLayout="scroll" [sortField]="sortField" [sortOrder]="sortOrder">
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 3rem"></th>
@@ -28,12 +28,18 @@
           </td>
         </tr>
       </ng-template>
-
       <ng-template pTemplate="rowexpansion" let-task>
         <tr *ngIf="expandedRow === task">
           <td colspan="7">
             <div class="p-3">
-              <p-table [value]="task.tasks" dataKey="id" dataKey="name" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
+              <div class="mb-4" style="margin-left: 20px;">
+                <select #dd (change)="getT(dd.value,task.tasks)">
+                  <option > </option>
+                  <option value="0"> Daily</option>
+                  <option value="1"> Weekly</option>
+                  </select>
+                </div>
+              <p-table [value]="taskss" dataKey="id" dataKey="name" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
                 <ng-template pTemplate="header">
                   <tr>
                     <th pSortableColumn="taskName" style="font-size: 16px; font-weight:700;">Task Name</th>
@@ -64,19 +70,20 @@
       </ng-template>
     </p-table>
   </div>
-
   <div class="card" *ngIf="selectedValue === 'MT' || !allowedRoles(['Admin'])">
     <h5>My Tasks</h5>
     <div class="text-right">
       <button pButton label="NEW TASK" class="p-button-outlined mb-2"  icon="pi pi-plus" (click)="addTask()"></button>
     </div>
-
     <div class="grid">
+      <div class="mb-4" style="margin-left: 20px;">
+      <p-dropdown [(ngModel)]="selectedTask" [options]="tasksortOption" ></p-dropdown>
+      </div>
       <div class="col-12">
       <div class="board">
         <div class="column" (dragover)="dragOver($event)" (drop)="onDrop($event,'NOTSTARTED')">
           <h4>Tasks</h4>
-          <div class="card" draggable="true" *ngFor="let item of filterdTask('NOTSTARTED')" (dragstart)="onDragStart(item)"
+          <div class="card"  draggable="true" *ngFor="let item of filterdTask('NOTSTARTED')" (dragstart)="onDragStart(item)"
           [class]="getStyleee(item)">
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
               <div class="flex align-items-left">
