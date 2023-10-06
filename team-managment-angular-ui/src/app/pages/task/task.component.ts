@@ -88,24 +88,30 @@ export class TaskComponent implements OnInit {
   }
 
   getT(ti:any,li:any){
-    console.log(li)
-
-    if (ti === '0') {
+   
+    if (ti === 'DAILY') {
       li = li.filter((task) => {
         const currentDate = new Date();
-        const createdDate = new Date(task.createdDate);
+        const createdDate = new Date(task.endDate);
         return currentDate.getDate() === createdDate.getDate();
       });
-    } else if (ti === 1) {
+    } else if (ti === 'WEEKLY') {
       li = li.filter((task) => {
         const currentDate = new Date();
-        const createdDate = new Date(task.createdDate);
+        const createdDate = new Date(task.endDate);
         const daysDiff = Math.ceil((currentDate.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24));
         return daysDiff <= 7;
       });
+    }else if (this.selectedTask === 'MONTHLY') {
+      li = li.filter((task) => {
+        const currentDate = new Date();
+        const createdDate = new Date(task.endDate);
+        const daysDiff = Math.ceil((currentDate.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24));
+        return daysDiff <= 30;
+      });
     }
 
-    this.taskss= li
+    return li
 
   }
   filterdTask(status: string) {

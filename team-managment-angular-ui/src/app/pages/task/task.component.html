@@ -33,13 +33,12 @@
           <td colspan="7">
             <div class="p-3">
               <div class="mb-4" style="margin-left: 20px;">
-                <select #dd (change)="getT(dd.value,task.tasks)">
-                  <option > </option>
-                  <option value="0"> Daily</option>
-                  <option value="1"> Weekly</option>
-                  </select>
-                </div>
-              <p-table [value]="taskss" dataKey="id" dataKey="name" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
+                <p-dropdown [(ngModel)]="selectedOption" [id]="task.id" [options]="tasksortOption" >
+      
+                </p-dropdown>
+                
+               </div>
+              <p-table [value]="getT(selectedOption,task.tasks)" dataKey="id" dataKey="name" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
                 <ng-template pTemplate="header">
                   <tr>
                     <th pSortableColumn="taskName" style="font-size: 16px; font-weight:700;">Task Name</th>
@@ -69,6 +68,11 @@
         </tr>
       </ng-template>
     </p-table>
+
+
+
+
+    
   </div>
   <div class="card" *ngIf="selectedValue === 'MT' || !allowedRoles(['Admin'])">
     <h5>My Tasks</h5>
