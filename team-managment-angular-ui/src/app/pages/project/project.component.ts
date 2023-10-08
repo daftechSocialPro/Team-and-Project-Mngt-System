@@ -35,7 +35,6 @@ export class ProjectComponent implements OnInit {
     { label: 'Name', value: 'projectName' },
     { label: 'Status', value: 'projectStatus' },
     { label: 'Date', value: 'dueDate'}
-    // Add more sorting options as needed
   ];
 
   truncatedDescription: string;
@@ -225,19 +224,16 @@ calculateProgressBarColor(id): string {
     }
   }
 
-getStyleee(project:any){
 
-  if(this.isTaskOverdue(project.dueDate) && !(project.projectStatus === "COMPLETED") && !(project.projectStatus === "CANCELD") )
-  return 'border-overdue'
-  if(project.projectStatus === "CANCELD")
-  return 'border-cancle'
-
-  if(project.projectStatus === "COMPLETED" )
-
-  return 'border-success'
-
-  return ''
-}
+getColor(progress) {
+  if (progress >= 70) {
+    return 'bg-success';
+  } else if (progress >= 30) {
+    return 'bg-warning';
+  } else {
+    return 'bg-danger';
+  }
+};
 
 }
 
