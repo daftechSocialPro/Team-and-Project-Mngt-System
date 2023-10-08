@@ -27,6 +27,9 @@ export class TaskService {
   updateStatus(data:any){
     return this.http.put<any>(this.BaseURI + '/api/Task/ChangeStatus', data)
   }
+  getPendingCompletedTasks(){
+    return this.http.get<any>(this.BaseURI + '/api/Task/GetPendingCompletedTasks')
+  }
   
 }
 

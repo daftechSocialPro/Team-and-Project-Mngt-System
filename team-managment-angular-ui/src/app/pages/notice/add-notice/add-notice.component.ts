@@ -61,17 +61,17 @@ export class AddNoticeComponent implements OnInit {
       TeamId: [null],
 
     })
-    this.connection = new signalR.HubConnectionBuilder()
-            .withUrl(this.urlHub, {
-              skipNegotiation: true,
-              transport: signalR.HttpTransportType.WebSockets
-            })
-            .configureLogging(signalR.LogLevel.Debug)
-            .build();
+    // this.connection = new signalR.HubConnectionBuilder()
+    //         .withUrl(this.urlHub, {
+    //           skipNegotiation: true,
+    //           transport: signalR.HttpTransportType.WebSockets
+    //         })
+    //         .configureLogging(signalR.LogLevel.Debug)
+    //         .build();
 
-          this.connection.start()
+    //       this.connection.start()
             
-            .catch((err) => console.log('Error while connecting to the server', err));
+    //         .catch((err) => console.log('Error while connecting to the server', err));
 
   }
 

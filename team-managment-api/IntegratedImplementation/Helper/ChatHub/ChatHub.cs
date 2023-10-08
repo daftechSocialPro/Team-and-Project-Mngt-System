@@ -22,12 +22,5 @@ namespace IntegratedImplementation.Helper.ChatHub
         }
 
 
-
-
-
-
-
-
-
     }
 }

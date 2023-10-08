@@ -26,6 +26,9 @@ namespace IntegratedImplementation.DTOS.Task
         public string? FilePath { get; set; } = null!;
         public string? ProjectName { get; set; }
         public string CreatedById { get; set; } = null!;
+        public string TaskApproval { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string? RejectionRemark { get; set; }
 
 
     }
@@ -49,9 +52,11 @@ namespace IntegratedImplementation.DTOS.Task
 
     public record TaskStatusDto
     {
-        public Guid? Id { get; set; }
+        public Guid Id { get; set; }
         public string TaskStatuses { get; set; }
         public bool IsOnHold { get; set; }
+        public string TaskApproval { get; set; }
+        public string? RejectionRemark { get; set; }
     }
 
 }
