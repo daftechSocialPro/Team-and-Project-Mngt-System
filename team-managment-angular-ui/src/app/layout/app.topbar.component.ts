@@ -77,15 +77,7 @@ export class AppTopBarComponent implements OnInit {
         if(this.allowedRoles(['Admin'])){
           this.connection.on('getTaskNotice', (result) => {
             this.tasks.push(result) 
-            this.messageService.add({
-              severity: 'info',
-              summary: 'Competed Task',
-              detail: `${result.employeeName} have completed 
-              <a (click)="viewTask(this.task)" target="_blank" >${result.taskName}</a> 
-              task please review the task and confirm it `,
-              sticky: true
-              
-            });
+            
             console.log(this.tasks)
           })
         }

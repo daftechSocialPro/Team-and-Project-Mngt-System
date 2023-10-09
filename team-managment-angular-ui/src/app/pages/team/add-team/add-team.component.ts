@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { TeamService } from 'src/app/services/team.service';
 import { CommonService } from 'src/app/services/common.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-team',
@@ -11,7 +12,7 @@ import { CommonService } from 'src/app/services/common.service';
   styleUrls: ['./add-team.component.scss']
 })
 export class AddTeamComponent implements OnInit {
-  @Output() teamAdded = new EventEmitter<any>();
+  
 
   getEmployeeList: any[];
   getProjectList: any[];
@@ -27,7 +28,8 @@ export class AddTeamComponent implements OnInit {
     private formBuilder: FormBuilder,
     private commonService: CommonService,
     private messageService: MessageService,
-    private teamService: TeamService
+    private teamService: TeamService,
+    private activeModal: NgbActiveModal 
   ) { }
 
   ngOnInit(): void {
@@ -83,8 +85,9 @@ export class AddTeamComponent implements OnInit {
               });
 
               this.TeamForm.reset();
+              this.closeModal();
           
-              this.teamAdded.emit();
+              
             } else {
               this.messageService.add({
                 severity: 'error',
@@ -132,5 +135,8 @@ export class AddTeamComponent implements OnInit {
 
   getImage(url: string) {
     return this.commonService.createImgPath(url);
+  }
+  closeModal(){
+    this.activeModal.close()
   }
 }

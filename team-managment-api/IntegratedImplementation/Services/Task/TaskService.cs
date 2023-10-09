@@ -178,6 +178,11 @@ namespace IntegratedImplementation.Services.Task
                 task.TaskName = editTask.TaskName;
                 task.EndDate = editTask.EndDate;
                 task.TaskPriority = Enum.Parse<TaskPriority>(editTask.TaskPriority);
+                if (editTask.TaskStatuses != "COMPLETE" && task.TaskApproval != Enum.Parse<TaskApproval>("APPROVED"))
+                {
+                    task.TaskApproval = Enum.Parse<TaskApproval>("PENDING");
+                }
+                
                 task.TaskStatuses = Enum.Parse<TaskStatuses>(editTask.TaskStatuses);
                 task.TaskDescription = editTask.TaskDescription;
                 if (editTask.File != null)
@@ -206,7 +211,15 @@ namespace IntegratedImplementation.Services.Task
             {
                 task.TaskStatuses = Enum.Parse<TaskStatuses>(editStatus.TaskStatuses);
                 task.IsOnHold= editStatus.IsOnHold;
-                task.TaskApproval = Enum.Parse<TaskApproval>(editStatus.TaskApproval);
+                if(editStatus.TaskStatuses != "COMPLETE" && task.TaskApproval != Enum.Parse<TaskApproval> ("APPROVED")) {
+                    task.TaskApproval = Enum.Parse<TaskApproval>("PENDING");
+                }
+                else
+                {
+                    task.TaskApproval = Enum.Parse<TaskApproval>(editStatus.TaskApproval);
+
+                }
+                
                 task.RejectionRemark = editStatus.RejectionRemark;
                 await _dbContext.SaveChangesAsync();
             }
