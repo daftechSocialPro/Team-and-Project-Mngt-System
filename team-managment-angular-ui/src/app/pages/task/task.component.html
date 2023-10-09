@@ -115,7 +115,7 @@
           </div>
         </div>
         <div class="column" (dragover)="dragOver($event)" (drop)="onDrop($event,'INPROGRESS')">
-          <h4>IN PROGRESS</h4>
+          <h4>In Progress</h4>
           <div class="card" draggable="true"  *ngFor="let item of filterdTask('INPROGRESS')" (dragstart)="onDragStart(item)"  
           [class]="getStyleee(item)">  
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
@@ -144,7 +144,7 @@
         </div>
         </div>
         <div class="column" (dragover)="dragOver($event)" (drop)="onDrop($event,'COMPLETE')">
-          <h4>COMPLETE</h4>
+          <h4>Complete</h4>
           <div  draggable="true"  *ngFor="let item of filterdTask('COMPLETE')" (dragstart)="onDragStart(item)" 
           [class]="item.taskApproval === 'APPROVED' ? 'card green-border':'card gradient'"
           [class]="item.taskApproval === 'REJECTED' ? 'card red-border':'card gradient'" >
