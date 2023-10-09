@@ -25,14 +25,12 @@
                 <!-- <p-dataView #dv [value]="tasks" dataKey="id" [rows]="9"  layout="list" [rows]="9" >
                     <ng-template let-task pTemplate="listItem">
                         <div class="col-12">
-                            <div class="flex flex-column md:flex-row align-items-center p-3 w-full ">
-                                {{task.employeeName}} have completed 
-                                <a (click)="viewTask(this.task)" target="_blank" >{{task.taskName}}</a> 
-                                task please review the task and confirm it `
+                            <div style="display: inline-block; background-color: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; padding: 10px; margin-bottom: 10px;">
+                              {{task.employeeName}} has completed 
+                              <a (click)="viewTask(this.task)" target="_blank" style="text-decoration: underline; color:  blue; cursor: pointer;">{{task.taskName}}</a> 
+                              task. Please review the task and confirm it.
                             </div>
-                        </div>
-                        
-
+                          </div>
                     </ng-template>
 
                 </p-dataView> -->
