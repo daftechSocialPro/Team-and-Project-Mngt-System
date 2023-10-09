@@ -75,15 +75,7 @@ export class TaskComponent implements OnInit {
     let filteredTasks = this.tasks;
     console.log("filteredTasks", filteredTasks);
      
-    // if (this.selectedTask === 'DAILY') {
-      // filteredTasks = filteredTasks.filter((task) => {
-      //   const currentDate = new Date();
-      //   const createdDate = new Date(task.createdDate);
-      //   const daysDiff = Math.ceil((currentDate.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24));
-      //   console.log("daysDiff",createdDate)
-      //   return currentDate.getDate() === createdDate.getDate();
-      // });
-    // }
+
    
   }
 
@@ -161,6 +153,7 @@ export class TaskComponent implements OnInit {
     this.taskService.getAllTask().subscribe({
       next: (res) => {
         this.tasks = res;
+        console.log("ttttttttttttttttt", this.tasks)
       },
       error: (err) => {
         console.log(err);
