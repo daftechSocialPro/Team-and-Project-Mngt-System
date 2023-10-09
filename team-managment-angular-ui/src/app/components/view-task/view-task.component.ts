@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
+import { CommonService } from 'src/app/services/common.service';
 import { TaskService } from 'src/app/services/task.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class ViewTaskComponent implements OnInit {
   constructor(private activeModal :NgbActiveModal,
     private formBuilder: FormBuilder,
     private taskService: TaskService,
-    private messageService: MessageService){}
+    private messageService: MessageService,
+    private commonService: CommonService){}
     
     ngOnInit(): void {
       console.log(this.task)
@@ -73,6 +75,9 @@ export class ViewTaskComponent implements OnInit {
       else {
         this.messageService.add({ severity: 'error', summary: 'Form Submit failed.', detail: "Please fil required inputs !!" });
       }
+    }
+    getImage(url: string) {
+      return this.commonService.createImgPath(url)
     }
   }
   

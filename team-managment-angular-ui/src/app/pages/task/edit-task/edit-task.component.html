@@ -9,7 +9,7 @@
 
     <form [formGroup]="TaskForm" (submit)="onSubmit()">
         <div class="p-fluid p-formgrid grid">
-            <!-- <div class="field col-12">
+            <div *ngIf="task.filePath === null" class="field col-12">
                 <p-fileUpload   (onSelect)="onUpload($event)" [multiple]="false" 
                  [maxFileSize]="50000000">
                 <ng-template pTemplate="content">
@@ -20,13 +20,22 @@
                 </ng-template>
                 </p-fileUpload>
             
-            </div> -->
+            </div>
 
             
-           
-            <a (click)="viewPdf(task.filePath)" target="_blank" >  <i class="pi pi-file-pdf text-primary p-2" style="font-size: 22px;background-color: #5c1d1612; border-radius: 50%;"></i>
-                &nbsp;&nbsp;
-               <i class="pi pi-download text-primary" style="font-size: 18px;"></i></a>
+            <div *ngIf="task.filePath !== null" class="field col-12 ">
+                
+                <a (click)="viewPdf(task.filePath)" target="_blank" >  <i class="pi pi-file-pdf text-primary p-2" style="font-size: 50px;background-color: #5c1d1612; border-radius: 50%; " ></i>
+                    &nbsp;&nbsp;
+                </a>
+                <input #file (change)="onUpload2($event)" type="file" style="display: none;" accept="pdf/*" />
+                    <div class="pt-2">
+                        <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
+                            title="Upload new task file">
+                            <i class="bi bi-upload"></i> Upload File
+                        </a>
+                    </div>
+            </div>
 
             <div class="field col-12 md:col-4">
                 <label htmlFor="firstname2">Task Name</label>

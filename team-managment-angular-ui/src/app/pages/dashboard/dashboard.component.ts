@@ -22,6 +22,10 @@ export class DashboardComponent implements OnInit, AfterViewInit{
   pieOptions:any
   projectStatuses: any;
   totalTaskCount: any;
+  barOptions: any;
+  barData: any;
+  projectProgress: any;
+  projectNames: any;
 
 
 
@@ -103,11 +107,16 @@ export class DashboardComponent implements OnInit, AfterViewInit{
   initCharts() {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
     this.projectStatuses = this.projects.map(project => project.projectStatus);
     const statusCounts = this.projectStatuses.reduce((counts,status)=> {
       counts[status] = (counts[status] || 0) + 1;
       return counts;
     },{})
+    this.projectNames = this.projects.map(p=> p.projectName)
+    this.projectProgress = this.projects.map(i => i.projectProgress)
+    console.log(this.projectProgress)
     const labels = Object.keys(statusCounts);
     const data = Object.values(statusCounts);
     
@@ -141,5 +150,55 @@ export class DashboardComponent implements OnInit, AfterViewInit{
             }
         }
     }
+    this.barData = {
+      labels: this.projectNames,
+      datasets: [
+          {
+              label: 'Actual Project Progress',
+              backgroundColor: documentStyle.getPropertyValue('--primary-500'),
+              borderColor: documentStyle.getPropertyValue('--primary-500'),
+              data: this.projectProgress
+          },
+          {
+              label: 'Expected Project Progress',
+              backgroundColor: documentStyle.getPropertyValue('--primary-200'),
+              borderColor: documentStyle.getPropertyValue('--primary-200'),
+              data: [28, 48, 40, 19, 86, 27, 90]
+          }
+      ]
+  }
+
+  this.barOptions = {
+      plugins: {
+          legend: {
+              labels: {
+                  fontColor: textColor
+              }
+          }
+      },
+      scales: {
+          x: {
+              ticks: {
+                  color: textColorSecondary,
+                  font: {
+                      weight: 500
+                  }
+              },
+              grid: {
+                  display: false,
+                  drawBorder: false
+              }
+          },
+          y: {
+              ticks: {
+                  color: textColorSecondary
+              },
+              grid: {
+                  color: surfaceBorder,
+                  drawBorder: false
+              }
+          },
+      }
+  }
   }
 }

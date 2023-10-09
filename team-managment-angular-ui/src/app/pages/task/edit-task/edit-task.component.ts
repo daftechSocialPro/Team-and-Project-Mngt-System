@@ -15,9 +15,11 @@ import { UserService, UserView } from 'src/app/services/user.service';
 })
 export class EditTaskComponent implements OnInit {
   @Input() taskId: string
+  filePath: any=null;
   user : UserView
   projectSelectList: SelectItem[] = []
   TaskForm : FormGroup;
+  fileGH! : File;
   uploadedFiles: any[] = [];
   taskStatusDropDown = [
     { name: 'NOTSTARTED', code: 'NOTSTARTED' },
@@ -117,7 +119,7 @@ export class EditTaskComponent implements OnInit {
           formData.append(key, (taskEdit as any)[key]);
         }
       }
-      formData.append("File", this.uploadedFiles[0]);
+      formData.append("File", this.fileGH);
 
       this.taskService.editTask(formData).subscribe({
         next: (res) => {
@@ -173,5 +175,28 @@ export class EditTaskComponent implements OnInit {
     let pdfLink = this.getPdfFile(link)
     let modalRef = this.modalService.open(ViewPdfComponent, { size: 'lg', backdrop: 'static' })
     modalRef.componentInstance.pdflink = pdfLink
+  }
+  getFile2() {
+
+    if (this.filePath != null) {
+      return this.filePath
+    }
+    if (this.task != null) {
+      return this.getPdfFile(this.task.filePath!)
+    }
+    
+  }
+  onUpload2(event: any) {
+
+    var file: File = event.target.files[0];
+    this.fileGH = file
+    
+    var myReader: FileReader = new FileReader();
+    myReader.onloadend = (e) => {
+      this.filePath = myReader.result;
+    }
+    myReader.readAsDataURL(file);
+    console.log(this.fileGH)
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
   }
 }
