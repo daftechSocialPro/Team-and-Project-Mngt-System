@@ -5,8 +5,12 @@
     </div>
     <div class="card">
         <div class="card-body">
-            
+            <p-chip [label]="task.employeeName" [image]="getImage(task.employeeImagePath)" styleClass="m-1"></p-chip>
                 {{task.taskName}}
+                {{task.taskDescription}}
+                {{task.endDate}}
+                {{task.taskPriority}}
+                {{task.projectName}}
                 <form [formGroup]="TaskApprovalForm" (submit)="onSubmit()">
                     <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-4">
