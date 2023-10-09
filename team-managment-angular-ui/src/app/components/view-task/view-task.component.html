@@ -3,30 +3,54 @@
         <h5 class="modal-title"> Evaluate Completed Task</h5>
         <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <p-chip [label]="task.employeeName" [image]="getImage(task.employeeImagePath)" styleClass="m-1"></p-chip>
-                {{task.taskName}}
-                {{task.taskDescription}}
-                {{task.endDate}}
-                {{task.taskPriority}}
-                {{task.projectName}}
-                <form [formGroup]="TaskApprovalForm" (submit)="onSubmit()">
-                    <div class="p-fluid p-formgrid grid">
-                    <div class="field col-12 md:col-4">
-                        <label htmlFor="state">Task Approval Status</label>
-                        <p-dropdown [options]="taskApprovalDropDown" optionLabel="name"
-                            formControlName="TaskApproval" placeholder="Select Task Status" ></p-dropdown>
-                    </div>
-                    <div *ngIf="showInput() === 'REJECTED'" class="field col-12 md:col-4">
-                        <label htmlFor="firstname2">Rejection Remark</label>
-                        <input pInputText id="firstname2" formControlName="RejectionRemark" type="text" />
-                    </div>
-                    <button pButton type="submit" [disabled]="!TaskApprovalForm.valid" label="Submit"></button>
-                    </div>
-                </form>
+    <div class="task-card">
+        <div class="task-header">
+          <div class="employee-image">
+            <img [src]="getImage(task.employeeImagePath)" alt="Image">
+          </div>
+          <div class="task-header-info">
+            <h3>{{task.employeeName}}</h3>
+            <h3>{{task.taskName}}</h3>
+            <div class="task-details">
+              <div class="task-info">
+                <h5>End Date: {{task.endDate}}</h5>
+                <h5>Priority: {{task.taskPriority}}</h5>
+                <h5>Project: {{task.projectName}}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="task-description">
+          <p>{{task.taskDescription}}</p>
+          <form [formGroup]="TaskApprovalForm" (submit)="onSubmit()">
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12">
+                  <div *ngIf="task.filePath === null">
+                      <ng-template pTemplate="content">
+                        <ul *ngIf="uploadedFiles.length">
+                          <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                        </ul>
+                        <div></div>
+                      </ng-template>
+                  </div>
+                </div>
+                <div class="field col-12">
+                  <label for="state">Task Approval Status</label>
+                  <p-dropdown [options]="taskApprovalDropDown" optionLabel="name" formControlName="TaskApproval"
+                    placeholder="Select Task Status"></p-dropdown>
+                </div>
+                <div *ngIf="showInput() === 'REJECTED'" class="field col-12 md:col-6">
+                  <label for="rejection-remark">Rejection Remark</label>
+                  <input pInputText id="rejection-remark" formControlName="RejectionRemark" type="text" />
+                </div>
+                <div class="field col-12">
+                  <button pButton type="submit" [disabled]="!TaskApprovalForm.valid" label="Submit"></button>
+                </div>
+              </div>
+      
+          </form>
+        </div>
+      </div>
             
         </div>
-    </div>
-
-</div>
+  
