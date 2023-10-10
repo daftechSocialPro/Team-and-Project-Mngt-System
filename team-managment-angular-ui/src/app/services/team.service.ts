@@ -19,6 +19,9 @@ export class TeamService {
   getSelectedEmployee(){
     return this.http.get<any>(this.BaseURI+'/api/Employee/getEmployeesSelectList')
   }
+  getEmployeesTeams(employeeId : string) {
+    return this.http.get<any>(this.BaseURI + '/api/Team/GetEmployeesTeams?employeeId='+employeeId);
+  }
   getEmployeeNotInTeam(teamId: any) {
     return this.http.get<any>(this.BaseURI + `/api/Team/GetEmployeeNotInTeam?teamId=${teamId}`);
   }

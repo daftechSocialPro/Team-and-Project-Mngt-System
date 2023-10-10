@@ -4,10 +4,10 @@
         <div class="text-right">
             <button pButton label="User" class="p-button-outlined mb-2" (click)="addUser()" icon="pi pi-plus"></button>
         </div>
-        <div class="grid mt-2" style="background-color: #eff3f8;border-radius: 10px;">
+        <div class="grid mt-2">
 
-            <div class="col-12 lg:col-6 xl:col-3" *ngFor="let user of users">
-                <div class="card mb-0">
+            <div class="col-12 lg:col-6 xl:col-3" style="width: 300px;" *ngFor="let user of users">
+                <div class="card mb-0 shadow">
                     <div class="flex justify-content-between mb-3">
                         <div>
                             <span class="block text-500 font-medium mb-3">{{ user.name }}</span>
@@ -15,7 +15,7 @@
                         </div>
                         <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
                             [ngStyle]="{width: '4rem', height: '4rem',borderRadius:'20px'}">
-                            <img [src]="getImage(user.imagePath)" width="100%" alt="User Image">
+                            <img [src]="getImage(user.imagePath)" width="55px" height="55px" style="border-radius: 10px;" alt="User Image">
 
 
                         </div>
@@ -23,12 +23,12 @@
 
                     <button (click)="manageRoles(user.id)" pButton pRipple type="button" label="Manage Roles" class="p-button-text"></button>
 
-                    <ng-container *ngFor="let role of user.roles; let last = last">
+                    <!-- <ng-container *ngFor="let role of user.roles; let last = last">
                         
                         
                         <span class="text-primary">{{ role.name.toUpperCase() }}</span>
                         
-                      </ng-container>
+                      </ng-container> -->
                 </div>
             </div>
 
