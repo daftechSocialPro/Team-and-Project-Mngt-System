@@ -21,5 +21,6 @@ namespace IntegratedImplementation.Interfaces.Project
         Task<List<SelectListDto>> GetProjectSelectList();
         Task<double> GetProjectProgress(Guid id);
         Task<List<ProjectGetDto>> GetEmpolyeesProjects(Guid employeeId);
+        Task<List<double>> GetOverallProgress();
     }
 }

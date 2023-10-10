@@ -6,6 +6,7 @@ import { TeamService } from 'src/app/services/team.service';
 import { UserService, UserView } from 'src/app/services/user.service';
 import { EmployeeComponent } from '../employee/employee.component';
 import { EmployeeService } from 'src/app/services/employee.service';
+import { Observable, from, mergeMap, map, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,9 +29,12 @@ export class DashboardComponent implements OnInit, AfterViewInit{
   totalTaskCount: any;
   barOptions: any;
   barData: any;
-  projectProgress: any;
+  projectProgress: any[]=[];
   projectNames: any;
-
+  progressArray: any;
+  expProjectProgress: any[]=[];
+  currentDate: Date;
+  OverallProgress:any
 
 
   constructor(
@@ -48,20 +52,29 @@ export class DashboardComponent implements OnInit, AfterViewInit{
     this.getTeams()
     this.getTasks()
     this.getEmployees()
+
     this.getEmployeeProject()
     this.getEmployeeTeam()
     this.getEmployeeTasks()
 
+    this.currentDate= new Date()
+    this.getOverallProgress()
+    
+
+
   }
 
   ngAfterViewInit(): void {
+    
     this.initCharts()
+    
   }
   allowedRoles(allowedRoles: any)
   {
     return this.userService.roleMatch(allowedRoles)
   }
 
+  
   getUsers(){
     this.userService.getUserList().subscribe({
       next: (res)=>{
@@ -145,6 +158,16 @@ getEmployeeTeam(){
     });
   }
   
+  getOverallProgress(){
+    this.projectService.getOverallProgress().subscribe(
+      res => {
+        this.OverallProgress = res
+        console.log("sggsgsgs",this.OverallProgress)
+      }
+    )
+    
+  }
+  
   initCharts() {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
@@ -156,8 +179,31 @@ getEmployeeTeam(){
       return counts;
     },{})
     this.projectNames = this.projects.map(p=> p.projectName)
-    this.projectProgress = this.projects.map(i => i.projectProgress)
-    console.log(this.projectProgress)
+    const observables = this.projects.map(project => this.projectService.getProjectProgress(project.id))
+     
+    this.projects.forEach((p) => {
+    
+      const dueDate = new Date(p.dueDate);
+      const createdDate = new Date(p.assignedDate);
+      if (dueDate < this.currentDate ){
+        this.expProjectProgress.push(100)
+      }
+      else{
+        const totalDuration = Math.floor((dueDate.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+        
+        const elapsedDuration = Math.floor((this.currentDate.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+        
+        
+        const expectedProgress = (elapsedDuration / totalDuration) * 100
+        console.log("exp",expectedProgress)
+        this.expProjectProgress.push(expectedProgress)
+      }
+      
+    })
+    
+    
+    
+    
     const labels = Object.keys(statusCounts);
     const data = Object.values(statusCounts);
     
@@ -167,16 +213,16 @@ getEmployeeTeam(){
             {
                 data: data,
                 backgroundColor: [
-                    documentStyle.getPropertyValue('--indigo-500'),
-                    documentStyle.getPropertyValue('--purple-500'),
-                    documentStyle.getPropertyValue('--orange-500'),
-                    documentStyle.getPropertyValue('--teal-500')
+                    '#1e87e4',
+                    '#8866c3',
+                    '#f4791f',
+                    '#4dc7d6'
                 ],
                 hoverBackgroundColor: [
-                    documentStyle.getPropertyValue('--indigo-400'),
-                    documentStyle.getPropertyValue('--purple-400'),
-                    documentStyle.getPropertyValue('--orange-400'),
-                    documentStyle.getPropertyValue('--teal-400')
+                    '#4296e2',
+                    '#9b7dcc',
+                    '#f48f4b',
+                    '#69cfdb'
                 ]
             }]
     }
@@ -191,24 +237,27 @@ getEmployeeTeam(){
             }
         }
     }
-    this.barData = {
-      labels: this.projectNames,
-      datasets: [
-          {
-              label: 'Actual Project Progress',
-              backgroundColor: documentStyle.getPropertyValue('--primary-500'),
-              borderColor: documentStyle.getPropertyValue('--primary-500'),
-              data: this.projectProgress
-          },
-          {
-              label: 'Expected Project Progress',
-              backgroundColor: documentStyle.getPropertyValue('--primary-200'),
-              borderColor: documentStyle.getPropertyValue('--primary-200'),
-              data: [28, 48, 40, 19, 86, 27, 90]
-          }
-      ]
-  }
-
+    forkJoin(observables).subscribe(progressValues => {
+      this.projectProgress.push(progressValues);
+      
+      this.barData = {
+        labels: this.projectNames,
+        datasets: [
+            {
+                label: 'Actual Project Progress',
+                backgroundColor: documentStyle.getPropertyValue('--primary-500'),
+                borderColor: documentStyle.getPropertyValue('--primary-500'),
+                data: this.projectProgress[0]
+            },
+            {
+                label: 'Expected Project Progress',
+                backgroundColor: documentStyle.getPropertyValue('--primary-200'),
+                borderColor: documentStyle.getPropertyValue('--primary-200'),
+                data: this.expProjectProgress
+            }
+          ]
+        }
+    })
   this.barOptions = {
       plugins: {
           legend: {
@@ -240,6 +289,6 @@ getEmployeeTeam(){
               }
           },
       }
-  }
+    }
   }
 }

@@ -15,6 +15,6 @@ namespace IntegratedImplementation.Helper.ChatHub
         Task AddDirectorToGroup(string employeeId);
         Task getNotice(NoticeGetDto notice, string employeeId);
         Task getTaskNotice(TaskGetDto task ,string employeeId);
-
+        Task getUserTaskNotice(TaskGetDto task, string approvalStatus);
     }
 }

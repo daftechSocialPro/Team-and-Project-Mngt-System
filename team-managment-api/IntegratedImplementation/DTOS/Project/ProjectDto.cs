@@ -20,6 +20,8 @@ namespace IntegratedImplementation.DTOS.Project
         public string? ProjectStatus { get; set; } 
         public string? AssignedTo { get; set; }
         public string? GitHubLink { get; set; }
+        public DateTime? CompletionDate { get; set; }
+        public string? CompletionRemark { get; set; }
 
         public List<SelectListDto>? TeamProjects { get; set; }
         public List<SelectProjectEmployeeListDto>? ProjectEmployees { get; set; }
@@ -38,7 +40,8 @@ namespace IntegratedImplementation.DTOS.Project
         public string? AssignedTo { get; set; }
         public string? GitHubLink { get; set; }
         public Guid? TeamId { get; set; }
-        
+        public string? CompletionRemark { get; set; }
+
         public string CreatedById { get; set; } = null!;
         public List<Guid>? ProjectEmployees { get; set; }
         public List<Guid>? TaskLists { get; set; }

@@ -26,7 +26,7 @@ namespace IntegratedImplementation.DTOS.Task
         public string? FilePath { get; set; } = null!;
         public string? ProjectName { get; set; }
         public string CreatedById { get; set; } = null!;
-        public string TaskApproval { get; set; }
+        public string? TaskApproval { get; set; } = null!;
         public DateTime CreatedDate { get; set; }
         public string? RejectionRemark { get; set; }
 

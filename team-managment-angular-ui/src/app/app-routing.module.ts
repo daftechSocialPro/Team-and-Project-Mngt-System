@@ -19,17 +19,17 @@ import { NoticeComponent } from './pages/notice/notice.component';
     imports: [
         RouterModule.forRoot([
             {
-                path: '', component: AppLayoutComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin","Developer"]}, 
+                path: '', component: AppLayoutComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin","Developer","Finance","HRM","Deputy_Manager","Marketing"]}, 
                  
                 children: [
                     { path: '', component:DashboardComponent },
                     { path: 'employees',component:EmployeeComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]}},
                     { path: 'users',component:UsersComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]} },
                     { path: 'notice',component:NoticeComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]} },
-                    { path: 'tasks',component:TaskComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin","Developer"]}},
-                    { path: 'teams',component:TeamComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]}},
-                    { path: 'projects',component:ProjectComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]} },
-                    { path: 'projectdetail/:projectId',component:ProjectDetailComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]} },
+                    { path: 'tasks',component:TaskComponent},
+                    { path: 'teams',component:TeamComponent},
+                    { path: 'projects',component:ProjectComponent },
+                    { path: 'projectdetail/:projectId',component:ProjectDetailComponent },
                     
                 ]
 

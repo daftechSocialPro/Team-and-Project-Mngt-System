@@ -38,6 +38,9 @@ export class ProjectService {
   getProjectSelectList(){
     return this.http.get<any>( this.BaseURI + '/api/Project/GetProjectSelectList')
   }
+  getOverallProgress() {
+    return this.http.get<any>(this.BaseURI + '/api/Project/GetOverallProgress');
+  }
 
   
 }
