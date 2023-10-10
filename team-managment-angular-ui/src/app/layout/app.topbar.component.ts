@@ -57,6 +57,7 @@ export class AppTopBarComponent implements OnInit {
         if(this.allowedRoles(['Admin'])){
           this.connection.invoke('addDirectorToGroup','task')
         }
+        this.connection.invoke('addDirectorToGroup',this.user.EmployeeId)
         
       })
       .catch((err) => console.log('Error while connecting to the server', err));
@@ -74,8 +75,20 @@ export class AppTopBarComponent implements OnInit {
           });
           console.log("result",result)
         });
+        this.connection.on('getUserTaskNotice', (result,res) => {
+          
+          this.messageService.add({
+            severity: 'info',
+            summary: res,
+            detail: result.taskName,
+            sticky: true
+          });
+          console.log("result",result)
+        });
+
         if(this.allowedRoles(['Admin'])){
-          this.connection.on('getTaskNotice', (result) => {
+          this.connection.on('getTaskNotice', (result,res) => {
+            console.log(res)
             this.tasks.push(result) 
             
             console.log(this.tasks)

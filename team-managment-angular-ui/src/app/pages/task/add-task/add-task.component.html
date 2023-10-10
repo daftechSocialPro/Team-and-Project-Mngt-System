@@ -46,7 +46,7 @@
                 <p-dropdown [options]="taskPriorityDropDown" optionLabel="name"
                     formControlName="TaskPriority" placeholder="Select Task Priority" [showClear]="true"></p-dropdown>
             </div>
-            <div class="field col-12 md:col-4">
+            <div *ngIf="projectId === undefined" class="field col-12 md:col-4">
                 <label htmlFor="lastname2">Task Type</label>
                 <p-dropdown [options]="dropdownOptions" placeholder="Select Task Type" optionLabel="label"
                      formControlName="TasKType">

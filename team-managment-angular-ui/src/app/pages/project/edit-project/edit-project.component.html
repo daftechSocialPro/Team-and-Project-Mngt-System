@@ -14,9 +14,7 @@
                 <label htmlFor="firstname2">Project Name</label>
                 <input pInputText id="firstname2" formControlName="ProjectName" type="text" />
             </div>
-            <div class="field col-12 md:col-4">
-                <textarea rows="3" cols="15" placeholder="Project Description" formControlName="Description" pInputTextarea></textarea>
-            </div>
+            
             
             <div class="field col-12 md:col-4">
                 <label htmlFor="firstname2">Assigned Date</label>
@@ -33,10 +31,18 @@
                 <p-dropdown [options]="projectStatusDropdownItems" optionLabel="name" 
                     formControlName="ProjectStatus"  ></p-dropdown>
             </div>
+
+
+            <div *ngIf="showInput2() === 'COMPLETED'" class="field col-12 md:col-4">
+                <label htmlFor="firstname2">Completion Date</label>
+                <input pInputText id="firstname2" formControlName="CompletionDate" type="date" />
+            </div>
+            <div *ngIf="showInput2() === 'COMPLETED'" class="field col-12 md:col-4">
+                <label htmlFor="firstname2">Completion Remark</label>
+                <input pInputText id="firstname2" formControlName="CompletionRemark" type="text" />
+            </div>
             
-
-
-
+           
             <div class="field col-12 md:col-4">
                 <label htmlFor="lastname2">GitHub Link</label>
                 <input pInputText id="lastname2" type="text" formControlName="GitHubLink" />
@@ -62,6 +68,9 @@
                 <label htmlFor="lastname2">Team</label>
 			    <p-dropdown [options]="teamsSelectList" placeholder="Select Team" optionLabel="label"
                     formControlName="TeamId"></p-dropdown>
+            </div>
+            <div class="field col-12">
+                <textarea rows="3" cols="15" placeholder="Project Description" formControlName="Description" pInputTextarea></textarea>
             </div>
             
             <hr />

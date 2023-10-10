@@ -28,7 +28,9 @@ export class DashboardComponent implements OnInit, AfterViewInit{
   projectProgress: any[]=[];
   projectNames: any;
   progressArray: any;
-
+  expProjectProgress: any[]=[];
+  currentDate: Date;
+  OverallProgress:any
 
 
   constructor(
@@ -45,8 +47,8 @@ export class DashboardComponent implements OnInit, AfterViewInit{
     this.getTeams()
     this.getTasks()
     this.getEmployees()
-    
-    
+    this.currentDate= new Date()
+    this.getOverallProgress()
     
 
   }
@@ -111,6 +113,15 @@ export class DashboardComponent implements OnInit, AfterViewInit{
     });
   }
   
+  getOverallProgress(){
+    this.projectService.getOverallProgress().subscribe(
+      res => {
+        this.OverallProgress = res
+        console.log("sggsgsgs",this.OverallProgress)
+      }
+    )
+    
+  }
   
   initCharts() {
     const documentStyle = getComputedStyle(document.documentElement);
@@ -123,9 +134,28 @@ export class DashboardComponent implements OnInit, AfterViewInit{
       return counts;
     },{})
     this.projectNames = this.projects.map(p=> p.projectName)
-     const observables = this.projects.map(project => this.projectService.getProjectProgress(project.id))
+    const observables = this.projects.map(project => this.projectService.getProjectProgress(project.id))
      
-    console.log("xxxxxxx",this.projectProgress)
+    this.projects.forEach((p) => {
+    
+      const dueDate = new Date(p.dueDate);
+      const createdDate = new Date(p.assignedDate);
+      if (dueDate < this.currentDate ){
+        this.expProjectProgress.push(100)
+      }
+      else{
+        const totalDuration = Math.floor((dueDate.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+        
+        const elapsedDuration = Math.floor((this.currentDate.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+        
+        
+        const expectedProgress = (elapsedDuration / totalDuration) * 100
+        console.log("exp",expectedProgress)
+        this.expProjectProgress.push(expectedProgress)
+      }
+      
+    })
+    
     
     
     
@@ -178,7 +208,7 @@ export class DashboardComponent implements OnInit, AfterViewInit{
                 label: 'Expected Project Progress',
                 backgroundColor: documentStyle.getPropertyValue('--primary-200'),
                 borderColor: documentStyle.getPropertyValue('--primary-200'),
-                data: [10,20,30,40,50]
+                data: this.expProjectProgress
             }
           ]
         }

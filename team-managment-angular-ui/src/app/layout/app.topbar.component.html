@@ -3,15 +3,15 @@
         <img src="assets/logo.png" alt="logo">
         <span>DAFTech Social</span>
     </a>
-
+    
     <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
         <i class="pi pi-bars"></i>
     </button>
-
+    
     <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
         <i class="pi pi-ellipsis-v"></i>
     </button>
-
+    
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
         <p-chip [label]="user.FullName" [image]="getImage(user.Photo)" styleClass="m-1"></p-chip>
         
@@ -22,22 +22,18 @@
             </button>
             <!-- <button type="button" pButton label="DataTable" (click)="op2.toggle($event)" class="p-button-success"></button> -->
             <p-overlayPanel  #op2 [style]="{width: '450px'}" >
-                <!-- <p-dataView #dv [value]="tasks" dataKey="id" [rows]="9"  layout="list" [rows]="9" >
-                    <ng-template let-task pTemplate="listItem">
-                        <div class="col-12">
-                            <div style="display: inline-block; background-color: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; padding: 10px; margin-bottom: 10px;">
-                              {{task.employeeName}} has completed 
-                              <a (click)="viewTask(this.task)" target="_blank" style="text-decoration: underline; color:  blue; cursor: pointer;">{{task.taskName}}</a> 
-                              task. Please review the task and confirm it.
-                            </div>
-                          </div>
-                    </ng-template>
-
-                </p-dataView> -->
-                <span *ngFor="let task of tasks">{{task.employeeName}}</span>
+                
+                <div *ngFor="let task of tasks" >
+                    <div style="display: inline-block; background-color: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; padding: 10px; margin-bottom: 10px;">
+                        {{task.employeeName}} has completed 
+                        <a (click)="viewTask(this.task)" target="_blank" style="text-decoration: underline; color:  blue; cursor: pointer;">{{task.taskName}}</a> 
+                        task. Please review the task and confirm it.
+                    </div>
+                </div>
+                
             </p-overlayPanel>
         </div>
-                    
+        
         <button class="p-link layout-topbar-button" (click)="logOut()">
             <i class="pi pi-sign-out"></i>
             <span>Log Out</span>

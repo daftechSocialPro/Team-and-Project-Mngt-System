@@ -1,6 +1,7 @@
 ﻿using IntegratedImplementation.DTOS.HRM;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -51,5 +52,16 @@ namespace Implementation.DTOS.Authentication
         public string RoleName { get; set; } = null!;
     }
 
+    public class ChangePasswordDto
+    {
+        [Required]
+        public string UserId { get; set; }
+
+        [Required]
+        public string CurrentPassword { get; set; }
+
+        [Required]
+        public string NewPassword { get; set; }
+    }
 
 }

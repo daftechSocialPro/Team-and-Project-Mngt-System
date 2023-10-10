@@ -71,6 +71,8 @@ export class EditProjectComponent implements OnInit {
       TeamId: [''],
       ProjectEmployees: [''],
       GitHubLink: [''],
+      CompletionDate: [null],
+      CompletionRemark: [null]
       
     
     })
@@ -114,6 +116,9 @@ export class EditProjectComponent implements OnInit {
           projectEmployees:this.employeesSelectedList,
           gitHubLink:this.ProjectForm.value.GitHubLink,
           createdById:this.user.UserID,
+          completionRemark:this.ProjectForm.value.CompletionRemark,
+          CompletionDate:this.ProjectForm.value.CompletionDate
+          
         }
       }
       else{
@@ -128,6 +133,8 @@ export class EditProjectComponent implements OnInit {
           projectEmployees:this.employeesSelectedList,
           gitHubLink:this.ProjectForm.value.GitHubLink,
           createdById:this.user.UserID,
+          completionRemark:this.ProjectForm.value.CompletionRemark,
+          CompletionDate:this.ProjectForm.value.CompletionDate
         }
       }
 
@@ -185,6 +192,11 @@ export class EditProjectComponent implements OnInit {
   showInput()
   {
     return this.ProjectForm.value.AssignedTo.name
+
+  }
+  showInput2()
+  {
+    return this.ProjectForm.value.ProjectStatus.name
 
   }
   getImage(url: string) {
