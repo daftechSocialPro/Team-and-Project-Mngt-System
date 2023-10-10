@@ -3,7 +3,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { TaskService } from 'src/app/services/task.service';
 import { TeamService } from 'src/app/services/team.service';
-import { UserService } from 'src/app/services/user.service';
+import { UserService, UserView } from 'src/app/services/user.service';
 import { EmployeeComponent } from '../employee/employee.component';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { Observable, from, mergeMap, map, forkJoin } from 'rxjs';
@@ -15,10 +15,14 @@ import { Observable, from, mergeMap, map, forkJoin } from 'rxjs';
 })
 export class DashboardComponent implements OnInit, AfterViewInit{
   projects: any;
+  user : UserView;
+  employeeProject:any;
   users: any;
   teams: any;
+  employeeTeams:any;
   employees: any;
   tasks: any;
+  employeeTask:any;
   pieData:any
   pieOptions:any
   projectStatuses: any;
@@ -43,13 +47,20 @@ export class DashboardComponent implements OnInit, AfterViewInit{
   ){}
   ngOnInit(): void {
     this.getUsers()
+    this.user = this.userService.getCurrentUser()
     this.getProjects()
     this.getTeams()
     this.getTasks()
     this.getEmployees()
+
+    this.getEmployeeProject()
+    this.getEmployeeTeam()
+    this.getEmployeeTasks()
+
     this.currentDate= new Date()
     this.getOverallProgress()
     
+
 
   }
 
@@ -57,6 +68,10 @@ export class DashboardComponent implements OnInit, AfterViewInit{
     
     this.initCharts()
     
+  }
+  allowedRoles(allowedRoles: any)
+  {
+    return this.userService.roleMatch(allowedRoles)
   }
 
   
@@ -80,6 +95,15 @@ export class DashboardComponent implements OnInit, AfterViewInit{
       }
     })
   }
+  getEmployeeProject(){
+    this.projectService.getEmployeesProject(this.user.EmployeeId).subscribe({
+      next: (res) => {
+       this.employeeProject = res         
+      }, error: (err) => {
+        console.log(err)
+      }
+    })
+  }
 
   getTeams(){
     this.teamService.getTeams().subscribe({
@@ -90,6 +114,15 @@ export class DashboardComponent implements OnInit, AfterViewInit{
       }
     })
   }
+getEmployeeTeam(){
+  this.teamService.getEmployeesTeams(this.user.EmployeeId).subscribe({
+    next: (res) => {
+      this.employeeTeams= res
+    }, error: (err) => {
+      console.log(err)
+    }
+  })
+}
 
   getEmployees(){
     this.employeeService.getEmployees().subscribe({
@@ -106,6 +139,18 @@ export class DashboardComponent implements OnInit, AfterViewInit{
       next: (res) => {
         this.tasks = res;
         this.totalTaskCount = this.tasks.reduce((count, obj) => count + obj.tasks.length, 0);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+  getEmployeeTasks() {
+    this.taskService.getTask(this.user.EmployeeId).subscribe({
+      next: (res) => {
+        this.employeeTask = res;
+      
+       
       },
       error: (err) => {
         console.log(err);
