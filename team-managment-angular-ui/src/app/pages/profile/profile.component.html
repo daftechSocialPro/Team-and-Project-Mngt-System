@@ -1,0 +1,32 @@
+<div class="card">
+    <h5 style="font-size: 16px; font-weight:700; color: #3366fe;"> Profile</h5>
+    <div style="display: flex;  gap: 20px;">
+        <div style="flex: 2;">
+            <div class="card">
+                <div class="profile-container">
+                    <div class="profile-image">
+                      <img [src]="getImage(employee.imagePath)"  alt="Profile Image" />
+                      <i class="pi pi-pencil edit-icon" (click)="editImage(employee.id)"></i>
+                    </div>
+                    <div class="profile-info">
+                      <h2>{{ employee.firstName }} {{ employee.lastName }}</h2>
+                      <p>{{ employee.employmentPosition }}</p>
+                      <p>{{ employee.email }}</p>
+                      <p>{{ employee.phoneNumber }}</p>
+                    </div>
+                  </div>
+            </div>
+        </div>
+
+        <div style="flex: 3;">
+            <div class="">
+                <div class="card chat-container">
+
+                 
+         
+
+        </div>
+
+    </div>
+
+</div>
