@@ -90,5 +90,11 @@ namespace IntegratedDigitalAPI.Controllers.Project
         {
             return Ok(await _projectService.GetProjectProgress(id));
         }
+        [HttpGet("GetOverallProgress")]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetOverallProgress()
+        {
+            return Ok(await _projectService.GetOverallProgress());
+        }
     }
 }

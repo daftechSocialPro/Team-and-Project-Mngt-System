@@ -131,6 +131,18 @@ namespace ERPSystems.Controllers.Authentication
         //        return BadRequest();
         //    }
         //}
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _authenticationService.ChangePassword(model));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
 
     }

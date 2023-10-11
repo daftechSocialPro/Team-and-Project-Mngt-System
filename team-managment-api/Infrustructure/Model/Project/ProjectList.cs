@@ -33,6 +33,8 @@ namespace IntegratedInfrustructure.Model.Project
         public DateTime DueDate { get; set; }
         public ProjectStatus ProjectStatus { get; set; }
         public AssignedTo AssignedTo { get; set; }
+        public DateTime? CompletionDate { get; set; }
+        public string? CompletionRemark { get; set; }
 
         
         

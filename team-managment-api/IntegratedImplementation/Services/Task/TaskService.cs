@@ -178,6 +178,11 @@ namespace IntegratedImplementation.Services.Task
                 task.TaskName = editTask.TaskName;
                 task.EndDate = editTask.EndDate;
                 task.TaskPriority = Enum.Parse<TaskPriority>(editTask.TaskPriority);
+                if (editTask.TaskStatuses != "COMPLETE" && task.TaskApproval != TaskApproval.APPROVED)
+                {
+                    task.TaskApproval = TaskApproval.PENDING;
+                }
+                
                 task.TaskStatuses = Enum.Parse<TaskStatuses>(editTask.TaskStatuses);
                 task.TaskDescription = editTask.TaskDescription;
                 if (editTask.File != null)
@@ -206,7 +211,15 @@ namespace IntegratedImplementation.Services.Task
             {
                 task.TaskStatuses = Enum.Parse<TaskStatuses>(editStatus.TaskStatuses);
                 task.IsOnHold= editStatus.IsOnHold;
-                task.TaskApproval = Enum.Parse<TaskApproval>(editStatus.TaskApproval);
+                if(editStatus.TaskStatuses != "COMPLETE" && task.TaskApproval != TaskApproval.APPROVED) {
+                    task.TaskApproval = TaskApproval.PENDING;
+                }
+                else
+                {
+                    task.TaskApproval = Enum.Parse<TaskApproval>(editStatus.TaskApproval);
+
+                }
+                
                 task.RejectionRemark = editStatus.RejectionRemark;
                 await _dbContext.SaveChangesAsync();
             }
@@ -216,6 +229,12 @@ namespace IntegratedImplementation.Services.Task
                 var task2 = await GetTask(editStatus.Id);
                 await _chatService.Clients.Group("task").getTaskNotice(task2, "task");
             }
+            if (editStatus.TaskStatuses == "COMPLETE" && (editStatus.TaskApproval == "APPROVED" || editStatus.TaskApproval == "REJECTED"))
+            {
+                var task2 = await GetTask(editStatus.Id);
+                await _chatService.Clients.Group(task2.EmployeeId.ToString()).getUserTaskNotice(task2, editStatus.TaskApproval);
+            }
+            
             return new ResponseMessage
             {
                 Message = "Task Status Updated Successfully",

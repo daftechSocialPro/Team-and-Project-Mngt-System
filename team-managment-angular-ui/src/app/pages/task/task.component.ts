@@ -205,7 +205,8 @@ export class TaskComponent implements OnInit {
       const data = {
         id: record.id,
         taskStatuses: status,
-        isOnHold: record.isOnHold
+        isOnHold: record.isOnHold,
+        taskApproval:record.taskApproval
       };
 
       this.taskService.updateStatus(data).subscribe({

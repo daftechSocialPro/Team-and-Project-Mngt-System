@@ -295,5 +295,33 @@ namespace Implementation.Services.Authentication
             }
             return new ResponseMessage { Success = false, Message = "User Not Found" };
         }
+
+        public async Task<ResponseMessage> ChangePassword(ChangePasswordDto model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+
+            if (user == null)
+            {
+                return new ResponseMessage
+                {
+
+                    Success = false,
+                    Message = "User not found."
+                };
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = result.Errors.ToString()
+                };
+            }
+
+            return new ResponseMessage { Message = "Password changed successfully.", Success = true };
+        }
     }
 }

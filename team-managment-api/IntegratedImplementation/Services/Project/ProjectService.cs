@@ -9,8 +9,10 @@ using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.Project;
 using IntegratedInfrustructure.Model.Team;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using static IntegratedInfrustructure.Data.EnumList;
+
 namespace IntegratedImplementation.Services.Project
 {
     public class ProjectService : IProjectService
@@ -163,10 +165,17 @@ namespace IntegratedImplementation.Services.Project
             {
                 project.ProjectName = editProject.ProjectName;
                 project.Description = editProject.Description;
+                project.AssignedDate = editProject.AssignedDate;
                 project.DueDate = editProject.DueDate;
                 project.ProjectStatus = Enum.Parse<ProjectStatus>(editProject.ProjectStatus);
                 project.AssignedTo = Enum.Parse<AssignedTo>(editProject.AssignedTo);
                 project.GitHubLink= editProject.GitHubLink;
+                if (editProject.ProjectStatus == "COMPLETED")
+                {
+                    project.CompletionDate = DateTime.Now;
+                    project.CompletionRemark = editProject.CompletionRemark;
+
+                }
                 await _dbContext.SaveChangesAsync();
                 if (editProject.AssignedTo == "EMPLOYEE")
                 {
@@ -267,6 +276,41 @@ namespace IntegratedImplementation.Services.Project
             }
              
         }
+
+        public async Task<List<double>?> GetOverallProgress()
+        {
+            var allprojects = await _dbContext.Projects.AsNoTracking()
+                                    .ProjectTo<ProjectGetDto>(_mapper.ConfigurationProvider)
+                                    .ToListAsync();
+            var completedProjects = await _dbContext.Projects.Where(x => x.ProjectStatus.Equals(ProjectStatus.COMPLETED)).AsNoTracking()
+                                    .ProjectTo<ProjectGetDto>(_mapper.ConfigurationProvider)
+                                    .ToListAsync();
+            var compBeforeDue = new List<ProjectGetDto>();
+            foreach (var project in completedProjects) { 
+                if(project.CompletionDate <= project.DueDate)
+                {
+                    compBeforeDue.Add(project);
+                }
+            
+            }
+            var progress = new List<double>();
+
+            if (!completedProjects.IsNullOrEmpty())
+            {
+                var temp2 = ((compBeforeDue.Count / (double)completedProjects.Count) * 100);
+                progress.Add(temp2);
+            }
+            if (!allprojects.IsNullOrEmpty()) { 
+                var temp = (completedProjects.Count / (double)allprojects.Count) * 100;
+            
+                progress.Add(temp);
+            }
+
+            return progress;
+
+         
+        }
+
 
     }
 }

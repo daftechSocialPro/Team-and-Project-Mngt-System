@@ -51,14 +51,19 @@ export class TeamComponent implements OnInit {
 
   addTeam() {
    this.visible=true
+   let modalRef = this.modalService.open(AddTeamComponent,{size:'lg',backdrop:'static'})
+   modalRef.result.then(()=>{this.getTeams()})
   }
   updateTeam(team:any) {
     let modalRef = this.modalService.open(UpdateTeamComponent,{size:'lg',backdrop:'static'})
     modalRef.componentInstance.team = team
+    modalRef.result.then(()=>{this.getTeams()})
+    
    }
    manageMember(team:any) {
     let modalRef = this.modalService.open(ManageMembersComponent,{size:'lg',backdrop:'static'})
     modalRef.componentInstance.team = team
+    modalRef.result.then(()=>{this.getTeams()})
    }
   onTeamAdded(team: any) {
     console.log('Team added:', team);
