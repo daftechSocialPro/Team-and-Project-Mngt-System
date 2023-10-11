@@ -14,6 +14,7 @@ import { TaskComponent } from './pages/task/task.component';
 import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NoticeComponent } from './pages/notice/notice.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import { NoticeComponent } from './pages/notice/notice.component';
                     { path: 'tasks',component:TaskComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin","Developer"]}},
                     { path: 'teams',component:TeamComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]}},
                     { path: 'projects',component:ProjectComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]} },
+                    { path: 'profile',component:ProfileComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]} },
                     { path: 'projectdetail/:projectId',component:ProjectDetailComponent,canActivate: [AuthGuard],data:{permittedRoles:["Developer","Admin"]} },
                     
                 ]

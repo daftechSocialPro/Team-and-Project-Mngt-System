@@ -13,8 +13,8 @@
     </button>
 
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-        <p-chip [label]="user.FullName" [image]="getImage(user.Photo)" styleClass="m-1"></p-chip>
-        
+        <p-chip [label]="user.FullName" [image]="getImage(user.Photo)" styleClass="m-1" (click)="redirectToComponent()" style="cursor: pointer;"></p-chip>
+       
         <div *ngIf="allowedRoles(['Admin'])">
             <button class="p-link layout-topbar-button" (click)="op2.toggle($event)">
                 <i class="pi pi-bell"></i>

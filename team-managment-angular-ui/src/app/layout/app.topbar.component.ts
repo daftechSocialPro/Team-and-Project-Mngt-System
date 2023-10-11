@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewTaskComponent } from '../components/view-task/view-task.component';
 import { TaskService } from '../services/task.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class AppTopBarComponent implements OnInit {
     private commonService:CommonService,   
     private messageService: MessageService,
     private modalService: NgbModal,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private router: Router
     ) { }
     
     ngOnInit(): void {
@@ -104,6 +106,10 @@ export class AppTopBarComponent implements OnInit {
     {
       return this.userService.roleMatch(allowedRoles)
     }
+    redirectToComponent() {
+      // Use the router's navigate method to navigate to the desired component
+      this.router.navigate(['/profile']);
+  }
     viewTask(task: any) {
 
       let modalRef = this.modalService.open(ViewTaskComponent, { size: 'lg', backdrop: 'static' })
@@ -116,6 +122,9 @@ export class AppTopBarComponent implements OnInit {
           this.tasks=res
         }
       })
+    }
+    getEmployee(){
+      
     }
   }
   
