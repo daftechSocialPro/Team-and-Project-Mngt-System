@@ -12,29 +12,55 @@
         <i class="pi pi-ellipsis-v"></i>
     </button>
     
+    
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
         <p-chip [label]="user.FullName" [image]="getImage(user.Photo)" styleClass="m-1" (click)="redirectToComponent()" style="cursor: pointer;"></p-chip>
-       
-        <div *ngIf="allowedRoles(['Admin'])">
+        <div>
+          <div *ngIf="allowedRoles(['Admin', 'Developer'])">
             <button class="p-link layout-topbar-button" (click)="op2.toggle($event)">
-                <i class="pi pi-bell"></i>
-                <span>Announcement</span>
+              <i class="pi pi-bell"></i>
+              <span>Announcement</span>
             </button>
-            <!-- <button type="button" pButton label="DataTable" (click)="op2.toggle($event)" class="p-button-success"></button> -->
-            <p-overlayPanel  #op2 [style]="{width: '450px'}" >
-
-                
-                <div *ngFor="let task of tasks" >
-                    <div style="display: inline-block; background-color: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; padding: 10px; margin-bottom: 10px;">
-                        {{task.employeeName}} has completed 
-                        <a (click)="viewTask(this.task)" target="_blank" style="text-decoration: underline; color:  blue; cursor: pointer;">{{task.taskName}}</a> 
-                        task. Please review the task and confirm it.
+            <p-overlayPanel #op2 [style]="{width: '450px'}">
+              <div style="max-height: 300px; overflow-y: scroll;
+              scrollbar-width: thin;">
+                <ng-container *ngIf="allowedRoles(['Admin'])">
+                  <div *ngFor="let task of tasks">
+                    <div style="display: inline-block; border-bottom: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
+                      <div style="display: flex; align-items: center;">
+                        <div class="flex flex-wrap gap-2">
+                          <button pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-info" style="margin-right: 10px;"></button>
+                        </div>
+                        <div class="">
+                          {{task.employeeName}}
+                          <a (click)="viewTask(task)" target="_blank" style="text-decoration: underline; color: blue; cursor: pointer;">{{task.taskName}}</a>
+                          task. Please review the task and confirm it.
+                        </div>
+                      </div>
                     </div>
-                </div>
-                
-
+                  </div>
+                </ng-container>
+          
+                <ng-container *ngIf="allowedRoles(['Developer'])">
+                  <div *ngFor="let annu of notices">
+                    <div style="display: inline-block; padding: 10px; margin-bottom: 10px; position: relative;">
+                      <div style="display: flex; align-items: center;">
+                        <div class="flex flex-wrap gap-2">
+                          <button pButton pRipple type="button" icon="pi pi-megaphone" class="p-button-rounded p-button-secondary" style="margin-right: 10px;"></button>
+                        </div>
+                        <div class="notice-content">
+                          {{annu.subject}}:{{annu.content}}
+                        </div>
+                      </div>
+                      <div style="position: absolute; bottom: 0; left: 0; width: 410px; height: 1px; background-color: #ddd; content: '';"></div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
             </p-overlayPanel>
-        </div>
+          </div>
+
+</div>
         
         <button class="p-link layout-topbar-button" (click)="logOut()">
             <i class="pi pi-sign-out"></i>
@@ -43,3 +69,8 @@
         
     </div>
 </div>
+<style>
+  ::-webkit-scrollbar {
+    width: 2px; 
+  }
+</style> 
