@@ -217,7 +217,41 @@ namespace IntegratedImplementation.Services.HRM
             return employees;
         }
 
+        public async Task<ResponseMessage> changeEmployeeImage(EmployeeImagePostDto addEmployee)
+        {
 
+            var path = "";
 
+            if (addEmployee.Image != null)
+                path = _generalConfig.UploadFiles(addEmployee.Image, addEmployee.Id.ToString(), "Employee").Result.ToString();
+            var employee = _dbContext.Employees.Find(addEmployee.Id);
+            if (employee != null)
+            {
+                if (addEmployee.Image != null)
+                {
+                    employee.ImagePath = path;
+                }
+
+                await _dbContext.SaveChangesAsync();
+
+                return new ResponseMessage
+                {
+
+                    Message = "Image Updated Successfully",
+                    Success = true
+                };
+
+            }
+            else
+            {
+                return new ResponseMessage
+                {
+
+                    Message = "No employee Found",
+                    Success = false
+                };
+            }
+
+        }
     }
 }

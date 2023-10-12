@@ -58,32 +58,32 @@
                 <div class="">
                     <div class="card chat-container">
 
-                        <div class="chat-messages message-list">
+                        <div #scrollMe class="chat-messages message-list">
                             <div *ngFor="let message of messages" >
 
                                 <div class="message">
 
                                 
-                                <div class="avatar-lef" *ngIf="message.employeeId !== user.EmployeeId">
-                                    <img class="avatar-image" [src]="getImage(message.employee.imagePath)"
-                                        alt="User Avatar" />
+                                    <div class="avatar-lef" *ngIf="message.employeeId !== user.EmployeeId">
+                                        <img class="avatar-image" [src]="getImage(message.employee.imagePath)"
+                                            alt="User Avatar" />
+                                    </div>
+                                    <div class="other-message" *ngIf="message.employeeId !== user.EmployeeId">
+                                        <div class="employee-name">{{ message.employee.name }}</div>
+                                        <div class="message-content">{{ message.message }}</div>
+                                        <div class="message-time">{{ message.createdDate|date:"dd MMM HH:MM a" }}</div>
+                                    </div>
+                                    <div class="my-message" *ngIf="message.employeeId === user.EmployeeId">
+                                        <div class="employee-name">{{ message.employee.name }}</div>
+                                        <div class="message-content">{{ message.message }}</div>
+                                        <div class="message-time">{{ message.createdDate|date:"dd MMM HH:MM a" }}</div>
+                            
+                                    </div>
+                                    <div class="avatar" *ngIf="message.employeeId === user.EmployeeId">
+                                        <img class="avatar-image" [src]="getImage(message.employee.imagePath)"
+                                            alt="User Avatar" />
+                                    </div>
                                 </div>
-                                <div class="other-message" *ngIf="message.employeeId !== user.EmployeeId">
-                                    <div class="employee-name">{{ message.employee.name }}</div>
-                                    <div class="message-content">{{ message.message }}</div>
-                                    <div class="message-time">{{ message.createdDate|date:"dd MMM HH:MM a" }}</div>
-                                </div>
-                                <div class="my-message" *ngIf="message.employeeId === user.EmployeeId">
-                                    <div class="employee-name">{{ message.employee.name }}</div>
-                                    <div class="message-content">{{ message.message }}</div>
-                                    <div class="message-time">{{ message.createdDate|date:"dd MMM HH:MM a" }}</div>
-                           
-                                </div>
-                                <div class="avatar" *ngIf="message.employeeId === user.EmployeeId">
-                                    <img class="avatar-image" [src]="getImage(message.employee.imagePath)"
-                                        alt="User Avatar" />
-                                </div>
-                            </div>
                           
                             </div>
 

@@ -309,7 +309,7 @@ namespace Implementation.Services.Authentication
                     Message = "User not found."
                 };
             }
-
+            
             var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
 
             if (!result.Succeeded)

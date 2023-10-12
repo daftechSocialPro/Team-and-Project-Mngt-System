@@ -33,6 +33,8 @@ export class EditTaskComponent implements OnInit {
     { name: 'HIGH', code: 'HIGH'}
   ]
   task: any;
+  type: string = '';
+  pdflink: string = '';
   
   constructor(private userService: UserService,
     private formBuilder: FormBuilder,
@@ -170,11 +172,40 @@ export class EditTaskComponent implements OnInit {
   getPdfFile(url: string) {
     return this.commonService.getPdf(url)
   }
-  viewPdf(link: string) {
+  getImage(url: string) {
+    return this.commonService.createImgPath(url)
+  }
+  getFileExtension(filename: string): string {
+    const lastDotIndex = filename.lastIndexOf('.');
+    if (lastDotIndex === -1) {
+      return '';
+    }
+    return filename.substr(lastDotIndex);
+  }
+  isImageFile(fileUrl: string): boolean {
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+    const fileExtension = this.getFileExtension(fileUrl);
+    return imageExtensions.includes(fileExtension.toLowerCase());
+  }
 
-    let pdfLink = this.getPdfFile(link)
+  isPDFFile(fileUrl: string): boolean {
+    const pdfExtensions = ['.pdf'];
+    const fileExtension = this.getFileExtension(fileUrl);
+    return pdfExtensions.includes(fileExtension.toLowerCase());
+  }
+  viewPdf(link: string) {
     let modalRef = this.modalService.open(ViewPdfComponent, { size: 'lg', backdrop: 'static' })
-    modalRef.componentInstance.pdflink = pdfLink
+    if (this.isPDFFile(link)) {
+      this.pdflink = this.getPdfFile(link);
+      this.type = "pdf";
+    }
+
+    if (this.isImageFile(link)) {
+      this.pdflink = this.getImage(link);
+      this.type = "image";
+    }
+    modalRef.componentInstance.type = this.type
+    modalRef.componentInstance.pdflink = this.pdflink
   }
   getFile2() {
 

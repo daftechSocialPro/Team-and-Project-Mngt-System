@@ -77,6 +77,9 @@ export class UserService {
 
     return this.http.post<any>(this.BaseURI+"/api/Authentication/AddUser",value)
   }
+  changePassword(changePassword:any){
+    return this.http.post<any>(this.BaseURI+"/api/Authentication/ChangePassword",changePassword)
+  }
 
 
 }
