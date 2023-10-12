@@ -194,13 +194,15 @@ export class EditTaskComponent implements OnInit {
     return pdfExtensions.includes(fileExtension.toLowerCase());
   }
   viewPdf(link: string) {
-    let modalRef = this.modalService.open(ViewPdfComponent, { size: 'lg', backdrop: 'static' })
+    let modalRef
     if (this.isPDFFile(link)) {
+      modalRef = this.modalService.open(ViewPdfComponent, { size:'lg', backdrop: 'static' })
       this.pdflink = this.getPdfFile(link);
       this.type = "pdf";
     }
 
     if (this.isImageFile(link)) {
+      modalRef = this.modalService.open(ViewPdfComponent, {  backdrop: 'static' })
       this.pdflink = this.getImage(link);
       this.type = "image";
     }
