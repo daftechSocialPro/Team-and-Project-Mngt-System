@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { CommonService } from 'src/app/services/common.service';
 import { TaskService } from 'src/app/services/task.service';
+import { ViewPdfComponent } from '../view-pdf/view-pdf.component';
 
 @Component({
   selector: 'app-view-task',
@@ -12,6 +13,8 @@ import { TaskService } from 'src/app/services/task.service';
 })
 export class ViewTaskComponent implements OnInit {
   @Input()  task !: any
+  type: string = '';
+  pdflink: string = '';
   taskApprovalDropDown = [
     { name: 'PENDING', code: 'PENDING'},
     { name: 'APPROVED', code: 'APPROVED'},
@@ -22,7 +25,8 @@ export class ViewTaskComponent implements OnInit {
     private formBuilder: FormBuilder,
     private taskService: TaskService,
     private messageService: MessageService,
-    private commonService: CommonService){}
+    private commonService: CommonService,
+    private modalService: NgbModal){}
     
     ngOnInit(): void {
       console.log(this.task)
@@ -76,8 +80,46 @@ export class ViewTaskComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Form Submit failed.', detail: "Please fil required inputs !!" });
       }
     }
+    
+    getPdfFile(url: string) {
+      return this.commonService.getPdf(url)
+    }
     getImage(url: string) {
       return this.commonService.createImgPath(url)
+    }
+    getFileExtension(filename: string): string {
+      const lastDotIndex = filename.lastIndexOf('.');
+      if (lastDotIndex === -1) {
+        return '';
+      }
+      return filename.substr(lastDotIndex);
+    }
+    isImageFile(fileUrl: string): boolean {
+      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+      const fileExtension = this.getFileExtension(fileUrl);
+      return imageExtensions.includes(fileExtension.toLowerCase());
+    }
+  
+    isPDFFile(fileUrl: string): boolean {
+      const pdfExtensions = ['.pdf'];
+      const fileExtension = this.getFileExtension(fileUrl);
+      return pdfExtensions.includes(fileExtension.toLowerCase());
+    }
+    viewPdf(link: string) {
+      let modalRef
+      if (this.isPDFFile(link)) {
+        modalRef = this.modalService.open(ViewPdfComponent, { size:'lg', backdrop: 'static' })
+        this.pdflink = this.getPdfFile(link);
+        this.type = "pdf";
+      }
+  
+      if (this.isImageFile(link)) {
+        modalRef = this.modalService.open(ViewPdfComponent, {  backdrop: 'static' })
+        this.pdflink = this.getImage(link);
+        this.type = "image";
+      }
+      modalRef.componentInstance.type = this.type
+      modalRef.componentInstance.pdflink = this.pdflink
     }
   }
   

@@ -4,13 +4,18 @@
     
     <div style="flex: 1;">
       
-        <div class="profile-container">
-          <div class="profile-image">
-            <img [src]="getImage(employee.imagePath)"  alt="Profile Image" />
-            <i class="pi pi-camera edit-icon" (click)="editImage(employee.id)"></i>
-          </div>
+      <div class="profile-container">
+        <div class="profile-image">
+          <img [src]="getImage2()"  alt="Profile Image" />
+          <input #file (change)="onUpload2($event)" type="file" style="display: none;" accept="pdf/*" />
+          
+          
+          <i (click)="file.click()" class="pi pi-camera edit-icon" ></i> 
+          
           
         </div>
+        
+      </div>
       
     </div>
     

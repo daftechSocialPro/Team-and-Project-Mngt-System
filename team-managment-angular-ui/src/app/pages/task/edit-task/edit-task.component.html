@@ -25,7 +25,8 @@
             
             <div *ngIf="task.filePath !== null" class="field col-12 ">
                 
-                <a (click)="viewPdf(task.filePath)" target="_blank" >  <i class="pi pi-file-pdf text-primary p-2" style="font-size: 50px;background-color: #5c1d1612; border-radius: 50%; " ></i>
+                <a (click)="viewPdf(task.filePath)" target="_blank" >  <i *ngIf="isPDFFile(task.filePath)" class="pi pi-file-pdf text-primary p-2" style="font-size: 30px;background-color: #5c1d1612; border-radius: 50%; " ></i>
+                    <i *ngIf="isImageFile(task.filePath)" class="pi pi-image text-primary p-2" style="font-size: 30px;background-color: #5c1d1612; border-radius: 50%; " ></i>
                     &nbsp;&nbsp;
                 </a>
                 <input #file (change)="onUpload2($event)" type="file" style="display: none;" accept="pdf/*" />
