@@ -95,9 +95,7 @@
 .customProgress .ui-progressbar .ui-progressbar-label {
     color: yellow;
 }
-.chat-container {
-    height: 400px;
-  }
+
   
   .chat-messages {
     max-height: 300px;
@@ -118,10 +116,11 @@
 .chat-container {
     display: flex;
     flex-direction: column;
-    height: 100%;
     background-color: #EFF3F8;
     padding: 10px;
     border-radius: 2px;
+    height: 350px;
+
 
   }
   .chat-messages {

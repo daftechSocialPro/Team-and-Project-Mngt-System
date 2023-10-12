@@ -20,6 +20,7 @@ import { AppLayoutComponent } from "./app.layout.component";
 import { ChipModule } from 'primeng/chip';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DataViewModule } from 'primeng/dataview';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
     declarations: [
@@ -45,7 +46,8 @@ import { DataViewModule } from 'primeng/dataview';
         AppConfigModule,
         ChipModule,
         OverlayPanelModule,
-        DataViewModule
+        DataViewModule,
+        ButtonModule
     ],
     exports: [AppLayoutComponent]
 })

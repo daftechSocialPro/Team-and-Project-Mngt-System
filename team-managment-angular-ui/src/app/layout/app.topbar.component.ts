@@ -4,6 +4,7 @@ import { LayoutService } from "./service/app.layout.service";
 import { AuthGuard } from '../auth/auth.guard';
 import { UserService, UserView } from '../services/user.service';
 import { CommonService } from '../services/common.service';
+import { NoticeService } from '../services/notice.sercive';
 import { MessageService } from 'primeng/api';
 import * as signalR from '@microsoft/signalr';
 import { environment } from 'src/environments/environment';
@@ -25,6 +26,7 @@ export class AppTopBarComponent implements OnInit {
   public connection!: signalR.HubConnection;
   urlHub: string = environment.baseUrl + "/ws/Chat"
   tasks:any[] = [];
+  notices:any
   
   @ViewChild('menubutton') menuButton!: ElementRef;
   
@@ -39,7 +41,8 @@ export class AppTopBarComponent implements OnInit {
     private messageService: MessageService,
     private modalService: NgbModal,
     private taskService: TaskService,
-    private router: Router
+    private router: Router,
+    private noticeService: NoticeService,
     ) { }
     
     ngOnInit(): void {
@@ -97,6 +100,7 @@ export class AppTopBarComponent implements OnInit {
           })
         }
       }
+      this.getNotices() 
     }
     
     logOut(){
@@ -125,7 +129,19 @@ export class AppTopBarComponent implements OnInit {
       this.taskService.getPendingCompletedTasks().subscribe({
         next: (res) => {
           this.tasks=res
+    
         }
+      })
+    }
+    getNotices() {
+
+      this.noticeService.getAllNotices().subscribe({
+        next: (res) => {
+          this.notices = res       
+        }, error: (err) => {
+          console.log(err)
+        }
+  
       })
     }
     getEmployee(){

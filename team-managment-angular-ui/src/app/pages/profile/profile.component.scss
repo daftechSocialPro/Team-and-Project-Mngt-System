@@ -46,7 +46,16 @@
   .profile-info h2 {
     margin-bottom: 5px;
   }
-  
+  .cont{
+    width:450px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .spaners{
+    display: flex;
+  }
   .profile-info p {
     margin: 0;
     text-align: center;

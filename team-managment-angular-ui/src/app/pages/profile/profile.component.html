@@ -19,22 +19,43 @@
       
     </div>
     
-    <div style="flex: 3;">
+    <div style="flex: 3; margin-left: 40px;">
       <div class="">
-        <div class="card chat-container">
+        <div class="card cont">
           <div style="margin-top: 20px;" class="profile-info">
             
             <div>
-              <span>Full Name</span>
               <div style="font-size: 30px; font-weight: 700;">{{ employee.firstName }} {{ employee.lastName }}</div>
             </div>
-            <div style="margin-top: 40px;"><span>Full Name</span><div>{{ employee.employmentPosition }}</div></div>
-            <p>{{ employee.email }}</p>
-            <p>{{ employee.phoneNumber }}</p>
+            <div style="margin-left: 80px; font-weight: 700;">{{ employee.employmentPosition }}</div>
+            <div class="">
+              <div class="spaners">
+                <i style="margin-top: 10px;
+                margin-right: 10px;
+                color: #0000ffc4;" class="pi  pi-inbox"></i>
+                <p >{{ employee.email }}</p>
+              </div>
+              <div class="spaners">
+                <i style="margin-top: 6px;
+                margin-right: 10px;
+                color: #7f7f82c4;" class="pi   pi-phone"></i>
+                 <p>{{ employee.phoneNumber }}</p>
+              </div>
+              <div class="spaners">
+                <i style="margin-top: 5px;
+                margin-right: 10px;
+                color: #00ff4cc4;" class="pi  pi-map-marker"></i>
             <p>{{ employee.address }}</p>
-          </div>
-          <button pButton pRipple class="p-button-raised top-right-button" label="Change Password" icon="pi pi-pencil" (click)="changePassword()"></button>
+              </div>
+            </div>
           
+          
+         
+            
+          </div>
+          
+          <button pButton pRipple type="button" label="Change Password" icon="pi pi-pencil" (click)="changePassword()" class="p-button-outlined top-right-button p-button-secondary"></button>
+
         </div>
       </div>
       
