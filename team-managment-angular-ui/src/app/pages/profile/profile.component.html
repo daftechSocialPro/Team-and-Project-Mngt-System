@@ -1,32 +1,43 @@
 <div class="card">
-    <h5 style="font-size: 16px; font-weight:700; color: #3366fe;"> Profile</h5>
-    <div style="display: flex;  gap: 20px;">
-        <div style="flex: 2;">
-            <div class="card">
-                <div class="profile-container">
-                    <div class="profile-image">
-                      <img [src]="getImage(employee.imagePath)"  alt="Profile Image" />
-                      <i class="pi pi-pencil edit-icon" (click)="editImage(employee.id)"></i>
-                    </div>
-                    <div class="profile-info">
-                      <h2>{{ employee.firstName }} {{ employee.lastName }}</h2>
-                      <p>{{ employee.employmentPosition }}</p>
-                      <p>{{ employee.email }}</p>
-                      <p>{{ employee.phoneNumber }}</p>
-                    </div>
-                  </div>
-            </div>
+  <h5 style="font-size: 16px; font-weight:700; color: #3366fe;"> Profile</h5>
+  <div style="display: flex; margin-top: 25px; gap: 20px;">
+    
+    <div style="flex: 1;">
+      
+        <div class="profile-container">
+          <div class="profile-image">
+            <img [src]="getImage(employee.imagePath)"  alt="Profile Image" />
+            <i class="pi pi-camera edit-icon" (click)="editImage(employee.id)"></i>
+          </div>
+          
         </div>
-
-        <div style="flex: 3;">
-            <div class="">
-                <div class="card chat-container">
-
-                 
-         
-
-        </div>
-
+      
     </div>
+    
+    <div style="flex: 3;">
+      <div class="">
+        <div class="card chat-container">
+          <div style="margin-top: 20px;" class="profile-info">
+            
+            <div>
+              <span>Full Name</span>
+              <div style="font-size: 30px; font-weight: 700;">{{ employee.firstName }} {{ employee.lastName }}</div>
+            </div>
+            <div style="margin-top: 40px;"><span>Full Name</span><div>{{ employee.employmentPosition }}</div></div>
+            <p>{{ employee.email }}</p>
+            <p>{{ employee.phoneNumber }}</p>
+            <p>{{ employee.address }}</p>
+          </div>
+          <button pButton pRipple class="p-button-raised top-right-button" label="Change Password" icon="pi pi-pencil" (click)="changePassword()"></button>
 
+        </div>
+      </div>
+      
+      
+      
+      
+    </div>
+    
+  </div>
+  
 </div>

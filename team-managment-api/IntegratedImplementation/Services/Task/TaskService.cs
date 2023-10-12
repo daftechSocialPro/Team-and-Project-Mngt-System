@@ -88,31 +88,25 @@ namespace IntegratedImplementation.Services.Task
         {
 
 
-            if (addTask.EndDate < DateTime.Now)
-            {
-                return new ResponseMessage
-                {
-                    Message = "Task End Date Should Be Later Than Todays' Date",
-                    Success = false
-                };
-            }
-            else
+            if (addTask.EndDate >= DateTime.Today)
             {
                 var id = Guid.NewGuid();
                 var path = "";
-                 
+
                 if (addTask.ProjectId != null)
                 {
-                    
-                    if (addTask.FilePath != null) {
+
+                    if (addTask.FilePath != null)
+                    {
                         var name = $"{Path.GetFileNameWithoutExtension(addTask.FilePath.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.EmployeeName}";
                         path = _generalConfig.UploadFiles(addTask.FilePath, name, $"Files/Projects/{addTask.ProjectName}").Result.ToString();
                     }
                 }
                 else
                 {
-                    
-                    if (addTask.FilePath != null) { 
+
+                    if (addTask.FilePath != null)
+                    {
                         var name = $"{Path.GetFileNameWithoutExtension(addTask.FilePath.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.TaskName}";
                         path = _generalConfig.UploadFiles(addTask.FilePath, name, $"Files/Tasks/{addTask.EmployeeName}").Result.ToString();
                     }
@@ -130,8 +124,8 @@ namespace IntegratedImplementation.Services.Task
                     TaskDescription = addTask.TaskDescription,
                     EmployeeId = addTask.EmployeeId,
                     ProjectId = addTask.ProjectId,
-                    FilePath= path,
-                    TaskApproval= Enum.Parse<TaskApproval>("PENDING")
+                    FilePath = path,
+                    TaskApproval = Enum.Parse<TaskApproval>("PENDING")
 
                 };
 
@@ -145,6 +139,15 @@ namespace IntegratedImplementation.Services.Task
                     Message = "Task Added Successfully",
                     Success = true
                 };
+            }
+            else
+            {
+                return new ResponseMessage
+                {
+                    Message = "Task End Date Should Be Later Than Todays' Date",
+                    Success = false
+                };
+
             }
         }
 
