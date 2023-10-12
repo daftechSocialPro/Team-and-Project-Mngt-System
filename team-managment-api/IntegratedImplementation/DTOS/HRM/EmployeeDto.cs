@@ -80,5 +80,13 @@ namespace IntegratedImplementation.DTOS.HRM
 
     }
 
-   
+    public class EmployeeImagePostDto
+    {
+        public Guid Id { get; set; }
+        public IFormFile? Image { get; set; } = null!;
+        public string? ImagePath { get; set; } = null!;
+
+    }
+
+
 }

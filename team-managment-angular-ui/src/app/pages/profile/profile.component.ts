@@ -4,6 +4,7 @@ import { EmployeeService } from 'src/app/services/employee.service';
 import { CommonService } from 'src/app/services/common.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditimageComponent } from './editimage/editimage.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +25,7 @@ export class ProfileComponent implements OnInit {
     ) {}
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser()
-    this.  getEmployee()
+    this.getEmployee()
   }
 
   getEmployee(){
@@ -44,6 +45,11 @@ getImage(url: string) {
 editImage(employeeId){
   let modalRef= this.modalSerivce.open(EditimageComponent,{size:'sl',backdrop:'static'})
   modalRef.componentInstance.employeeId = employeeId
+  modalRef.result.then(()=>{this.getEmployee()})
+}
+changePassword(){
+  let modalRef= this.modalSerivce.open(ChangePasswordComponent,{size:'sl',backdrop:'static'})
+  modalRef.componentInstance.userId = this.user.UserID
   modalRef.result.then(()=>{this.getEmployee()})
 }
 }

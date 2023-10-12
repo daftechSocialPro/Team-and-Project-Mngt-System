@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ViewPdfComponent implements OnInit {
 
   @Input()  pdflink !: string
+  @Input() type!: string;
   constructor(private activeMOdal :NgbActiveModal){}
 
   ngOnInit(): void {

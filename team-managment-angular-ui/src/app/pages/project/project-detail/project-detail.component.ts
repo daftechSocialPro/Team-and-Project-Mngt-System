@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'src/app/services/common.service';
@@ -18,12 +18,13 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./project-detail.component.scss']
 })
 export class ProjectDetailComponent implements OnInit, AfterViewInit {
+  @ViewChild('scrollMe', { static: false, read: ElementRef}) scrollMe!: ElementRef;
   user: UserView
   project:any
   employeeTasks
   projectId:string
   projectemp:any
-
+  
   completeCount:any = 0;
   inprogresCount:any = 0;
   notstartedCount:any = 0;
@@ -43,9 +44,9 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
   projectProgress: any;
   public connection!: signalR.HubConnection;
   urlHub : string = environment.baseUrl+"/ws/Chat"
-    
-
- 
+  
+  
+  
   constructor (
     private route: ActivatedRoute,
     private projectService: ProjectService,
@@ -54,177 +55,186 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
     private modalSerivce: NgbModal,
     private teamService: TeamService,
     private chatService: ChatService,
-    private messageService: MessageService
-      ) {}
-
-
-  ngOnInit(): void {
-    this.user = this.userService.getCurrentUser()
-    this.route.paramMap.subscribe(params => {
-    this.projectId = params.get('projectId');
-    });
-
-  
-    this.getProject(this.projectId)
-    this.getMessages(this.projectId)
+    private messageService: MessageService,
+    private renderer: Renderer2
+    ) {}
     
+    
+    ngOnInit(): void {
+      this.user = this.userService.getCurrentUser()
+      this.route.paramMap.subscribe(params => {
+        this.projectId = params.get('projectId');
+      });
       
-}
-ngAfterViewInit(): void {
-  this.connection = new signalR.HubConnectionBuilder()
-    .withUrl(this.urlHub, {
-      skipNegotiation: true,
-      transport: signalR.HttpTransportType.WebSockets
-    })
-    .configureLogging(signalR.LogLevel.Debug)
-    .build();
-
-  this.connection.start()
-    .then((res) => {
-     
-     this.connection.invoke('addDirectorToGroup', this.projectId);
-     
-    })
-    .catch((err) => console.log('Error while connecting to the server', err));
-
-  
-
-  if (this.connection){
-
-  this.connection.on('getNotification', (result) => {
-    console.log("result of getNotification",result,"jhgghfghfghf")
-    //this.getMessages(this.projectId)
-    this.messages.push(result)
-  });
-
-  } 
-}
-
-
-
-  
-getProject(projectId){
-  this.projectService.getProject(projectId).subscribe(res => {    
-    this.project = res;
-    this.projectemp = this.project.projectEmployees.map(u => {
-      return {
-        name: u.name,
-        imagePath: u.imagePath,
-        value:u.id
-      };
-    });
-    if( res.teamProjects.length > 0){
-      this.teamService.getTeamMembersSelectList(this.project.teamProjects.map(i => i.id)).subscribe({
-        next: (res) => {
-          this.projectemp = res.map(i => ({value: i.id, name: i.name,imagePath:i.imagePath }))
-        }
+      
+      this.getProject(this.projectId)
+      this.getMessages(this.projectId)
+      
+      
+    }
+    ngAfterViewInit(): void {
+      this.connection = new signalR.HubConnectionBuilder()
+      .withUrl(this.urlHub, {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets
       })
+      .configureLogging(signalR.LogLevel.Debug)
+      .build();
+      
+      this.connection.start()
+      .then((res) => {
+        
+        this.connection.invoke('addDirectorToGroup', this.projectId);
+        
+      })
+      .catch((err) => console.log('Error while connecting to the server', err));
+      
+      
+      
+      if (this.connection){
+        
+        this.connection.on('getNotification', (result) => {
+          
+          this.messages.push(result)
+        });
+        
+      } 
+      const element: Element = this.scrollMe.nativeElement;
+      this.renderer.setStyle(element, 'scroll-behavior', 'smooth');
+      this.lockScrollToBottom(element);
     }
     
-    this.dataViewValue = this.project.taskLists;
-    this.employeeTasks = res.taskLists.filter(u=> u.employeeId === this.user.EmployeeId )
-    this.projectService.getProjectProgress(res.id).subscribe((progress: number) => {
-      this.projectProgress = progress
-    });
-     this.project.taskLists.forEach(task => {
+    
+    private lockScrollToBottom(element: Element) {
+      setTimeout(() => {
+        element.scrollTop = element.scrollHeight;
+      }, 0);
+    }
+    
+    getProject(projectId){
+      this.projectService.getProject(projectId).subscribe(res => {    
+        this.project = res;
+        this.projectemp = this.project.projectEmployees.map(u => {
+          return {
+            name: u.name,
+            imagePath: u.imagePath,
+            value:u.id
+          };
+        });
+        if( res.teamProjects.length > 0){
+          this.teamService.getTeamMembersSelectList(this.project.teamProjects.map(i => i.id)).subscribe({
+            next: (res) => {
+              this.projectemp = res.map(i => ({value: i.id, name: i.name,imagePath:i.imagePath }))
+            }
+          })
+        }
         
-        switch (task.taskStatuses) {
-          case 'COMPLETE':
+        this.dataViewValue = this.project.taskLists;
+        this.employeeTasks = res.taskLists.filter(u=> u.employeeId === this.user.EmployeeId )
+        this.projectService.getProjectProgress(res.id).subscribe((progress: number) => {
+          this.projectProgress = progress
+        });
+        this.project.taskLists.forEach(task => {
+          
+          switch (task.taskStatuses) {
+            case 'COMPLETE':
             this.completeCount++;
             break;
-          case 'INPROGRESS':
+            case 'INPROGRESS':
             this.inprogresCount++;
             break;
-          case 'NOTSTARTED':
+            case 'NOTSTARTED':
             this.notstartedCount++;
             break;
-          case 'OVERDUE':
+            case 'OVERDUE':
             this.overdueCount++;
             break;
-          case 'ONHOLD':
+            case 'ONHOLD':
             this.onholdCount++;
             break;
-          default:
+            default:
             break;
-        }
-        this.allTask++;
-      });
+          }
+          this.allTask++;
+        });
         
-    })
-     
-}
-
-openLink(): void {
-  const link = this.project.gitHubLink; 
-  window.open(link, '_blank');
-}
-
-
-
-getImage(url: string) {
-  return this.commonServive.createImgPath(url)
-}
-onDataViewChange() {
+      })
+      
+    }
     
-  if (this.selectedValue === 'AT') {
-    this.dataViewValue = this.project.taskLists;
-  } else if (this.selectedValue === 'MT') {
-    this.dataViewValue = this.employeeTasks;
-  
-}
-}
-assignTask(projectId,teamProject,projectEmployees){
-  let modalRef= this.modalSerivce.open(AddTaskComponent,{size:'xl',backdrop:'static'})
-  modalRef.componentInstance.projectId = projectId
-  modalRef.componentInstance.teamProject = teamProject
-  modalRef.componentInstance.projectEmployees = projectEmployees
-  modalRef.result.then(()=>{this.getProject(this.projectId)})
-}
-allowedRoles(allowedRoles: any)
-  {
-    return this.userService.roleMatch(allowedRoles)
-  }
-  
-
-  sendMessage() {
-    if (this.newMessage) {
-      this.messages.push({ severity: 'info', detail: this.newMessage });
-      var sendChat:any = {
-        employeeId:this.user.EmployeeId,
-        projectId:this.projectId,
-        message:this.newMessage,
-        createdById:this.user.UserID,
-        employeeIds:this.projectemp.map(u=>u.value)
+    openLink(): void {
+      const link = this.project.gitHubLink; 
+      window.open(link, '_blank');
+    }
+    
+    
+    
+    getImage(url: string) {
+      return this.commonServive.createImgPath(url)
+    }
+    onDataViewChange() {
+      
+      if (this.selectedValue === 'AT') {
+        this.dataViewValue = this.project.taskLists;
+      } else if (this.selectedValue === 'MT') {
+        this.dataViewValue = this.employeeTasks;
+        
       }
-      this.chatService.sendChat(sendChat).subscribe({
-        next: (res) => {
-
-          if (res.success) {
-            this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
+    }
+    assignTask(projectId,teamProject,projectEmployees){
+      let modalRef= this.modalSerivce.open(AddTaskComponent,{size:'xl',backdrop:'static'})
+      modalRef.componentInstance.projectId = projectId
+      modalRef.componentInstance.teamProject = teamProject
+      modalRef.componentInstance.projectEmployees = projectEmployees
+      modalRef.result.then(()=>{this.getProject(this.projectId)})
+    }
+    allowedRoles(allowedRoles: any)
+    {
+      return this.userService.roleMatch(allowedRoles)
+    }
+    
+    
+    sendMessage() {
+      if (this.newMessage) {
+        this.messages.push({ severity: 'info', detail: this.newMessage });
+        var sendChat:any = {
+          employeeId:this.user.EmployeeId,
+          projectId:this.projectId,
+          message:this.newMessage,
+          createdById:this.user.UserID,
+          employeeIds:this.projectemp.map(u=>u.value)
+        }
+        this.chatService.sendChat(sendChat).subscribe({
+          next: (res) => {
+            
+            if (res.success) {
+              
+              this.getMessages(this.projectId)
+            }
+            else {
+              this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
+              
+            }
+            
+          }, error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
           }
-          else {
-            this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
-
-          }
-
-        }, error: (err) => {
-          this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
+        })
+        
+        this.newMessage = '';
+      }
+    }
+    
+    getMessages(projectId){
+      this.chatService.getProjectChat(projectId).subscribe({
+        next: (res)=> {
+          console.log("chat",res)
+          this.messages = res
         }
       })
-
-      this.newMessage = '';
     }
+    
+    
+    
   }
-
-  getMessages(projectId){
-    this.chatService.getProjectChat(projectId).subscribe({
-      next: (res)=> {
-        console.log("chat",res)
-        this.messages = res
-        }
-    })
-  }
-
-
-
-}
+  

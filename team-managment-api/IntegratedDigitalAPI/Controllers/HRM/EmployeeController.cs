@@ -74,7 +74,19 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         {
             return Ok(await _employeeService.GetEmployeeSelectList());
         }
-
+        [HttpPut("changeEmployeeImage")]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> changeEmployeeImage([FromForm]EmployeeImagePostDto addEmployee)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.changeEmployeeImage(addEmployee));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
 
 

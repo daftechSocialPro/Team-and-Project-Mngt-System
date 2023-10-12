@@ -19,8 +19,10 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<EmployeeGetDto> GetEmployee(Guid employeeId);
         Task<List<SelectListDto>> GetEmployeeNoUser();
         Task<List<SelectListDto>> GetEmployeeSelectList();
+        Task<ResponseMessage> changeEmployeeImage(EmployeeImagePostDto addEmployee);
 
-      
+
+
 
     }
 }
