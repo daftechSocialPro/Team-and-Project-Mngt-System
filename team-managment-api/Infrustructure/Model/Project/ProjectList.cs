@@ -27,7 +27,7 @@ namespace IntegratedInfrustructure.Model.Project
         public ICollection<ProjectEmployee> ProjectEmployees { get; set; }
 
         public string ProjectName { get; set; } = null!;
-        public string GitHubLink { get; set; }
+        public string? GitHubLink { get; set; }
         public string Description { get; set; } = null!;
         public DateTime AssignedDate { get; set; }
         public DateTime DueDate { get; set; }

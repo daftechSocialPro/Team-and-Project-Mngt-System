@@ -22,7 +22,7 @@ export class ChangePasswordComponent implements OnInit {
       this.PasswordForm = this.formBuilder.group({
         CurrentPassword: [null, Validators.required],
         NewPassword: [null, Validators.required],
-        ConfirmPassword: [null, Validators.required],
+        ConfirmPassword: [null, Validators.required]
       },)
     }
     

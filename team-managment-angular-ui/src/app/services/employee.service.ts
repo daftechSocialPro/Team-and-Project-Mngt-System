@@ -31,4 +31,8 @@ export class EmployeeService {
   getEmployeesSelectList(){
     return this.http.get<any>(this.BaseURI+"/api/Employee/getEmployeesSelectList")
   }
+  changeProfilePic(formData : FormData){
+    return this.http.put<any>(this.BaseURI+ '/api/Employee/changeEmployeeImage',formData)
+  }
+  
 }

@@ -108,6 +108,7 @@ export class TaskComponent implements OnInit {
   }
   filterdTask(status: string) {
     let filteredTasks = this.taskArray.filter((task) => task.taskStatuses === status);
+    
   
     if (this.selectedTask === 'DAILY') {
       filteredTasks = filteredTasks.filter((task) => {
