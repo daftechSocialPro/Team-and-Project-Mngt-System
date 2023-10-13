@@ -1,4 +1,5 @@
-﻿using IntegratedImplementation.DTOS.Configuration;
+﻿using IntegratedImplementation.DTOS.Client;
+using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.Task;
 using IntegratedInfrustructure.Model.Team;
 using System;
@@ -25,6 +26,7 @@ namespace IntegratedImplementation.DTOS.Project
 
         public List<SelectListDto>? TeamProjects { get; set; }
         public List<SelectProjectEmployeeListDto>? ProjectEmployees { get; set; }
+        public List<ClientGetDto>? ProjectClients { get; set; }
         public List<TaskGetDto>? TaskLists { get; set; }
 
     }
