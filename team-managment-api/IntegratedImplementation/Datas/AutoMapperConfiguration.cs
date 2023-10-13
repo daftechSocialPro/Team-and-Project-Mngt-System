@@ -99,6 +99,7 @@ namespace IntegratedImplementation.Datas
             CreateMap<ClientList, ClientGetDto>();
 
             CreateMap<ClientFile, ClientFileGetDto>();
+            CreateMap<ProjectClient, ClientGetDto>();
 
 
         }

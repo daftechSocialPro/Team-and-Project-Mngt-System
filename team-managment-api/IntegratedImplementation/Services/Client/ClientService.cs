@@ -11,8 +11,10 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.Client
 {
@@ -42,28 +44,9 @@ namespace IntegratedImplementation.Services.Client
             var id = Guid.NewGuid();
             var path = "";
 
-            if (addClient.ClientFiles.Count > 0)
-            {
-                foreach(var file in addClient.ClientFiles)
-                {
-                    var fileName = file.FileName;
-                    var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addClient.Name}";
-                    path = _generalConfig.UploadFiles(file, name, $"Files/Clients/{addClient.Name}").Result.ToString();
-                    ClientFile clientFile = new ClientFile
-                    {
-                        ClientId= id,
-                        FileName= fileName,
-                        FilePath = path,
-                        
-                    };
-                    await _dbContext.ClientFiles.AddAsync(clientFile);
-                }
-                await _dbContext.SaveChangesAsync();
-
-
-            }
-            if (addClient.ImagePath != null)
-                path = _generalConfig.UploadFiles(addClient.ImagePath, id.ToString(), "Employee").Result.ToString();
+            
+            if (addClient.Image != null)
+                path = _generalConfig.UploadFiles(addClient.Image, id.ToString(), "Client").Result.ToString();
             ClientList client = new ClientList
             {
                 Id = id,
@@ -78,6 +61,26 @@ namespace IntegratedImplementation.Services.Client
              };
             await _dbContext.Clients.AddAsync(client);
             await _dbContext.SaveChangesAsync();
+            if (addClient.ClientFiles.Count > 0)
+            {
+                foreach (var file in addClient.ClientFiles.Distinct())
+                {
+                    var fileName = file.FileName;
+                    var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addClient.Name}";
+                    path = _generalConfig.UploadFiles(file, name, $"Files/Clients/{addClient.Name}").Result.ToString();
+                    ClientFile clientFile = new ClientFile
+                    {
+                        ClientId = id,
+                        FileName = fileName,
+                        FilePath = path,
+                        CreatedById = addClient.CreatedById
+                    };
+                    await _dbContext.ClientFiles.AddAsync(clientFile);
+                }
+                await _dbContext.SaveChangesAsync();
+
+
+            }
 
             return new ResponseMessage
             {
@@ -85,6 +88,74 @@ namespace IntegratedImplementation.Services.Client
                 Message = "Client Added Successfully",
                 Success = true
             };
+
+        }
+
+        public async Task<ResponseMessage> EditClient(ClientPostDto editClient)
+        {
+            var path = "";
+
+            if (editClient.Image != null)
+                path = _generalConfig.UploadFiles(editClient.Image, editClient.Id.ToString(), "Client").Result.ToString();
+
+            var client = _dbContext.Clients.Find(editClient.Id);
+
+            if (client != null)
+            {
+
+                client.Email = editClient.Email;                
+                client.Name = editClient.Name;
+                client.Address = editClient.Address;
+                client.Email = editClient.Email;
+                client.Description = editClient.Description;
+                
+                if (editClient.Image != null)
+                {
+                    client.ImagePath = path;
+                }                       
+                              
+                await _dbContext.SaveChangesAsync();
+
+                if (editClient.ClientFiles.Count > 0)
+                {
+                    foreach (var file in editClient.ClientFiles.Distinct())
+                    {
+                        var fileName = file.FileName;
+                        var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editClient.Name}";
+                        path = _generalConfig.UploadFiles(file, name, $"Files/Clients/{editClient.Name}").Result.ToString();
+                        ClientFile clientFile = new ClientFile
+                        {
+                            ClientId = client.Id,
+                            FileName = fileName,
+                            FilePath = path,
+                            CreatedById = editClient.CreatedById
+                        };
+                        await _dbContext.ClientFiles.AddAsync(clientFile);
+                    }
+                    await _dbContext.SaveChangesAsync();
+
+
+                }
+
+
+
+                return new ResponseMessage
+                {
+
+                    Message = "Client Updated Successfully",
+                    Success = true
+                };
+
+            }
+            else
+            {
+                return new ResponseMessage
+                {
+
+                    Message = "No Client Found",
+                    Success = false
+                };
+            }
 
         }
 

@@ -21,11 +21,13 @@ namespace IntegratedImplementation.DTOS.Client
     }
     public class ClientPostDto
     {
+        public Guid? Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }
         public string Description { get; set; }
-        public IFormFile? ImagePath { get; set; } = null!;
+        public IFormFile? Image { get; set; } = null!;
+        public string ImagePath { get; set; } = null!;
         public List<IFormFile>? ClientFiles { get; set; }
         public string CreatedById { get; set; } = null!;
 

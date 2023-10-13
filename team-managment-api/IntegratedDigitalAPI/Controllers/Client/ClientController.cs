@@ -1,5 +1,6 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Client;
+using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.DTOS.Project;
 using IntegratedImplementation.DTOS.Team;
 using IntegratedImplementation.Interfaces.Client;
@@ -34,6 +35,19 @@ namespace IntegratedDigitalAPI.Controllers.Client
             if (ModelState.IsValid)
             {
                 return Ok(await _clientService.AddClient(client));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateClient([FromForm] ClientPostDto client)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _clientService.EditClient(client));
             }
             else
             {

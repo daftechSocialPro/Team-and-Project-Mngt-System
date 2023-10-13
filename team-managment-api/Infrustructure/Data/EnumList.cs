@@ -144,5 +144,17 @@ namespace IntegratedInfrustructure.Data
             APPROVED,
             REJECTED
         }
+        public enum ComplaintType
+        {
+
+        }
+        public enum ComplaintStatus
+        {
+            PENDING,
+            INPROGRESS,
+            ONHOLD,
+            RESOLVED,
+            REOPENED
+        }
     }
 }
