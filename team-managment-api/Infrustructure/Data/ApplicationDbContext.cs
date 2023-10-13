@@ -15,6 +15,7 @@ using IntegratedInfrustructure.Model.Project;
 using IntegratedInfrustructure.Model.Task;
 using IntegratedInfrustructure.Model.Chat;
 using IntegratedInfrustructure.Model.Notice;
+using IntegratedInfrustructure.Model.Client;
 
 namespace IntegratedInfrustructure.Data
 {
@@ -59,6 +60,7 @@ namespace IntegratedInfrustructure.Data
 
         public DbSet<ProjectList> Projects { get; set; }
         public DbSet<ProjectEmployee> ProjectEmployees { get; set; }
+        public DbSet<ProjectClient> ProjectClients { get; set; }
 
         #endregion
 
@@ -70,6 +72,13 @@ namespace IntegratedInfrustructure.Data
 
         #region Notice
         public DbSet<NoticeList> Notices { get; set; }
+        #endregion
+
+        #region Client
+        public DbSet<ClientList> Clients { get; set; }
+        public DbSet<ClientFile> ClientFiles { get; set; }
+
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

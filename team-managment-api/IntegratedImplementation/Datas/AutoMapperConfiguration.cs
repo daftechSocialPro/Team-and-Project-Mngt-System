@@ -20,6 +20,8 @@ using IntegratedInfrustructure.Model.Chat;
 using IntegratedImplementation.DTOS.Chat;
 using IntegratedInfrustructure.Model.Notice;
 using IntegratedImplementation.DTOS.Notice;
+using IntegratedInfrustructure.Model.Client;
+using IntegratedImplementation.DTOS.Client;
 
 namespace IntegratedImplementation.Datas
 {
@@ -59,6 +61,7 @@ namespace IntegratedImplementation.Datas
             CreateMap<ProjectList, ProjectGetDto>()
                 .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Id))
                 .ForMember(a => a.ProjectEmployees, e => e.MapFrom(mfg => mfg.ProjectEmployees))
+                .ForMember(a => a.ProjectClients, e => e.MapFrom(mfg => mfg.ProjectClients))
                 .ForMember(a => a.TeamProjects, e => e.MapFrom(mfg => mfg.TeamProjects))
                 .ForMember(a => a.TaskLists, e => e.MapFrom(mfg => mfg.TaskLists))
                 .ForMember(a => a.ProjectStatus, e => e.MapFrom(mfg => mfg.ProjectStatus.ToString()))
@@ -92,10 +95,12 @@ namespace IntegratedImplementation.Datas
             CreateMap<NoticeList, NoticeGetDto>();
 
             CreateMap<TaskList, TaskStatusDto>()
-                ; 
-                            
+                ;
+            CreateMap<ClientList, ClientGetDto>();
 
-            
+            CreateMap<ClientFile, ClientFileGetDto>();
+
+
         }
     }
 }
