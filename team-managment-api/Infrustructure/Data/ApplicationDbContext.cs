@@ -16,6 +16,7 @@ using IntegratedInfrustructure.Model.Task;
 using IntegratedInfrustructure.Model.Chat;
 using IntegratedInfrustructure.Model.Notice;
 using IntegratedInfrustructure.Model.Client;
+using IntegratedInfrustructure.Model.Complaint;
 
 namespace IntegratedInfrustructure.Data
 {
@@ -78,6 +79,12 @@ namespace IntegratedInfrustructure.Data
         public DbSet<ClientList> Clients { get; set; }
         public DbSet<ClientFile> ClientFiles { get; set; }
 
+
+        #endregion
+
+        #region Complaint
+        public DbSet<ComplaintList> Complaints { get; set; }
+        public DbSet<ComplaintFile> ComplaintFiles { get; set; }
 
         #endregion
 

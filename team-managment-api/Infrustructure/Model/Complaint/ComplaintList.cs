@@ -1,5 +1,6 @@
 ﻿using IntegratedInfrustructure.Model.Authentication;
 using IntegratedInfrustructure.Model.Client;
+using IntegratedInfrustructure.Model.Project;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,6 +20,10 @@ namespace IntegratedInfrustructure.Model.Complaint
 
         [InverseProperty(nameof(ComplaintFile.Complaint))]
         public ICollection<ComplaintFile> ComplaintFiles { get; set; }
+        public virtual ClientList Client { get; set; }
+        public Guid ClientId { get; set; }
+        public virtual ProjectList Project { get; set; }
+        public Guid ProjectId { get; set; }
         public string ComplaintCode { get; set; }
         public string Description { get; set; }
         public string Subject { get; set; }

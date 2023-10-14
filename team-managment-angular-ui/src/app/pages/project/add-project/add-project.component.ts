@@ -70,7 +70,6 @@ export class AddProjectComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.ProjectForm.value)
     
     if (this.ProjectForm.valid) {
       
@@ -103,7 +102,6 @@ export class AddProjectComponent implements OnInit {
         }
       }
 
-      console.log(projectAdd)
 
       this.projectService.addProject(projectAdd).subscribe({
         next: (res) => {
@@ -150,7 +148,6 @@ export class AddProjectComponent implements OnInit {
   SelectItems(event: any)
   {
     
-    console.log(event.value.map(item => (item.value)))
     this.employeesSelectedList = event.value.map(item => (item.value))
   
   }

@@ -114,7 +114,6 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
     getProject(projectId){
       this.projectService.getProject(projectId).subscribe(res => {    
         this.project = res;
-        console.log("jhsdjkhsdkjhd",this.project)
         this.projectemp = this.project.projectEmployees.map(u => {
           return {
             name: u.name,
@@ -229,7 +228,6 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
     getMessages(projectId){
       this.chatService.getProjectChat(projectId).subscribe({
         next: (res)=> {
-          console.log("chat",res)
           this.messages = res
         }
       })

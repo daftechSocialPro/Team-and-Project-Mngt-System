@@ -78,7 +78,6 @@ export class AppTopBarComponent implements OnInit {
             detail: result.content,
             sticky: true
           });
-          console.log("result",result)
         });
         this.connection.on('getUserTaskNotice', (result,res) => {
           
@@ -88,15 +87,12 @@ export class AppTopBarComponent implements OnInit {
             detail: result.taskName,
             sticky: true
           });
-          console.log("result",result)
         });
 
         if(this.allowedRoles(['Admin'])){
           this.connection.on('getTaskNotice', (result,res) => {
-            console.log(res)
             this.tasks.push(result) 
             
-            console.log(this.tasks)
           })
         }
       }
@@ -139,7 +135,6 @@ export class AppTopBarComponent implements OnInit {
         next: (res) => {
           this.notices = res       
         }, error: (err) => {
-          console.log(err)
         }
   
       })

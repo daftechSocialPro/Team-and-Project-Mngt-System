@@ -47,7 +47,6 @@ export class EditEmployeeComponent implements OnInit {
 
     this.user = this.userService.getCurrentUser()
 
-    console.log(this.user)
     this.EmployeeForm = this.formBuilder.group({
       FirstName: [null, Validators.required],
       LastName: [null, Validators.required],
@@ -61,10 +60,8 @@ export class EditEmployeeComponent implements OnInit {
     })
     this.employeeService.getEmployee(this.employeeId).subscribe({next:(res) => {
       
-      console.log(res)
       
       this.employee = res
-      console.log(this.employee)
       this.EmployeeForm.controls['FirstName'].setValue(this.employee.firstName )
       this.EmployeeForm.controls['LastName'].setValue(this.employee.lastName)
       this.EmployeeForm.controls['Gender'].setValue(this.genderDropdownItems.find(u => u.name === this.employee.gender))
@@ -81,8 +78,6 @@ export class EditEmployeeComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.EmployeeForm.value)
-    console.log(this.uploadedFiles)
     if (this.EmployeeForm.valid) {
       debugger
       const formData = new FormData();
@@ -130,7 +125,6 @@ export class EditEmployeeComponent implements OnInit {
 
   }
   onUpload(event: any) {
-    console.log(event)
     for (const file of event.files) {
       this.uploadedFiles.push(file);
     }

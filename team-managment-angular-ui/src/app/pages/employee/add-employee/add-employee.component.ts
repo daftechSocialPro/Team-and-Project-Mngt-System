@@ -41,7 +41,6 @@ export class AddEmployeeComponent implements OnInit {
 
     this.user = this.userService.getCurrentUser()
 
-    console.log(this.user)
     this.EmployeeForm = this.formBuilder.group({
       FirstName: [null, Validators.required],
       LastName: [null, Validators.required],
@@ -56,8 +55,6 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.EmployeeForm.value)
-    console.log(this.uploadedFiles)
     if (this.EmployeeForm.valid) {
 
       const formData = new FormData();
@@ -104,7 +101,6 @@ export class AddEmployeeComponent implements OnInit {
 
   }
   onUpload(event: any) {
-    console.log(event)
     for (const file of event.files) {
       this.uploadedFiles.push(file);
     }

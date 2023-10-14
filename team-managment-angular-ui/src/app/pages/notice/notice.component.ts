@@ -37,9 +37,7 @@ export class NoticeComponent implements OnInit {
       next: (res) => {
         this.notices = res
         this.loading = false
-        console.log("noticeeee", res)
       }, error: (err) => {
-        console.log(err)
       }
 
     })

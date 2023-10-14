@@ -36,7 +36,6 @@ export class EmployeeComponent implements OnInit {
         this.employees = res
         this.loading = false
       }, error: (err) => {
-        console.log(err)
       }
 
     })

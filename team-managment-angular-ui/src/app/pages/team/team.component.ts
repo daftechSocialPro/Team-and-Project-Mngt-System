@@ -40,7 +40,6 @@ export class TeamComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.log(err);
       }
     });
   }
@@ -66,11 +65,9 @@ export class TeamComponent implements OnInit {
     modalRef.result.then(()=>{this.getTeams()})
    }
   onTeamAdded(team: any) {
-    console.log('Team added:', team);
     this.getTeams();
   }
   onTeamUpdate(team: any) {
-    console.log('Team updated:', team);
     this.getTeams();
   }
 }
