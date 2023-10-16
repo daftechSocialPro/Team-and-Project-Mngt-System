@@ -66,6 +66,9 @@ import { ViewTaskComponent } from './components/view-task/view-task.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
 import { ChangePasswordComponent } from './pages/profile/change-password/change-password.component';
+import { ClientComponent } from './pages/client/client.component';
+import { EditclientComponent } from './pages/client/editclient/editclient.component';
+import { AddClientComponent } from './pages/client/add-client/add-client.component';
 
 
 
@@ -75,7 +78,7 @@ import { ChangePasswordComponent } from './pages/profile/change-password/change-
 @NgModule({
     declarations: [
 
-        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent,ProjectDetailComponent,ManageMembersComponent, EditEmployeeComponent, ManageRolesComponent, TaskComponent, AddTaskComponent, EditTaskComponent, DashboardComponent, NoticeComponent, AddNoticeComponent, ViewPdfComponent, ViewTaskComponent, ProfileComponent, ChangePasswordComponent
+        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent,ProjectDetailComponent,ManageMembersComponent, EditEmployeeComponent, ManageRolesComponent, TaskComponent, AddTaskComponent, EditTaskComponent, DashboardComponent, NoticeComponent, AddNoticeComponent, ViewPdfComponent, ViewTaskComponent, ProfileComponent, ChangePasswordComponent, ClientComponent, EditclientComponent, AddClientComponent
 
 
     ],
