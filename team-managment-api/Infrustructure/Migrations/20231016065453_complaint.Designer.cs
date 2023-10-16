@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231016065453_complaint")]
+    partial class complaint
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,50 +120,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("Chats");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.Client.ClientContact", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Position")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.ToTable("ClientContacts");
-                });
-
             modelBuilder.Entity("IntegratedInfrustructure.Model.Client.ClientFile", b =>
                 {
                     b.Property<Guid>("Id")
@@ -226,10 +185,6 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -991,25 +946,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.Client.ClientContact", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.Client.ClientList", "Client")
-                        .WithMany("ClientContacts")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Client");
-
-                    b.Navigation("CreatedBy");
-                });
-
             modelBuilder.Entity("IntegratedInfrustructure.Model.Client.ClientFile", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Client.ClientList", "Client")
@@ -1164,7 +1100,7 @@ namespace IntegratedInfrustructure.Migrations
             modelBuilder.Entity("IntegratedInfrustructure.Model.Project.ProjectClient", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Client.ClientList", "Client")
-                        .WithMany("ProjectClients")
+                        .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1316,11 +1252,7 @@ namespace IntegratedInfrustructure.Migrations
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Client.ClientList", b =>
                 {
-                    b.Navigation("ClientContacts");
-
                     b.Navigation("ClientFiles");
-
-                    b.Navigation("ProjectClients");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Complaint.ComplaintList", b =>

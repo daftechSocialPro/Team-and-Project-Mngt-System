@@ -78,6 +78,7 @@ namespace IntegratedInfrustructure.Data
         #region Client
         public DbSet<ClientList> Clients { get; set; }
         public DbSet<ClientFile> ClientFiles { get; set; }
+        public DbSet<ClientContact> ClientContacts { get; set; }    
 
 
         #endregion

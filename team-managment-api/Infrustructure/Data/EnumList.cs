@@ -62,7 +62,6 @@ namespace IntegratedInfrustructure.Data
         public enum GeneralCodeType
         {
             EMPLOYEEPREFIX,
-            TASKPREFIX,
             COMPLAINTPREFIX
         }
 
@@ -147,6 +146,7 @@ namespace IntegratedInfrustructure.Data
         }
         public enum ComplaintType
         {
+            NEW
 
         }
         public enum ComplaintStatus

@@ -22,6 +22,8 @@ using IntegratedInfrustructure.Model.Notice;
 using IntegratedImplementation.DTOS.Notice;
 using IntegratedInfrustructure.Model.Client;
 using IntegratedImplementation.DTOS.Client;
+using IntegratedInfrustructure.Model.Complaint;
+using IntegratedImplementation.DTOS.Complaint;
 
 namespace IntegratedImplementation.Datas
 {
@@ -100,6 +102,12 @@ namespace IntegratedImplementation.Datas
 
             CreateMap<ClientFile, ClientFileGetDto>();
             CreateMap<ProjectClient, ClientGetDto>();
+
+            CreateMap<ComplaintList, ComplaintGetDto>();
+
+            CreateMap<ComplaintFile, ComplaintFileGetDto>();
+
+            CreateMap<ClientContact, AddToClientDto>();
 
 
         }

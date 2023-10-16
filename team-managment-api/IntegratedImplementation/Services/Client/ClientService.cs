@@ -2,11 +2,13 @@
 using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Client;
+using IntegratedImplementation.DTOS.Project;
 using IntegratedImplementation.DTOS.Team;
 using IntegratedImplementation.Interfaces.Client;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.Client;
+using IntegratedInfrustructure.Model.Project;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -56,12 +58,18 @@ namespace IntegratedImplementation.Services.Client
                 CreatedById = addClient.CreatedById,
                 CreatedDate = DateTime.Now,
                 Email = addClient.Email,
+                PhoneNo= addClient.PhoneNo,
                 ImagePath = path
 
              };
             await _dbContext.Clients.AddAsync(client);
             await _dbContext.SaveChangesAsync();
-            if (addClient.ClientFiles.Count > 0)
+            foreach (var contact in addClient.ClientContacts)
+            {
+                AddContactToClient(contact, id);
+
+            }
+            if (addClient.ClientFiles != null && addClient.ClientFiles.Count > 0)
             {
                 foreach (var file in addClient.ClientFiles.Distinct())
                 {
@@ -107,6 +115,7 @@ namespace IntegratedImplementation.Services.Client
                 client.Name = editClient.Name;
                 client.Address = editClient.Address;
                 client.Email = editClient.Email;
+                client.PhoneNo = editClient.PhoneNo;
                 client.Description = editClient.Description;
                 
                 if (editClient.Image != null)
@@ -116,7 +125,7 @@ namespace IntegratedImplementation.Services.Client
                               
                 await _dbContext.SaveChangesAsync();
 
-                if (editClient.ClientFiles.Count > 0)
+                if (editClient.ClientFiles != null && editClient.ClientFiles.Count > 0)
                 {
                     foreach (var file in editClient.ClientFiles.Distinct())
                     {
@@ -152,11 +161,35 @@ namespace IntegratedImplementation.Services.Client
                 return new ResponseMessage
                 {
 
-                    Message = "No Client Found",
+                    Message = "Client No Found",
                     Success = false
                 };
             }
 
+        }
+
+        public async Task<ResponseMessage> AddContactToClient(AddToClientDto addToClient,Guid id)
+        {
+            
+            ClientContact contact = new ClientContact
+            {
+                ClientId = id,
+                Name = addToClient.Name,
+                Position = addToClient.Position,
+                PhoneNo = addToClient.PhoneNo,
+                Email = addToClient.Email,
+                CreatedById = addToClient.CreatedById
+            };
+            await _dbContext.ClientContacts.AddAsync(contact);
+            await _dbContext.SaveChangesAsync();
+            
+
+            return new ResponseMessage
+            {
+
+                Message = "Clients Contacts Added Successfully",
+                Success = true
+            };
         }
 
 

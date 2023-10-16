@@ -1,40 +1,39 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Client;
-using IntegratedImplementation.DTOS.HRM;
-using IntegratedImplementation.DTOS.Project;
+using IntegratedImplementation.DTOS.Complaint;
 using IntegratedImplementation.DTOS.Team;
 using IntegratedImplementation.Interfaces.Client;
-using IntegratedImplementation.Interfaces.Project;
-using IntegratedImplementation.Services.Project;
+using IntegratedImplementation.Interfaces.Complaint;
+using IntegratedImplementation.Services.Client;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace IntegratedDigitalAPI.Controllers.Client
+namespace IntegratedDigitalAPI.Controllers.Complaint
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientController : ControllerBase
+    public class ComplaintController : ControllerBase
     {
-        IClientService _clientService;
-        public ClientController(IClientService clientService)
+        IComplaintService _complaintService;
+        public ComplaintController(IComplaintService complaintService)
         {
 
-            _clientService = clientService;
+            _complaintService = complaintService;
         }
         [HttpGet]
         [ProducesResponseType(typeof(TeamGetDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetClients()
+        public async Task<IActionResult> GetComplaints()
         {
-            return Ok(await _clientService.GetClients());
+            return Ok(await _complaintService.GetComplaints());
         }
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddClient([FromForm] ClientPostDto client)
+        public async Task<IActionResult> AddComplaint([FromForm]ComplaintPostDto addComplaint)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _clientService.AddClient(client));
+                return Ok(await _complaintService.AddComplaint(addComplaint));
             }
             else
             {
@@ -43,11 +42,11 @@ namespace IntegratedDigitalAPI.Controllers.Client
         }
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateClient([FromForm] ClientPostDto client)
+        public async Task<IActionResult> UpdateComplaint([FromForm] ComplaintPostDto complaint)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _clientService.EditClient(client));
+                return Ok(await _complaintService.EditComplaint(complaint));
             }
             else
             {

@@ -46,6 +46,7 @@ namespace IntegratedImplementation.DTOS.Project
 
         public string CreatedById { get; set; } = null!;
         public List<Guid>? ProjectEmployees { get; set; }
+        public List<Guid>? ProjectClients { get; set; }
         public List<Guid>? TaskLists { get; set; }
     }
 

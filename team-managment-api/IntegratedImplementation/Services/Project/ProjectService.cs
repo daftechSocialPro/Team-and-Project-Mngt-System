@@ -69,6 +69,7 @@ namespace IntegratedImplementation.Services.Project
             }
             else
             {
+                var id = Guid.NewGuid();
 
                 if (addProject.TeamId != null)
                 {
@@ -80,7 +81,7 @@ namespace IntegratedImplementation.Services.Project
                         ProjectStatus = Enum.Parse<ProjectStatus>(addProject.ProjectStatus),
                         AssignedTo = Enum.Parse<AssignedTo>(addProject.AssignedTo),
                         GitHubLink = addProject.GitHubLink,
-                        Id = Guid.NewGuid(),
+                        Id = id,
                         AssignedDate = addProject.AssignedDate,
                         CreatedById = addProject.CreatedById,
                     };
@@ -105,7 +106,7 @@ namespace IntegratedImplementation.Services.Project
                         DueDate = addProject.DueDate,
                         ProjectStatus = Enum.Parse<ProjectStatus>(addProject.ProjectStatus),
                         AssignedTo = Enum.Parse<AssignedTo>(addProject.AssignedTo),
-                        Id = Guid.NewGuid(),
+                        Id = id,
                         AssignedDate = DateTime.Now,
                         GitHubLink = addProject.GitHubLink,
                         CreatedById = addProject.CreatedById,
@@ -120,6 +121,17 @@ namespace IntegratedImplementation.Services.Project
                         createdBy = addProject.CreatedById
                     };
                     await AddEmployeeToProject(addToProject);
+                }
+                if (addProject.ProjectClients != null)
+                {
+                    var addToProject = new AddToProjectDto()
+                    {
+                        employeeList = addProject.ProjectClients,
+                        projectId = id,
+                        createdBy = addProject.CreatedById
+                    };
+                    await AddClientToProject(addToProject);
+                    await _dbContext.SaveChangesAsync();
                 }
 
 
@@ -156,7 +168,27 @@ namespace IntegratedImplementation.Services.Project
                 Success = true
             };
         }
+        public async Task<ResponseMessage> AddClientToProject(AddToProjectDto addToProject)
+        {
+            foreach (var emp in addToProject.employeeList.Distinct())
+            {
+                ProjectClient clients = new ProjectClient
+                {
+                    ClientId = emp,
+                    ProjectId = addToProject.projectId,
+                    CreatedById = addToProject.createdBy
+                };
+                await _dbContext.ProjectClients.AddAsync(clients);
+                await _dbContext.SaveChangesAsync();
+            }
 
+            return new ResponseMessage
+            {
+
+                Message = "Clients Added Successfully",
+                Success = true
+            };
+        }
         public async Task<ResponseMessage> EditProject(ProjectPostDto editProject)
         {
             var project = _dbContext.Projects.Find(editProject.Id);
@@ -200,11 +232,23 @@ namespace IntegratedImplementation.Services.Project
                         CreatedById = editProject.CreatedById
 
                     };
-                    await _dbContext.TeamProjects.AddAsync(teamProject);
+                    
                     _dbContext.TeamProjects.RemoveRange(_dbContext.TeamProjects.Where(a => a.ProjectId.Equals(project.Id)));
                     _dbContext.ProjectEmployees.RemoveRange(_dbContext.ProjectEmployees.Where(a => a.ProjectId.Equals(project.Id)));
+                    await _dbContext.TeamProjects.AddAsync(teamProject);
                     await _dbContext.SaveChangesAsync();
 
+                }
+                if (editProject.ProjectClients != null)
+                {
+                    var addToProject = new AddToProjectDto()
+                    {
+                        employeeList = editProject.ProjectClients,
+                        projectId = project.Id,
+                        createdBy = editProject.CreatedById
+                    };
+                    await AddClientToProject(addToProject);
+                    await _dbContext.SaveChangesAsync();
                 }
 
 
