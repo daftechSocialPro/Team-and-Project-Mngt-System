@@ -6,7 +6,7 @@ export const environment = {
   production: false,
  baseUrl:'http://192.168.0.15:6363'
  //baseUrl:'http://192.168.1.10:8085'//daftech social
-//  baseUrl:'http://192.168.1.10:8086'//daftech engineering
+ //baseUrl:'http://192.168.1.10:8086'//daftech engineering
   //baseUrl:'http://localhost:5267'
 };
 

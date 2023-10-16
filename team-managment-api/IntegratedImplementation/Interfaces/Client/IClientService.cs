@@ -12,6 +12,7 @@ namespace IntegratedImplementation.Interfaces.Client
     {
         Task<List<ClientGetDto>> GetClients();
         Task<ResponseMessage> AddClient(ClientPostDto addClient);
+        Task<ResponseMessage> EditClient(ClientPostDto editClient);
 
     }
 }
