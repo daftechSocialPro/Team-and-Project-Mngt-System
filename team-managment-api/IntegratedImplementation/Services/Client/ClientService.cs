@@ -2,13 +2,16 @@
 using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Client;
+using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.Project;
 using IntegratedImplementation.DTOS.Team;
 using IntegratedImplementation.Interfaces.Client;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedInfrustructure.Data;
+using IntegratedInfrustructure.Model.Authentication;
 using IntegratedInfrustructure.Model.Client;
 using IntegratedInfrustructure.Model.Project;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,11 +28,13 @@ namespace IntegratedImplementation.Services.Client
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly IGeneralConfigService _generalConfig;
-        public ClientService(ApplicationDbContext dbContext, IMapper mapper, IGeneralConfigService generalConfig)
+        private UserManager<ApplicationUser> _userManager;
+        public ClientService(ApplicationDbContext dbContext, IMapper mapper, IGeneralConfigService generalConfig, UserManager<ApplicationUser> userManager)
         {
             _dbContext = dbContext;
             _generalConfig= generalConfig;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public async Task<List<ClientGetDto>> GetClients()
@@ -64,11 +69,16 @@ namespace IntegratedImplementation.Services.Client
              };
             await _dbContext.Clients.AddAsync(client);
             await _dbContext.SaveChangesAsync();
-            foreach (var contact in addClient.ClientContacts)
-            {
-                AddContactToClient(contact, id);
+            //if (addClient.ClientContacts != null) 
+            //{
 
-            }
+            //    foreach (var contact in addClient.ClientContacts)
+            //    {
+            //        AddContactToClient(contact, id);
+
+            //    }
+            //}
+
             if (addClient.ClientFiles != null && addClient.ClientFiles.Count > 0)
             {
                 foreach (var file in addClient.ClientFiles.Distinct())
@@ -161,35 +171,62 @@ namespace IntegratedImplementation.Services.Client
                 return new ResponseMessage
                 {
 
-                    Message = "Client No Found",
+                    Message = "Client Not Found",
                     Success = false
                 };
             }
 
         }
 
-        public async Task<ResponseMessage> AddContactToClient(AddToClientDto addToClient,Guid id)
+        public async Task<ResponseMessage> AddContactToClient(List<AddToClientDto> addToClient)
         {
-            
-            ClientContact contact = new ClientContact
+            var client = _dbContext.Clients.Find(addToClient[0].ClientId);
+            if (client != null)
             {
-                ClientId = id,
-                Name = addToClient.Name,
-                Position = addToClient.Position,
-                PhoneNo = addToClient.PhoneNo,
-                Email = addToClient.Email,
-                CreatedById = addToClient.CreatedById
-            };
-            await _dbContext.ClientContacts.AddAsync(contact);
-            await _dbContext.SaveChangesAsync();
-            
+                foreach (var addToClien in addToClient)
+                {
+                    ClientContact contact = new ClientContact
+                    {
+                        ClientId = client.Id,
+                        Name = addToClien.name,
+                        Position = addToClien.position,
+                        PhoneNo = addToClien.phoneNo,
+                        Email = addToClien.email,
+                        CreatedById = client.CreatedById
+                    };
+                    await _dbContext.ClientContacts.AddAsync(contact);
+                }
+                await _dbContext.SaveChangesAsync();
 
-            return new ResponseMessage
+
+                return new ResponseMessage
+                {
+
+                    Message = "Clients Contacts Added Successfully",
+                    Success = true
+                };
+            }
+            else
             {
+                return new ResponseMessage
+                {
 
-                Message = "Clients Contacts Added Successfully",
-                Success = true
-            };
+                    Message = "Client Not Found",
+                    Success = false
+                };
+
+            }
+        }
+        public async Task<List<SelectListDto>> GetClientNoUser()
+        {
+            var users = _userManager.Users.Select(x => x.ClientId).ToList();
+
+            var clients = await _dbContext.Clients
+                .Where(e => !users.Contains(e.Id))
+                .ProjectTo<SelectListDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return clients;
         }
 
 

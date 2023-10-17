@@ -128,14 +128,10 @@ namespace IntegratedImplementation.Services.Complaint
                     }
                     await _dbContext.SaveChangesAsync();
 
-
                 }
-
-
 
                 return new ResponseMessage
                 {
-
                     Message = "Complaints Updated Successfully",
                     Success = true
                 };
@@ -145,11 +141,26 @@ namespace IntegratedImplementation.Services.Complaint
             {
                 return new ResponseMessage
                 {
-
                     Message = "Complaint Not Found",
                     Success = false
                 };
             }
+        }
+
+        public async Task<ResponseMessage> AssignTask(ComplaintGetDto complain, Guid id )
+        {
+
+
+
+
+
+
+
+            return new ResponseMessage
+            {
+                Message = "Complaint Assigned Successfully",
+                Success = true
+            };
         }
 
     }

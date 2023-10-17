@@ -1,5 +1,6 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Client;
+using IntegratedImplementation.DTOS.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace IntegratedImplementation.Interfaces.Client
         Task<List<ClientGetDto>> GetClients();
         Task<ResponseMessage> AddClient(ClientPostDto addClient);
         Task<ResponseMessage> EditClient(ClientPostDto editClient);
+        Task<ResponseMessage> AddContactToClient(List<AddToClientDto> addToClient);
+        Task<List<SelectListDto>> GetClientNoUser();
 
     }
 }

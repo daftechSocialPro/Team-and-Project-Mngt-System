@@ -10,7 +10,8 @@ namespace IntegratedInfrustructure.Model.Authentication
 {
     public class ApplicationUser : IdentityUser
     {
-        public Guid EmployeeId { get; set; }
+        public Guid? EmployeeId { get; set; }
+        public Guid? ClientId { get; set; }
         public RowStatus RowStatus { get; set; }
      
     }

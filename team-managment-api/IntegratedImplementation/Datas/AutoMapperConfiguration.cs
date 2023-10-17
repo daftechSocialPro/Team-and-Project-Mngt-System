@@ -98,7 +98,8 @@ namespace IntegratedImplementation.Datas
 
             CreateMap<TaskList, TaskStatusDto>()
                 ;
-            CreateMap<ClientList, ClientGetDto>();
+            CreateMap<ClientList, ClientGetDto>()
+                .ForMember(a => a.ClientContacts, e => e.MapFrom(b => b.ClientContacts));
 
             CreateMap<ClientFile, ClientFileGetDto>();
             CreateMap<ProjectClient, ClientGetDto>();
@@ -108,6 +109,7 @@ namespace IntegratedImplementation.Datas
             CreateMap<ComplaintFile, ComplaintFileGetDto>();
 
             CreateMap<ClientContact, AddToClientDto>();
+            CreateMap<ClientList, SelectListDto>();
 
 
         }

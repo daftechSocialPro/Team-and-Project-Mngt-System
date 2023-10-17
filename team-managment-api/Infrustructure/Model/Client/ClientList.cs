@@ -15,7 +15,7 @@ namespace IntegratedInfrustructure.Model.Client
         public ClientList()
         {
             ClientFiles = new HashSet<ClientFile>();
-            ClientContacts = new HashSet<ClientContact>();
+            //ClientContacts = new HashSet<ClientContact>();
             ProjectClients = new HashSet<ProjectClient>();
         }
 
@@ -25,9 +25,9 @@ namespace IntegratedInfrustructure.Model.Client
         [InverseProperty(nameof(ProjectClient.Client))]
         public ICollection<ProjectClient> ProjectClients { get; set; }
 
-        [InverseProperty(nameof(ClientContact.Client))]
-        public ICollection<ClientContact> ClientContacts { get; set; }
-
+        //[InverseProperty(nameof(ClientContact.Client))]
+        //public ICollection<ClientContact> ClientContacts { get; set; }
+        public List<ClientContact> ClientContacts { get; set; }
         public string Name { get; set; }
         public string PhoneNo { get; set; }
         public string Address { get; set; }
