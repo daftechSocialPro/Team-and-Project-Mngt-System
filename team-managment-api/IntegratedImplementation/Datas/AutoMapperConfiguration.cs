@@ -110,6 +110,8 @@ namespace IntegratedImplementation.Datas
 
             CreateMap<ClientContact, AddToClientDto>();
             CreateMap<ClientList, SelectListDto>();
+            CreateMap<TaskFile, TaskFileGetDto>();
+            CreateMap<ProjectFile, ProjectFileGetDto>();
 
 
         }

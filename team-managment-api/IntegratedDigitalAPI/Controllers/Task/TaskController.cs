@@ -57,7 +57,7 @@ namespace IntegratedDigitalAPI.Controllers.Task
         }
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> EditTask([FromForm] TaskGetDto editTask)
+        public async Task<IActionResult> EditTask([FromForm] TaskPostDto editTask)
         {
             if (ModelState.IsValid)
             {

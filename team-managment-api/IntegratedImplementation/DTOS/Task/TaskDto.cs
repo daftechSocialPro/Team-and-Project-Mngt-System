@@ -1,4 +1,5 @@
-﻿using IntegratedImplementation.DTOS.Configuration;
+﻿using IntegratedImplementation.DTOS.Client;
+using IntegratedImplementation.DTOS.Configuration;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -22,13 +23,12 @@ namespace IntegratedImplementation.DTOS.Task
         public string? EmployeeImagePath { get; set; }
         public string? EmployeeName { get; set; }
         public bool? IsOnHold { get; set; }
-        public IFormFile? File { get; set; } = null!;
-        public string? FilePath { get; set; } = null!;
         public string? ProjectName { get; set; }
         public string CreatedById { get; set; } = null!;
         public string? TaskApproval { get; set; } = null!;
         public DateTime CreatedDate { get; set; }
         public string? RejectionRemark { get; set; }
+        public List<TaskFileGetDto>? TaskFiles { get; set; }
 
 
     }
@@ -43,10 +43,10 @@ namespace IntegratedImplementation.DTOS.Task
         public Guid EmployeeId { get; set; }
         public Guid? ProjectId { get; set; }
         public string TaskDescription { get; set; }
-        public string CreatedById { get; set; } = null!;
-        public IFormFile? FilePath { get; set; } = null!;
+        public string CreatedById { get; set; } = null!;        
         public string? ProjectName { get; set; }
         public string? EmployeeName { get; set; }
+        public List<IFormFile>? TaskFiles { get; set; }
 
     }
 

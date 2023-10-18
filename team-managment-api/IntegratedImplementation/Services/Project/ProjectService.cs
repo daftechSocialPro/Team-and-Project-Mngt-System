@@ -3,9 +3,12 @@ using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.Project;
+using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Project;
 using IntegratedImplementation.Interfaces.Team;
 using IntegratedInfrustructure.Data;
+using IntegratedInfrustructure.Migrations;
+using IntegratedInfrustructure.Model.Complaint;
 using IntegratedInfrustructure.Model.Project;
 using IntegratedInfrustructure.Model.Team;
 using Microsoft.EntityFrameworkCore;
@@ -20,11 +23,13 @@ namespace IntegratedImplementation.Services.Project
         private readonly ApplicationDbContext _dbContext;
         private readonly ITeamService _teamService;
         private readonly IMapper _mapper;
-        public ProjectService(ApplicationDbContext dbContext, IMapper mapper, ITeamService teamService)
+        private readonly IGeneralConfigService _generalConfig;
+        public ProjectService(ApplicationDbContext dbContext, IMapper mapper, ITeamService teamService, IGeneralConfigService generalConfig)
         {
             _dbContext = dbContext;
             _teamService= teamService;
             _mapper = mapper;
+            _generalConfig = generalConfig;
         }
 
         public async Task<List<ProjectGetDto>> GetProjects()
@@ -132,6 +137,26 @@ namespace IntegratedImplementation.Services.Project
                     };
                     await AddClientToProject(addToProject);
                     await _dbContext.SaveChangesAsync();
+                }
+                if (addProject.ProjectFiles != null && addProject.ProjectFiles.Count > 0)
+                {
+                    var path = "";
+                    foreach (var file in addProject.ProjectFiles.Distinct())
+                    {
+                        var fileName = file.FileName;
+                        var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addProject.ProjectName}";
+                        path = _generalConfig.UploadFiles(file, name, $"Files/ProjectFiles/{addProject.ProjectName}").Result.ToString();
+                        ProjectFile projectFile = new ProjectFile
+                        {
+                            ProjectId = id,
+                            FileName = fileName,
+                            FilePath = path,
+                            CreatedById = addProject.CreatedById
+                        };
+                        await _dbContext.ProjectFiles.AddAsync(projectFile);
+                    }
+                    await _dbContext.SaveChangesAsync();
+
                 }
 
 
@@ -250,6 +275,26 @@ namespace IntegratedImplementation.Services.Project
                     await AddClientToProject(addToProject);
                     await _dbContext.SaveChangesAsync();
                 }
+                if (editProject.ProjectFiles != null && editProject.ProjectFiles.Count > 0)
+                {
+                    var path = "";
+                    foreach (var file in editProject.ProjectFiles.Distinct())
+                    {
+                        var fileName = file.FileName;
+                        var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editProject.ProjectName}";
+                        path = _generalConfig.UploadFiles(file, name, $"Files/ProjectFiles/{editProject.ProjectName}").Result.ToString();
+                        ProjectFile projectFile = new ProjectFile
+                        {
+                            ProjectId = project.Id,
+                            FileName = fileName,
+                            FilePath = path,
+                            CreatedById = editProject.CreatedById
+                        };
+                        await _dbContext.ProjectFiles.AddAsync(projectFile);
+                    }
+                    await _dbContext.SaveChangesAsync();
+
+                }
 
 
                 return new ResponseMessage
@@ -354,6 +399,7 @@ namespace IntegratedImplementation.Services.Project
 
          
         }
+
 
 
     }

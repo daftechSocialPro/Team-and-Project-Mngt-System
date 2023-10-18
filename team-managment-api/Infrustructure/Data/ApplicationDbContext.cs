@@ -54,6 +54,7 @@ namespace IntegratedInfrustructure.Data
         #region Task
 
         public DbSet<TaskList> Tasks { get; set; }
+        public DbSet<TaskFile> TaskFiles { get; set; }
 
         #endregion
 
@@ -62,6 +63,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<ProjectList> Projects { get; set; }
         public DbSet<ProjectEmployee> ProjectEmployees { get; set; }
         public DbSet<ProjectClient> ProjectClients { get; set; }
+        public DbSet<ProjectFile> ProjectFiles { get; set; }
 
         #endregion
 

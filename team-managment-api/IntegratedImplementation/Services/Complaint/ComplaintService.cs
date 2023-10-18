@@ -2,19 +2,24 @@
 using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Complaint;
+using IntegratedImplementation.DTOS.Task;
 using IntegratedImplementation.Interfaces.Complaint;
 using IntegratedImplementation.Interfaces.Configuration;
+using IntegratedImplementation.Interfaces.Task;
+using IntegratedImplementation.Interfaces.Team;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Migrations;
 using IntegratedInfrustructure.Model.Authentication;
 using IntegratedInfrustructure.Model.Client;
 using IntegratedInfrustructure.Model.Complaint;
+using IntegratedInfrustructure.Model.Task;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
@@ -27,14 +32,18 @@ namespace IntegratedImplementation.Services.Complaint
         private readonly IGeneralConfigService _generalConfig;
         private UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly ITaskService _taskService;
+        private readonly ITeamService _teamService;
         public ComplaintService(ApplicationDbContext dbContext,
             UserManager<ApplicationUser> userManager,
-            IGeneralConfigService generalConfig, IMapper mapper)
+            IGeneralConfigService generalConfig, IMapper mapper, ITaskService taskService, ITeamService teamService)
         {
             _dbContext = dbContext;
             _generalConfig = generalConfig;
             _userManager = userManager;
             _mapper = mapper;
+            _taskService = taskService; 
+            _teamService = teamService; 
         }
 
         public async Task<List<ComplaintGetDto>> GetComplaints()
@@ -44,6 +53,7 @@ namespace IntegratedImplementation.Services.Complaint
             
             return complaints;
         } 
+
 
         public async Task<ResponseMessage> AddComplaint(ComplaintPostDto addComplaint)
         {
@@ -147,8 +157,85 @@ namespace IntegratedImplementation.Services.Complaint
             }
         }
 
-        public async Task<ResponseMessage> AssignTask(ComplaintGetDto complain, Guid id )
+        public async Task<ResponseMessage> AssignAsTask(AssignComplaintDto complain)
         {
+            if (complain.EmployeeId != null && complain.EmployeeId.Count> 0)
+            {
+                foreach (var emp in complain.EmployeeId)
+                {
+                    TaskPostDto complainTask = new TaskPostDto
+                    {
+                        TaskName = complain.Complaint.Subject,
+                        EndDate = complain.EndDate,
+                        TaskStatuses = "NOTSTARTED",
+                        TaskPriority = complain.TaskPriority,
+                        EmployeeId = emp,
+                        ProjectId = complain.Complaint.ProjectId,
+                        TaskDescription = complain.Complaint.Description,
+                        CreatedById = complain.CreatedById,
+                        ProjectName = complain.Complaint.Project.ProjectName,
+                        //TaskFiles = complain.Complaint.ComplaintFiles
+
+                    };
+                    var result = await _taskService.AddTask(complainTask);
+                    if (result.Success)
+                    {
+                        foreach (var file in complain.Complaint.ComplaintFiles.Distinct())
+                        {
+                            
+                            TaskFile taskFile = new TaskFile
+                            {
+                                TaskId = (Guid)result.Data,
+                                FileName = file.FileName,
+                                FilePath = file.FilePath,
+                                CreatedById = complain.CreatedById
+                            };
+                            await _dbContext.TaskFiles.AddAsync(taskFile);
+                        }
+                        await _dbContext.SaveChangesAsync();
+
+                    }
+                }
+            }
+            else
+            {
+                var teamEmp = await _teamService.GetTeamMembersSelectList((Guid)complain.TeamId);
+                foreach (var emp in teamEmp)
+                {
+                    TaskPostDto complainTask = new TaskPostDto
+                    {
+                        TaskName = complain.Complaint.Subject,
+                        EndDate = complain.EndDate,
+                        TaskStatuses = "NOTSTARTED",
+                        TaskPriority = complain.TaskPriority,
+                        EmployeeId = emp.Id,
+                        ProjectId = complain.Complaint.ProjectId,
+                        TaskDescription = complain.Complaint.Description,
+                        CreatedById = complain.CreatedById,
+                        ProjectName = complain.Complaint.Project.ProjectName,
+                        //TaskFiles = complain.Complaint.ComplaintFiles
+
+                    };
+                    var result = await _taskService.AddTask(complainTask);
+                    if (result.Success)
+                    {
+                        foreach (var file in complain.Complaint.ComplaintFiles.Distinct())
+                        {
+
+                            TaskFile taskFile = new TaskFile
+                            {
+                                TaskId = (Guid)result.Data,
+                                FileName = file.FileName,
+                                FilePath = file.FilePath,
+                                CreatedById = complain.CreatedById
+                            };
+                            await _dbContext.TaskFiles.AddAsync(taskFile);
+                        }
+                        await _dbContext.SaveChangesAsync();
+
+                    }
+                } 
+            }
 
 
 

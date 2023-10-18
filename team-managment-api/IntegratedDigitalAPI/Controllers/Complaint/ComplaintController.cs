@@ -53,5 +53,18 @@ namespace IntegratedDigitalAPI.Controllers.Complaint
                 return BadRequest();
             }
         }
+        [HttpPost("AssignComplaint")]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AssignAsTask(AssignComplaintDto complain)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _complaintService.AssignAsTask(complain));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }
