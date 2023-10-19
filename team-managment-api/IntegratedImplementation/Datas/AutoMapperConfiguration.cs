@@ -99,10 +99,20 @@ namespace IntegratedImplementation.Datas
             CreateMap<TaskList, TaskStatusDto>()
                 ;
             CreateMap<ClientList, ClientGetDto>()
-                .ForMember(a => a.ClientContacts, e => e.MapFrom(b => b.ClientContacts));
+                ;
 
             CreateMap<ClientFile, ClientFileGetDto>();
-            CreateMap<ProjectClient, ClientGetDto>();
+            CreateMap<ProjectClient, ClientGetDto>()
+                .ForMember(a => a.Name, e => e.MapFrom(mfg => mfg.Client.Name))
+                .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Client.Id))
+                .ForMember(a => a.Email, e => e.MapFrom(mfg => mfg.Client.Email))
+                .ForMember(a => a.Address, e => e.MapFrom(mfg => mfg.Client.Address))
+                .ForMember(a => a.ClientContacts, e => e.MapFrom(mfg => mfg.Client.ClientContacts))
+                .ForMember(a => a.Description, e => e.MapFrom(mfg => mfg.Client.Description))
+                .ForMember(a => a.PhoneNo, e => e.MapFrom(mfg => mfg.Client.PhoneNo))
+                .ForMember(a => a.ImagePath, e => e.MapFrom(mfg => mfg.Client.ImagePath))
+                .ForMember(a => a.ClientFiles, e => e.MapFrom(mfg => mfg.Client.ClientFiles))
+                          ;
 
             CreateMap<ComplaintList, ComplaintGetDto>();
 

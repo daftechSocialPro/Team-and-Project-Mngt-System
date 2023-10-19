@@ -151,7 +151,9 @@ export class AddTaskComponent implements OnInit{
           formData.append(key, (taskAdd as any)[key]);
         }
       }
-      formData.append("FilePath", this.uploadedFiles[0]);
+      for (var i = 0; i < this.uploadedFiles.length; i++) {
+        formData.append("TaskFiles", this.uploadedFiles[i]);
+      }
       
 
       this.taskService.addTask(formData).subscribe({

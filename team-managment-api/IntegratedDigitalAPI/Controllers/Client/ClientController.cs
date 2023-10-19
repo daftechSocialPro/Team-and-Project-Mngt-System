@@ -29,6 +29,12 @@ namespace IntegratedDigitalAPI.Controllers.Client
         {
             return Ok(await _clientService.GetClients());
         }
+        [HttpGet("GetClient")]
+        [ProducesResponseType(typeof(TeamGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetClient(Guid id)
+        {
+            return Ok(await _clientService.GetClient(id));
+        }
         [HttpGet("getClientNoUser")]
         [ProducesResponseType(typeof(EmployeeGetDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetClientNoUser()

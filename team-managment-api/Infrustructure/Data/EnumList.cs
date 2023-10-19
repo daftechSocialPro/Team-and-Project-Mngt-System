@@ -157,5 +157,13 @@ namespace IntegratedInfrustructure.Data
             RESOLVED,
             REOPENED
         }
+        public enum ContractStatus
+        {
+            DRAFT,
+            ACTIVE,
+            EXPIRED,
+            TERMINATED,
+            RENEWED
+        }
     }
 }

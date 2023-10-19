@@ -63,6 +63,8 @@ export class EditTaskComponent implements OnInit {
       {
         
         this.task = res
+        console.log('task: ', this.task);
+        
         this.TaskForm.controls['TaskName'].setValue(this.task.taskName)
         this.TaskForm.controls['EndDate'].setValue(this.task.endDate.toString().split('T')[0])
         this.TaskForm.controls['TaskStatus'].setValue(this.taskStatusDropDown.find(u => u.name === this.task.taskStatuses))
@@ -118,7 +120,9 @@ export class EditTaskComponent implements OnInit {
           formData.append(key, (taskEdit as any)[key]);
         }
       }
-      formData.append("File", this.fileGH);
+      for (var i = 0; i < this.uploadedFiles.length; i++) {
+        formData.append("TaskFiles", this.uploadedFiles[i]);
+      }
 
       this.taskService.editTask(formData).subscribe({
         next: (res) => {
@@ -195,6 +199,7 @@ export class EditTaskComponent implements OnInit {
       modalRef = this.modalService.open(ViewPdfComponent, { size:'lg', backdrop: 'static' })
       this.pdflink = this.getPdfFile(link);
       this.type = "pdf";
+      
     }
 
     if (this.isImageFile(link)) {
@@ -202,6 +207,7 @@ export class EditTaskComponent implements OnInit {
       this.pdflink = this.getImage(link);
       this.type = "image";
     }
+    
     modalRef.componentInstance.type = this.type
     modalRef.componentInstance.pdflink = this.pdflink
   }

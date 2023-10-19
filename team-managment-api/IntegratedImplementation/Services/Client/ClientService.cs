@@ -44,7 +44,13 @@ namespace IntegratedImplementation.Services.Client
                                     .ToListAsync();
             return clientList;
         }
-
+        public async Task<ClientGetDto> GetClient(Guid id)
+        {
+            var client = await _dbContext.Clients.Where(x => x.Id == id).AsNoTracking()
+                                    .ProjectTo<ClientGetDto>(_mapper.ConfigurationProvider)
+                                    .FirstOrDefaultAsync();
+            return client;
+        }
         public async Task<ResponseMessage> AddClient(ClientPostDto addClient)
         {
 
@@ -64,7 +70,8 @@ namespace IntegratedImplementation.Services.Client
                 CreatedDate = DateTime.Now,
                 Email = addClient.Email,
                 PhoneNo= addClient.PhoneNo,
-                ImagePath = path
+                ImagePath = path,
+                ContractEndDate= addClient.ContractEndDate
 
              };
             await _dbContext.Clients.AddAsync(client);
@@ -127,6 +134,7 @@ namespace IntegratedImplementation.Services.Client
                 client.Email = editClient.Email;
                 client.PhoneNo = editClient.PhoneNo;
                 client.Description = editClient.Description;
+                client.ContractEndDate= editClient.ContractEndDate;
                 
                 if (editClient.Image != null)
                 {

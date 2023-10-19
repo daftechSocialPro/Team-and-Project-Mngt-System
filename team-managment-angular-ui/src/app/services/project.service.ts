@@ -23,14 +23,14 @@ export class ProjectService {
     return this.http.get<any>(this.BaseURI + '/api/Project/GetEmpolyeesProjects?employeeId='+employeeId);
   }
 
-  addProject (projectAdd : any){
+  addProject (fromData : FormData){
 
-    return this.http.post<any>(this.BaseURI+'/api/Project',projectAdd);
+    return this.http.post<any>(this.BaseURI+'/api/Project',fromData);
   }
 
-  editProject (projectEdit : any){
+  editProject (fromData : FormData){
 
-    return this.http.put<any>(this.BaseURI+'/api/Project',projectEdit)
+    return this.http.put<any>(this.BaseURI+'/api/Project',fromData)
   }
   getProjectProgress(id : any) {
     return this.http.get<number>(this.BaseURI + '/api/Project/GetProjectProgress?id='+id);

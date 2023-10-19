@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedInfrustructure.Model.Client
 {
@@ -34,6 +35,8 @@ namespace IntegratedInfrustructure.Model.Client
         public string Email { get; set; }
         public string Description { get; set; }
         public string? ImagePath { get; set; } = null!;
+        public DateTime ContractEndDate { get; set; } 
+        public ContractStatus ContractStatus { get; set; }
 
 
     }
