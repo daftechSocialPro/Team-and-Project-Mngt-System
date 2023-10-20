@@ -57,20 +57,18 @@
                         </div>
                         <h5 class="font-bold">{{client.name}}'s Files</h5>
                         <div *ngIf="client.clientFiles !== null" class="field col-12: md-2 mt-2">
-                            <a (click)="viewPdf(client.clientFiles)" target="_blank">
+                            
                               <div style="display: flex; flex-direction: column;">
                                 <ng-container *ngFor="let file of client.clientFiles">
-                                  <div *ngIf="isPDFFile(file.filePath)" class="file-item">
-                                    <i class="pi pi-file-pdf text-primary p-2" style="font-size: 30px;"></i>
+                                  
+                                    <a (click)="viewPdf(file.filePath)" target="_blank">
+                                    <i *ngIf="isPDFFile(file.filePath)" class="pi pi-file-pdf text-primary p-2" style="font-size: 30px;"></i>
+                                    <i *ngIf="isImageFile(file.filePath)"  class="pi pi-image text-primary p-2" style="font-size: 30px;" ></i></a>
                                     <span class="file-name-pdf">{{ file.fileName }}</span>
-                                  </div>
-                                  <div *ngIf="isImageFile(file.filePath)" style="display: flex;">
-                                    <i class="pi pi-image text-primary p-2" style="font-size: 30px;" ></i>
-                                    <span class="file-name-image" style="font-size: 20px;" >{{ file.fileName }}</span>
-                                  </div>
+                             
                                 </ng-container>
                               </div>
-                            </a>
+                            
                           </div>
 
                     </div>

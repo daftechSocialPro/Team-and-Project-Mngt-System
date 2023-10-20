@@ -5,6 +5,8 @@ import { Table } from 'primeng/table';
 import { CommonService } from 'src/app/services/common.service';
 import { ClientService } from 'src/app/services/client.service';
 import { Router } from '@angular/router';
+import { AddClientComponent } from './add-client/add-client.component';
+import { EditclientComponent } from './edit-client/editclient.component';
 
 @Component({
   selector: 'app-client',
@@ -25,7 +27,7 @@ export class ClientComponent  implements OnInit {
     private router: Router,
     private modalSerivce: NgbModal) { }
   ngOnInit(): void {
-this.getClients()
+    this.getClients()
   }
   getClients() {
 
@@ -54,14 +56,18 @@ this.getClients()
   }
   addClients() {
 
-    this.visible = true
+    let modalRef= this.modalSerivce.open(AddClientComponent,{size:'xl',backdrop:'static'})
+    
+    modalRef.result.then(()=>{this.getClients()})
 
   }
-  onClientAdded(event: any) {
-    
-    this.visible = false;
-    this.getClients()
+ 
+  editClient(client :any){
+    let modalRef = this.modalSerivce.open(EditclientComponent,{size:'xl',backdrop:'static'})
+    modalRef.componentInstance.client = client
+    modalRef.result.then(()=>{this.getClients()})
   }
+  
   clientDetail(clientId: any)
   {
     this.router.navigate(['/clientdetail',clientId])
