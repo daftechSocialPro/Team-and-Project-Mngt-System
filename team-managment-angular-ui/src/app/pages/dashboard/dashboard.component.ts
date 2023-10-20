@@ -80,7 +80,6 @@ export class DashboardComponent implements OnInit, AfterViewInit{
       next: (res)=>{
         this.users = res
       }, error: (err) => {
-        console.log(err)
       }
     })
   }
@@ -91,7 +90,6 @@ export class DashboardComponent implements OnInit, AfterViewInit{
         this.projects = res
         
       }, error: (err) => {
-        console.log(err)
       }
     })
   }
@@ -100,7 +98,6 @@ export class DashboardComponent implements OnInit, AfterViewInit{
       next: (res) => {
        this.employeeProject = res         
       }, error: (err) => {
-        console.log(err)
       }
     })
   }
@@ -110,7 +107,6 @@ export class DashboardComponent implements OnInit, AfterViewInit{
       next: (res) => {
         this.teams = res
       }, error: (err) => {
-        console.log(err)
       }
     })
   }
@@ -119,7 +115,6 @@ getEmployeeTeam(){
     next: (res) => {
       this.employeeTeams= res
     }, error: (err) => {
-      console.log(err)
     }
   })
 }
@@ -129,7 +124,6 @@ getEmployeeTeam(){
       next: (res) => {
         this.employees = res
         }, error: (err) => {
-        console.log(err)
       }
     })
   }
@@ -141,7 +135,6 @@ getEmployeeTeam(){
         this.totalTaskCount = this.tasks.reduce((count, obj) => count + obj.tasks.length, 0);
       },
       error: (err) => {
-        console.log(err);
       }
     });
   }
@@ -153,7 +146,6 @@ getEmployeeTeam(){
        
       },
       error: (err) => {
-        console.log(err);
       }
     });
   }
@@ -162,7 +154,6 @@ getEmployeeTeam(){
     this.projectService.getOverallProgress().subscribe(
       res => {
         this.OverallProgress = res
-        console.log("sggsgsgs",this.OverallProgress)
       }
     )
     
@@ -195,7 +186,6 @@ getEmployeeTeam(){
         
         
         const expectedProgress = (elapsedDuration / totalDuration) * 100
-        console.log("exp",expectedProgress)
         this.expProjectProgress.push(expectedProgress)
       }
       

@@ -2,11 +2,16 @@
 using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Client;
+using IntegratedImplementation.DTOS.Configuration;
+using IntegratedImplementation.DTOS.Project;
 using IntegratedImplementation.DTOS.Team;
 using IntegratedImplementation.Interfaces.Client;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedInfrustructure.Data;
+using IntegratedInfrustructure.Model.Authentication;
 using IntegratedInfrustructure.Model.Client;
+using IntegratedInfrustructure.Model.Project;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,11 +28,13 @@ namespace IntegratedImplementation.Services.Client
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly IGeneralConfigService _generalConfig;
-        public ClientService(ApplicationDbContext dbContext, IMapper mapper, IGeneralConfigService generalConfig)
+        private UserManager<ApplicationUser> _userManager;
+        public ClientService(ApplicationDbContext dbContext, IMapper mapper, IGeneralConfigService generalConfig, UserManager<ApplicationUser> userManager)
         {
             _dbContext = dbContext;
             _generalConfig= generalConfig;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public async Task<List<ClientGetDto>> GetClients()
@@ -37,7 +44,13 @@ namespace IntegratedImplementation.Services.Client
                                     .ToListAsync();
             return clientList;
         }
-
+        public async Task<ClientGetDto> GetClient(Guid id)
+        {
+            var client = await _dbContext.Clients.Where(x => x.Id == id).AsNoTracking()
+                                    .ProjectTo<ClientGetDto>(_mapper.ConfigurationProvider)
+                                    .FirstOrDefaultAsync();
+            return client;
+        }
         public async Task<ResponseMessage> AddClient(ClientPostDto addClient)
         {
 
@@ -56,12 +69,24 @@ namespace IntegratedImplementation.Services.Client
                 CreatedById = addClient.CreatedById,
                 CreatedDate = DateTime.Now,
                 Email = addClient.Email,
-                ImagePath = path
+                PhoneNo= addClient.PhoneNo,
+                ImagePath = path,
+                ContractEndDate= addClient.ContractEndDate
 
              };
             await _dbContext.Clients.AddAsync(client);
             await _dbContext.SaveChangesAsync();
-            if (addClient.ClientFiles.Count > 0)
+            //if (addClient.ClientContacts != null) 
+            //{
+
+            //    foreach (var contact in addClient.ClientContacts)
+            //    {
+            //        AddContactToClient(contact, id);
+
+            //    }
+            //}
+
+            if (addClient.ClientFiles != null && addClient.ClientFiles.Count > 0)
             {
                 foreach (var file in addClient.ClientFiles.Distinct())
                 {
@@ -107,7 +132,9 @@ namespace IntegratedImplementation.Services.Client
                 client.Name = editClient.Name;
                 client.Address = editClient.Address;
                 client.Email = editClient.Email;
+                client.PhoneNo = editClient.PhoneNo;
                 client.Description = editClient.Description;
+                client.ContractEndDate= editClient.ContractEndDate;
                 
                 if (editClient.Image != null)
                 {
@@ -116,7 +143,7 @@ namespace IntegratedImplementation.Services.Client
                               
                 await _dbContext.SaveChangesAsync();
 
-                if (editClient.ClientFiles.Count > 0)
+                if (editClient.ClientFiles != null && editClient.ClientFiles.Count > 0)
                 {
                     foreach (var file in editClient.ClientFiles.Distinct())
                     {
@@ -152,11 +179,62 @@ namespace IntegratedImplementation.Services.Client
                 return new ResponseMessage
                 {
 
-                    Message = "No Client Found",
+                    Message = "Client Not Found",
                     Success = false
                 };
             }
 
+        }
+
+        public async Task<ResponseMessage> AddContactToClient(List<AddToClientDto> addToClient)
+        {
+            var client = _dbContext.Clients.Find(addToClient[0].ClientId);
+            if (client != null)
+            {
+                foreach (var addToClien in addToClient)
+                {
+                    ClientContact contact = new ClientContact
+                    {
+                        ClientId = client.Id,
+                        Name = addToClien.name,
+                        Position = addToClien.position,
+                        PhoneNo = addToClien.phoneNo,
+                        Email = addToClien.email,
+                        CreatedById = client.CreatedById
+                    };
+                    await _dbContext.ClientContacts.AddAsync(contact);
+                }
+                await _dbContext.SaveChangesAsync();
+
+
+                return new ResponseMessage
+                {
+
+                    Message = "Clients Contacts Added Successfully",
+                    Success = true
+                };
+            }
+            else
+            {
+                return new ResponseMessage
+                {
+
+                    Message = "Client Not Found",
+                    Success = false
+                };
+
+            }
+        }
+        public async Task<List<SelectListDto>> GetClientNoUser()
+        {
+            var users = _userManager.Users.Select(x => x.ClientId).ToList();
+
+            var clients = await _dbContext.Clients
+                .Where(e => !users.Contains(e.Id))
+                .ProjectTo<SelectListDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return clients;
         }
 
 

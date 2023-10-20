@@ -25,7 +25,6 @@ export class UsersComponent implements OnInit {
         this.users = res
       },
       error: (err) => {
-        console.log(err)
       }
     })
   }

@@ -67,13 +67,11 @@ export class TaskComponent implements OnInit {
         });
       },
       error: (err) => {
-        console.log(err);
       }
     });
   }
   filterdTaskTable() {
     let filteredTasks = this.tasks;
-    console.log("filteredTasks", filteredTasks);
      
 
    
@@ -113,9 +111,7 @@ export class TaskComponent implements OnInit {
     if (this.selectedTask === 'DAILY') {
       filteredTasks = filteredTasks.filter((task) => {
         const currentDate = new Date();
-        console.log("todaysdate",currentDate);
         const createdDate = new Date(task.endDate);
-        console.log("taskdate",createdDate);
         return currentDate.getDate() === createdDate.getDate();
       });
     } else if (this.selectedTask === 'WEEKLY') {
@@ -156,10 +152,8 @@ export class TaskComponent implements OnInit {
     this.taskService.getAllTask().subscribe({
       next: (res) => {
         this.tasks = res;
-        console.log("ttttttttttttttttt", this.tasks)
       },
       error: (err) => {
-        console.log(err);
       }
     });
   }
@@ -192,16 +186,13 @@ export class TaskComponent implements OnInit {
   }
   onDragStart(item: any) {
     this.curentTask = item;
-    console.log("onDragStart")
 
   }
   onDrop(event: any, status: string) {
-    console.log("onDrop");
     event.preventDefault();
     const record = this.taskArray.find(m => m.id == this.curentTask.id);
     if (record !== undefined) {
       record.taskStatuses = status;
-      console.log(record.id, status, "sending data");
 
       const data = {
         id: record.id,
@@ -212,10 +203,8 @@ export class TaskComponent implements OnInit {
 
       this.taskService.updateStatus(data).subscribe({
         next: (res) => {
-          console.log("Task status updated successfully:", res);
         },
         error: (err) => {
-          console.log("Error updating task status:", err);
         }
       });
     }
@@ -236,7 +225,6 @@ export class TaskComponent implements OnInit {
         // console.log("Task status updated successfully:", res);
       },
       error: (err) => {
-        console.log("Error updating task status:", err);
       }
     });
   }
@@ -255,7 +243,6 @@ export class TaskComponent implements OnInit {
 
   dragOver(event: any) {
     event.preventDefault();
-    console.log("dragOver")
   }
 
 

@@ -15,6 +15,7 @@ namespace IntegratedInfrustructure.Model.Project
             TeamProjects = new HashSet<TeamProject>();
             TaskLists = new HashSet<TaskList>();
             ProjectClients = new HashSet<ProjectClient>();
+            ProjectFiles = new HashSet<ProjectFile>();
 
         }
 
@@ -29,6 +30,9 @@ namespace IntegratedInfrustructure.Model.Project
 
         [InverseProperty(nameof(ProjectClient.Project))]
         public ICollection<ProjectClient> ProjectClients { get; set; }
+
+        [InverseProperty(nameof(ProjectFile.Project))]
+        public ICollection<ProjectFile> ProjectFiles { get; set; }
 
         public string ProjectName { get; set; } = null!;
         public string? GitHubLink { get; set; }

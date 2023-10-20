@@ -38,7 +38,6 @@ export class ManageMembersComponent implements OnInit {
         next: (res) => {
 
           this.sourceEmployees = res
-          console.log("source ", this.sourceEmployees)
         }, error: (err) => {
           console.error('Failed to fetch employee list:', err);
         }
@@ -52,7 +51,6 @@ export class ManageMembersComponent implements OnInit {
         next: (res) => {
 
           this.targetEmployees = res
-          console.log("targe", this.targetEmployees)
         }, error: (err) => {
           console.error('Failed to fetch employee list:', err);
         }
@@ -71,7 +69,6 @@ export class ManageMembersComponent implements OnInit {
         createdBy: this.user.UserID
       };
 
-      console.log(data)
 
       this.teamService.addMember(data).subscribe({
         next: (res) => {
@@ -115,7 +112,6 @@ export class ManageMembersComponent implements OnInit {
         
       };
 
-      console.log(data)
 
       this.teamService.removeMember(data).subscribe({
         next: (res) => {

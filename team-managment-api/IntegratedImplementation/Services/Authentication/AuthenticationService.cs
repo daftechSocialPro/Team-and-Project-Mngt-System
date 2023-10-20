@@ -53,40 +53,82 @@ namespace Implementation.Services.Authentication
                 var roleList = await _userManager.GetRolesAsync(user);
                 IdentityOptions _options = new IdentityOptions();
                 var str = String.Join(",", roleList);
-                var employee = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == user.EmployeeId);
-                if (employee != null)
+                if (user.EmployeeId!= null)
                 {
-
-                    var TokenDescriptor = new SecurityTokenDescriptor
+                    var employee = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == user.EmployeeId);
+                    if (employee != null)
                     {
-                        Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
+
+                        var TokenDescriptor = new SecurityTokenDescriptor
                         {
-                        new Claim("userId", user.Id.ToString()),
-                        new Claim("employeeId", user.EmployeeId.ToString()),
-                        new Claim("fullName", $"{employee.FirstName}  {employee.LastName}"),
-                        new Claim("photo",employee?.ImagePath),
-                        new Claim(_options.ClaimsIdentity.RoleClaimType, str),
+                            Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
+                            {
+                                new Claim("userId", user.Id.ToString()),
+                                new Claim("employeeId", user.EmployeeId.ToString()),
+                                new Claim("fullName", $"{employee.FirstName}  {employee.LastName}"),
+                                new Claim("photo",employee?.ImagePath),
+                                new Claim(_options.ClaimsIdentity.RoleClaimType, str),
 
-                        }),
-                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1225290901686999272364748849994004994049404940")), SecurityAlgorithms.HmacSha256Signature)
-                    };
+                            }),
+                            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1225290901686999272364748849994004994049404940")), SecurityAlgorithms.HmacSha256Signature)
+                        };
 
-                    var TokenHandler = new JwtSecurityTokenHandler();
-                    var SecurityToken = TokenHandler.CreateToken(TokenDescriptor);
-                    var token = TokenHandler.WriteToken(SecurityToken);
+                        var TokenHandler = new JwtSecurityTokenHandler();
+                        var SecurityToken = TokenHandler.CreateToken(TokenDescriptor);
+                        var token = TokenHandler.WriteToken(SecurityToken);
+                        return new ResponseMessage()
+                        {
+                            Success = true,
+                            Message = "Login Success",
+                            Data = token
+                        };
+                    }
+
                     return new ResponseMessage()
                     {
-                        Success = true,
-                        Message = "Login Success",
-                        Data = token
+                        Success = false,
+                        Message = "could not find Employee"
+                    };
+
+                }
+                else
+                {
+                    var client = await _dbContext.Clients.FirstOrDefaultAsync(x => x.Id == user.ClientId);
+                    if (client != null)
+                    {
+
+                        var TokenDescriptor = new SecurityTokenDescriptor
+                        {
+                            Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
+                            {
+                                new Claim("userId", user.Id.ToString()),
+                                new Claim("clientId", user.ClientId.ToString()),
+                                new Claim("clientName", client.Name),
+                                new Claim("photo",client?.ImagePath),
+                                new Claim(_options.ClaimsIdentity.RoleClaimType, str),
+
+                            }),
+                            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1225290901686999272364748849994004994049404940")), SecurityAlgorithms.HmacSha256Signature)
+                        };
+
+                        var TokenHandler = new JwtSecurityTokenHandler();
+                        var SecurityToken = TokenHandler.CreateToken(TokenDescriptor);
+                        var token = TokenHandler.WriteToken(SecurityToken);
+                        return new ResponseMessage()
+                        {
+                            Success = true,
+                            Message = "Login Success",
+                            Data = token
+                        };
+                    }
+
+                    return new ResponseMessage()
+                    {
+                        Success = false,
+                        Message = "could not find Client"
                     };
                 }
-
-                return new ResponseMessage()
-                {
-                    Success = false,
-                    Message = "could not find Employee"
-                };
+                
             }
             else
                 return new ResponseMessage()
@@ -104,24 +146,48 @@ namespace Implementation.Services.Authentication
 
             foreach (var user in userList)
             {
-
-                var employee = _dbContext.Employees.Find(user.EmployeeId);
-
-                var userListt = new UserListDto()
+                if (user.EmployeeId != null)
                 {
-                    Id = user.Id,
-                    EmployeeId = user.EmployeeId,
-                    UserName = user.UserName,
-                    Name = $"{employee.FirstName} {employee.LastName}",
-                    Status = user.RowStatus.ToString(),
-                    ImagePath = employee.ImagePath,
-                    Email = employee.Email,
+                    var employee = _dbContext.Employees.Find(user.EmployeeId);
+
+                    var userListt = new UserListDto()
+                    {
+                        Id = user.Id,
+                        EmployeeId = (Guid)user.EmployeeId,
+                        UserName = user.UserName,
+                        Name = $"{employee.FirstName} {employee.LastName}",
+                        Status = user.RowStatus.ToString(),
+                        ImagePath = employee.ImagePath,
+                        Email = employee.Email,
 
 
-                };
-                userListt.Roles = await GetAssignedRoles(user.Id, 1);
+                    };
+                    userListt.Roles = await GetAssignedRoles(user.Id, 1);
 
-                userLists.Add(userListt);
+                    userLists.Add(userListt);
+                }
+                else
+                {
+                    var client = _dbContext.Clients.Find(user.ClientId);
+
+                    var userListt = new UserListDto()
+                    {
+                        Id = user.Id,
+                        ClientId = (Guid)user.ClientId,
+                        UserName = user.UserName,
+                        Name = client.Name,
+                        Status = user.RowStatus.ToString(),
+                        ImagePath = client.ImagePath,
+                        Email = client.Email,
+
+
+                    };
+                    userListt.Roles = await GetAssignedRoles(user.Id, 1);
+
+                    userLists.Add(userListt);
+
+                }
+                
 
             }
 
@@ -132,42 +198,86 @@ namespace Implementation.Services.Authentication
 
         public async Task<ResponseMessage> AddUser(AddUSerDto addUSer)
         {
-            var currentEmployee = _userManager.Users.Any(x => x.EmployeeId.Equals(addUSer.EmployeeId));
-            if (currentEmployee)
-                return new ResponseMessage { Success = false, Message = "Employee Already Exists" };
-
-            var applicationUser = new ApplicationUser
+            if(addUSer.EmployeeId != null)
             {
-                EmployeeId = addUSer.EmployeeId,
-                Email = addUSer.UserName + "@her.com",
-                UserName = addUSer.UserName,
-                RowStatus = RowStatus.ACTIVE,
-            };
+                var currentEmployee = _userManager.Users.Any(x => x.EmployeeId.Equals(addUSer.EmployeeId));
+                if (currentEmployee)
+                    return new ResponseMessage { Success = false, Message = "Employee Already Exists" };
 
-            var response = await _userManager.CreateAsync(applicationUser, addUSer.Password);
-
-            if (response.Succeeded)
-            {
-                var currentEmployee1 = _userManager.Users.Where(x => x.EmployeeId.Equals(addUSer.EmployeeId)).FirstOrDefault();
-
-
-
-                if ((!addUSer.Roles.IsNullOrEmpty()) && currentEmployee1 != null)
+                var applicationUser = new ApplicationUser
                 {
-                    var userRoles = new UserRoleDto();
-                    userRoles.UserId = currentEmployee1.Id;
-                    userRoles.RoleName = addUSer.Roles ;
+                    EmployeeId = addUSer.EmployeeId,
+                    Email = addUSer.UserName + "@her.com",
+                    UserName = addUSer.UserName,
+                    RowStatus = RowStatus.ACTIVE,
+                };
 
-                    await _userManager.AddToRoleAsync(currentEmployee1, userRoles.RoleName);
+                var response = await _userManager.CreateAsync(applicationUser, addUSer.Password);
+
+                if (response.Succeeded)
+                {
+                    var currentEmployee1 = _userManager.Users.Where(x => x.EmployeeId.Equals(addUSer.EmployeeId)).FirstOrDefault();
+
+
+
+                    if ((!addUSer.Roles.IsNullOrEmpty()) && currentEmployee1 != null)
+                    {
+                        var userRoles = new UserRoleDto();
+                        userRoles.UserId = currentEmployee1.Id;
+                        userRoles.RoleName = addUSer.Roles;
+
+                        await _userManager.AddToRoleAsync(currentEmployee1, userRoles.RoleName);
+                    }
+                    return new ResponseMessage { Success = true, Message = "Succesfully Added User", Data = applicationUser.UserName };
                 }
-                return new ResponseMessage { Success = true, Message = "Succesfully Added User", Data = applicationUser.UserName };
+                else
+                {
+
+                    string errorMessage = string.Join(", ", response.Errors.Select(error => error.Code));
+                    return new ResponseMessage { Success = false, Message = errorMessage, Data = applicationUser.UserName };
+                }
+
             }
             else
             {
+                var currentClient = _userManager.Users.Any(x => x.ClientId.Equals(addUSer.ClientId));
+                if (currentClient)
+                    return new ResponseMessage { Success = false, Message = "Client Already Exists" };
 
-                string errorMessage = string.Join(", ", response.Errors.Select(error => error.Code));
-                return new ResponseMessage { Success = false, Message = errorMessage, Data = applicationUser.UserName };
+                var applicationUser = new ApplicationUser
+                {
+                    ClientId = addUSer.ClientId,
+                    Email = addUSer.UserName + "@her.com",
+                    UserName = addUSer.UserName,
+                    RowStatus = RowStatus.ACTIVE,
+                };
+
+                var response = await _userManager.CreateAsync(applicationUser, addUSer.Password);
+
+                if (response.Succeeded)
+                {
+                    var currentClient1 = _userManager.Users.Where(x => x.ClientId.Equals(addUSer.ClientId)).FirstOrDefault();
+
+
+
+                    if ((!addUSer.Roles.IsNullOrEmpty()) && currentClient1 != null)
+                    {
+                        var userRoles = new UserRoleDto();
+                        userRoles.UserId = currentClient1.Id;
+                        userRoles.RoleName = addUSer.Roles;
+
+                        await _userManager.AddToRoleAsync(currentClient1, "Client");
+                    }
+                    return new ResponseMessage { Success = true, Message = "Succesfully Added User", Data = applicationUser.UserName };
+                }
+                else
+                {
+
+                    string errorMessage = string.Join(", ", response.Errors.Select(error => error.Code));
+                    return new ResponseMessage { Success = false, Message = errorMessage, Data = applicationUser.UserName };
+                }
             }
+            
 
 
         }

@@ -27,7 +27,6 @@ export class ChangePasswordComponent implements OnInit {
     }
     
     onSubmit(){
-      console.log(this.PasswordForm.value)
       if (this.PasswordForm.valid) {
         if(this.PasswordForm.value.NewPassword !== this.PasswordForm.value.ConfirmPassword)
         {
@@ -43,7 +42,6 @@ export class ChangePasswordComponent implements OnInit {
             }
             
             
-            console.log(changePassword)
             
             this.userService.changePassword(changePassword).subscribe({
               next: (res) => {

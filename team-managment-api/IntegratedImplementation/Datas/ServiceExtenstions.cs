@@ -17,6 +17,8 @@ using IntegratedImplementation.Interfaces.Notice;
 using IntegratedImplementation.Services.Notice;
 using IntegratedImplementation.Interfaces.Client;
 using IntegratedImplementation.Services.Client;
+using IntegratedImplementation.Interfaces.Complaint;
+using IntegratedImplementation.Services.Complaint;
 
 namespace IntegratedImplementation.Datas
 {
@@ -35,6 +37,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<INoticeService, NoticeService>();
             services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IComplaintService, ComplaintService>();
             return services;
         }
     }

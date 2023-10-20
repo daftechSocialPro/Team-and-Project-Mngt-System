@@ -9,6 +9,25 @@
 
     <form [formGroup]="ProjectForm" (submit)="onSubmit()">
         <div class="p-fluid p-formgrid grid">
+            <div *ngIf="project.projectFiles !== null" class="field col-12">
+                <p-fileUpload   (onSelect)="onUpload($event)" [multiple]="true" 
+                 [maxFileSize]="50000000">
+                <ng-template pTemplate="content">
+                    <ul >
+                        <li *ngFor="let file of project.projectFiles">{{file.fileName}} 
+                            <a (click)="viewPdf(file.filePath)" target="_blank" >  <i *ngIf="isPDFFile(file.filePath)" class="pi pi-file-pdf text-primary p-2" style="font-size: 20px;background-color: #5c1d1612; border-radius: 50%; " ></i>
+                                <i *ngIf="isImageFile(file.filePath)" class="pi pi-image text-primary p-2" style="font-size: 20px;background-color: #5c1d1612; border-radius: 50%; " ></i>
+                                <i *ngIf="!isImageFile(file.filePath) && !isPDFFile(file.filePath)" class="pi pi-file text-primary p-2" style="font-size: 20px;background-color: #5c1d1612; border-radius: 50%; " ></i>
+                                &nbsp;&nbsp;
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    <div></div>
+                </ng-template>
+                </p-fileUpload>
+            
+            </div>
             
             <div class="field col-12 md:col-4">
                 <label htmlFor="firstname2">Project Name</label>

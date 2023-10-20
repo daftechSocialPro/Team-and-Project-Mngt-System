@@ -99,7 +99,6 @@ export class ProjectComponent implements OnInit {
         this.dataViewValue = this.projects;
       },
       error: (err) => {
-        console.log(err);
       }
     });
   }
@@ -123,7 +122,6 @@ export class ProjectComponent implements OnInit {
  
                
       }, error: (err) => {
-        console.log(err)
       }
 
       

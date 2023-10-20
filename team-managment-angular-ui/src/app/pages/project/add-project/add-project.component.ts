@@ -33,6 +33,7 @@ export class AddProjectComponent implements OnInit {
     
   ]
   selectedState: any = null;
+  uploadedFiles: any[] = [];
   
   ProjectForm!: FormGroup;
   
@@ -70,42 +71,52 @@ export class AddProjectComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.ProjectForm.value)
     
     if (this.ProjectForm.valid) {
       
       if(this.ProjectForm.value.TeamId !== undefined)
         {
         var projectAdd:any ={
-          projectName:this.ProjectForm.value.ProjectName,
-          description:this.ProjectForm.value.Description,
-          assignedDate:this.ProjectForm.value.AssignedDate,
-          dueDate:this.ProjectForm.value.DueDate,
-          projectStatus:this.ProjectForm.value.ProjectStatus.name,
-          assignedTo:this.ProjectForm.value.AssignedTo.name,
-          teamId:this.ProjectForm.value.TeamId.value,
-          projectEmployees:this.employeesSelectedList,
-          gitHubLink:this.ProjectForm.value.GitHubLink,
-          createdById:this.user.UserID,
+          ProjectName:this.ProjectForm.value.ProjectName,
+          Description:this.ProjectForm.value.Description,
+          AssignedDate:this.ProjectForm.value.AssignedDate,
+          DueDate:this.ProjectForm.value.DueDate,
+          ProjectStatus:this.ProjectForm.value.ProjectStatus.name,
+          AssignedTo:this.ProjectForm.value.AssignedTo.name,
+          TeamId:this.ProjectForm.value.TeamId,
+          GitHubLink:this.ProjectForm.value.GitHubLink,
+          CreatedById:this.user.UserID,
         }
       }
       else{
         var projectAdd:any ={
-          projectName:this.ProjectForm.value.ProjectName,
-          description:this.ProjectForm.value.Description,
-          assignedDate:this.ProjectForm.value.AssignedDate,
-          dueDate:this.ProjectForm.value.DueDate,
-          projectStatus:this.ProjectForm.value.ProjectStatus.name,
-          assignedTo:this.ProjectForm.value.AssignedTo.name,
-          projectEmployees:this.employeesSelectedList,
-          gitHubLink:this.ProjectForm.value.GitHubLink,
-          createdById:this.user.UserID,
+          ProjectName:this.ProjectForm.value.ProjectName,
+          Description:this.ProjectForm.value.Description,
+          AssignedDate:this.ProjectForm.value.AssignedDate,
+          DueDate:this.ProjectForm.value.DueDate,
+          ProjectStatus:this.ProjectForm.value.ProjectStatus.name,
+          AssignedTo:this.ProjectForm.value.AssignedTo.name,
+          //ProjectEmployees:this.employeesSelectedList,
+          GitHubLink:this.ProjectForm.value.GitHubLink,
+          CreatedById:this.user.UserID,
         }
       }
+      var formData = new FormData();
+      for (let key in projectAdd) {
+        if (projectAdd.hasOwnProperty(key)) {
+          formData.append(key, (projectAdd as any)[key]);
+        }
+      }
+      for (var i = 0; i < this.employeesSelectedList.length; i++) {
+        formData.append("ProjectEmployees", this.employeesSelectedList[i]);
+      }
+      for (var i = 0; i < this.uploadedFiles.length; i++) {
+        formData.append("ProjectFiles", this.uploadedFiles[i]);
+      }
+      
 
-      console.log(projectAdd)
 
-      this.projectService.addProject(projectAdd).subscribe({
+      this.projectService.addProject(formData).subscribe({
         next: (res) => {
 
           if (res.success) {
@@ -150,7 +161,6 @@ export class AddProjectComponent implements OnInit {
   SelectItems(event: any)
   {
     
-    console.log(event.value.map(item => (item.value)))
     this.employeesSelectedList = event.value.map(item => (item.value))
   
   }
@@ -168,5 +178,12 @@ export class AddProjectComponent implements OnInit {
   }
   getImage(url: string) {
     return this.commonService.createImgPath(url)
+  }
+  onUpload(event: any) {
+    for (const file of event.files) {
+      this.uploadedFiles.push(file);
+    }
+
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
   }
 }
