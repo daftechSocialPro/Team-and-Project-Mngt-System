@@ -17,9 +17,12 @@ import { ViewPdfComponent } from 'src/app/components/view-pdf/view-pdf.component
 export class ClientDetailComponent implements OnInit {
   user: UserView
   client:any
+  clientContact:any
   clientId:string
   type: string = '';
   pdflink: string = '';
+  newContact: any = {};
+  showAddContactDialog: boolean = false;
   constructor (
     private route: ActivatedRoute,
     private clientService: ClientService,
@@ -40,8 +43,11 @@ export class ClientDetailComponent implements OnInit {
       this.clientService.getClient(clientId).subscribe(res => {    
         this.client = res;
         console.log("dsadsds",this.client)
+        console.log("ewwwww",this.client.clientContacts)
+
         });
     }
+
     getImage(url: string) {
       return this.commonServive.createImgPath(url)
     }
@@ -82,5 +88,17 @@ export class ClientDetailComponent implements OnInit {
       modalRef.componentInstance.type = this.type
       modalRef.componentInstance.pdflink = this.pdflink
     }
-
+    addContactPerson() {
+      const newContact = {
+        name: '',
+        position: '',
+        email: '',
+        phoneNo: ''
+      };
+      this.client.clientContacts.push(newContact);
+    }
+    
+    removeContact(index: number) {
+      this.client.clientContacts.splice(index, 1);
+    }
 }

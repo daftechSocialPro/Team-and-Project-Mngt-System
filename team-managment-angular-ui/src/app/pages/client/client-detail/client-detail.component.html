@@ -38,15 +38,10 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
-              
-          
                     </div>
                 </div>
             </div>
-
         <div style="flex: 1.5;" >
                     <div class="card chat-container">
                         <div class="flex-column flex-wrap gap-4">
@@ -81,50 +76,98 @@
 
         </div>
 
-        <h5 class="font-bold" style="margin-left: 20px;">Contact Persons</h5>
-        <!-- <div class="card col-12">
+        <!-- <h5 class="font-bold" style="margin-left: 20px;">Contact Persons</h5>
+        <div class="card col-12">
             <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
-                <p-dropdown [(ngModel)]="selectedValue" [options]="dropdownOptions" (onChange)="onDataViewChange()"
-                    class=""></p-dropdown>
-                <button pButton [label]="allowedRoles(['Admin']) ? 'Assign Task': 'Create Task'"
+                <button pButton label="Add Contact person" 
                     class="p-button-outlined mb-2" icon="pi pi-plus"
-                    (click)="assignTask(project.id,project.teamProjects,project.projectEmployees)"></button>
+                    ></button>
             </div>
 
-            <p-table [value]="dataViewValue" class="col-12" scrollDirection="both" [scrollable]="true" [paginator]="true" [rows]="10"
+            <p-table [value]="client.clientContacts" class="col-12" scrollDirection="both" [scrollable]="true" [paginator]="true" [rows]="10"
             scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width:200px" pFrozenColumn>Name</th>
-                    <th style="width:200px">Description </th>
-                    <th style="width:200px">Status</th>
-                    <th style="width:200px">Priority</th>
-                    <th style="width: 200px">Due Date</th>
-                    <th style="width:200px">Owner</th>
+                    <th style="width:200px">Position </th>
+                    <th style="width:200px">Email</th>
+                    <th style="width:200px">Phone Number</th>
+                    <th style="width: 200px">Action</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-task>
+            <ng-template *ngIf="client.clientContacts !== null" pTemplate="body" >
+                <ng-container *ngFor="let contact of client.clientContacts">
                 <tr>
-                    <td style="width:200px" pFrozenColumn>{{task.taskName}}</td>
-                    <td pFrozenColumn>{{task.taskDescription}}</td>
-                    <td style="width:200px" pFrozenColumn>
-                        <span
-                        [class]="'status-badge status-'+task.taskStatuses.toLowerCase()">{{task.taskStatuses}}</span>
-                    </td>
-                    <td style="width:200px" pFrozenColumn>
-                        <span
-                        [class]="'priority-badge prio-'+task.taskPriority.toLowerCase()">{{task.taskPriority}}</span>
-                    </td>
-                    <td style="width:200px" pFrozenColumn>
-                        
-                        {{task.endDate | date:'dd/MM/yyyy'}}
-                    </td>
-                    <td colspan="5">
-                        <img [alt]="" [src]="getImage(task.employeeImagePath)" width="32"
-                        style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
-                        <span class="ml-2">{{task.employeeName}}</span>
-                    </td>
+                    <td style="width:200px" pFrozenColumn>{{contact.name}}</td>
+                    <td pFrozenColumn>{{contact.position}}</td>
+                    <td pFrozenColumn>{{contact.email}}</td>
+                    <td pFrozenColumn>{{contact.phoneNo}}</td>
+                   
                 </tr>
+            </ng-container>
             </ng-template>
         </p-table>
       </div> -->
+      <h5 class="font-bold" style="margin-left: 20px;">Contact Persons</h5>
+      <div class="card col-12">
+        <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
+          <button pButton label="Add Contact Person" class="p-button-outlined mb-2" icon="pi pi-plus" (click)="addContactPerson()"></button>
+        </div>
+      
+        <p-table [value]="client.clientContacts" class="col-12" scrollDirection="both" [scrollable]="true" [paginator]="true" [rows]="10" scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width:200px" pFrozenColumn>Name</th>
+              <th style="width:200px">Position</th>
+              <th style="width:200px">Email</th>
+              <th style="width:200px">Phone Number</th>
+              <th style="width: 200px">Action</th>
+            </tr>
+          </ng-template>
+          <ng-template *ngIf="client.clientContacts !== null" pTemplate="body">
+            <tr *ngFor="let contact of client.clientContacts; let i = index">
+              <td style="width:200px" pFrozenColumn>
+                <span *ngIf="!contact.editing">{{ contact.name }}</span>
+                <input *ngIf="contact.editing" type="text" [(ngModel)]="contact.name" [ngModelOptions]="{standalone: true}">
+              </td>
+              <td pFrozenColumn>
+                <span *ngIf="!contact.editing">{{ contact.position }}</span>
+                <input *ngIf="contact.editing" type="text" [(ngModel)]="contact.position" [ngModelOptions]="{standalone: true}">
+              </td>
+              <td pFrozenColumn>
+                <span *ngIf="!contact.editing">{{ contact.email }}</span>
+                <input *ngIf="contact.editing" type="email" [(ngModel)]="contact.email" [ngModelOptions]="{standalone: true}">
+              </td>
+              <td pFrozenColumn>
+                <span *ngIf="!contact.editing">{{ contact.phoneNo }}</span>
+                <input *ngIf="contact.editing" type="text" [(ngModel)]="contact.phoneNo" [ngModelOptions]="{standalone: true}">
+              </td>
+              <td>
+                <button pButton icon="pi pi-pencil" *ngIf="!contact.editing" (click)="toggleEditing(contact)"></button>
+                <button pButton icon="pi pi-check" *ngIf="contact.editing" (click)="toggleEditing(contact)"></button>
+                <button pButton icon="pi pi-trash" class="p-button-danger" (click)="removeContact(i)"></button>
+              </td>
+            </tr>
+            <tr *ngIf="isNewContact">
+              <td style="width:200px" pFrozenColumn>
+                <input type="text" [(ngModel)]="newContact.name" [ngModelOptions]="{standalone: true}">
+              </td>
+              <td pFrozenColumn>
+                <input type="text" [(ngModel)]="newContact.position" [ngModelOptions]="{standalone: true}">
+              </td>
+              <td pFrozenColumn>
+                <input type="email" [(ngModel)]="newContact.email" [ngModelOptions]="{standalone: true}">
+              </td>
+              <td pFrozenColumn>
+                <input type="text" [(ngModel)]="newContact.phoneNo" [ngModelOptions]="{standalone: true}">
+              </td>
+              <td>
+                <button pButton icon="pi pi-check" (click)="saveNewContact()"></button>
+                <button pButton icon="pi pi-times" class="p-button-danger" (click)="cancelNewContact()"></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      </div>
+      </div>
