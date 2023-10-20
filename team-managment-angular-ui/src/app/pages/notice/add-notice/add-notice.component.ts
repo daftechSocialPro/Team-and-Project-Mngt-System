@@ -77,8 +77,7 @@ export class AddNoticeComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.NoticeForm.value)
-    //debugger
+    
 
     if (this.NoticeForm.valid) {
 
@@ -155,7 +154,6 @@ export class AddNoticeComponent implements OnInit {
         });
         
         postNotice.employeeIds = this.projectemp.map(u => u.value)
-        console.log("Notice",postNotice)
         this.PostNotice(postNotice)
       });
 
@@ -171,23 +169,19 @@ export class AddNoticeComponent implements OnInit {
           };
         });
         postNotice.employeeIds = this.projectemp.map(u => u.value)
-        console.log("Notice",postNotice)
         this.PostNotice(postNotice)
       });
     }
     else if (this.employeesSelectedList.length > 0) {
       this.projectemp = this.employeesSelectedList
       postNotice.employeeIds = this.projectemp
-      console.log("Notice",postNotice)
       this.PostNotice(postNotice)
     }
     else {
       this.employeeService.getEmployeesSelectList().subscribe({
         next: (res) => {
-          console.log("res",res)
           this.projectemp = res
           postNotice.employeeIds = this.projectemp.map(u => u.id)
-          console.log("Notice",postNotice)
           this.PostNotice(postNotice)
         }
       })

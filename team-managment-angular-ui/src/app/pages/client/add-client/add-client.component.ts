@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { UserService, UserView } from 'src/app/services/user.service';
 import { ClientService } from 'src/app/services/client.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-client',
@@ -23,6 +24,7 @@ export class AddClientComponent implements OnInit {
     private userService: UserService,
     private messageService: MessageService,
     private clientService: ClientService,
+    private activeModal: NgbActiveModal
     
   ) { }
 
@@ -120,5 +122,9 @@ export class AddClientComponent implements OnInit {
     myReader.readAsDataURL(file);
     console.log(this.fileGH)
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
+  }
+  closeModal()
+  {
+    this.activeModal.close()
   }
 }

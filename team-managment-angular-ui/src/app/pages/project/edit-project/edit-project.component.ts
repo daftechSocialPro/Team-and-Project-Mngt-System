@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SelectItem, MessageService } from 'primeng/api';
+import { ViewPdfComponent } from 'src/app/components/view-pdf/view-pdf.component';
 import { CommonService } from 'src/app/services/common.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { ProjectService, ProjectView } from 'src/app/services/project.service';
@@ -17,12 +18,14 @@ export class EditProjectComponent implements OnInit {
   
   @Input() projectId: string
   user : UserView
-  project : ProjectView
+  project : any
   employeesSelectList: SelectItem[] = []
-  employeesSelectedList: SelectItem[] = []
+  employeesSelectedList: any
 
   teamsSelectList: SelectItem[] = []
-  
+  uploadedFiles: any[] = [];
+  type: string = '';
+  pdflink: string = '';
 
 
   assignedToDropdownItems = [
@@ -49,7 +52,8 @@ export class EditProjectComponent implements OnInit {
     private employeeService: EmployeeService,
     private activeModal: NgbActiveModal,
     private teamService: TeamService,
-    private commonService: CommonService 
+    private commonService: CommonService,
+    private modalService: NgbModal
       
     ) { }
 
@@ -100,47 +104,60 @@ export class EditProjectComponent implements OnInit {
 
   onSubmit() {
     console.log(this.ProjectForm.value)
+    
 
     if (this.ProjectForm.valid) {
       if(this.ProjectForm.value.TeamId !== undefined)
         {
         var projectEdit:any ={
-          id:this.project.id,
-          projectName:this.ProjectForm.value.ProjectName,
-          description:this.ProjectForm.value.Description,
-          assignedDate:this.ProjectForm.value.AssignedDate,
-          dueDate:this.ProjectForm.value.DueDate,
-          projectStatus:this.ProjectForm.value.ProjectStatus.name,
-          assignedTo:this.ProjectForm.value.AssignedTo.name,
-          teamId:this.ProjectForm.value.TeamId.value,
-          projectEmployees:this.employeesSelectedList,
-          gitHubLink:this.ProjectForm.value.GitHubLink,
-          createdById:this.user.UserID,
-          completionRemark:this.ProjectForm.value.CompletionRemark,
+          Id:this.project.id,
+          ProjectName:this.ProjectForm.value.ProjectName,
+          Description:this.ProjectForm.value.Description,
+          AssignedDate:this.ProjectForm.value.AssignedDate,
+          DueDate:this.ProjectForm.value.DueDate,
+          ProjectStatus:this.ProjectForm.value.ProjectStatus.name,
+          AssignedTo:this.ProjectForm.value.AssignedTo.name,
+          TeamId:this.ProjectForm.value.TeamId.value,
+          GitHubLink:this.ProjectForm.value.GitHubLink,
+          CreatedById:this.user.UserID,
+          CompletionRemark:this.ProjectForm.value.CompletionRemark,
           CompletionDate:this.ProjectForm.value.CompletionDate
           
         }
       }
       else{
         var projectEdit:any ={
-          id:this.project.id,
-          projectName:this.ProjectForm.value.ProjectName,
-          description:this.ProjectForm.value.Description,
-          assignedDate:this.ProjectForm.value.AssignedDate,
-          dueDate:this.ProjectForm.value.DueDate,
-          projectStatus:this.ProjectForm.value.ProjectStatus.name,
-          assignedTo:this.ProjectForm.value.AssignedTo.name,
-          projectEmployees:this.employeesSelectedList,
-          gitHubLink:this.ProjectForm.value.GitHubLink,
-          createdById:this.user.UserID,
-          completionRemark:this.ProjectForm.value.CompletionRemark,
+          Id:this.project.id,
+          ProjectName:this.ProjectForm.value.ProjectName,
+          Description:this.ProjectForm.value.Description,
+          AssignedDate:this.ProjectForm.value.AssignedDate,
+          DueDate:this.ProjectForm.value.DueDate,
+          ProjectStatus:this.ProjectForm.value.ProjectStatus.name,
+          AssignedTo:this.ProjectForm.value.AssignedTo.name,
+          // ProjectEmployees:this.employeesSelectedList,
+          GitHubLink:this.ProjectForm.value.GitHubLink,
+          CreatedById:this.user.UserID,
+          CompletionRemark:this.ProjectForm.value.CompletionRemark,
           CompletionDate:this.ProjectForm.value.CompletionDate
         }
       }
 
       console.log(projectEdit)
+      var formData = new FormData();
+      for (let key in projectEdit) {
+        if (projectEdit.hasOwnProperty(key)) {
+          formData.append(key, (projectEdit as any)[key]);
+        }
+      }
+      for (var i = 0; i < this.employeesSelectedList.length; i++) {
+        formData.append("ProjectEmployees", this.employeesSelectedList[i]);
+      }
+      for (var i = 0; i < this.uploadedFiles.length; i++) {
+        formData.append("ProjectFiles", this.uploadedFiles[i]);
+      }
 
-      this.projectService.editProject(projectEdit).subscribe({
+
+      this.projectService.editProject(formData).subscribe({
         next: (res) => {
 
           if (res.success) {
@@ -199,7 +216,54 @@ export class EditProjectComponent implements OnInit {
     return this.ProjectForm.value.ProjectStatus.name
 
   }
+  onUpload(event: any) {
+    for (const file of event.files) {
+      this.uploadedFiles.push(file);
+    }
+
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
+  }
+
+  getPdfFile(url: string) {
+    return this.commonService.getPdf(url)
+  }
   getImage(url: string) {
     return this.commonService.createImgPath(url)
+  }
+  getFileExtension(filename: string): string {
+    const lastDotIndex = filename.lastIndexOf('.');
+    if (lastDotIndex === -1) {
+      return '';
+    }
+    return filename.substr(lastDotIndex);
+  }
+  isImageFile(fileUrl: string): boolean {
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+    const fileExtension = this.getFileExtension(fileUrl);
+    return imageExtensions.includes(fileExtension.toLowerCase());
+  }
+
+  isPDFFile(fileUrl: string): boolean {
+    const pdfExtensions = ['.pdf'];
+    const fileExtension = this.getFileExtension(fileUrl);
+    return pdfExtensions.includes(fileExtension.toLowerCase());
+  }
+  viewPdf(link: string) {
+    let modalRef
+    if (this.isPDFFile(link)) {
+      modalRef = this.modalService.open(ViewPdfComponent, { size:'lg', backdrop: 'static' })
+      this.pdflink = this.getPdfFile(link);
+      this.type = "pdf";
+      
+    }
+
+    if (this.isImageFile(link)) {
+      modalRef = this.modalService.open(ViewPdfComponent, {  backdrop: 'static' })
+      this.pdflink = this.getImage(link);
+      this.type = "image";
+    }
+    
+    modalRef.componentInstance.type = this.type
+    modalRef.componentInstance.pdflink = this.pdflink
   }
 }

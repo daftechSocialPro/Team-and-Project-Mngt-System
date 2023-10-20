@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { map } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
@@ -39,7 +40,7 @@ export class CommonService {
     
     return this.sanitizer.bypassSecurityTrustResourceUrl(url)
   }
-
+  
   
   getCurrentLocation() {
     return new Promise((resolve, reject) => {

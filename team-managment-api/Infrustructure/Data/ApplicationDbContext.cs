@@ -16,6 +16,7 @@ using IntegratedInfrustructure.Model.Task;
 using IntegratedInfrustructure.Model.Chat;
 using IntegratedInfrustructure.Model.Notice;
 using IntegratedInfrustructure.Model.Client;
+using IntegratedInfrustructure.Model.Complaint;
 
 namespace IntegratedInfrustructure.Data
 {
@@ -53,6 +54,7 @@ namespace IntegratedInfrustructure.Data
         #region Task
 
         public DbSet<TaskList> Tasks { get; set; }
+        public DbSet<TaskFile> TaskFiles { get; set; }
 
         #endregion
 
@@ -61,6 +63,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<ProjectList> Projects { get; set; }
         public DbSet<ProjectEmployee> ProjectEmployees { get; set; }
         public DbSet<ProjectClient> ProjectClients { get; set; }
+        public DbSet<ProjectFile> ProjectFiles { get; set; }
 
         #endregion
 
@@ -77,7 +80,14 @@ namespace IntegratedInfrustructure.Data
         #region Client
         public DbSet<ClientList> Clients { get; set; }
         public DbSet<ClientFile> ClientFiles { get; set; }
+        public DbSet<ClientContact> ClientContacts { get; set; }    
 
+
+        #endregion
+
+        #region Complaint
+        public DbSet<ComplaintList> Complaints { get; set; }
+        public DbSet<ComplaintFile> ComplaintFiles { get; set; }
 
         #endregion
 

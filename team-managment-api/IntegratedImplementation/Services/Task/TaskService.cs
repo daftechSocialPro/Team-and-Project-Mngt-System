@@ -15,6 +15,7 @@ using IntegratedImplementation.DTOS.Project;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Helper.ChatHub;
 using Microsoft.AspNetCore.SignalR;
+using IntegratedInfrustructure.Model.Project;
 
 namespace IntegratedImplementation.Services.Task
 {
@@ -93,24 +94,7 @@ namespace IntegratedImplementation.Services.Task
                 var id = Guid.NewGuid();
                 var path = "";
 
-                if (addTask.ProjectId != null)
-                {
-
-                    if (addTask.FilePath != null)
-                    {
-                        var name = $"{Path.GetFileNameWithoutExtension(addTask.FilePath.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.EmployeeName}";
-                        path = _generalConfig.UploadFiles(addTask.FilePath, name, $"Files/Projects/{addTask.ProjectName}").Result.ToString();
-                    }
-                }
-                else
-                {
-
-                    if (addTask.FilePath != null)
-                    {
-                        var name = $"{Path.GetFileNameWithoutExtension(addTask.FilePath.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.TaskName}";
-                        path = _generalConfig.UploadFiles(addTask.FilePath, name, $"Files/Tasks/{addTask.EmployeeName}").Result.ToString();
-                    }
-                }
+                
 
                 TaskList task = new TaskList
                 {
@@ -124,20 +108,72 @@ namespace IntegratedImplementation.Services.Task
                     TaskDescription = addTask.TaskDescription,
                     EmployeeId = addTask.EmployeeId,
                     ProjectId = addTask.ProjectId,
-                    FilePath = path,
                     TaskApproval = Enum.Parse<TaskApproval>("PENDING")
 
                 };
 
                 await _dbContext.Tasks.AddAsync(task);
                 await _dbContext.SaveChangesAsync();
+                if (addTask.ProjectId != null)
+                {
+                                        
+                    if (addTask.TaskFiles != null && addTask.TaskFiles.Count > 0)
+                    {
+                        
+                        foreach (var file in addTask.TaskFiles.Distinct())
+                        {
+                            var fileName = file.FileName;
+                            var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.EmployeeName}";
+                            path = _generalConfig.UploadFiles(file, name, $"Files/ProjectTasks/{addTask.ProjectName}").Result.ToString();
+                            
+                            TaskFile taskFile = new TaskFile
+                            {
+                                TaskId = id,
+                                FileName = fileName,
+                                FilePath = path,
+                                CreatedById = addTask.CreatedById
+                            };
+                            await _dbContext.TaskFiles.AddAsync(taskFile);
+                        }
+                        await _dbContext.SaveChangesAsync();
+
+                    }
+                }
+                else
+                {
+
+                    
+                    if (addTask.TaskFiles != null && addTask.TaskFiles.Count > 0)
+                    {
+
+                        foreach (var file in addTask.TaskFiles.Distinct())
+                        {
+                            var fileName = file.FileName;
+                            var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.EmployeeName}";
+                            path = _generalConfig.UploadFiles(file, name, $"Files/PersonalTasks/{addTask.EmployeeName}").Result.ToString();
+
+                            TaskFile taskFile = new TaskFile
+                            {
+                                TaskId = id,
+                                FileName = fileName,
+                                FilePath = path,
+                                CreatedById = addTask.CreatedById
+                            };
+                            await _dbContext.TaskFiles.AddAsync(taskFile);
+                        }
+                        await _dbContext.SaveChangesAsync();
+
+                    }
+
+                }
 
 
                 return new ResponseMessage
                 {
 
                     Message = "Task Added Successfully",
-                    Success = true
+                    Success = true,
+                    Data = id
                 };
             }
             else
@@ -151,29 +187,11 @@ namespace IntegratedImplementation.Services.Task
             }
         }
 
-        public async Task<ResponseMessage> EditTask(TaskGetDto editTask)
+        public async Task<ResponseMessage> EditTask(TaskPostDto editTask)
         {
             var path = "";
 
-            if (editTask.ProjectId != null)
-            {
-
-                if (editTask.File != null)
-                {
-                    var name = $"{Path.GetFileNameWithoutExtension(editTask.File.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editTask.EmployeeName}";
-                    path = _generalConfig.UploadFiles(editTask.File, name, $"Files/Projects/{editTask.ProjectName}").Result.ToString();
-                }
-            }
-            else
-            {
-
-                if (editTask.File != null)
-                {
-                    var name = $"{Path.GetFileNameWithoutExtension(editTask.File.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editTask.TaskName}";
-                    path = _generalConfig.UploadFiles(editTask.File, name, $"Files/Tasks/{editTask.EmployeeName}").Result.ToString();
-                }
-            }
-
+            
             var task = _dbContext.Tasks.Find(editTask.Id);
 
             if (task != null)
@@ -188,23 +206,80 @@ namespace IntegratedImplementation.Services.Task
                 
                 task.TaskStatuses = Enum.Parse<TaskStatuses>(editTask.TaskStatuses);
                 task.TaskDescription = editTask.TaskDescription;
-                if (editTask.File != null)
-                {
-                    task.FilePath = path;
-                }
+                
                 await _dbContext.SaveChangesAsync();
                
+                
+                if (editTask.ProjectId != null)
+                {
+
+                    if (editTask.TaskFiles != null && editTask.TaskFiles.Count > 0)
+                    {
+
+                        foreach (var file in editTask.TaskFiles.Distinct())
+                        {
+                            var fileName = file.FileName;
+                            var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editTask.EmployeeName}";
+                            path = _generalConfig.UploadFiles(file, name, $"Files/ProjectTasks/{editTask.ProjectName}").Result.ToString();
+
+                            TaskFile taskFile = new TaskFile
+                            {
+                                TaskId = task.Id,
+                                FileName = fileName,
+                                FilePath = path,
+                                CreatedById = editTask.CreatedById
+                            };
+                            await _dbContext.TaskFiles.AddAsync(taskFile);
+                        }
+                        await _dbContext.SaveChangesAsync();
+
+                    }
+                }
+                else
+                {
+
+
+                    if (editTask.TaskFiles != null && editTask.TaskFiles.Count > 0)
+                    {
+
+                        foreach (var file in editTask.TaskFiles.Distinct())
+                        {
+                            var fileName = file.FileName;
+                            var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editTask.EmployeeName}";
+                            path = _generalConfig.UploadFiles(file, name, $"Files/PersonalTasks/{editTask.EmployeeName}").Result.ToString();
+
+                            TaskFile taskFile = new TaskFile
+                            {
+                                TaskId = task.Id,
+                                FileName = fileName,
+                                FilePath = path,
+                                CreatedById = editTask.CreatedById
+                            };
+                            await _dbContext.TaskFiles.AddAsync(taskFile);
+                        }
+                        await _dbContext.SaveChangesAsync();
+
+                    }
+
+                }
                 if (editTask.TaskStatuses == "COMPLETE")
                 {
-                    await _chatService.Clients.Group("task").getTaskNotice(editTask, "task");
+                    var task2 = await _dbContext.Tasks.Where(u => u.Id == editTask.Id).AsNoTracking()
+                                .ProjectTo<TaskGetDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+                    await _chatService.Clients.Group("task").getTaskNotice(task2, "task");
                 }
+                return new ResponseMessage
+                {
+                    Message = "Task Updated Successfully",
+                    Success = true
+                };
             }
-
-            return new ResponseMessage 
-            { 
-                Message = "Task Updated Successfully",
-                Success = true 
+            return new ResponseMessage
+            {
+                Message = "Task Not Found",
+                Success = false
             };
+
         }
 
         public async Task<ResponseMessage>ChangeStatus(TaskStatusDto editStatus)

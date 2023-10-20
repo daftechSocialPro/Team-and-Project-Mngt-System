@@ -2,11 +2,20 @@
 using static IntegratedInfrustructure.Data.EnumList;
 using IntegratedInfrustructure.Model.Project;
 using IntegratedInfrustructure.Model.HRM;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IntegratedInfrustructure.Model.Task
 {
     public class TaskList : WithIdModel
     {
+        public TaskList() 
+        {
+            TaskFiles = new HashSet<TaskFile>();
+        }
+
+        [InverseProperty(nameof(TaskFile.Task))]
+        public ICollection<TaskFile> TaskFiles { get; set; }
+        
         public string TaskName { get; set; }
         public string TaskDescription { get; set; }
         public DateTime EndDate { get; set; }

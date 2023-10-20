@@ -2,6 +2,7 @@
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.Task;
 using IntegratedInfrustructure.Model.Team;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace IntegratedImplementation.DTOS.Project
         public List<SelectProjectEmployeeListDto>? ProjectEmployees { get; set; }
         public List<ClientGetDto>? ProjectClients { get; set; }
         public List<TaskGetDto>? TaskLists { get; set; }
+        public List<ProjectFileGetDto>? ProjectFiles { get; set; }
 
     }
 
@@ -46,7 +48,9 @@ namespace IntegratedImplementation.DTOS.Project
 
         public string CreatedById { get; set; } = null!;
         public List<Guid>? ProjectEmployees { get; set; }
+        public List<Guid>? ProjectClients { get; set; }
         public List<Guid>? TaskLists { get; set; }
+        public List<IFormFile>? ProjectFiles { get; set; }
     }
 
     

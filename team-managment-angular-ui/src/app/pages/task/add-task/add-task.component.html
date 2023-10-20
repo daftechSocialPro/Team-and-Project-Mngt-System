@@ -10,7 +10,7 @@
     <form [formGroup]="TaskForm" (submit)="onSubmit()">
         <div class="p-fluid p-formgrid grid">
             <div class="field col-12">
-                <p-fileUpload   (onSelect)="onUpload($event)" [multiple]="false"
+                <p-fileUpload   (onSelect)="onUpload($event)" [multiple]="true"
                  [maxFileSize]="50000000">
                 <!-- <ng-template pTemplate="content">
                     <ul *ngIf="uploadedFiles.length">

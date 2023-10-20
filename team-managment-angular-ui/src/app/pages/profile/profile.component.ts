@@ -36,9 +36,7 @@ export class ProfileComponent implements OnInit {
     this.employeeService.getEmployee(this.user.EmployeeId).subscribe({
       next: (res) => {
        this.employee = res   
-       console.log("this.employee",this.employee)
       },error: (err) => {
-        console.log(err)
       }
     })
 }
@@ -73,7 +71,6 @@ onUpload2(event: any) {
     this.imagePath = myReader.result;
   }
   myReader.readAsDataURL(file);
-  console.log(this.fileGH)
   const formData = new FormData();
       formData.append("Id", this.employee.id)
       formData.append("Image", this.fileGH);

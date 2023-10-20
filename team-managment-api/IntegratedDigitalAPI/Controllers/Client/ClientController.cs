@@ -6,6 +6,7 @@ using IntegratedImplementation.DTOS.Team;
 using IntegratedImplementation.Interfaces.Client;
 using IntegratedImplementation.Interfaces.Project;
 using IntegratedImplementation.Services.Project;
+using IntegratedInfrustructure.Migrations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -28,9 +29,22 @@ namespace IntegratedDigitalAPI.Controllers.Client
         {
             return Ok(await _clientService.GetClients());
         }
+        [HttpGet("GetClient")]
+        [ProducesResponseType(typeof(TeamGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetClient(Guid id)
+        {
+            return Ok(await _clientService.GetClient(id));
+        }
+        [HttpGet("getClientNoUser")]
+        [ProducesResponseType(typeof(EmployeeGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetClientNoUser()
+        {
+            return Ok(await _clientService.GetClientNoUser());
+        }
+
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddProject([FromForm] ClientPostDto client)
+        public async Task<IActionResult> AddClient([FromForm] ClientPostDto client)
         {
             if (ModelState.IsValid)
             {
@@ -48,6 +62,19 @@ namespace IntegratedDigitalAPI.Controllers.Client
             if (ModelState.IsValid)
             {
                 return Ok(await _clientService.EditClient(client));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpPost("addContactsToClient")]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddContactToClient(List<AddToClientDto> addToClient)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _clientService.AddContactToClient(addToClient));
             }
             else
             {

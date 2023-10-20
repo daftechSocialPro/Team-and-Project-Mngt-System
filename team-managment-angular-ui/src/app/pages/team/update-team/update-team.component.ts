@@ -37,11 +37,9 @@ export class UpdateTeamComponent implements OnInit {
       teamEmployees: [null, Validators.required],
       teamProjects: [null, Validators.required]
     })
-   console.log(this.team)
    this.TeamForm.controls['teamName'].setValue(this.team.teamName )
    this.TeamForm.controls['teamEmployees'].setValue( this.team.teamEmployees.map(item => ({ value: item.id, label: item.name })) )
    this.TeamForm.controls['teamProjects'].setValue( this.team.teamProjects.map(item => ({ value: item.projectId, label: item.name })) )
-   console.log(this.TeamForm.value)
 
   }
 
@@ -71,7 +69,6 @@ export class UpdateTeamComponent implements OnInit {
           // teamEmployees:this.TeamForm.value.teamEmployees.map(item=>item.id),
           // teamProjects: this.TeamForm.value.teamProjects.map(item=>item.id)
         }
-        console.log(editTeam)
         this.teamService.editTeam(editTeam).subscribe({
           next: (res) => {
             if (res.success) {

@@ -62,7 +62,7 @@ namespace IntegratedInfrustructure.Data
         public enum GeneralCodeType
         {
             EMPLOYEEPREFIX,
-            TASKPREFIX
+            COMPLAINTPREFIX
         }
 
         public enum ApplicantStatus
@@ -146,6 +146,7 @@ namespace IntegratedInfrustructure.Data
         }
         public enum ComplaintType
         {
+            NEW
 
         }
         public enum ComplaintStatus
@@ -155,6 +156,14 @@ namespace IntegratedInfrustructure.Data
             ONHOLD,
             RESOLVED,
             REOPENED
+        }
+        public enum ContractStatus
+        {
+            DRAFT,
+            ACTIVE,
+            EXPIRED,
+            TERMINATED,
+            RENEWED
         }
     }
 }

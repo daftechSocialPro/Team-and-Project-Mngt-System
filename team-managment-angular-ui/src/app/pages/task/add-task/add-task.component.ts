@@ -83,15 +83,10 @@ export class AddTaskComponent implements OnInit{
         
       })
     }
-     console.log("projectId",this.projectId)
-     console.log("projectEmployees",this.projectEmployees)
-     console.log("teamProject",this.teamProject)
     
   }
 
   onSubmit(){
-    console.log(this.TaskForm.value)
-    console.log(this.uploadedFiles)
     if(this.TaskForm.valid){
       if (this.TaskForm.value.ProjectId === null){
         var taskAdd:any = {
@@ -156,7 +151,9 @@ export class AddTaskComponent implements OnInit{
           formData.append(key, (taskAdd as any)[key]);
         }
       }
-      formData.append("FilePath", this.uploadedFiles[0]);
+      for (var i = 0; i < this.uploadedFiles.length; i++) {
+        formData.append("TaskFiles", this.uploadedFiles[i]);
+      }
       
 
       this.taskService.addTask(formData).subscribe({
@@ -218,7 +215,6 @@ export class AddTaskComponent implements OnInit{
     return this.userService.roleMatch(allowedRoles)
   }
   onUpload(event: any) {
-    console.log(event)
     for (const file of event.files) {
       this.uploadedFiles.push(file);
     }

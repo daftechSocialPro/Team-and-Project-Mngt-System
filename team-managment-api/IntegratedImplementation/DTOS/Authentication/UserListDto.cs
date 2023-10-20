@@ -12,7 +12,8 @@ namespace Implementation.DTOS.Authentication
     public class UserListDto
     {
         public string Id { get; set; } = null!;
-        public Guid EmployeeId { get; set; }
+        public Guid? ClientId { get; set; }
+        public Guid? EmployeeId { get; set; }
         public string Name { get; set; } = null!;
         
         public string ImagePath { get; set; }
@@ -39,7 +40,8 @@ namespace Implementation.DTOS.Authentication
 
     public class AddUSerDto
     {
-        public Guid EmployeeId { get; set; }
+        public Guid? EmployeeId { get; set; }
+        public Guid? ClientId { get; set; }
         public string UserName { get; set; } = null!;
         public string Password { get; set; } = null!;
 

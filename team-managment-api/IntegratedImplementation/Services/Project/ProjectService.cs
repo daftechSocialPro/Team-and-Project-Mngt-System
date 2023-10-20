@@ -3,9 +3,12 @@ using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.Project;
+using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Project;
 using IntegratedImplementation.Interfaces.Team;
 using IntegratedInfrustructure.Data;
+using IntegratedInfrustructure.Migrations;
+using IntegratedInfrustructure.Model.Complaint;
 using IntegratedInfrustructure.Model.Project;
 using IntegratedInfrustructure.Model.Team;
 using Microsoft.EntityFrameworkCore;
@@ -20,11 +23,13 @@ namespace IntegratedImplementation.Services.Project
         private readonly ApplicationDbContext _dbContext;
         private readonly ITeamService _teamService;
         private readonly IMapper _mapper;
-        public ProjectService(ApplicationDbContext dbContext, IMapper mapper, ITeamService teamService)
+        private readonly IGeneralConfigService _generalConfig;
+        public ProjectService(ApplicationDbContext dbContext, IMapper mapper, ITeamService teamService, IGeneralConfigService generalConfig)
         {
             _dbContext = dbContext;
             _teamService= teamService;
             _mapper = mapper;
+            _generalConfig = generalConfig;
         }
 
         public async Task<List<ProjectGetDto>> GetProjects()
@@ -59,6 +64,7 @@ namespace IntegratedImplementation.Services.Project
         public async Task<ResponseMessage> AddProject(ProjectPostDto addProject)
         {
             if (addProject.DueDate < addProject.AssignedDate)
+
             {
                 return new ResponseMessage
                 {
@@ -69,6 +75,7 @@ namespace IntegratedImplementation.Services.Project
             }
             else
             {
+                var id = Guid.NewGuid();
 
                 if (addProject.TeamId != null)
                 {
@@ -80,7 +87,7 @@ namespace IntegratedImplementation.Services.Project
                         ProjectStatus = Enum.Parse<ProjectStatus>(addProject.ProjectStatus),
                         AssignedTo = Enum.Parse<AssignedTo>(addProject.AssignedTo),
                         GitHubLink = addProject.GitHubLink,
-                        Id = Guid.NewGuid(),
+                        Id = id,
                         AssignedDate = addProject.AssignedDate,
                         CreatedById = addProject.CreatedById,
                     };
@@ -105,7 +112,7 @@ namespace IntegratedImplementation.Services.Project
                         DueDate = addProject.DueDate,
                         ProjectStatus = Enum.Parse<ProjectStatus>(addProject.ProjectStatus),
                         AssignedTo = Enum.Parse<AssignedTo>(addProject.AssignedTo),
-                        Id = Guid.NewGuid(),
+                        Id = id,
                         AssignedDate = DateTime.Now,
                         GitHubLink = addProject.GitHubLink,
                         CreatedById = addProject.CreatedById,
@@ -120,6 +127,37 @@ namespace IntegratedImplementation.Services.Project
                         createdBy = addProject.CreatedById
                     };
                     await AddEmployeeToProject(addToProject);
+                }
+                if (addProject.ProjectClients != null)
+                {
+                    var addToProject = new AddToProjectDto()
+                    {
+                        employeeList = addProject.ProjectClients,
+                        projectId = id,
+                        createdBy = addProject.CreatedById
+                    };
+                    await AddClientToProject(addToProject);
+                    await _dbContext.SaveChangesAsync();
+                }
+                if (addProject.ProjectFiles != null && addProject.ProjectFiles.Count > 0)
+                {
+                    var path = "";
+                    foreach (var file in addProject.ProjectFiles.Distinct())
+                    {
+                        var fileName = file.FileName;
+                        var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addProject.ProjectName}";
+                        path = _generalConfig.UploadFiles(file, name, $"Files/ProjectFiles/{addProject.ProjectName}").Result.ToString();
+                        ProjectFile projectFile = new ProjectFile
+                        {
+                            ProjectId = id,
+                            FileName = fileName,
+                            FilePath = path,
+                            CreatedById = addProject.CreatedById
+                        };
+                        await _dbContext.ProjectFiles.AddAsync(projectFile);
+                    }
+                    await _dbContext.SaveChangesAsync();
+
                 }
 
 
@@ -156,7 +194,27 @@ namespace IntegratedImplementation.Services.Project
                 Success = true
             };
         }
+        public async Task<ResponseMessage> AddClientToProject(AddToProjectDto addToProject)
+        {
+            foreach (var emp in addToProject.employeeList.Distinct())
+            {
+                ProjectClient clients = new ProjectClient
+                {
+                    ClientId = emp,
+                    ProjectId = addToProject.projectId,
+                    CreatedById = addToProject.createdBy
+                };
+                await _dbContext.ProjectClients.AddAsync(clients);
+                await _dbContext.SaveChangesAsync();
+            }
 
+            return new ResponseMessage
+            {
+
+                Message = "Clients Added Successfully",
+                Success = true
+            };
+        }
         public async Task<ResponseMessage> EditProject(ProjectPostDto editProject)
         {
             var project = _dbContext.Projects.Find(editProject.Id);
@@ -200,9 +258,41 @@ namespace IntegratedImplementation.Services.Project
                         CreatedById = editProject.CreatedById
 
                     };
-                    await _dbContext.TeamProjects.AddAsync(teamProject);
+                    
                     _dbContext.TeamProjects.RemoveRange(_dbContext.TeamProjects.Where(a => a.ProjectId.Equals(project.Id)));
                     _dbContext.ProjectEmployees.RemoveRange(_dbContext.ProjectEmployees.Where(a => a.ProjectId.Equals(project.Id)));
+                    await _dbContext.TeamProjects.AddAsync(teamProject);
+                    await _dbContext.SaveChangesAsync();
+
+                }
+                if (editProject.ProjectClients != null)
+                {
+                    var addToProject = new AddToProjectDto()
+                    {
+                        employeeList = editProject.ProjectClients,
+                        projectId = project.Id,
+                        createdBy = editProject.CreatedById
+                    };
+                    await AddClientToProject(addToProject);
+                    await _dbContext.SaveChangesAsync();
+                }
+                if (editProject.ProjectFiles != null && editProject.ProjectFiles.Count > 0)
+                {
+                    var path = "";
+                    foreach (var file in editProject.ProjectFiles.Distinct())
+                    {
+                        var fileName = file.FileName;
+                        var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editProject.ProjectName}";
+                        path = _generalConfig.UploadFiles(file, name, $"Files/ProjectFiles/{editProject.ProjectName}").Result.ToString();
+                        ProjectFile projectFile = new ProjectFile
+                        {
+                            ProjectId = project.Id,
+                            FileName = fileName,
+                            FilePath = path,
+                            CreatedById = editProject.CreatedById
+                        };
+                        await _dbContext.ProjectFiles.AddAsync(projectFile);
+                    }
                     await _dbContext.SaveChangesAsync();
 
                 }
@@ -310,6 +400,7 @@ namespace IntegratedImplementation.Services.Project
 
          
         }
+
 
 
     }
