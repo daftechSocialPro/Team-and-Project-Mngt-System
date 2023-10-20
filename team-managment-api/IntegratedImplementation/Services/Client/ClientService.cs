@@ -71,7 +71,8 @@ namespace IntegratedImplementation.Services.Client
                 Email = addClient.Email,
                 PhoneNo= addClient.PhoneNo,
                 ImagePath = path,
-                ContractEndDate= addClient.ContractEndDate
+                ContractEndDate= addClient.ContractEndDate,
+                ContractStatus = Enum.Parse<ContractStatus>(addClient.ContractStatus)
 
              };
             await _dbContext.Clients.AddAsync(client);
@@ -135,6 +136,7 @@ namespace IntegratedImplementation.Services.Client
                 client.PhoneNo = editClient.PhoneNo;
                 client.Description = editClient.Description;
                 client.ContractEndDate= editClient.ContractEndDate;
+                client.ContractStatus = Enum.Parse<ContractStatus>(editClient.ContractStatus);
                 
                 if (editClient.Image != null)
                 {

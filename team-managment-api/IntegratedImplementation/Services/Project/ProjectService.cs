@@ -64,6 +64,7 @@ namespace IntegratedImplementation.Services.Project
         public async Task<ResponseMessage> AddProject(ProjectPostDto addProject)
         {
             if (addProject.DueDate < addProject.AssignedDate)
+
             {
                 return new ResponseMessage
                 {

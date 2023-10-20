@@ -18,6 +18,7 @@ namespace IntegratedImplementation.DTOS.Client
         public string Description { get; set; }
         public string PhoneNo { get; set; }
         public DateTime ContractEndDate { get; set; }
+        public string? ContractStatus { get; set; }
         public IFormFile? Image { get; set; } = null!;
         public string? ImagePath { get; set; } = null!;
         public List<ClientFileGetDto>? ClientFiles { get; set; }
@@ -33,6 +34,7 @@ namespace IntegratedImplementation.DTOS.Client
         public string? Description { get; set; }
         public string? PhoneNo { get; set; }
         public DateTime ContractEndDate { get; set; }
+        public string? ContractStatus { get; set; }
         public IFormFile? Image { get; set; } = null!;
         public string? ImagePath { get; set; } = null!;
         public List<IFormFile>? ClientFiles { get; set; }

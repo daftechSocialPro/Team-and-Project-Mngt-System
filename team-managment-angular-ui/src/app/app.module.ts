@@ -18,7 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { FormsModule } from '@angular/forms';
-import { TableModule } from 'primeng/table';
+import { CellEditor, TableModule } from 'primeng/table';
 import { EmployeeComponent } from './pages/employee/employee.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -66,9 +66,10 @@ import { ViewTaskComponent } from './components/view-task/view-task.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ChangePasswordComponent } from './pages/profile/change-password/change-password.component';
 import { ClientComponent } from './pages/client/client.component';
-import { EditclientComponent } from './pages/client/editclient/editclient.component';
+import { EditclientComponent } from './pages/client/edit-client/editclient.component';
 import { AddClientComponent } from './pages/client/add-client/add-client.component';
 import { ClientDetailComponent } from './pages/client/client-detail/client-detail.component';
+import { EditorModule } from 'primeng/editor';
 
 
 
@@ -116,6 +117,7 @@ import { ClientDetailComponent } from './pages/client/client-detail/client-detai
         InputTextareaModule,
 		ChartModule,
         InputSwitchModule,
+        EditorModule
         
 		
         

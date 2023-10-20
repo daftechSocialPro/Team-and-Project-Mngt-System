@@ -99,6 +99,7 @@ namespace IntegratedImplementation.Datas
             CreateMap<TaskList, TaskStatusDto>()
                 ;
             CreateMap<ClientList, ClientGetDto>()
+                .ForMember(a => a.ContractStatus, e => e.MapFrom(mfg => mfg.ContractStatus.ToString()))
                 ;
 
             CreateMap<ClientFile, ClientFileGetDto>();
@@ -114,7 +115,10 @@ namespace IntegratedImplementation.Datas
                 .ForMember(a => a.ClientFiles, e => e.MapFrom(mfg => mfg.Client.ClientFiles))
                           ;
 
-            CreateMap<ComplaintList, ComplaintGetDto>();
+            CreateMap<ComplaintList, ComplaintGetDto>()
+                .ForMember(a => a.ComplaintType, e => e.MapFrom(mfg => mfg.ComplaintType.ToString()))
+                .ForMember(a => a.ComplaintStatus, e => e.MapFrom(mfg => mfg.ComplaintStatus.ToString()))
+                ;
 
             CreateMap<ComplaintFile, ComplaintFileGetDto>();
 

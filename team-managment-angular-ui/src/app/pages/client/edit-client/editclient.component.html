@@ -1,0 +1,123 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title"> Edit Client</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            <form [formGroup]="ClientForm" (submit)="onSubmit()">
+                <div class="p-fluid p-formgrid grid">
+                    <div *ngIf="client.clientFiles !== null" class="field col-12">
+                        <p-fileUpload   (onSelect)="onUpload($event)" [multiple]="true" 
+                        [maxFileSize]="50000000">
+                        <ng-template pTemplate="content">
+                            <ul >
+                                <li *ngFor="let file of client.clientFiles">{{file.fileName}} 
+                                    <a (click)="viewPdf(file.filePath)" target="_blank" >  <i *ngIf="isPDFFile(file.filePath)" class="pi pi-file-pdf text-primary p-2" style="font-size: 20px;background-color: #5c1d1612; border-radius: 50%; " ></i>
+                                        <i *ngIf="isImageFile(file.filePath)" class="pi pi-image text-primary p-2" style="font-size: 20px;background-color: #5c1d1612; border-radius: 50%; " ></i>
+                                        <i *ngIf="!isImageFile(file.filePath) && !isPDFFile(file.filePath)" class="pi pi-file text-primary p-2" style="font-size: 20px;background-color: #5c1d1612; border-radius: 50%; " ></i>
+                                        &nbsp;&nbsp;
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                            <div></div>
+                        </ng-template>
+                    </p-fileUpload>
+                    
+                </div>
+                
+                <div class="field col-12 md:col-4">
+                    <label htmlFor="firstname2">Client Name</label>
+                    <input pInputText id="firstname2" formControlName="Name" type="text" />
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label htmlFor="firstname2">Client Email</label>
+                    <input pInputText id="firstname2" formControlName="Email" type="text" />
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label htmlFor="firstname2">Client Address</label>
+                    <input pInputText id="firstname2" formControlName="Address" type="text" />
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label htmlFor="firstname2">Client PhoneNo</label>
+                    <input pInputText id="firstname2" formControlName="PhoneNo" type="text" />
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label htmlFor="firstname2">Client Description</label>
+                    <input pInputText id="firstname2" formControlName="Description" type="text" />
+                </div>
+                <div class="field col-12">
+                    <div class=" field col-12 md:col-2 align-items-right">
+                        <button pButton type="button" (click)="addContact()" label="Add Contact"></button>
+                    </div>
+                    <form [formGroup]="contactForm" >
+                        <p-table [value]="client.clientContacts" [paginator]="false" [rows]="5">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Position</th>
+                                    <th></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-contact let-i="rowIndex">
+                                
+                                <tr >
+                                    <td>
+                                        {{contact.name}}
+                                    </td>
+                                    <td>
+                                        {{contact.email}}
+                                    </td>
+                                    <td>
+                                        {{contact.phoneNo}}
+                                    </td>
+                                    <td>
+                                        {{contact.postion}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                        </p-table>
+                        <p-table [value]="contactControls.controls" [paginator]="false" [rows]="5">
+                            
+                            
+                            <ng-template pTemplate="body" let-contact let-i="rowIndex">
+                                
+                                <tr [formGroup]="contact">
+                                    <td>
+                                        
+                                        <input pInputText id="firstname2" formControlName="name" type="text" />
+                                    </td>
+                                    <td>
+                                        
+                                        <input pInputText id="firstname2" formControlName="email" type="email" />
+                                    </td>
+                                    <td>
+                                        <input pInputText id="firstname2" formControlName="phone" type="text" />
+                                        
+                                    </td>
+                                    <td>
+                                        <input pInputText id="firstname2" formControlName="phone" type="text" />
+                                        <!-- <input type="text" formControlName="phone" placeholder="Phone"> -->
+                                    </td>
+                                    <td>
+                                        <button pButton type="button" (click)="removeContact(i)" label="Remove" class="p-button-secondary"></button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        
+                        
+                    </form>
+                </div>
+                <button pButton type="submit" [disabled]="!ClientForm.valid" label="Submit"></button>
+            </div>
+        </form>
+        
+    </div>
+</div>
+</div>

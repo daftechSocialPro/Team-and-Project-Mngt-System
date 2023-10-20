@@ -71,7 +71,7 @@
                         {{client.description }}
                     </td>
                     <td>
-                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editEmployee(employee.id)"></button>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editClient(client)"></button>
                     </td>
                 </tr>
             </ng-template>
@@ -91,8 +91,3 @@
 </div>
 
 
-
-<p-dialog header="Add Client" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
-    [resizable]="false">
-    <app-add-client (clientAdded)="onClientAdded($event)" />
-</p-dialog>
