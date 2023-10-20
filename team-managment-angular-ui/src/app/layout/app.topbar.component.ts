@@ -112,7 +112,6 @@ export class AppTopBarComponent implements OnInit {
       return this.userService.roleMatch(allowedRoles)
     }
     redirectToComponent() {
-      // Use the router's navigate method to navigate to the desired component
       this.router.navigate(['/profile']);
   }
     viewTask(task: any) {

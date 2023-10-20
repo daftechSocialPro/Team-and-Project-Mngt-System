@@ -1,0 +1,130 @@
+<div *ngIf="client">
+
+    <div class="card">
+        <h5 style="font-size: 16px; font-weight:700; color: #3366fe;">{{client.name}}'s Detail</h5>
+        <div style="display: flex;  gap: 20px;">
+            <div style="flex: 2.5;">
+                <div class="card">
+                    <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+                        <div class="flex flex align-items-center  " style="margin-right: 20px;">
+                            <img [alt]="" [src]="getImage(client.imagePath)" width="32"
+                                style="vertical-align: middle; border-radius: 50%; width: 100px; height: 100px;" />
+                            <span class="ml-2 font-semibold" style="font-size: 30px;">{{client.name}}</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 mb-3" style="margin-top: 10px;">
+                        <div class="flex-column flex-wrap gap-4">
+                            <div class="">
+                                <div style="display: flex; flex-direction: column;">
+                                    <div class="flex">
+                                        <span class="ml-2 font-semibold">Address:</span>
+                                        <span style="margin-left: 10px;">{{client.address}}</span>
+                                    </div>
+                                    <div class="flex">
+                                        <span class="ml-2 font-semibold">Phone Number:</span>
+                                        <span style="margin-left: 10px;">{{client.phoneNo}}</span>
+                                    </div>
+                                    <div class="flex">
+                                        <span class="ml-2 font-semibold">Email:</span>
+                                        <span style="margin-left: 10px;"> {{client.email}}</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column;">
+                                        <span style="margin-left: 8px;" class="font-semibold">{{client.name}} Projects:</span>
+                                        <div style="margin-left: 10px;">
+                                            <span *ngFor="let project of client.projects">
+                                              <i class="pi pi-folder"></i> {{ project }}
+                                            </span>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+              
+          
+                    </div>
+                </div>
+            </div>
+
+        <div style="flex: 1.5;" >
+                    <div class="card chat-container">
+                        <div class="flex-column flex-wrap gap-4">
+                            <div style="display: flex; flex-direction: column;">
+                                <h5 class="font-bold">About {{client.name}}</h5>
+                                <span style="margin-left: 10px;">{{client.description}}</span>
+                            </div>
+                        </div>
+                        <h5 class="font-bold">{{client.name}}'s Files</h5>
+                        <div *ngIf="client.clientFiles !== null" class="field col-12: md-2 mt-2">
+                            <a (click)="viewPdf(client.clientFiles)" target="_blank">
+                              <div style="display: flex; flex-direction: column;">
+                                <ng-container *ngFor="let file of client.clientFiles">
+                                  <div *ngIf="isPDFFile(file.filePath)" class="file-item">
+                                    <i class="pi pi-file-pdf text-primary p-2" style="font-size: 30px;"></i>
+                                    <span class="file-name-pdf">{{ file.fileName }}</span>
+                                  </div>
+                                  <div *ngIf="isImageFile(file.filePath)" style="display: flex;">
+                                    <i class="pi pi-image text-primary p-2" style="font-size: 30px;" ></i>
+                                    <span class="file-name-image" style="font-size: 20px;" >{{ file.fileName }}</span>
+                                  </div>
+                                </ng-container>
+                              </div>
+                            </a>
+                          </div>
+
+                    </div>
+          
+                </div> 
+
+
+
+        </div>
+
+        <h5 class="font-bold" style="margin-left: 20px;">Contact Persons</h5>
+        <!-- <div class="card col-12">
+            <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
+                <p-dropdown [(ngModel)]="selectedValue" [options]="dropdownOptions" (onChange)="onDataViewChange()"
+                    class=""></p-dropdown>
+                <button pButton [label]="allowedRoles(['Admin']) ? 'Assign Task': 'Create Task'"
+                    class="p-button-outlined mb-2" icon="pi pi-plus"
+                    (click)="assignTask(project.id,project.teamProjects,project.projectEmployees)"></button>
+            </div>
+
+            <p-table [value]="dataViewValue" class="col-12" scrollDirection="both" [scrollable]="true" [paginator]="true" [rows]="10"
+            scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width:200px" pFrozenColumn>Name</th>
+                    <th style="width:200px">Description </th>
+                    <th style="width:200px">Status</th>
+                    <th style="width:200px">Priority</th>
+                    <th style="width: 200px">Due Date</th>
+                    <th style="width:200px">Owner</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-task>
+                <tr>
+                    <td style="width:200px" pFrozenColumn>{{task.taskName}}</td>
+                    <td pFrozenColumn>{{task.taskDescription}}</td>
+                    <td style="width:200px" pFrozenColumn>
+                        <span
+                        [class]="'status-badge status-'+task.taskStatuses.toLowerCase()">{{task.taskStatuses}}</span>
+                    </td>
+                    <td style="width:200px" pFrozenColumn>
+                        <span
+                        [class]="'priority-badge prio-'+task.taskPriority.toLowerCase()">{{task.taskPriority}}</span>
+                    </td>
+                    <td style="width:200px" pFrozenColumn>
+                        
+                        {{task.endDate | date:'dd/MM/yyyy'}}
+                    </td>
+                    <td colspan="5">
+                        <img [alt]="" [src]="getImage(task.employeeImagePath)" width="32"
+                        style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
+                        <span class="ml-2">{{task.employeeName}}</span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+      </div> -->
