@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Table } from 'primeng/table';
 import { CommonService } from 'src/app/services/common.service';
 import { ClientService } from 'src/app/services/client.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client',
@@ -21,6 +22,7 @@ export class ClientComponent  implements OnInit {
   constructor(
     private clientService: ClientService,
     private commonService: CommonService,
+    private router: Router,
     private modalSerivce: NgbModal) { }
   ngOnInit(): void {
 this.getClients()
@@ -28,7 +30,7 @@ this.getClients()
   getClients() {
 
  
-    this.clientService. getClient().subscribe({
+    this.clientService. getClients().subscribe({
       next: (res) => {
         this.clients = res
         this.loading = false
@@ -59,5 +61,9 @@ this.getClients()
     
     this.visible = false;
     this.getClients()
+  }
+  clientDetail(clientId: any)
+  {
+    this.router.navigate(['/clientdetail',clientId])
   }
 }

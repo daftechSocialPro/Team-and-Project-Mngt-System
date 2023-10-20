@@ -16,6 +16,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NoticeComponent } from './pages/notice/notice.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ClientComponent } from './pages/client/client.component';
+import { ClientDetailComponent } from './pages/client/client-detail/client-detail.component';
 
 @NgModule({
     imports: [
@@ -34,6 +35,8 @@ import { ClientComponent } from './pages/client/client.component';
                     { path: 'teams',component:TeamComponent},
                     { path: 'projects',component:ProjectComponent },
                     { path: 'projectdetail/:projectId',component:ProjectDetailComponent },
+                    { path: 'clientdetail/:clientId',component:ClientDetailComponent },
+                    
                     
                 ]
 

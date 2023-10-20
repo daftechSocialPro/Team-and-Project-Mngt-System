@@ -1,1 +1,53 @@
-<p>add-client works!</p>
+<div class="card">
+    <form [formGroup]="ClientForm" (submit)="onSubmit()">
+        <div class="p-fluid p-formgrid grid">
+          <div class="p-fluid p-formgrid grid">
+            <div class="field col-12 ">
+                <input #file (change)="onUpload2($event)" type="file" style="display: none;" accept="pdf/*" />
+                    <div class="pt-2">
+                        <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
+                            title="Upload new task file">
+                            <i class="bi bi-upload"></i> Upload logo
+                        </a>
+                    </div>
+                    </div>
+            
+            <div class="field col-12 md:col-6">
+                <label htmlFor="name">Name</label>
+                <input pInputText id="name" formControlName="Name" type="text" />
+            </div>
+            <div class="field col-12 md:col-6">
+                <label htmlFor="name">Email </label>
+                <input pInputText id="name" formControlName="Email" type="text" />
+            </div>
+            <div class="field col-12 md:col-6">
+                <label htmlFor="name">Phone Number</label>
+                <input pInputText id="name" formControlName="PhoneNo" type="text" />
+            </div>
+            <div class="field col-12 md:col-6">
+                <label htmlFor="name">Address</label>
+                <input pInputText id="name" type="text" formControlName="Address" />
+            </div>
+            <div class="field col-12  ">
+                <label htmlFor="name">Description</label>
+                <textarea id="name" formControlName="Description" class="custom-textarea"></textarea>
+              </div>
+              <div class="field col-12">
+                <p-fileUpload
+                  (onSelect)="onClientFilesSelect($event)"
+                  [multiple]="true"
+                  accept="image/*,application/pdf"
+                >
+                  <ng-template pTemplate="content">
+                    <ul *ngIf="clientFiles&&clientFiles.length">
+                      <li *ngFor="let file of clientFiles">{{ file.fileName }} - {{ file.filePath }}</li>
+                    </ul>
+                  </ng-template>
+                </p-fileUpload>
+              </div>
+              </div>
+            <hr />
+            <button pButton type="submit" [disabled]="!ClientForm.valid" label="Submit"></button>
+        </div>
+    </form>
+</div>
