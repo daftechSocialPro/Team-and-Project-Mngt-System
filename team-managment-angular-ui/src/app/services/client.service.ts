@@ -13,10 +13,18 @@ export class ClientService {
   getClients() {
     return this.http.get<any>(this.BaseURI + '/api/Client');
   }
+  
+  getClientsContact() {
+    return this.http.get<any>(this.BaseURI + '/api/Client/addContactsToClient');
+  }
 
   addClient (fromData : FormData){
 
     return this.http.post<any>(this.BaseURI+'/api/Client',fromData);
+  }
+  addClientcus(data:any){
+
+    return this.http.post<any>(this.BaseURI+'/api/Client/addContactsToClient',data);
   }
   getClient(clientId : any) {
     return this.http.get(this.BaseURI + '/api/Client/GetClient?id='+clientId);
