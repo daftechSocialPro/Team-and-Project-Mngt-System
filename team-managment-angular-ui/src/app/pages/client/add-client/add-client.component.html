@@ -1,61 +1,76 @@
 <div class="modal-content">
   <div class="modal-header">
-      <h5 class="modal-title"> Add Client</h5>
-      <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    <h5 class="modal-title"> Add Client</h5>
+    <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
   </div>
-
   
-<div class="card">
+  
+  <div class="card">
     <form [formGroup]="ClientForm" (submit)="onSubmit()">
-        <div class="p-fluid p-formgrid grid">
-          <div class="p-fluid p-formgrid grid">
-            <div class="field col-12 ">
-                <input #file (change)="onUpload2($event)" type="file" style="display: none;" accept="pdf/*" />
-                    <div class="pt-2">
-                        <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
-                            title="Upload new task file">
-                            <i class="bi bi-upload"></i> Upload logo
-                        </a>
-                    </div>
-                    </div>
-            
-            <div class="field col-12 md:col-6">
-                <label htmlFor="name">Name</label>
-                <input pInputText id="name" formControlName="Name" type="text" />
-            </div>
-            <div class="field col-12 md:col-6">
-                <label htmlFor="name">Email </label>
-                <input pInputText id="name" formControlName="Email" type="text" />
-            </div>
-            <div class="field col-12 md:col-6">
-                <label htmlFor="name">Phone Number</label>
-                <input pInputText id="name" formControlName="PhoneNo" type="text" />
-            </div>
-            <div class="field col-12 md:col-6">
-                <label htmlFor="name">Address</label>
-                <input pInputText id="name" type="text" formControlName="Address" />
-            </div>
-            <div class="field col-12  ">
-                <label htmlFor="name">Description</label>
-                <textarea id="name" formControlName="Description" class="custom-textarea"></textarea>
-              </div>
-              <div class="field col-12">
-                <p-fileUpload
-                  (onSelect)="onClientFilesSelect($event)"
-                  [multiple]="true"
-                  accept="image/*,application/pdf"
-                >
-                  <ng-template pTemplate="content">
-                    <ul *ngIf="clientFiles&&clientFiles.length">
-                      <li *ngFor="let file of clientFiles">{{ file.fileName }} - {{ file.filePath }}</li>
-                    </ul>
-                  </ng-template>
-                </p-fileUpload>
-              </div>
-              </div>
-            <hr />
-            <button pButton type="submit" [disabled]="!ClientForm.valid" label="Submit"></button>
+      <div class="row">
+        <div class="col-md-3 ">
+          <img  [src]="getImage2()" alt="Profile"
+          style="width: 230px; border-radius: 50%; height: 230px;">
+          <input #file (change)="onUpload2($event)" type="file" style="display: none;" accept="image/*" />
+          <div class="pt-2">
+            <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
+            title="Upload new profile image">
+            <i class="bi bi-upload"></i> Upload Logo
+          </a>
         </div>
-    </form>
+      </div>
+      <div class="col-md-9">
+        <div class="p-fluid p-formgrid grid">
+          
+          
+          <div class="field col-12 md:col-6">
+            <label htmlFor="name">Name</label>
+            <input pInputText id="name" formControlName="Name" type="text" />
+          </div>
+          <div class="field col-12 md:col-6">
+            <label htmlFor="name">Email </label>
+            <input pInputText id="name" formControlName="Email" type="text" />
+          </div>
+          <div class="field col-12 md:col-6">
+            <label htmlFor="name">Phone Number</label>
+            <input pInputText id="name" formControlName="PhoneNo" type="text" />
+          </div>
+          <div class="field col-12 md:col-6">
+            <label htmlFor="name">Address</label>
+            <input pInputText id="name" type="text" formControlName="Address" />
+          </div>
+          <div class="field col-12 md:col-6">
+            <label htmlFor="firstname2">Contract End Date</label>
+            <input pInputText id="firstname2" formControlName="ContractEndDate" type="date" />
+          </div>
+        
+
+          <div class="field col-12 md:col-6">
+              <label htmlFor="state">Contract Status</label>
+              <p-dropdown [options]="contractStatusDropdownItems" optionLabel="name"
+                  formControlName="ContractStatus" placeholder="Select Contract Status" [showClear]="true"></p-dropdown>
+          </div>
+
+          
+          <div class="field col-12">
+            <textarea rows="3" cols="15" placeholder="Client Description" formControlName="Description" pInputTextarea></textarea>
+          </div>
+          <div class="field col-12">
+            <p-fileUpload
+            (onSelect)="onClientFilesSelect($event)"
+            [multiple]="true"
+            accept="image/*,application/pdf"
+            >
+            
+          </p-fileUpload>
+        </div>
+      </div>
+      <hr />
+      
+    </div>
+    <button pButton type="submit" [disabled]="!ClientForm.valid" label="Submit"></button>
+    </div>
+</form>
+
 </div>
 </div>

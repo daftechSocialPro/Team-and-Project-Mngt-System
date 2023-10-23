@@ -60,6 +60,9 @@
             font-size: 1rem;
             display: none;
         }
+        .badge{
+            display: block;
+        }
     }
 
     .layout-menu-button {
@@ -72,6 +75,7 @@
         i {
             font-size: 1.25rem;
         }
+        
     }
 
     .layout-topbar-menu {
@@ -137,6 +141,7 @@
                 i {
                     font-size: 1rem;
                     margin-right: .5rem;
+                    
                 }
 
                 span {
@@ -147,3 +152,8 @@
         }
     }
 }
+.p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: none; 
+  }

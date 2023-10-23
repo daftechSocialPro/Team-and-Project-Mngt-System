@@ -1,62 +1,64 @@
 <div class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title"> Evaluate Completed Task</h5>
-        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
-    </div>
-    <div class="task-card">
-        <div class="task-header">
-          <div class="employee-image">
-            <img [src]="getImage(task.employeeImagePath)" alt="Image">
+  <div class="modal-header">
+    <h5 class="modal-title"> Evaluate Completed Task</h5>
+    <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+  </div>
+  <div class="task-card">
+    <div class="task-header">
+      <div class="employee-image">
+        <img [src]="getImage(task.employeeImagePath)" alt="Image">
+      </div>
+      <div class="task-header-info">
+        <h3>{{task.employeeName}}</h3>
+        <h3>{{task.taskName}}</h3>
+        <div class="task-details">
+          <div class="task-info">
+            <h5><label>End Date:</label> {{task.endDate| date:'yyyy-MM-dd'}}</h5>
+            <h5><label>Priority:</label> {{task.taskPriority}}</h5>
+            <h5><label>Project:</label> {{task.projectName}}</h5>
+
           </div>
-          <div class="task-header-info">
-            <h3>{{task.employeeName}}</h3>
-            <h3>{{task.taskName}}</h3>
-            <div class="task-details">
-              <div class="task-info">
-                <h5><label>End Date:</label> {{task.endDate| date:'yyyy-MM-dd'}}</h5>
-                <h5><label>Priority:</label> {{task.taskPriority}}</h5>
-                <h5><label>Project:</label> {{task.projectName}}</h5>
-                
-              </div>
-              
-            </div>
-            <div class="task-info" style="margin-top: 5px;">
-              <h5 ><label>Description:</label> <br>{{task.taskDescription}}</h5>
-              <div *ngIf="task.filePath !== null" class="field col-12: md-2 mt-2">
-                
-                <a (click)="viewPdf(task.filePath)" target="_blank" >  <i *ngIf="isPDFFile(task.filePath)" class="pi pi-file-pdf text-primary p-2" style="font-size: 30px;background-color: #5c1d1612; border-radius: 50%; " ></i>
-                  <i *ngIf="isImageFile(task.filePath)" class="pi pi-image text-primary p-2" style="font-size: 30px;background-color: #5c1d1612; border-radius: 50%; " ></i>
-                    &nbsp;&nbsp;
-                </a>
-              </div>
-    
-            </div>
-          </div>
+
         </div>
-        
-        
-        <div class="task-description">
-          
-          <form [formGroup]="TaskApprovalForm" (submit)="onSubmit()">
-            <div class="p-fluid p-formgrid grid">
-                
-                <div class="field col-12">
-                  <label for="state">Task Approval Status</label>
-                  <p-dropdown [options]="taskApprovalDropDown" optionLabel="name" formControlName="TaskApproval"
-                    placeholder="Select Task Status"></p-dropdown>
-                </div>
-                <div *ngIf="showInput() === 'REJECTED'" class="field col-12 md:col-6">
-                  <label for="rejection-remark">Rejection Remark</label>
-                  <input pInputText id="rejection-remark" formControlName="RejectionRemark" type="text" />
-                </div>
-                <div class="field col-12">
-                  <button pButton type="submit" [disabled]="!TaskApprovalForm.valid" label="Submit"></button>
-                </div>
-              </div>
-      
-          </form>
+        <div class="task-info" style="margin-top: 5px;">
+          <h5><label>Description:</label> <br>{{task.taskDescription}}</h5>
+          <div *ngIf="task.taskFiles.filePath !== null" class="field col-12: md-2 mt-2">
+            
+           <ng-container *ngFor="let file of task.taskFiles">{{file.fileName}} 
+              <a (click)="viewPdf(file.filePath)" target="_blank" >  <i *ngIf="isPDFFile(file.filePath)" class="pi pi-file-pdf text-primary p-2" style="font-size: 20px;background-color: #5c1d1612; border-radius: 50%; " ></i>
+                  <i *ngIf="isImageFile(file.filePath)" class="pi pi-image text-primary p-2" style="font-size: 20px;background-color: #5c1d1612; border-radius: 50%; " ></i>
+                  <i *ngIf="!isImageFile(file.filePath) && !isPDFFile(file.filePath)" class="pi pi-file text-primary p-2" style="font-size: 20px;background-color: #5c1d1612; border-radius: 50%; " ></i>
+                  &nbsp;&nbsp;
+              </a>
+            </ng-container>
+          </div>
+
         </div>
       </div>
-            
+    </div>
+
+
+    <div class="task-description">
+
+      <form [formGroup]="TaskApprovalForm" (submit)="onSubmit()">
+        <div class="p-fluid p-formgrid grid">
+
+          <div class="field col-12">
+            <label for="state">Task Approval Status</label>
+            <p-dropdown [options]="taskApprovalDropDown" optionLabel="name" formControlName="TaskApproval"
+              placeholder="Select Task Status"></p-dropdown>
+          </div>
+          <div *ngIf="showInput() === 'REJECTED'" class="field col-12 md:col-6">
+            <label for="rejection-remark">Rejection Remark</label>
+            <input pInputText id="rejection-remark" formControlName="RejectionRemark" type="text" />
+          </div>
+          <div class="field col-12">
+            <button pButton type="submit" [disabled]="!TaskApprovalForm.valid" label="Submit"></button>
+          </div>
         </div>
-  
+
+      </form>
+    </div>
+  </div>
+
+</div>

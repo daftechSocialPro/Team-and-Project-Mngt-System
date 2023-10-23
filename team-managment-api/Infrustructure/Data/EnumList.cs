@@ -49,7 +49,9 @@ namespace IntegratedInfrustructure.Data
             HRM,
             FINANCE,
             MARKETING,
-            DEVELOPER
+            DEVELOPER,
+            CUSTOMER_SERVICE,
+            TRAINER
         }
 
         public enum PaymentType

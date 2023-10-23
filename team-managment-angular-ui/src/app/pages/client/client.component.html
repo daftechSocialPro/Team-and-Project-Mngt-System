@@ -3,7 +3,7 @@
 
         <h5>Client List</h5>
         <div class="text-right">
-            <button pButton label="Client" class="p-button-outlined mb-2" (click)=" addClients()"
+            <button pButton label="Client"  class="p-button-outlined mb-2" (click)=" addClients()"
                 icon="pi pi-plus"></button>
         </div>
         <p-table #dt1 [value]="clients" [loading]="loading" dataKey="id" [rows]="5" [rowHover]="true"
@@ -45,7 +45,12 @@
                     </th>
                     <th style="min-width: 10rem">
                         <div class="flex justify-content-between align-items-center">
-                           Description
+                           Phone Number
+                        </div>
+                    </th>
+                    <th style="min-width: 10rem">
+                        <div class="flex justify-content-between align-items-center">
+                           Contract Status
                         </div>
                     </th>
                
@@ -68,7 +73,10 @@
                         {{client.address}}
                     </td>
                     <td>
-                        {{client.description }}
+                        {{client.phoneNo}}
+                    </td>
+                    <td>
+                        {{client.contractStatus}}
                     </td>
                     <td>
                         <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editClient(client)"></button>

@@ -1,7 +1,7 @@
 <div class="col-12">
     <div class="card">
       <h5>Team List</h5>
-      <div class="text-right">
+      <div *ngIf="allowedRoles(['Admin'])" class="text-right">
         <button pButton label="Team" class="p-button-outlined mb-2" icon="pi pi-plus" (click)="addTeam()"></button>
       </div>
       <div class="card-container">
