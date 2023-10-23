@@ -193,7 +193,7 @@ namespace IntegratedImplementation.Services.Client
             var client = _dbContext.Clients.Find(addToClient[0].ClientId);
             if (client != null)
             {
-                foreach (var addToClien in addToClient)
+                foreach (var addToClien in addToClient.Distinct())
                 {
                     ClientContact contact = new ClientContact
                     {

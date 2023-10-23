@@ -70,6 +70,8 @@ import { EditclientComponent } from './pages/client/edit-client/editclient.compo
 import { AddClientComponent } from './pages/client/add-client/add-client.component';
 import { ClientDetailComponent } from './pages/client/client-detail/client-detail.component';
 import { EditorModule } from 'primeng/editor';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { ScrollTopModule } from 'primeng/scrolltop';
 
 
 
@@ -117,7 +119,10 @@ import { EditorModule } from 'primeng/editor';
         InputTextareaModule,
 		ChartModule,
         InputSwitchModule,
-        EditorModule
+        EditorModule,
+        ScrollPanelModule,
+        ScrollTopModule,
+        
         
 		
         

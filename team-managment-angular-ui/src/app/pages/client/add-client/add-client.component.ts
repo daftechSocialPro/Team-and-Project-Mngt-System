@@ -11,13 +11,21 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./add-client.component.scss']
 })
 export class AddClientComponent implements OnInit {
-  @Output() clientAdded = new EventEmitter<any>();
+  
   user!: UserView;
   uploadedFiles: any[] = [];
   ClientForm!: FormGroup;
   clientFiles: File[];
   fileGH! : File;
   ImagePath: any=null;
+  contractStatusDropdownItems = [
+    { name: 'DRAFT', code: 'DRAFT' },
+    { name: 'ACTIVE', code: 'ACTIVE' },
+    { name: 'EXPIRED', code: 'EXPIRED' },
+    { name: 'TERMINATED', code: 'TERMINATED' },
+    { name: 'RENEWED', code: 'RENEWED' },
+  ]
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,6 +45,9 @@ export class AddClientComponent implements OnInit {
       Address: [null, Validators.required],
       PhoneNo: [null, Validators.required],
       Description: [null],
+      ContractStatus:[null],
+      ContractEndDate:[null],
+      
     });
   }
 
@@ -49,9 +60,10 @@ export class AddClientComponent implements OnInit {
         Email: this.ClientForm.value.Email,
         Description:this.ClientForm.value.Description,
         PhoneNo:this.ClientForm.value.PhoneNo,
-        CreatedById: this.user.UserID
+        CreatedById: this.user.UserID,
+        ContractEndDate: this.ClientForm.value.ContractEndDate,
+        ContractStatus: this.ClientForm.value.ContractStatus.name
         // ImagePath:this.projectId,
-   
       }  
     
       var formData = new FormData();
@@ -75,7 +87,7 @@ export class AddClientComponent implements OnInit {
             this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
 
             this.ClientForm.reset();
-            // this.closeModal();
+            this.closeModal();
           }
           else {
             this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
@@ -86,11 +98,6 @@ export class AddClientComponent implements OnInit {
           this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
         }
       })
-
-
-      console.log(clientData,"clientData")
-
-
     }
   }
 
@@ -102,10 +109,7 @@ export class AddClientComponent implements OnInit {
 
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
   }
-  // closeModal()
-  // {
-  //   this.activeModal.close()
-  // }
+
 
   onClientFilesSelect(event: any) {
     this.clientFiles = event.files;
@@ -126,5 +130,15 @@ export class AddClientComponent implements OnInit {
   closeModal()
   {
     this.activeModal.close()
+  }
+  getImage2() {
+
+    if (this.ImagePath != null) {
+      return this.ImagePath
+    }
+    
+    else {
+      return 'assets/clientlogo.png'
+    }
   }
 }

@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddTeamComponent } from '../team/add-team/add-team.component';
 import { UpdateTeamComponent } from './update-team/update-team.component';
 import { ManageMembersComponent } from './manage-members/manage-members.component';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-team',
@@ -26,7 +27,8 @@ export class TeamComponent implements OnInit {
     private teamService: TeamService,
     private commonService: CommonService,
     public dialogService: DialogService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -69,5 +71,9 @@ export class TeamComponent implements OnInit {
   }
   onTeamUpdate(team: any) {
     this.getTeams();
+  }
+  allowedRoles(allowedRoles: any)
+  {
+    return this.userService.roleMatch(allowedRoles)
   }
 }

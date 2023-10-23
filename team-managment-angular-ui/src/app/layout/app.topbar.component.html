@@ -1,73 +1,109 @@
 <div class="layout-topbar">
-    <a class="layout-topbar-logo" routerLink="">
-        <!-- <img src="assets/logo.png" alt="logo">
+  <a class="layout-topbar-logo" routerLink="">
+    <!-- <img src="assets/logo.png" alt="logo">
         <span>DAFTech Social</span> -->
-        <img src="assets/logo2.jpg" alt="logo">
-        <span>DAFTech Computer Engineering</span>
-    </a>
-    
-    <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
-        <i class="pi pi-bars"></i>
-    </button>
-    
-    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
-        <i class="pi pi-ellipsis-v"></i>
-    </button>
-    
-    
-  <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-        <p-chip [label]="user.FullName" [image]="getImage(user.Photo)" styleClass="m-1" (click)="redirectToComponent()" style="cursor: pointer;"></p-chip>
-        <div>
-          <div *ngIf="allowedRoles(['Admin', 'Developer'])">
-            <button class="p-link layout-topbar-button" (click)="op2.toggle($event)">
-              <i class="pi pi-bell"></i>
-              <span>Announcement</span>
-            </button>
-            <p-overlayPanel #op2 [style]="{width: '450px'}">
-              <div style="max-height: 300px; overflow-y: scroll;
-              scrollbar-width: thin;">
-                <ng-container *ngIf="allowedRoles(['Admin'])">
-                  <div *ngFor="let task of tasks">
-                    <div style="display: inline-block; border-bottom: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
-                      <div style="display: flex; align-items: center;">
-                        <div class="flex flex-wrap gap-2">
-                          <button pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-info" style="margin-right: 10px;"></button>
-                        </div>
-                        <div class="">
-                          {{task.employeeName}}
-                          <a (click)="viewTask(task)" target="_blank" style="text-decoration: underline; color: blue; cursor: pointer;">{{task.taskName}}</a>
-                          task. Please review the task and confirm it.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </ng-container>
-          
-                <ng-container *ngIf="allowedRoles(['Developer'])">
-                  <div *ngFor="let annu of notices">
-                    <div style="display: inline-block; padding: 10px; margin-bottom: 10px; position: relative;">
-                      <div style="display: flex; align-items: center;">
-                        <div class="flex flex-wrap gap-2">
-                          <button pButton pRipple type="button" icon="pi pi-megaphone" class="p-button-rounded p-button-secondary" style="margin-right: 10px;"></button>
-                        </div>
-                        <div class="notice-content">
-                          {{annu.subject}}:{{annu.content}}
-                        </div>
-                      </div>
-                      <div style="position: absolute; bottom: 0; left: 0; width: 410px; height: 1px; background-color: #ddd; content: '';"></div>
-                    </div>
-                  </div>
-                </ng-container>
-              </div>
-            </p-overlayPanel>
-          </div>
+    <img src="assets/logo2.jpg" alt="logo">
+    <span>DAFTech Computer Engineering</span>
+  </a>
 
+  <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
+    <i class="pi pi-bars"></i>
+  </button>
+
+  <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button"
+    (click)="layoutService.showProfileSidebar()">
+    <i class="pi pi-ellipsis-v"></i>
+  </button>
+
+
+  <div #topbarmenu class="layout-topbar-menu"
+    [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+    <p-chip [label]="user.FullName" [image]="getImage(user.Photo)" styleClass="m-1" (click)="redirectToComponent()"
+      style="cursor: pointer;"></p-chip>
+
+    <button class="p-link layout-topbar-button" (click)="op2.toggle($event); seen=false">
+      <i class="pi pi-bell"></i>
+      <span *ngIf="seen" class="badge">{{tasks.length + notices.length}}</span>
+      
+      <span>Announcement</span>
+    </button>
+
+    <!-- <i (click)="op2.toggle($event)" class="pi pi-bell mr-4 p-text-secondary" pBadge style="font-size: 2rem" [value]="'10+'" severity="danger"></i> -->
+    <p-overlayPanel #op2 [style]="{width: '450px'}">
+      <div>
+        <p-tabView >
+          <p-tabPanel header="Tasks" *ngIf="allowedRoles(['Admin'])">
+           
+            <div style="max-height: 300px; overflow-y: scroll;
+            scrollbar-width: thin;">
+              <div *ngFor="let task of tasks"  >
+                <div style="display: inline-block; border-bottom: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
+                  <div style="display: flex; align-items: center;">
+                    <div class="flex flex-wrap gap-2">
+                      <button pButton pRipple type="button" icon="pi pi-comment" class="p-button-rounded p-button-info"
+                        style="margin-right: 10px;"></button>
+                    </div>
+                    <div class="">
+                      {{task.employeeName}}
+                      <a (click)="viewTask(task)" target="_blank"
+                        style="text-decoration: underline; color: blue; cursor: pointer;">{{task.taskName}}</a>
+                      task. Please review the task and confirm it.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </p-tabPanel>
+          <p-tabPanel header="Annoncments" styleClass="tabview-custom">
+           
+            <div style="max-height: 300px; overflow-y: scroll;
+            scrollbar-width: thin;">
+              <div *ngFor="let annu of notices"  >
+                <div style="display: inline-block; padding: 10px; margin-bottom: 10px; position: relative;">
+                  <div style="display: flex; align-items: center;">
+                    <div class="flex flex-wrap gap-2">
+                      <button pButton pRipple type="button" icon="pi pi-megaphone"
+                        class="p-button-rounded p-button-secondary" style="margin-right: 10px;"></button>
+                    </div>
+                    <div class="notice-content">
+                      {{annu.subject}}:{{annu.content}}
+                    </div>
+                  </div>
+                  <div
+                    style="position: absolute; bottom: 0; left: 0; width: 410px; height: 1px; background-color: #ddd; content: '';">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </p-tabPanel>
+        </p-tabView>
+
+
+
+      </div>
+    </p-overlayPanel>
+
+    <button class="p-link layout-topbar-button" (click)="logOut()">
+      <i class="pi pi-sign-out"></i>
+      <span>Log Out</span>
+    </button>
+
+  </div>
 </div>
-        
-        <button class="p-link layout-topbar-button" (click)="logOut()">
-            <i class="pi pi-sign-out"></i>
-            <span>Log Out</span>
-        </button>
-        
-    </div> 
-</div>
+
+<style>
+  .badge {
+    position: absolute;
+  top: -3px;
+  right: -3px;
+  border-radius: 50%;
+  background: #FA3E3E;
+  color: white;
+  width: 20px;
+  height: 20px;
+  padding: .15em .15em;
+  }
+  
+</style>

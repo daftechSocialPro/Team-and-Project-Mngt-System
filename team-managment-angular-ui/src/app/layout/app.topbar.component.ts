@@ -27,7 +27,7 @@ export class AppTopBarComponent implements OnInit {
   urlHub: string = environment.baseUrl + "/ws/Chat"
   tasks:any[] = [];
   notices:any
-  
+  seen:boolean = true
   @ViewChild('menubutton') menuButton!: ElementRef;
   
   @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
@@ -78,6 +78,7 @@ export class AppTopBarComponent implements OnInit {
             detail: result.content,
             sticky: true
           });
+          this.seen = true
         });
         this.connection.on('getUserTaskNotice', (result,res) => {
           
@@ -92,7 +93,8 @@ export class AppTopBarComponent implements OnInit {
         if(this.allowedRoles(['Admin'])){
           this.connection.on('getTaskNotice', (result,res) => {
             this.tasks.push(result) 
-            
+            this.tasks.reverse();
+            this.seen = true
           })
         }
       }

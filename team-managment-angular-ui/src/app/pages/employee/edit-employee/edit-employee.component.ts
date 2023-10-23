@@ -75,6 +75,7 @@ export class EditEmployeeComponent implements OnInit {
       
       
     }})
+    
   }
 
   onSubmit() {
@@ -141,14 +142,15 @@ export class EditEmployeeComponent implements OnInit {
   }
   getImage2() {
 
-    if (this.imagePath != null) {
+    if (this.imagePath !== null) {
       return this.imagePath
     }
-    if (this.employee != null) {
+    if (this.employee.imagePath !== '') {
       return this.getImage(this.employee.imagePath!)
+      
     }
     else {
-      return 'assets/img/company.jpg'
+      return 'assets/profilelogo.png'
     }
   }
   onUpload2(event: any) {

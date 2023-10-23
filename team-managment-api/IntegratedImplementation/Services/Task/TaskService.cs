@@ -325,7 +325,7 @@ namespace IntegratedImplementation.Services.Task
             var tasks = await _dbContext.Tasks.Where(x => x.TaskStatuses.Equals(TaskStatuses.COMPLETE)
             && x.TaskApproval.Equals(TaskApproval.PENDING)).AsNoTracking()
                 .ProjectTo<TaskGetDto>(_mapper.ConfigurationProvider).ToListAsync();
-
+            //tasks.Reverse();
             return tasks;
 
         }

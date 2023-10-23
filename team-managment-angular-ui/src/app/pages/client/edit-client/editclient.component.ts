@@ -24,6 +24,13 @@ export class EditclientComponent implements OnInit {
   pdflink: string = '';
   type: string = '';
   contacts: any[] = [];
+  contractStatusDropdownItems = [
+    { name: 'DRAFT', code: 'DRAFT' },
+    { name: 'ACTIVE', code: 'ACTIVE' },
+    { name: 'EXPIRED', code: 'EXPIRED' },
+    { name: 'TERMINATED', code: 'TERMINATED' },
+    { name: 'RENEWED', code: 'RENEWED' },
+  ]
   constructor(private userService: UserService,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
@@ -40,6 +47,8 @@ export class EditclientComponent implements OnInit {
         Address: [null, Validators.required],
         PhoneNo: [null, Validators.required],
         Description: [null],
+        ContractStatus:[null],
+        ContractEndDate:[null],
       });
       
 
@@ -48,14 +57,63 @@ export class EditclientComponent implements OnInit {
       this.ClientForm.controls['Address'].setValue(this.client.address)
       this.ClientForm.controls['PhoneNo'].setValue(this.client.phoneNo)
       this.ClientForm.controls['Description'].setValue(this.client.description)
+      this.ClientForm.controls['ContractEndDate'].setValue(this.client.contractEndDate.split('T')[0])
+      this.ClientForm.controls['ContractStatus'].setValue(this.contractStatusDropdownItems.find(x => x.name === this.client.contractStatus))
+
       this.contactForm = this.formBuilder.group({
         contacts: this.formBuilder.array([])
       });
     }
 
   onSubmit(){
-    this.submitContacts()
+   
+    if (this.ClientForm.valid) {
+      var clientData:any = {
+        Id: this.client.id,
+        Name:this.ClientForm.value.Name,
+        Address:this.ClientForm.value.Address,
+        Email: this.ClientForm.value.Email,
+        Description:this.ClientForm.value.Description,
+        PhoneNo:this.ClientForm.value.PhoneNo,
+        CreatedById: this.user.UserID,
+        ContractEndDate: this.ClientForm.value.ContractEndDate,
+        ContractStatus: this.ClientForm.value.ContractStatus.name
+        
+      }  
+    
+      var formData = new FormData();
+      for (let key in clientData) {
+        if (clientData.hasOwnProperty(key)) {
+          formData.append(key, (clientData as any)[key]);
+        }
+      }
+      formData.append("Image", this.fileGH);
+     
 
+      for (var i = 0; i < this.uploadedFiles.length; i++) {
+        formData.append("ClientFiles", this.uploadedFiles[i]);
+      }
+
+  
+      this.clientService.editClient(formData).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
+
+            this.ClientForm.reset();
+            this.closeModal();
+          }
+          else {
+            this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
+
+          }
+
+        }, error: (err) => {
+          this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
+        }
+      })
+    }
   }
   closeModal()
   {
@@ -118,12 +176,10 @@ export class EditclientComponent implements OnInit {
 
 
 
-
+/////ADD CONTACT START 
   get contactControls() {
     return this.contactForm.get('contacts') as FormArray;
   }
-
-  
 
   addContact() {
     const contact = this.formBuilder.group({
@@ -133,9 +189,6 @@ export class EditclientComponent implements OnInit {
       position: ['']
     });
     this.contactControls.push(contact);
-    
-    
-
   }
 
   removeContact(index: number) {
@@ -143,6 +196,7 @@ export class EditclientComponent implements OnInit {
     this.contacts.splice(index, 1);
     console.log('contacts: ',this.contacts);
   }
+
   submitContacts() {
     const distinctContacts = new Set();
   
@@ -170,5 +224,39 @@ export class EditclientComponent implements OnInit {
     console.log('contacts: ', this.contacts);
     // Optionally, you can reset the form or perform any other actions after submitting the contacts.
     //this.contactControls.clear();
+  }
+  //// ADD CONTACT END
+
+
+
+  onUpload2(event: any) {
+
+    var file: File = event.target.files[0];
+    this.fileGH = file
+    
+    var myReader: FileReader = new FileReader();
+    myReader.onloadend = (e) => {
+      this.ImagePath = myReader.result;
+    }
+    myReader.readAsDataURL(file);
+    console.log(this.fileGH)
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
+  }
+ 
+  getImage2() {
+
+    if (this.ImagePath != null) {
+      return this.ImagePath
+    }
+    else if(this.client.imagePath != ''){
+      return this.getImage(this.client.imagePath!)
+    }
+    
+    else {
+      return 'assets/clientlogo.png'
+    }
+  }
+  onClientFilesSelect(event: any) {
+    this.clientFiles = event.files;
   }
 }
