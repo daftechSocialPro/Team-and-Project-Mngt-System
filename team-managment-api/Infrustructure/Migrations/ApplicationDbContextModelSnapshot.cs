@@ -188,6 +188,10 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
@@ -277,6 +281,10 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -441,6 +449,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("ComplaintListId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("CreatedById")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -505,6 +516,8 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ComplaintListId");
 
                     b.HasIndex("CreatedById");
 
@@ -673,6 +686,10 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
@@ -758,6 +775,10 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1191,6 +1212,10 @@ namespace IntegratedInfrustructure.Migrations
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeList", b =>
                 {
+                    b.HasOne("IntegratedInfrustructure.Model.Complaint.ComplaintList", null)
+                        .WithMany("AssignedEmployees")
+                        .HasForeignKey("ComplaintListId");
+
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById")
@@ -1444,6 +1469,8 @@ namespace IntegratedInfrustructure.Migrations
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Complaint.ComplaintList", b =>
                 {
+                    b.Navigation("AssignedEmployees");
+
                     b.Navigation("ComplaintFiles");
                 });
 

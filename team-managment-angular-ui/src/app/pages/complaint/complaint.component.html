@@ -1,0 +1,117 @@
+<div class="col-12">
+    <div class="card">
+
+        <h5>Complaints List</h5>
+        <!-- <div class="text-right">
+            <button pButton label="Client"  class="p-button-outlined mb-2" (click)=" addComplain()"
+                icon="pi pi-plus"></button>
+        </div> -->
+        <p-table #dt1 [value]="complaints" [loading]="loading" dataKey="id" [rows]="5" [rowHover]="true"
+            styleClass="p-datatable-gridlines" [paginator]="true"
+            [globalFilterFields]="['Name','phoneNumber','lastName','email','employmentDate','employmentPosition','employmentStatus']"
+            responsiveLayout="scroll">
+            <ng-template pTemplate="caption">
+                <div class="flex justify-content-between flex-column sm:flex-row">
+                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+                        (click)="clear(dt1)"></button>
+                    <span class="p-input-icon-left mb-2">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)"
+                            placeholder="Search Keyword" class="w-full" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="min-width: 12rem">
+                        <div class="flex justify-content-between align-items-center">
+                            Complaint Code
+                            <p-columnFilter type="text" field="name" display="menu"
+                                placeholder="Search by name"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width: 12rem">
+                        <div class="flex justify-content-between align-items-center">
+                            Client
+                            <p-columnFilter type="text" field="name" display="menu"
+                                placeholder="Search by name"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width: 12rem">
+                        <div class="flex justify-content-between align-items-center">
+                            Project
+                            <p-columnFilter type="text" field="name" display="menu"
+                                placeholder="Search by name"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width: 12rem">
+                        <div class="flex justify-content-between align-items-center">
+                            Subject
+                            <p-columnFilter type="text" field="name" display="menu"
+                                placeholder="Search by name"></p-columnFilter>
+                        </div>
+                    </th>
+                    
+                    <th style="min-width: 14rem">
+                        <div class="flex justify-content-between align-items-center">
+                         Type
+
+                        </div>
+                    </th>
+                    <th style="min-width: 10rem">
+                        <div class="flex justify-content-between align-items-center">
+                           Status
+                        </div>
+                    </th>
+                    
+               
+                    <th></th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-complaint>
+                <tr>
+                    <td (click)="complaintDetail(complaint.id)">
+                        {{complaint.complaintCode}} 
+                    </td>
+                    <td (click)="complaintDetail(complaint.id)">
+                        {{complaint.client.name}} 
+                    </td>
+                    <td (click)="complaintDetail(complaint.id)">
+                        {{complaint.project.projectName}} 
+                    </td>
+                    <td (click)="complaintDetail(complaint.id)">
+                        <!-- <img [alt]="complaint.name" [src]="getImage(client.imagePath)" 
+                            style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" /> -->
+
+                        <span class="image-text ml-2">{{complaint.subject}}</span>
+                    </td>
+                    
+                    <td (click)="complaintDetail(complaint.id)">
+                        {{complaint.complaintType}}
+                    </td>
+                    <td (click)="complaintDetail(complaint.id)">
+                        {{complaint.complaintStatus}}
+                    </td>
+                  
+                    <td>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editComplaint(complaint)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No Complaints Found.</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="8">Loading Complaint data. Please wait.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+</div>
+
+

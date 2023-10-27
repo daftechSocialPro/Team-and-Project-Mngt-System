@@ -27,6 +27,12 @@ namespace IntegratedDigitalAPI.Controllers.Complaint
         {
             return Ok(await _complaintService.GetComplaints());
         }
+        [HttpGet("GetComplaint")]
+        [ProducesResponseType(typeof(TeamGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetComplaint(Guid id)
+        {
+            return Ok(await _complaintService.GetComplaint(id));
+        }
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddComplaint([FromForm]ComplaintPostDto addComplaint)

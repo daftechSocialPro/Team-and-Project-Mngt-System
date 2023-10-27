@@ -95,8 +95,7 @@ export class EditProjectComponent implements OnInit {
       this.ProjectForm.controls['GitHubLink'].setValue(this.project.gitHubLink )
       this.ProjectForm.controls['TeamId'].setValue(this.teamsSelectList.find(u=>u.value === this.project.teamProjects.map(u=>u.id)[0]))
       this.employeesSelectedList =  this.project.projectEmployees.map(u => u.id)
-      console.log(this.teamsSelectList.find(u=>u.value === this.project.teamProjects.map(u=>u.id)[0]))
-      
+            
     }})
     
       
@@ -248,21 +247,19 @@ export class EditProjectComponent implements OnInit {
     const fileExtension = this.getFileExtension(fileUrl);
     return pdfExtensions.includes(fileExtension.toLowerCase());
   }
-  viewPdf(link: string) {
+  viewPdf(link: string,type:string) {
     let modalRef
-    if (this.isPDFFile(link)) {
-      modalRef = this.modalService.open(ViewPdfComponent, { size:'lg', backdrop: 'static' })
-      this.pdflink = this.getPdfFile(link);
-      this.type = "pdf";
-      
-    }
-
+   
     if (this.isImageFile(link)) {
       modalRef = this.modalService.open(ViewPdfComponent, {  backdrop: 'static' })
       this.pdflink = this.getImage(link);
       this.type = "image";
     }
-    
+    else{
+      modalRef = this.modalService.open(ViewPdfComponent, { size:'lg', backdrop: 'static' })
+      this.pdflink = this.getPdfFile(link);
+      this.type = type
+    }
     modalRef.componentInstance.type = this.type
     modalRef.componentInstance.pdflink = this.pdflink
   }

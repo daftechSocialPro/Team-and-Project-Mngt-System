@@ -1,9 +1,9 @@
 <div class="layout-topbar">
   <a class="layout-topbar-logo" routerLink="">
-    <!-- <img src="assets/logo.png" alt="logo">
-        <span>DAFTech Social</span> -->
-    <img src="assets/logo2.jpg" alt="logo">
-    <span>DAFTech Computer Engineering</span>
+    <img src="assets/logo.png" alt="logo">
+        <span>DAFTech Social</span>
+    <!-- <img src="assets/logo2.jpg" alt="logo">
+    <span>DAFTech Computer Engineering</span> -->
   </a>
 
   <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
@@ -23,9 +23,10 @@
 
     <button class="p-link layout-topbar-button" (click)="op2.toggle($event); seen=false">
       <i class="pi pi-bell"></i>
-      <span *ngIf="seen" class="badge">{{tasks.length + notices.length}}</span>
+      <span *ngIf="seen && allowedRoles(['Admin'])" class="badge">{{tasks.length + notices.length}}</span>
+      <span *ngIf="seen && !allowedRoles(['Admin'])" class="badge">{{notices.length}}</span>
       
-      <span>Announcement</span>
+      <span>Notifications</span>
     </button>
 
     <!-- <i (click)="op2.toggle($event)" class="pi pi-bell mr-4 p-text-secondary" pBadge style="font-size: 2rem" [value]="'10+'" severity="danger"></i> -->

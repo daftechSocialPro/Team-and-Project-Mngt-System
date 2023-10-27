@@ -1,5 +1,6 @@
 ﻿using IntegratedInfrustructure.Model.Authentication;
 using IntegratedInfrustructure.Model.Client;
+using IntegratedInfrustructure.Model.HRM;
 using IntegratedInfrustructure.Model.Project;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace IntegratedInfrustructure.Model.Complaint
         public string Subject { get; set; }
         public ComplaintType ComplaintType { get; set; }
         public ComplaintStatus ComplaintStatus { get; set; }
-
+        public ICollection<EmployeeList> AssignedEmployees { get; set; }
 
     }
 }

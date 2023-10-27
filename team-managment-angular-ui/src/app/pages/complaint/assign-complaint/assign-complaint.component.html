@@ -1,0 +1,46 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title"> Assign Task</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form [formGroup]="AssignForm" (submit)="onSubmit()">
+                <div class="p-fluid p-formgrid grid">
+                
+                    <div class="field col-12 md:col-4">
+                        <label htmlFor="firstname2">Due Date</label>
+                        <input pInputText id="firstname2" formControlName="EndDate" type="date" />
+                    </div>
+                    
+        
+                    <div class="field col-12 md:col-4">
+                        <label htmlFor="state">Priority</label>
+                        <p-dropdown [options]="taskPriorityDropDown" optionLabel="name"
+                            formControlName="TaskPriority" placeholder="Select Priority" [showClear]="true"></p-dropdown>
+                    </div>
+        
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="firstname2">Employees</label>
+                        <p-multiSelect #SelectedItem formControlName ="Employees" (onChange)="SelectItems($event)" [options]="employeeSelectList" placeholder="Select Employee(s)" optionLabel="label" class="multiselect-custom" display="chip">
+                            <ng-template let-employee pTemplate="item">
+                                <div class="flex align-items-center">
+                                    <img [alt]="" [src]="getImage(employee.imagePath)" width="32"
+                                    style="vertical-align: middle; border-radius: 20px;" />
+                                    <span class="ml-2">{{employee.label}}</span>
+                                </div>
+                                
+                            </ng-template>
+                        </p-multiSelect>
+                    </div>
+                    
+                
+                    <hr />
+                    <button pButton type="submit" [disabled]="!AssignForm.valid" label="Submit"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

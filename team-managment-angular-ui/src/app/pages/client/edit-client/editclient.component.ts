@@ -151,21 +151,19 @@ export class EditclientComponent implements OnInit {
     const fileExtension = this.getFileExtension(fileUrl);
     return pdfExtensions.includes(fileExtension.toLowerCase());
   }
-  viewPdf(link: string) {
+  viewPdf(link: string,type:string) {
     let modalRef
-    if (this.isPDFFile(link)) {
-      modalRef = this.modalService.open(ViewPdfComponent, { size:'lg', backdrop: 'static' })
-      this.pdflink = this.getPdfFile(link);
-      this.type = "pdf";
-      
-    }
-
+   
     if (this.isImageFile(link)) {
       modalRef = this.modalService.open(ViewPdfComponent, {  backdrop: 'static' })
       this.pdflink = this.getImage(link);
       this.type = "image";
     }
-    
+    else{
+      modalRef = this.modalService.open(ViewPdfComponent, { size:'lg', backdrop: 'static' })
+      this.pdflink = this.getPdfFile(link);
+      this.type = type
+    }
     modalRef.componentInstance.type = this.type
     modalRef.componentInstance.pdflink = this.pdflink
   }

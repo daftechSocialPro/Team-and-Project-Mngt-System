@@ -80,9 +80,9 @@ export class EditEmployeeComponent implements OnInit {
 
   onSubmit() {
     if (this.EmployeeForm.valid) {
-      debugger
+      
       const formData = new FormData();
-      formData.append("Id", this.employee.id)
+      formData.append("Id", this.employee.id);
       formData.append("FirstName", this.EmployeeForm.value.FirstName);
       formData.append("LastName", this.EmployeeForm.value.LastName);
       formData.append("Gender", this.EmployeeForm.value.Gender.name);

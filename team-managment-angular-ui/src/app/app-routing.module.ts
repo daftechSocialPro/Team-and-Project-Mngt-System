@@ -17,6 +17,8 @@ import { NoticeComponent } from './pages/notice/notice.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ClientComponent } from './pages/client/client.component';
 import { ClientDetailComponent } from './pages/client/client-detail/client-detail.component';
+import { ComplaintComponent } from './pages/complaint/complaint.component';
+import { ComplaintDetailComponent } from './pages/complaint/complaint-detail/complaint-detail.component';
 
 @NgModule({
     imports: [
@@ -30,19 +32,19 @@ import { ClientDetailComponent } from './pages/client/client-detail/client-detai
                     { path: 'users',component:UsersComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]} },
                     { path: 'notice',component:NoticeComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]} },
                     { path: 'client',component:ClientComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]} },
+                    { path: 'complaint',component:ComplaintComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]} },
                     { path: 'profile',component:ProfileComponent},
                     { path: 'tasks',component:TaskComponent},
                     { path: 'teams',component:TeamComponent},
                     { path: 'projects',component:ProjectComponent },
                     { path: 'projectdetail/:projectId',component:ProjectDetailComponent },
-                    { path: 'clientdetail/:clientId',component:ClientDetailComponent },
-                    
-                    
+                    { path: 'clientdetail/:clientId',component:ClientDetailComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]} },
+                    { path: 'complaintdetail/:complaintId',component:ComplaintDetailComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]} },
+                                       
                 ]
 
             },
-            
-            
+                        
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
             { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'notfound', component: NotfoundComponent },

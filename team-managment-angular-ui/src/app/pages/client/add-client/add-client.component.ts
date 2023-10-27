@@ -15,7 +15,7 @@ export class AddClientComponent implements OnInit {
   user!: UserView;
   uploadedFiles: any[] = [];
   ClientForm!: FormGroup;
-  clientFiles: File[];
+  clientFiles: File[] = [];
   fileGH! : File;
   ImagePath: any=null;
   contractStatusDropdownItems = [

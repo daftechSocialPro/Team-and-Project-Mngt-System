@@ -1,0 +1,27 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title"> Update Complaint Status</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+
+    <form [formGroup]="EditComplaint" (submit)="onSubmit()">
+        <div class="p-fluid p-formgrid grid">
+  
+            <div class="field col-12">
+                <label htmlFor="state">Project Status</label>
+                <p-dropdown [options]="ComplaintStatusDropdownItems" optionLabel="name" 
+                    formControlName="ComplaintStatus"  ></p-dropdown>
+            </div>
+
+            
+            <hr />
+            <button pButton type="submit" [disabled]="!EditComplaint.valid" label="Submit"></button>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+

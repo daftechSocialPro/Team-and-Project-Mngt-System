@@ -13,6 +13,7 @@ using IntegratedInfrustructure.Model.Client;
 using IntegratedInfrustructure.Model.Project;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,6 +93,7 @@ namespace IntegratedImplementation.Services.Client
                 foreach (var file in addClient.ClientFiles.Distinct())
                 {
                     var fileName = file.FileName;
+                    var fileType = file.ContentType;
                     var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addClient.Name}";
                     path = _generalConfig.UploadFiles(file, name, $"Files/Clients/{addClient.Name}").Result.ToString();
                     ClientFile clientFile = new ClientFile
@@ -99,6 +101,7 @@ namespace IntegratedImplementation.Services.Client
                         ClientId = id,
                         FileName = fileName,
                         FilePath = path,
+                        FileType = fileType,
                         CreatedById = addClient.CreatedById
                     };
                     await _dbContext.ClientFiles.AddAsync(clientFile);
@@ -150,6 +153,7 @@ namespace IntegratedImplementation.Services.Client
                     foreach (var file in editClient.ClientFiles.Distinct())
                     {
                         var fileName = file.FileName;
+                        var fileType = file.ContentType;
                         var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editClient.Name}";
                         path = _generalConfig.UploadFiles(file, name, $"Files/Clients/{editClient.Name}").Result.ToString();
                         ClientFile clientFile = new ClientFile
@@ -157,6 +161,7 @@ namespace IntegratedImplementation.Services.Client
                             ClientId = client.Id,
                             FileName = fileName,
                             FilePath = path,
+                            FileType = fileType,
                             CreatedById = editClient.CreatedById
                         };
                         await _dbContext.ClientFiles.AddAsync(clientFile);

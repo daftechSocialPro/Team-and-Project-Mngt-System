@@ -16,6 +16,7 @@ using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Helper.ChatHub;
 using Microsoft.AspNetCore.SignalR;
 using IntegratedInfrustructure.Model.Project;
+using Microsoft.VisualBasic.FileIO;
 
 namespace IntegratedImplementation.Services.Task
 {
@@ -123,6 +124,7 @@ namespace IntegratedImplementation.Services.Task
                         foreach (var file in addTask.TaskFiles.Distinct())
                         {
                             var fileName = file.FileName;
+                            var fileType = file.ContentType;
                             var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.EmployeeName}";
                             path = _generalConfig.UploadFiles(file, name, $"Files/ProjectTasks/{addTask.ProjectName}").Result.ToString();
                             
@@ -131,6 +133,7 @@ namespace IntegratedImplementation.Services.Task
                                 TaskId = id,
                                 FileName = fileName,
                                 FilePath = path,
+                                FileType = fileType,
                                 CreatedById = addTask.CreatedById
                             };
                             await _dbContext.TaskFiles.AddAsync(taskFile);
@@ -149,6 +152,7 @@ namespace IntegratedImplementation.Services.Task
                         foreach (var file in addTask.TaskFiles.Distinct())
                         {
                             var fileName = file.FileName;
+                            var fileType = file.ContentType;
                             var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.EmployeeName}";
                             path = _generalConfig.UploadFiles(file, name, $"Files/PersonalTasks/{addTask.EmployeeName}").Result.ToString();
 
@@ -157,6 +161,7 @@ namespace IntegratedImplementation.Services.Task
                                 TaskId = id,
                                 FileName = fileName,
                                 FilePath = path,
+                                FileType = fileType,
                                 CreatedById = addTask.CreatedById
                             };
                             await _dbContext.TaskFiles.AddAsync(taskFile);
@@ -219,6 +224,7 @@ namespace IntegratedImplementation.Services.Task
                         foreach (var file in editTask.TaskFiles.Distinct())
                         {
                             var fileName = file.FileName;
+                            var fileType = file.ContentType;
                             var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editTask.EmployeeName}";
                             path = _generalConfig.UploadFiles(file, name, $"Files/ProjectTasks/{editTask.ProjectName}").Result.ToString();
 
@@ -227,6 +233,7 @@ namespace IntegratedImplementation.Services.Task
                                 TaskId = task.Id,
                                 FileName = fileName,
                                 FilePath = path,
+                                FileType = fileType,
                                 CreatedById = editTask.CreatedById
                             };
                             await _dbContext.TaskFiles.AddAsync(taskFile);
@@ -245,6 +252,7 @@ namespace IntegratedImplementation.Services.Task
                         foreach (var file in editTask.TaskFiles.Distinct())
                         {
                             var fileName = file.FileName;
+                            var fileType = file.ContentType;
                             var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editTask.EmployeeName}";
                             path = _generalConfig.UploadFiles(file, name, $"Files/PersonalTasks/{editTask.EmployeeName}").Result.ToString();
 
@@ -253,6 +261,7 @@ namespace IntegratedImplementation.Services.Task
                                 TaskId = task.Id,
                                 FileName = fileName,
                                 FilePath = path,
+                                FileType = fileType,
                                 CreatedById = editTask.CreatedById
                             };
                             await _dbContext.TaskFiles.AddAsync(taskFile);
