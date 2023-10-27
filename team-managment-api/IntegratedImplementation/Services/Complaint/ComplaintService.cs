@@ -15,6 +15,7 @@ using IntegratedInfrustructure.Model.Complaint;
 using IntegratedInfrustructure.Model.Task;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -52,7 +53,14 @@ namespace IntegratedImplementation.Services.Complaint
                 .ProjectTo<ComplaintGetDto>(_mapper.ConfigurationProvider).ToListAsync();
             
             return complaints;
-        } 
+        }
+        public async Task<ComplaintGetDto> GetComplaint(Guid id)
+        {
+            var complaints = await _dbContext.Complaints.Where(y => y.Id == id).Include(u => u.Project).Include(x => x.Client).AsNoTracking()
+                .ProjectTo<ComplaintGetDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+
+            return complaints;
+        }
 
 
         public async Task<ResponseMessage> AddComplaint(ComplaintPostDto addComplaint)
@@ -80,6 +88,7 @@ namespace IntegratedImplementation.Services.Complaint
                 foreach (var file in addComplaint.ComplaintFiles.Distinct())
                 {
                     var fileName = file.FileName;
+                    var fileType = file.ContentType;
                     var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addComplaint.Subject}";
                     path = _generalConfig.UploadFiles(file, name, $"Files/Clients/Complaints/{addComplaint.Subject}").Result.ToString();
                     ComplaintFile complaintFile = new ComplaintFile
@@ -88,6 +97,7 @@ namespace IntegratedImplementation.Services.Complaint
                         ComplaintCode= code,
                         FileName = fileName,
                         FilePath = path,
+                        FileType = fileType,
                         CreatedById = addComplaint.CreatedById
                     };
                     await _dbContext.ComplaintFiles.AddAsync(complaintFile);
@@ -124,6 +134,7 @@ namespace IntegratedImplementation.Services.Complaint
                     foreach (var file in editComplaint.ComplaintFiles.Distinct())
                     {
                         var fileName = file.FileName;
+                        var fileType = file.ContentType;
                         var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editComplaint.Subject}";
                         path = _generalConfig.UploadFiles(file, name, $"Files/Clients/Complaints/{editComplaint.Subject}").Result.ToString();
                         ComplaintFile complaintFile = new ComplaintFile
@@ -132,6 +143,7 @@ namespace IntegratedImplementation.Services.Complaint
                             ComplaintCode = complaint.ComplaintCode,
                             FileName = fileName,
                             FilePath = path,
+                            FileType = fileType,
                             CreatedById = editComplaint.CreatedById
                         };
                         await _dbContext.ComplaintFiles.AddAsync(complaintFile);
@@ -163,6 +175,10 @@ namespace IntegratedImplementation.Services.Complaint
             {
                 foreach (var emp in complain.EmployeeId)
                 {
+                    if(complain.Complaint.AssignedEmployees.Any(x => x.Id == emp))
+                    {
+                        continue;
+                    }
                     TaskPostDto complainTask = new TaskPostDto
                     {
                         TaskName = complain.Complaint.Subject,
@@ -188,6 +204,7 @@ namespace IntegratedImplementation.Services.Complaint
                                 TaskId = (Guid)result.Data,
                                 FileName = file.FileName,
                                 FilePath = file.FilePath,
+                                FileType = file.FileType,
                                 CreatedById = complain.CreatedById
                             };
                             await _dbContext.TaskFiles.AddAsync(taskFile);
@@ -196,58 +213,31 @@ namespace IntegratedImplementation.Services.Complaint
 
                     }
                 }
+
+                var complaint = _dbContext.Complaints.Find(complain.Complaint.Id);
+                var employees = _dbContext.Employees.Where(e => complain.EmployeeId.Contains(e.Id)).ToList();
+
+                complaint.AssignedEmployees = employees;
+                await _dbContext.SaveChangesAsync();
+
+                return new ResponseMessage
+                {
+                    Message = "Complaint Assigned Successfully",
+                    Success = true
+                };
             }
             else
             {
-                var teamEmp = await _teamService.GetTeamMembersSelectList((Guid)complain.TeamId);
-                foreach (var emp in teamEmp)
+                return new ResponseMessage
                 {
-                    TaskPostDto complainTask = new TaskPostDto
-                    {
-                        TaskName = complain.Complaint.Subject,
-                        EndDate = complain.EndDate,
-                        TaskStatuses = "NOTSTARTED",
-                        TaskPriority = complain.TaskPriority,
-                        EmployeeId = emp.Id,
-                        ProjectId = complain.Complaint.ProjectId,
-                        TaskDescription = complain.Complaint.Description,
-                        CreatedById = complain.CreatedById,
-                        ProjectName = complain.Complaint.Project.ProjectName,
-                        //TaskFiles = complain.Complaint.ComplaintFiles
-
-                    };
-                    var result = await _taskService.AddTask(complainTask);
-                    if (result.Success)
-                    {
-                        foreach (var file in complain.Complaint.ComplaintFiles.Distinct())
-                        {
-
-                            TaskFile taskFile = new TaskFile
-                            {
-                                TaskId = (Guid)result.Data,
-                                FileName = file.FileName,
-                                FilePath = file.FilePath,
-                                CreatedById = complain.CreatedById
-                            };
-                            await _dbContext.TaskFiles.AddAsync(taskFile);
-                        }
-                        await _dbContext.SaveChangesAsync();
-
-                    }
-                } 
+                    Message = "Complaint Assign Failed",
+                    Success = false
+                };
             }
+           
 
 
-
-
-
-
-
-            return new ResponseMessage
-            {
-                Message = "Complaint Assigned Successfully",
-                Success = true
-            };
+            
         }
 
     }

@@ -11,6 +11,7 @@ namespace IntegratedImplementation.Interfaces.Complaint
     public interface IComplaintService
     {
         Task<List<ComplaintGetDto>> GetComplaints();
+        Task<ComplaintGetDto> GetComplaint(Guid id);
         Task<ResponseMessage> AddComplaint(ComplaintPostDto addComplaint);
         Task<ResponseMessage> EditComplaint(ComplaintPostDto editComplaint);
         Task<ResponseMessage> AssignAsTask(AssignComplaintDto complain);

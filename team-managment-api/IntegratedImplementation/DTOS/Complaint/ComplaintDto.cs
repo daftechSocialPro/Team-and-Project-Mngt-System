@@ -25,6 +25,7 @@ namespace IntegratedImplementation.DTOS.Complaint
         public string? ComplaintStatus { get; set; }
         public List<ComplaintFileGetDto>? ComplaintFiles { get; set; }
         public DateTime CreatedDate { get; set; }
+        public ICollection<SelectListDto> AssignedEmployees { get; set; }
     }
     public class ComplaintPostDto
     {

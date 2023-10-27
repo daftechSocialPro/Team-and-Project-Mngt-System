@@ -72,6 +72,10 @@ import { ClientDetailComponent } from './pages/client/client-detail/client-detai
 import { EditorModule } from 'primeng/editor';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ScrollTopModule } from 'primeng/scrolltop';
+import { ComplaintComponent } from './pages/complaint/complaint.component';
+import { EditComplaintComponent } from './pages/complaint/edit-complaint/edit-complaint.component';
+import { ComplaintDetailComponent } from './pages/complaint/complaint-detail/complaint-detail.component';
+import { AssignComplaintComponent } from './pages/complaint/assign-complaint/assign-complaint.component';
 
 
 
@@ -81,7 +85,7 @@ import { ScrollTopModule } from 'primeng/scrolltop';
 @NgModule({
     declarations: [
 
-        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent,ProjectDetailComponent,ManageMembersComponent, EditEmployeeComponent, ManageRolesComponent, TaskComponent, AddTaskComponent, EditTaskComponent, DashboardComponent, NoticeComponent, AddNoticeComponent, ViewPdfComponent, ViewTaskComponent, ProfileComponent, ChangePasswordComponent, ClientComponent, EditclientComponent, AddClientComponent, ClientDetailComponent
+        AppComponent, NotfoundComponent, LoadingComponent,EmployeeComponent, UsersComponent, AddEmployeeComponent, AddUserComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, TeamComponent, AddTeamComponent, UpdateTeamComponent,ProjectDetailComponent,ManageMembersComponent, EditEmployeeComponent, ManageRolesComponent, TaskComponent, AddTaskComponent, EditTaskComponent, DashboardComponent, NoticeComponent, AddNoticeComponent, ViewPdfComponent, ViewTaskComponent, ProfileComponent, ChangePasswordComponent, ClientComponent, EditclientComponent, AddClientComponent, ClientDetailComponent, ComplaintComponent, EditComplaintComponent, ComplaintDetailComponent, AssignComplaintComponent
 
 
     ],

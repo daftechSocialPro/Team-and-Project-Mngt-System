@@ -61,7 +61,7 @@
             <ng-template pTemplate="body" let-client>
                 <tr>
                     <td (click)="clientDetail(client.id)" class="detail">
-                        <img [alt]="client.name" [src]="getImage(client.imagePath)" 
+                        <img alt="image" [src]="getImage(client.imagePath)" 
                             style="vertical-align: middle; border-radius: 50%; width: 30px; height: 30px;" />
 
                         <span class="image-text ml-2">{{client.name}}</span>
@@ -76,7 +76,9 @@
                         {{client.phoneNo}}
                     </td>
                     <td>
-                        {{client.contractStatus}}
+                        <span
+                        [class]="'project-badge status-'+client.contractStatus.toLowerCase()">{{client.contractStatus}}</span>
+                        
                     </td>
                     <td>
                         <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editClient(client)"></button>
@@ -85,7 +87,7 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="8">No client found.</td>
+                    <td colspan="8">No Client Found.</td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="loadingbody">

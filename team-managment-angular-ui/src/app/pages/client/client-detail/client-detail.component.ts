@@ -45,8 +45,6 @@ export class ClientDetailComponent implements OnInit {
     getClient(clientId){
       this.clientService.getClient(clientId).subscribe(res => {    
         this.client = res;
-        console.log("dsadsds",this.client)
-        console.log("ewwwww",this.client.clientContacts)
         });
     }
     get contacts(): FormArray {
@@ -91,7 +89,7 @@ export class ClientDetailComponent implements OnInit {
 
     submitContacts() {
       const distinctContacts = new Set<string>();
-   const   submittedDataArray = [];
+      const   submittedDataArray = [];
     
       for (const contactControl of this.contactControls.controls) {
         if (contactControl.valid) {
@@ -113,6 +111,7 @@ export class ClientDetailComponent implements OnInit {
                 if (res.success) {
                   this.messageService.add({ severity: 'success',  summary: 'Successful', detail: res.message });
                   this.contactForm.reset();
+                  this.getClient(this.clientId)
                 } else {
                   this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
                 }
@@ -148,17 +147,18 @@ export class ClientDetailComponent implements OnInit {
       const fileExtension = this.getFileExtension(fileUrl);
       return pdfExtensions.includes(fileExtension.toLowerCase());
     }
-    viewPdf(link: string) {
+    viewPdf(link: string,type:string) {
       let modalRef
-      if (this.isPDFFile(link)) {
-        modalRef = this.modalSerivce.open(ViewPdfComponent, { size:'lg', backdrop: 'static' })
-        this.pdflink = this.getPdfFile(link);
-        this.type = "pdf";
-      }
+     
       if (this.isImageFile(link)) {
         modalRef = this.modalSerivce.open(ViewPdfComponent, {  backdrop: 'static' })
         this.pdflink = this.getImage(link);
         this.type = "image";
+      }
+      else{
+        modalRef = this.modalSerivce.open(ViewPdfComponent, { size:'lg', backdrop: 'static' })
+        this.pdflink = this.getPdfFile(link);
+        this.type = type
       }
       modalRef.componentInstance.type = this.type
       modalRef.componentInstance.pdflink = this.pdflink

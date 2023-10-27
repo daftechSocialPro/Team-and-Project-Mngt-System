@@ -4,10 +4,10 @@
 </div>   
 
    
-  <div *ngIf="type === 'pdf'">
-    <embed [src]="pdflink" type="application/pdf" width="100%" height="650px" />
-  </div>
-
+  
   <div class="text-center"*ngIf="type === 'image'">
     <img [src]="pdflink" alt="Image"  style="width: 100%;"  />
+  </div>
+  <div *ngIf="type !== 'image' ">
+    <embed [src]="pdflink" [type]="type" width="100%" height="650px" />
   </div>

@@ -13,6 +13,7 @@ using IntegratedInfrustructure.Model.Project;
 using IntegratedInfrustructure.Model.Team;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualBasic.FileIO;
 using System.Data;
 using static IntegratedInfrustructure.Data.EnumList;
 
@@ -145,6 +146,7 @@ namespace IntegratedImplementation.Services.Project
                     foreach (var file in addProject.ProjectFiles.Distinct())
                     {
                         var fileName = file.FileName;
+                        var fileType = file.ContentType;
                         var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addProject.ProjectName}";
                         path = _generalConfig.UploadFiles(file, name, $"Files/ProjectFiles/{addProject.ProjectName}").Result.ToString();
                         ProjectFile projectFile = new ProjectFile
@@ -152,6 +154,7 @@ namespace IntegratedImplementation.Services.Project
                             ProjectId = id,
                             FileName = fileName,
                             FilePath = path,
+                            FileType = fileType,
                             CreatedById = addProject.CreatedById
                         };
                         await _dbContext.ProjectFiles.AddAsync(projectFile);
@@ -282,6 +285,7 @@ namespace IntegratedImplementation.Services.Project
                     foreach (var file in editProject.ProjectFiles.Distinct())
                     {
                         var fileName = file.FileName;
+                        var fileType = file.ContentType;
                         var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{editProject.ProjectName}";
                         path = _generalConfig.UploadFiles(file, name, $"Files/ProjectFiles/{editProject.ProjectName}").Result.ToString();
                         ProjectFile projectFile = new ProjectFile
@@ -289,6 +293,7 @@ namespace IntegratedImplementation.Services.Project
                             ProjectId = project.Id,
                             FileName = fileName,
                             FilePath = path,
+                            FileType = fileType,
                             CreatedById = editProject.CreatedById
                         };
                         await _dbContext.ProjectFiles.AddAsync(projectFile);

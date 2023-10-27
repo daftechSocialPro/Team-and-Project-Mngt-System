@@ -15,7 +15,7 @@
                 <ng-template pTemplate="content">
                     <ul >
                         <li *ngFor="let file of task.taskFiles">{{file.fileName}} 
-                            <a (click)="viewPdf(file.filePath)" target="_blank" >  <i *ngIf="isPDFFile(file.filePath)" class="pi pi-file-pdf text-primary p-2" style="font-size: 20px;background-color: #5c1d1612; border-radius: 50%; " ></i>
+                            <a (click)="viewPdf(file.filePath,file.fileType)" target="_blank" >  <i *ngIf="isPDFFile(file.filePath)" class="pi pi-file-pdf text-primary p-2" style="font-size: 20px;background-color: #5c1d1612; border-radius: 50%; " ></i>
                                 <i *ngIf="isImageFile(file.filePath)" class="pi pi-image text-primary p-2" style="font-size: 20px;background-color: #5c1d1612; border-radius: 50%; " ></i>
                                 <i *ngIf="!isImageFile(file.filePath) && !isPDFFile(file.filePath)" class="pi pi-file text-primary p-2" style="font-size: 20px;background-color: #5c1d1612; border-radius: 50%; " ></i>
                                 &nbsp;&nbsp;

@@ -26,7 +26,7 @@ export class AppTopBarComponent implements OnInit {
   public connection!: signalR.HubConnection;
   urlHub: string = environment.baseUrl + "/ws/Chat"
   tasks:any[] = [];
-  notices:any
+  notices:any[] = [];
   seen:boolean = true
   @ViewChild('menubutton') menuButton!: ElementRef;
   

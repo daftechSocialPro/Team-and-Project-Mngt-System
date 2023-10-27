@@ -1,3 +1,37 @@
 .detail{
     cursor: pointer;
 }
+
+.project-badge{
+    border-radius: var(--border-radius);
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+}
+  .project-badge {
+    &.status-active {
+        background: #C8E6C9;
+        color: #256029;
+    }
+
+    &.status-expired {
+        background: #FFCDD2;
+        color: #C63737;
+    }
+    &.status-terminated {
+        background: #FFCDD2;
+        color: #C63737;
+    }
+ 
+
+    &.status-renewed {
+        background: #FEEDAF;
+        color: #8A5340;
+    }
+    &.status-draft {
+        background:#9DD9F3 ;
+        color: #3B82F6 ;
+    }
+}

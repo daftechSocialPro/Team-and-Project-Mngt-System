@@ -7,13 +7,15 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./view-pdf.component.scss']
 })
 export class ViewPdfComponent implements OnInit {
-
+  
   @Input()  pdflink !: string
+  
   @Input() type!: string;
   constructor(private activeMOdal :NgbActiveModal){}
 
   ngOnInit(): void {
-    
+    console.log('pdflink: ', this.pdflink);
+    console.log('pdflink: ', this.type);
   }
 
   closeModal(){

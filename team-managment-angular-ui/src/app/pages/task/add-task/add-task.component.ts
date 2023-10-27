@@ -87,6 +87,7 @@ export class AddTaskComponent implements OnInit{
   }
 
   onSubmit(){
+    
     if(this.TaskForm.valid){
       if (this.TaskForm.value.ProjectId === null){
         var taskAdd:any = {
