@@ -10,6 +10,7 @@ using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.Notice;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Hangfire;
 
 
 namespace IntegratedImplementation.Services.Notice
@@ -48,6 +49,7 @@ namespace IntegratedImplementation.Services.Notice
                 Subject = sendNotice.Subject,
                 Content = sendNotice.Content,
                 TeamId = sendNotice.TeamId,
+                EndDate = sendNotice.EndDate,
                 CreatedById = sendNotice.CreatedById
 
 
@@ -86,6 +88,21 @@ namespace IntegratedImplementation.Services.Notice
                 .ProjectTo<NoticeGetDto>(_mapper.ConfigurationProvider).FirstAsync();
 
             return notice;
+        }
+
+
+
+        [AutomaticRetry(Attempts = 3)] // Retry the job up to 3 times on failure
+        public async System.Threading.Tasks.Task RemoveDataAfterDate()
+        {
+            
+                var entitiesToRemove = await _dbContext.Notices
+                    .Where(e => e.EndDate > DateTime.Now)
+                    .ToListAsync();
+
+             _dbContext.Notices.RemoveRange(entitiesToRemove);
+            await _dbContext.SaveChangesAsync();
+            
         }
 
     }

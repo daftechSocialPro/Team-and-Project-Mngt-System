@@ -57,21 +57,12 @@ export class AddNoticeComponent implements OnInit {
       Subject: [null, Validators.required],
       Content: [null, Validators.required],
       NoticeTo: [null, Validators.required],
+      EndDate: [null, Validators.required],
       ProjectId: [null],
       TeamId: [null],
 
     })
-    // this.connection = new signalR.HubConnectionBuilder()
-    //         .withUrl(this.urlHub, {
-    //           skipNegotiation: true,
-    //           transport: signalR.HttpTransportType.WebSockets
-    //         })
-    //         .configureLogging(signalR.LogLevel.Debug)
-    //         .build();
 
-    //       this.connection.start()
-            
-    //         .catch((err) => console.log('Error while connecting to the server', err));
 
   }
 
@@ -88,6 +79,7 @@ export class AddNoticeComponent implements OnInit {
         teamId: this.NoticeForm.value.TeamId,
         employeeId: this.user.EmployeeId,
         createdById: this.user.UserID,
+        endDate: this.NoticeForm.value.EndDate,
         // employeeIds:this.projectemp.map(u=>u.value)
       }
       this.setProjEmp(postNotice)

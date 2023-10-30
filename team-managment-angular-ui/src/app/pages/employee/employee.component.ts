@@ -5,6 +5,7 @@ import { Table } from 'primeng/table';
 import { CommonService } from 'src/app/services/common.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
+import { AddEmployeeComponent } from './add-employee/add-employee.component';
 
 @Component({
   selector: 'app-employee',
@@ -53,8 +54,9 @@ export class EmployeeComponent implements OnInit {
     return this.commonService.createImgPath(url)
   }
   addEmployee() {
-
-    this.visible = true
+   
+    let modalRef= this.modalSerivce.open(AddEmployeeComponent,{size:'xl',backdrop:'static'})
+    modalRef.result.then(()=>{this.getEmployees()})
 
   }
   onEmployeeAdded(event: any) {

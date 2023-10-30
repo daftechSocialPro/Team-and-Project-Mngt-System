@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService, SelectItem } from 'primeng/api';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { UserService, UserView } from 'src/app/services/user.service';
@@ -40,12 +41,13 @@ export class AddUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private employeeService: EmployeeService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private activeModal: NgbActiveModal) { }
 
   onSubmit() {
 
     if (this.userForm.value.password != this.userForm.value.confirmPassword) {
-      this.messageService.add({ severity: 'error', summary: 'Password Error', detail:"password don't much "});
+      this.messageService.add({ severity: 'error', summary: 'Password Error', detail:"Password doesn't match "});
         
       return
     }
@@ -64,7 +66,7 @@ export class AddUserComponent implements OnInit {
             this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
 
             this.userForm.reset();
-            this.userAdded.emit();
+            this.closeModal()
 
           }
           else {
@@ -101,5 +103,9 @@ export class AddUserComponent implements OnInit {
   }
 
 
+  closeModal()
+  {
+    this.activeModal.close()
+  }
 
 }

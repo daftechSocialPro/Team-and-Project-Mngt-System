@@ -1,3 +1,8 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title"> Add Employee</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
 <div class="card">
     <form [formGroup]="EmployeeForm" (submit)="onSubmit()">
         <div class="p-fluid p-formgrid grid">
@@ -57,4 +62,5 @@
             <button pButton type="submit" [disabled]="!EmployeeForm.valid" label="Submit"></button>
         </div>
     </form>
+</div>
 </div>

@@ -16,6 +16,7 @@ namespace IntegratedImplementation.DTOS.Notice
         public Guid? TeamId { get; set; }
         public Guid EmployeeId { get; set; }
         public DateTime CreatedDate { get; set; }
+        public DateTime EndDate { get; set; }
         public SelectListDto Employee { get; set; }
 
     }
@@ -26,6 +27,7 @@ namespace IntegratedImplementation.DTOS.Notice
         public Guid? ProjectId { get; set; }
         public Guid? TeamId { get; set; }
         public Guid EmployeeId { get; set; }
+        public DateTime EndDate { get; set; }
         public string CreatedById { get; set; }
         public List<string> EmployeeIds { get; set; }
 

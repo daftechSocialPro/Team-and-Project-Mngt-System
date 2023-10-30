@@ -13,6 +13,9 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using IntegratedImplementation.Helper.ChatHub;
+using Hangfire;
+
+using IntegratedImplementation.Interfaces.Notice;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +47,14 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>()
 
 builder.Services.AddSignalR();
 
+// Add Hangfire
+builder.Services.AddHangfire((sp,config) =>
+{
+    var connectionString = sp.GetRequiredService<IConfiguration>().GetConnectionString("SqlConnection");
+    config.UseSqlServerStorage(connectionString);
+});
+
+builder.Services.AddHangfireServer();
 
 
 builder.Services.Configure<IdentityOptions>(options =>
@@ -129,6 +140,13 @@ app.UseStaticFiles(new StaticFileOptions
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot")),
     RequestPath = new PathString("/wwwroot")
 });
+app.UseHangfireDashboard("/hangfire",new DashboardOptions
+{
+    DashboardTitle = "DAFTech Team Managment"
+
+});
+
+RecurringJob.AddOrUpdate<INoticeService>(a => a.RemoveDataAfterDate(), Cron.Daily(0));
 
 app.UseAuthentication();
 

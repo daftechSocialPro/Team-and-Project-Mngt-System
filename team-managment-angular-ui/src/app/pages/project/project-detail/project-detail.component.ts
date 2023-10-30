@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } fr
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'src/app/services/common.service';
-import { EmployeeService } from 'src/app/services/employee.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService, UserView } from 'src/app/services/user.service';
 import { AddTaskComponent } from '../../task/add-task/add-task.component';

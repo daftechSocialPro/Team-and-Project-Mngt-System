@@ -201,6 +201,12 @@ namespace IntegratedImplementation.Services.Task
 
             if (task != null)
             {
+                if (editTask.TaskStatuses != "COMPLETE" && task.TaskStatuses == TaskStatuses.COMPLETE)
+                {
+                    var task2 = await GetTask((Guid)editTask.Id);
+                    await _chatService.Clients.Group("task").getTaskNotice(task2, "rmTask");
+                }
+
                 task.TaskName = editTask.TaskName;
                 task.EndDate = editTask.EndDate;
                 task.TaskPriority = Enum.Parse<TaskPriority>(editTask.TaskPriority);
@@ -294,8 +300,15 @@ namespace IntegratedImplementation.Services.Task
         public async Task<ResponseMessage>ChangeStatus(TaskStatusDto editStatus)
         {
             var task = _dbContext.Tasks.Find(editStatus.Id);
+
             if(task != null)
             {
+                if (editStatus.TaskStatuses != "COMPLETE" && task.TaskStatuses == TaskStatuses.COMPLETE)
+                {
+                    var task2 = await GetTask(editStatus.Id);
+                    await _chatService.Clients.Group("task").getTaskNotice(task2, "rmTask");
+                }
+
                 task.TaskStatuses = Enum.Parse<TaskStatuses>(editStatus.TaskStatuses);
                 task.IsOnHold= editStatus.IsOnHold;
                 if(editStatus.TaskStatuses != "COMPLETE" && task.TaskApproval != TaskApproval.APPROVED) {
