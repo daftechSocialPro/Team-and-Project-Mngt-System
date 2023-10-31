@@ -10,13 +10,16 @@ using IntegratedInfrustructure.Model.Task;
 using Microsoft.EntityFrameworkCore;
 using static IntegratedInfrustructure.Data.EnumList;
 using IntegratedImplementation.DTOS.Configuration;
-using System.ComponentModel;
-using IntegratedImplementation.DTOS.Project;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Helper.ChatHub;
 using Microsoft.AspNetCore.SignalR;
-using IntegratedInfrustructure.Model.Project;
-using Microsoft.VisualBasic.FileIO;
+using Hangfire;
+using QuestPDF;
+using QuestPDF.Fluent;
+using QuestPDF.Previewer;
+using QuestPDF.Helpers;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace IntegratedImplementation.Services.Task
 {
@@ -34,7 +37,7 @@ namespace IntegratedImplementation.Services.Task
         private readonly IGeneralConfigService _generalConfig;
         private IHubContext<ChatHub, IChatHubInterface> _chatService;
 
-        public TaskService(ApplicationDbContext dbContext, IMapper mapper, IEmployeeService employeeService,IGeneralConfigService generalConfigService, IHubContext<ChatHub, IChatHubInterface> chatService)
+        public TaskService(ApplicationDbContext dbContext, IMapper mapper, IEmployeeService employeeService, IGeneralConfigService generalConfigService, IHubContext<ChatHub, IChatHubInterface> chatService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -56,18 +59,18 @@ namespace IntegratedImplementation.Services.Task
             var allTasks = new List<EmployeeTaskDto>();
 
             var allEmployees = await _employeeService.GetEmployees();
-            foreach(var employee in allEmployees.Distinct())
+            foreach (var employee in allEmployees.Distinct())
             {
                 var empTask = new EmployeeTaskDto();
-                empTask.employee = new SelectListDto() { Id= employee.Id , Name = employee.FirstName +" "+employee.LastName, ImagePath = employee.ImagePath};
+                empTask.employee = new SelectListDto() { Id = employee.Id, Name = employee.FirstName + " " + employee.LastName, ImagePath = employee.ImagePath };
                 empTask.tasks = new List<TaskGetDto>();
 
                 empTask.tasks = await GetTasks(employee.Id);
-                if (!empTask.tasks.Count.Equals(0)) 
+                if (!empTask.tasks.Count.Equals(0))
                 { allTasks.Add(empTask); }
-                
+
             }
-          
+
             return allTasks;
         }
         public async Task<List<TaskGetDto>> GetTasks(Guid employeeId)
@@ -95,7 +98,7 @@ namespace IntegratedImplementation.Services.Task
                 var id = Guid.NewGuid();
                 var path = "";
 
-                
+
 
                 TaskList task = new TaskList
                 {
@@ -117,17 +120,17 @@ namespace IntegratedImplementation.Services.Task
                 await _dbContext.SaveChangesAsync();
                 if (addTask.ProjectId != null)
                 {
-                                        
+
                     if (addTask.TaskFiles != null && addTask.TaskFiles.Count > 0)
                     {
-                        
+
                         foreach (var file in addTask.TaskFiles.Distinct())
                         {
                             var fileName = file.FileName;
                             var fileType = file.ContentType;
                             var name = $"{Path.GetFileNameWithoutExtension(file.FileName)}-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}-{addTask.EmployeeName}";
                             path = _generalConfig.UploadFiles(file, name, $"Files/ProjectTasks/{addTask.ProjectName}").Result.ToString();
-                            
+
                             TaskFile taskFile = new TaskFile
                             {
                                 TaskId = id,
@@ -145,7 +148,7 @@ namespace IntegratedImplementation.Services.Task
                 else
                 {
 
-                    
+
                     if (addTask.TaskFiles != null && addTask.TaskFiles.Count > 0)
                     {
 
@@ -196,7 +199,7 @@ namespace IntegratedImplementation.Services.Task
         {
             var path = "";
 
-            
+
             var task = _dbContext.Tasks.Find(editTask.Id);
 
             if (task != null)
@@ -214,13 +217,13 @@ namespace IntegratedImplementation.Services.Task
                 {
                     task.TaskApproval = TaskApproval.PENDING;
                 }
-                
+
                 task.TaskStatuses = Enum.Parse<TaskStatuses>(editTask.TaskStatuses);
                 task.TaskDescription = editTask.TaskDescription;
-                
+
                 await _dbContext.SaveChangesAsync();
-               
-                
+
+
                 if (editTask.ProjectId != null)
                 {
 
@@ -297,11 +300,11 @@ namespace IntegratedImplementation.Services.Task
 
         }
 
-        public async Task<ResponseMessage>ChangeStatus(TaskStatusDto editStatus)
+        public async Task<ResponseMessage> ChangeStatus(TaskStatusDto editStatus)
         {
             var task = _dbContext.Tasks.Find(editStatus.Id);
 
-            if(task != null)
+            if (task != null)
             {
                 if (editStatus.TaskStatuses != "COMPLETE" && task.TaskStatuses == TaskStatuses.COMPLETE)
                 {
@@ -310,8 +313,9 @@ namespace IntegratedImplementation.Services.Task
                 }
 
                 task.TaskStatuses = Enum.Parse<TaskStatuses>(editStatus.TaskStatuses);
-                task.IsOnHold= editStatus.IsOnHold;
-                if(editStatus.TaskStatuses != "COMPLETE" && task.TaskApproval != TaskApproval.APPROVED) {
+                task.IsOnHold = editStatus.IsOnHold;
+                if (editStatus.TaskStatuses != "COMPLETE" && task.TaskApproval != TaskApproval.APPROVED)
+                {
                     task.TaskApproval = TaskApproval.PENDING;
                 }
                 else
@@ -319,12 +323,12 @@ namespace IntegratedImplementation.Services.Task
                     task.TaskApproval = Enum.Parse<TaskApproval>(editStatus.TaskApproval);
 
                 }
-                
+
                 task.RejectionRemark = editStatus.RejectionRemark;
                 await _dbContext.SaveChangesAsync();
             }
-           
-            if (editStatus.TaskStatuses == "COMPLETE" && editStatus.TaskApproval =="PENDING")
+
+            if (editStatus.TaskStatuses == "COMPLETE" && editStatus.TaskApproval == "PENDING")
             {
                 var task2 = await GetTask(editStatus.Id);
                 await _chatService.Clients.Group("task").getTaskNotice(task2, "task");
@@ -334,7 +338,7 @@ namespace IntegratedImplementation.Services.Task
                 var task2 = await GetTask(editStatus.Id);
                 await _chatService.Clients.Group(task2.EmployeeId.ToString()).getUserTaskNotice(task2, editStatus.TaskApproval);
             }
-            
+
             return new ResponseMessage
             {
                 Message = "Task Status Updated Successfully",
@@ -349,6 +353,113 @@ namespace IntegratedImplementation.Services.Task
                 .ProjectTo<TaskGetDto>(_mapper.ConfigurationProvider).ToListAsync();
             //tasks.Reverse();
             return tasks;
+
+        }
+
+        [AutomaticRetry(Attempts = 3)] // Retry the job up to 3 times on failure
+        public async System.Threading.Tasks.Task GenerateWeeklyReport()
+        {
+            DateTime currentDate = DateTime.Now;
+            DateTime startOfWeek = currentDate.AddDays(-(int)currentDate.DayOfWeek);
+            DateTime endOfWeek = startOfWeek.AddDays(6);
+
+            var startedTasksForWeek = _dbContext.Tasks.Where(t => t.CreatedDate >= startOfWeek && t.CreatedDate <= endOfWeek);
+            var finishedTasksForWeek = _dbContext.Tasks.Where(t => t.EndDate >= startOfWeek && t.EndDate <= endOfWeek);
+
+            var finishedTasksForWeekList = _dbContext.Tasks.Where(t => t.EndDate >= startOfWeek && t.EndDate <= endOfWeek).AsNoTracking()
+                .ProjectTo<TaskGetDto>(_mapper.ConfigurationProvider).GroupBy(t => t.EmployeeName).ToListAsync();
+
+            var startedTaskCountByEmployee = startedTasksForWeek.GroupBy(t => t.Employee.FirstName + " " + t.Employee.LastName)
+                                             .Select(g => new
+                                                {
+                                                    EmployeeName = g.Key,
+                                                    TaskCount = g.Count()
+                                                })
+                                                .ToList();
+            var finishedTaskCountByEmployee = finishedTasksForWeek.GroupBy(t => t.Employee.FirstName +" "+ t.Employee.LastName)
+                                                .Select(g => new
+                                                        {
+                                                            EmployeeName = g.Key,
+                                                            TaskCount = g.Count()
+                                                        }).ToList();
+
+            var completedTaskCountByEmployee = finishedTasksForWeek
+                                                .Where(t => t.TaskStatuses == TaskStatuses.COMPLETE)
+                                                .GroupBy(t => t.Employee.FirstName +" "+ t.Employee.LastName)
+                                                .Select(g => new
+                                                {
+                                                    EmployeeName = g.Key,
+                                                    CompletedTaskCount = g.Count()
+                                                })
+                                                .ToList();
+            var inprogressTaskCountByEmployee = finishedTasksForWeek
+                                                .Where(t => t.TaskStatuses == TaskStatuses.INPROGRESS)
+                                                .GroupBy(t => t.Employee.FirstName +" "+ t.Employee.LastName)
+                                                .Select(g => new
+                                                {
+                                                    EmployeeName = g.Key,
+                                                    InprogressTaskCount = g.Count()
+                                                })
+                                                .ToList();
+            var notstartedTaskCountByEmployee = finishedTasksForWeek
+                                                .Where(t => t.TaskStatuses == TaskStatuses.NOTSTARTED)
+                                                .GroupBy(t => t.Employee.FirstName +" "+ t.Employee.LastName)
+                                                .Select(g => new
+                                                {
+                                                    EmployeeName = g.Key,
+                                                    NotstartedTaskCount = g.Count()
+                                                })
+                                                .ToList();
+
+
+
+            var document = Document
+                .Create(d =>
+                {
+                    d.Page(p =>
+                    {
+                        p.Margin(1, QuestPDF.Infrastructure.Unit.Inch);
+
+                        p.Header()
+                        .Text("DAFTech TEAM MANAGMENT WEEKLY REPORT")
+                        .FontSize(48)
+                        .SemiBold();
+
+                        p.Content()
+                        .Column(c =>
+                        {
+                            c.Spacing(0.5f, QuestPDF.Infrastructure.Unit.Inch);
+
+                            c.Item()
+                            .AspectRatio(16 / 9f)
+                            .Image(Placeholders.Image);
+
+                        });
+
+                        p.Footer()
+                        .AlignCenter()
+                        .Text(t =>
+                        {
+                            t.DefaultTextStyle(x => x.FontSize(18));
+                            t.CurrentPageNumber();
+                            t.Span("/");
+                            t.TotalPages();
+                        }); 
+                    });
+                });
+            
+            
+            var memoryStream = new MemoryStream();
+            document.GeneratePdf(memoryStream);
+            memoryStream.Position = 0;
+
+            // Create an IFormFile instance from the MemoryStream
+            var formFile = new FormFile(memoryStream, 0, memoryStream.Length, "myFileName.pdf", "myFileName.pdf");
+
+            var path = _generalConfig.UploadFiles(formFile, "WEEKLY-REPORT", "WeeklyReport").Result.ToString();
+
+
+
 
         }
     }

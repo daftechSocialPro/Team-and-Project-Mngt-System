@@ -193,7 +193,7 @@ export class TaskComponent implements OnInit {
   assignTask1(){
     let modalRef= this.modalSerivce.open(AddTaskComponent,{size:'xl',backdrop:'static'})
     modalRef.componentInstance.adminAssign = true
-    modalRef.result.then(() => { this.getEmployeeTask(this.user.EmployeeId) })
+    modalRef.result.then(() => { this.getTasks() })
   }
 
   onDragStart(item: any) {

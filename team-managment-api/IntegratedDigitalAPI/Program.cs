@@ -16,6 +16,8 @@ using IntegratedImplementation.Helper.ChatHub;
 using Hangfire;
 
 using IntegratedImplementation.Interfaces.Notice;
+using IntegratedImplementation.Interfaces.Task;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -145,8 +147,11 @@ app.UseHangfireDashboard("/hangfire",new DashboardOptions
     DashboardTitle = "DAFTech Team Managment"
 
 });
+QuestPDF.Settings.License = LicenseType.Community;
 
 RecurringJob.AddOrUpdate<INoticeService>(a => a.RemoveDataAfterDate(), Cron.Daily(0));
+
+RecurringJob.AddOrUpdate<ITaskService>(a => a.GenerateWeeklyReport(), "0 19 * * SAT");
 
 app.UseAuthentication();
 
