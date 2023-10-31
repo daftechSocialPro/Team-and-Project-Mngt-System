@@ -422,7 +422,7 @@ namespace IntegratedImplementation.Services.Task
 
                         p.Header()
                         .Text("DAFTech TEAM MANAGMENT WEEKLY REPORT")
-                        .FontSize(48)
+                        .FontSize(28)
                         .SemiBold();
 
                         p.Content()
