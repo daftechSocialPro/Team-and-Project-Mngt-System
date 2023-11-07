@@ -81,6 +81,14 @@ namespace IntegratedDigitalAPI.Controllers.Task
                 return BadRequest(ModelState);
             }
         }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteTask(Guid taskId)
+        {
+            return Ok(await _taskService.DeleteTask(taskId));
+        }
+
         [HttpGet("GetPendingCompletedTasks")]
         [ProducesResponseType(typeof(TaskGetDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetPendingCompletedTasks()

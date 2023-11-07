@@ -12,11 +12,7 @@
             <div class="field col-12">
                 <p-fileUpload   (onSelect)="onUpload($event)" [multiple]="true"
                  [maxFileSize]="50000000">
-                <!-- <ng-template pTemplate="content">
-                    <ul *ngIf="uploadedFiles.length">
-                        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                    </ul>
-                </ng-template> -->
+                
                 </p-fileUpload>
             </div>
             <div class="field col-12 md:col-4">
@@ -25,10 +21,7 @@
             </div>
             
             
-            <!-- <div class="field col-12 md:col-4">
-                <label htmlFor="firstname2">Assigned Date</label>
-                <input pInputText id="firstname2" formControlName="AssignedDate" type="date" />
-            </div> -->
+           
             <div class="field col-12 md:col-4">
                 <label htmlFor="firstname2">Due Date</label>
                 <input pInputText id="firstname2" formControlName="EndDate" type="date" />
@@ -46,7 +39,7 @@
                 <p-dropdown [options]="taskPriorityDropDown" optionLabel="name"
                     formControlName="TaskPriority" placeholder="Select Task Priority" [showClear]="true"></p-dropdown>
             </div>
-            <div *ngIf="projectId === undefined" class="field col-12 md:col-4">
+            <div *ngIf="!adminAssign && projectId === undefined" class="field col-12 md:col-4">
                 <label htmlFor="lastname2">Task Type</label>
                 <p-dropdown [options]="dropdownOptions" placeholder="Select Task Type" optionLabel="label"
                      formControlName="TasKType">
@@ -54,12 +47,12 @@
                 </p-dropdown>
             </div>
             
-            <div *ngIf="projectId === undefined && showInput() === 'PT' " class="field col-12 md:col-4">
+            <div *ngIf="!adminAssign && (projectId === undefined && showInput() === 'PT' )" class="field col-12 md:col-4">
                 <label htmlFor="lastname2">Project</label>
                 <p-dropdown [options]="projectSelectList" optionLabel="label"
                     formControlName="ProjectId" placeholder="Select Project" [showClear]="true"></p-dropdown>
             </div>
-            <div *ngIf="projectId !== undefined && allowedRoles(['Admin'])" class="field col-12 md:col-4">
+            <div *ngIf="adminAssign || (projectId !== undefined && allowedRoles(['Admin']))" class="field col-12 md:col-4">
                 <label htmlFor="lastname2">Employee</label>
                 <p-dropdown [options]="employeeSelectList" optionLabel="label"
                     formControlName="EmployeeId" placeholder="Select Employee" [showClear]="true"></p-dropdown>

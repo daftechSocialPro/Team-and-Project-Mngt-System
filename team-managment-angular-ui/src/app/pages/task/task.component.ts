@@ -161,9 +161,11 @@ export class TaskComponent implements OnInit {
   getImage(url: string) {
     return this.commonService.createImgPath(url)
   }
+
   getFile(url: string) {
     return this.commonService.getPdf(url)
   }
+
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
@@ -172,22 +174,33 @@ export class TaskComponent implements OnInit {
     table.clear();
     this.filter.nativeElement.value = '';
   }
+
   allowedRoles(allowedRoles: any) {
     return this.userService.roleMatch(allowedRoles)
   }
+
   addTask() {
     let modalRef = this.modalSerivce.open(AddTaskComponent, { size: 'xl', backdrop: 'static' })
     modalRef.result.then(() => { this.getEmployeeTask(this.user.EmployeeId) })
   }
+
   editTask(taskId) {
     let modalRef = this.modalSerivce.open(EditTaskComponent, { size: 'xl', backdrop: 'static' })
     modalRef.componentInstance.taskId = taskId
     modalRef.result.then(() => { this.getEmployeeTask(this.user.EmployeeId) })
   }
+
+  assignTask1(){
+    let modalRef= this.modalSerivce.open(AddTaskComponent,{size:'xl',backdrop:'static'})
+    modalRef.componentInstance.adminAssign = true
+    modalRef.result.then(() => { this.getTasks() })
+  }
+
   onDragStart(item: any) {
     this.curentTask = item;
 
   }
+
   onDrop(event: any, status: string) {
     event.preventDefault();
     const record = this.taskArray.find(m => m.id == this.curentTask.id);
@@ -210,19 +223,19 @@ export class TaskComponent implements OnInit {
     }
     this.curentTask = null;
   }
+
   onSwitchToggled(event: any, item: any) {
     let checked = event.checked;
     const data = {
       id: item.id,
       taskStatuses: item.taskStatuses,
-      isOnHold: checked
+      isOnHold: checked,
+      taskApproval: item.taskApproval
     };
-
     this.taskService.updateStatus(data).subscribe({
       next: (res) => {
-        this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
+        //this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
 
-        // console.log("Task status updated successfully:", res);
       },
       error: (err) => {
       }

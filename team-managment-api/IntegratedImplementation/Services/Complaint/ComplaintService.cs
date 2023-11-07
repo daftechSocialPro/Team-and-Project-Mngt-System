@@ -22,7 +22,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.Complaint
@@ -33,17 +32,17 @@ namespace IntegratedImplementation.Services.Complaint
         private readonly IGeneralConfigService _generalConfig;
         private UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
-        private readonly ITaskService _taskService;
+        private readonly ITaskService _complaintService;
         private readonly ITeamService _teamService;
         public ComplaintService(ApplicationDbContext dbContext,
             UserManager<ApplicationUser> userManager,
-            IGeneralConfigService generalConfig, IMapper mapper, ITaskService taskService, ITeamService teamService)
+            IGeneralConfigService generalConfig, IMapper mapper, ITaskService complaintService, ITeamService teamService)
         {
             _dbContext = dbContext;
             _generalConfig = generalConfig;
             _userManager = userManager;
             _mapper = mapper;
-            _taskService = taskService; 
+            _complaintService = complaintService; 
             _teamService = teamService; 
         }
 
@@ -169,6 +168,31 @@ namespace IntegratedImplementation.Services.Complaint
             }
         }
 
+        public async Task<ResponseMessage> DeleteComplaint(Guid complaintId)
+        {
+            var complaint = await _dbContext.Complaints.Where(x => x.Id.Equals(complaintId)).FirstAsync();
+
+            if (complaint != null)
+            {
+                _dbContext.Complaints.Remove(complaint);
+
+                await _dbContext.SaveChangesAsync();
+
+                return new ResponseMessage
+                {
+                    Message = "Complaint Deleted Successfully",
+                    Success = true
+                };
+
+            }
+            return new ResponseMessage
+            {
+                Message = "Complaint Not Found",
+                Success = false
+            };
+
+        }
+
         public async Task<ResponseMessage> AssignAsTask(AssignComplaintDto complain)
         {
             if (complain.EmployeeId != null && complain.EmployeeId.Count> 0)
@@ -193,13 +217,13 @@ namespace IntegratedImplementation.Services.Complaint
                         //TaskFiles = complain.Complaint.ComplaintFiles
 
                     };
-                    var result = await _taskService.AddTask(complainTask);
+                    var result = await _complaintService.AddTask(complainTask);
                     if (result.Success)
                     {
                         foreach (var file in complain.Complaint.ComplaintFiles.Distinct())
                         {
                             
-                            TaskFile taskFile = new TaskFile
+                            TaskFile complaintFile = new TaskFile
                             {
                                 TaskId = (Guid)result.Data,
                                 FileName = file.FileName,
@@ -207,7 +231,7 @@ namespace IntegratedImplementation.Services.Complaint
                                 FileType = file.FileType,
                                 CreatedById = complain.CreatedById
                             };
-                            await _dbContext.TaskFiles.AddAsync(taskFile);
+                            await _dbContext.TaskFiles.AddAsync(complaintFile);
                         }
                         await _dbContext.SaveChangesAsync();
 

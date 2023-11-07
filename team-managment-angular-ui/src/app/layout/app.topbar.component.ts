@@ -92,9 +92,18 @@ export class AppTopBarComponent implements OnInit {
 
         if(this.allowedRoles(['Admin'])){
           this.connection.on('getTaskNotice', (result,res) => {
-            this.tasks.push(result) 
-            this.tasks.reverse();
-            this.seen = true
+            if(res==='task'){
+              this.tasks.push(result) 
+              this.tasks.reverse();
+              this.seen = true
+            }
+            if(res === 'rmTask'){
+              const index = this.tasks.findIndex(task => task.id === result.id);
+              if (index > -1) {
+                this.tasks.splice(index, 1);
+              }
+            }
+            
           })
         }
       }

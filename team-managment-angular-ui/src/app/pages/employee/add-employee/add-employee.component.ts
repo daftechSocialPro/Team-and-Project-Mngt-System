@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { CommonService } from 'src/app/services/common.service';
 import { EmployeeService } from 'src/app/services/employee.service';
@@ -35,7 +36,8 @@ export class AddEmployeeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private messageService: MessageService,
-    private employeeService: EmployeeService) { }
+    private employeeService: EmployeeService,
+    private activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
 
@@ -69,7 +71,7 @@ export class AddEmployeeComponent implements OnInit {
       formData.append("EmploymentPosition", this.EmployeeForm.value.EmploymentPosition.name);
       formData.append("ImagePath", this.uploadedFiles[0]);
       formData.append("CreatedById", this.user.UserID);
-
+      
       this.employeeService.addEmployee(formData).subscribe({
         next: (res) => {
 
@@ -79,7 +81,7 @@ export class AddEmployeeComponent implements OnInit {
             this.EmployeeForm.reset();
             this.uploadedFiles = []
             this.employeeAdded.emit();
-            // this.closeModal();
+            this.closeModal();
           }
           else {
             this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
@@ -108,4 +110,8 @@ export class AddEmployeeComponent implements OnInit {
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
   }
 
+  closeModal()
+  {
+    this.activeModal.close()
+  }
 }

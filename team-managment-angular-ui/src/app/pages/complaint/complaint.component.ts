@@ -29,8 +29,6 @@ export class ComplaintComponent implements OnInit {
   }
 
   getComplaints() {
-
- 
     this.complaintService. getComplaints().subscribe({
       next: (res) => {
         this.complaints = res
@@ -42,6 +40,7 @@ export class ComplaintComponent implements OnInit {
 
     })
   }
+
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
@@ -54,7 +53,6 @@ export class ComplaintComponent implements OnInit {
     return this.commonService.createImgPath(url)
   }
   
- 
   editComplaint(complaint :any){
     let modalRef = this.modalSerivce.open(EditComplaintComponent,{size:'l',backdrop:'static'})
     modalRef.componentInstance.complaint = complaint

@@ -59,6 +59,14 @@ namespace IntegratedDigitalAPI.Controllers.Complaint
                 return BadRequest();
             }
         }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteComplaint(Guid complaintId)
+        {
+            return Ok(await _complaintService.DeleteComplaint(complaintId));
+        }
+
         [HttpPost("AssignComplaint")]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AssignAsTask(AssignComplaintDto complain)

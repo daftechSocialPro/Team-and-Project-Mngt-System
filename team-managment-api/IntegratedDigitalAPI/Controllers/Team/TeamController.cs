@@ -58,7 +58,7 @@ namespace IntegratedDigitalAPI.Controllers.Team
                 return BadRequest();
             }
         }
-        [HttpPost("RemoveTeamMember")]
+        [HttpDelete("RemoveTeamMember")]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> RemoveTeamMember(RemoveTeamDto removeTeam)
         {
@@ -84,7 +84,7 @@ namespace IntegratedDigitalAPI.Controllers.Team
                 return BadRequest();
             }
         }
-        [HttpPost("RemoveTeam")]
+        [HttpDelete("RemoveTeam")]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> RemoveTeam(Guid teamid)
         {

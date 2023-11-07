@@ -68,6 +68,14 @@ namespace IntegratedDigitalAPI.Controllers.Client
                 return BadRequest();
             }
         }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteClient(Guid clientId)
+        {
+            return Ok(await _clientService.DeleteClient(clientId));
+        }
+
         [HttpPost("addContactsToClient")]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddContactToClient(List<AddToClientDto> addToClient)

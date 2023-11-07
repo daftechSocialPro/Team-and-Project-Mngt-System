@@ -13,5 +13,6 @@ namespace IntegratedImplementation.Interfaces.Notice
         Task<ResponseMessage> PostNotice(NoticePostDto sendNotice);
         Task<List<NoticeGetDto>> GetNotices();
         Task<NoticeGetDto> GetNotice(Guid id);
+        System.Threading.Tasks.Task RemoveDataAfterDate();
     }
 }

@@ -37,7 +37,7 @@ namespace IntegratedImplementation.DTOS.Complaint
         public string? ComplaintType { get; set; }
         public string? ComplaintStatus { get; set; }
         public List<IFormFile>? ComplaintFiles { get; set; }
-        public string CreatedById { get; set; } = null!;
+        public string? CreatedById { get; set; } = null!;
 
 
     }

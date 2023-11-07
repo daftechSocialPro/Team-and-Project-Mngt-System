@@ -15,6 +15,7 @@ namespace IntegratedInfrustructure.Model.Notice
         public string Subject { get; set; }
         public string Content { get; set; }
         public Guid EmployeeId { get; set; }
+        public DateTime EndDate { get; set; }
 
         public virtual EmployeeList Employee { get; set; }
         public Guid? ProjectId { get; set; }

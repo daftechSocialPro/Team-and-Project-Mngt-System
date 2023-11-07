@@ -57,9 +57,9 @@ getImage2() {
   if (this.employee != null) {
     return this.getImage(this.employee.imagePath!)
   }
-  // else {
-  //   return 'assets/img/company.jpg'
-  // }
+  else {
+    return 'assets/profilelogo.png'
+  }
 }
 onUpload2(event: any) {
 
@@ -81,12 +81,11 @@ onUpload2(event: any) {
 
           if (res.success) {
             this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
-                    
+                 
             
           }
           else {
             this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
-
           }
 
         }, error: (err) => {

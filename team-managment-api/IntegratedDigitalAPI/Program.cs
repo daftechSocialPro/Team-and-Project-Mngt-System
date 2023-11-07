@@ -13,6 +13,11 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using IntegratedImplementation.Helper.ChatHub;
+using Hangfire;
+
+using IntegratedImplementation.Interfaces.Notice;
+using IntegratedImplementation.Interfaces.Task;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +49,14 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>()
 
 builder.Services.AddSignalR();
 
+// Add Hangfire
+builder.Services.AddHangfire((sp,config) =>
+{
+    var connectionString = sp.GetRequiredService<IConfiguration>().GetConnectionString("SqlConnection");
+    config.UseSqlServerStorage(connectionString);
+});
+
+builder.Services.AddHangfireServer();
 
 
 builder.Services.Configure<IdentityOptions>(options =>
@@ -129,6 +142,16 @@ app.UseStaticFiles(new StaticFileOptions
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot")),
     RequestPath = new PathString("/wwwroot")
 });
+app.UseHangfireDashboard("/hangfire",new DashboardOptions
+{
+    DashboardTitle = "DAFTech Team Managment"
+
+});
+QuestPDF.Settings.License = LicenseType.Community;
+
+RecurringJob.AddOrUpdate<INoticeService>(a => a.RemoveDataAfterDate(), Cron.Daily(0));
+
+RecurringJob.AddOrUpdate<ITaskService>(a => a.GenerateWeeklyReport(), "0 19 * * SAT");
 
 app.UseAuthentication();
 

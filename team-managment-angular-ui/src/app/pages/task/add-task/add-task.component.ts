@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService, SelectItem } from 'primeng/api';
 import { CommonService } from 'src/app/services/common.service';
+import { EmployeeService } from 'src/app/services/employee.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { TaskService } from 'src/app/services/task.service';
 import { TeamService } from 'src/app/services/team.service';
@@ -17,6 +18,7 @@ export class AddTaskComponent implements OnInit{
   @Input() projectId: string
   @Input() teamProject: any
   @Input() projectEmployees: any
+  @Input() adminAssign: boolean
   user : UserView
   projectSelectList: SelectItem[] = []
   employeeSelectList: SelectItem[] =[]
@@ -50,14 +52,16 @@ export class AddTaskComponent implements OnInit{
     private commonService: CommonService,
     private activeModal: NgbActiveModal,
     private taskService:TaskService,
-    private teamService:TeamService){}
+    private teamService:TeamService,
+    private employeeService: EmployeeService
+    ){}
 
 
   ngOnInit(): void {
     
     this.user = this.userService.getCurrentUser()
     
-    if (this.projectId === undefined){
+    if (this.projectId === undefined && !this.adminAssign){
       this.getProjectList()
       this.TaskForm = this.formBuilder.group({
       
@@ -66,7 +70,7 @@ export class AddTaskComponent implements OnInit{
         TaskStatus:[null,Validators.required],
         TaskPriority:[null,Validators.required],
         ProjectId:[null],
-        TaskDescription:[''],
+        TaskDescription:['',Validators.required],
         TasKType:[null,Validators.required]
       })
     }
@@ -99,9 +103,19 @@ export class AddTaskComponent implements OnInit{
           TaskDescription:this.TaskForm.value.TaskDescription,
           CreatedById:this.user.UserID,
           EmployeeName:this.user.FullName,
-          
-
         }
+      }
+      else if (this.adminAssign){
+        var taskAdd:any = {
+          TaskName:this.TaskForm.value.TaskName,
+          EndDate:this.TaskForm.value.EndDate,
+          TaskStatuses:this.TaskForm.value.TaskStatus.name,
+          TaskPriority:this.TaskForm.value.TaskPriority.name,
+          EmployeeId:this.TaskForm.value.EmployeeId.value,
+          TaskDescription:this.TaskForm.value.TaskDescription,
+          CreatedById:this.user.UserID,
+        }
+
       }
       else if (this.projectId === undefined){
         var taskAdd:any = {
@@ -194,15 +208,25 @@ export class AddTaskComponent implements OnInit{
   }
 
   getEmployeeList(){
-    if (this.teamProject.length === 0){
-      this.employeeSelectList = this.projectEmployees.map(i => ({ value:i.id, label:i.name}))
-    }
-    else {
-      this.teamService.getTeamMembersSelectList(this.teamProject.map(i => i.id)).subscribe({
+    if (this.adminAssign){
+      this.employeeService.getEmployeesSelectList().subscribe({
         next: (res) => {
-          this.employeeSelectList = res.map(i => ({value: i.id, label: i.name}))
+          this.employeeSelectList = res.map(item => ({ value: item.id, label: item.name, imagePath: item.imagePath }));
         }
       })
+
+    }
+    else {
+      if (this.teamProject.length === 0){
+        this.employeeSelectList = this.projectEmployees.map(i => ({ value:i.id, label:i.name}))
+      }
+      else {
+        this.teamService.getTeamMembersSelectList(this.teamProject.map(i => i.id)).subscribe({
+          next: (res) => {
+            this.employeeSelectList = res.map(i => ({value: i.id, label: i.name}))
+          }
+        })
+      }
     }
   }
 
