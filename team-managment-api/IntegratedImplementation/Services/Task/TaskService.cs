@@ -20,6 +20,9 @@ using QuestPDF.Previewer;
 using QuestPDF.Helpers;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using System.ComponentModel;
+using IntegratedImplementation.Helper;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace IntegratedImplementation.Services.Task
 {
@@ -36,6 +39,7 @@ namespace IntegratedImplementation.Services.Task
         private readonly IEmployeeService _employeeService;
         private readonly IGeneralConfigService _generalConfig;
         private IHubContext<ChatHub, IChatHubInterface> _chatService;
+        
 
         public TaskService(ApplicationDbContext dbContext, IMapper mapper, IEmployeeService employeeService, IGeneralConfigService generalConfigService, IHubContext<ChatHub, IChatHubInterface> chatService)
         {
@@ -356,7 +360,35 @@ namespace IntegratedImplementation.Services.Task
 
         }
 
+
+        public async Task<ResponseMessage> DeleteTask(Guid taskId)
+        {
+            var task = await _dbContext.Tasks.Where(x => x.Id.Equals(taskId)).FirstAsync();
+
+            if (task != null)
+            {
+                 _dbContext.Tasks.Remove(task);
+
+                await _dbContext.SaveChangesAsync();
+
+                return new ResponseMessage
+                {
+                    Message = "Task Deleted Successfully",
+                    Success = true
+                };
+
+            }
+            return new ResponseMessage
+            {
+                Message = "Task Not Found",
+                Success = false
+            };
+
+        }
+
+
         [AutomaticRetry(Attempts = 3)] // Retry the job up to 3 times on failure
+        [Obsolete]
         public async System.Threading.Tasks.Task GenerateWeeklyReport()
         {
             DateTime currentDate = DateTime.Now;
@@ -366,8 +398,10 @@ namespace IntegratedImplementation.Services.Task
             var startedTasksForWeek = _dbContext.Tasks.Where(t => t.CreatedDate >= startOfWeek && t.CreatedDate <= endOfWeek);
             var finishedTasksForWeek = _dbContext.Tasks.Where(t => t.EndDate >= startOfWeek && t.EndDate <= endOfWeek);
 
-            var finishedTasksForWeekList = _dbContext.Tasks.Where(t => t.EndDate >= startOfWeek && t.EndDate <= endOfWeek).AsNoTracking()
-                .ProjectTo<TaskGetDto>(_mapper.ConfigurationProvider).GroupBy(t => t.EmployeeName).ToListAsync();
+            var finishedTasksForWeekList = await _dbContext.Tasks.Where(t => t.EndDate >= startOfWeek && t.EndDate <= endOfWeek).AsNoTracking()
+                .ProjectTo<TaskGetDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            var finishedTasksForWeekList2 = finishedTasksForWeekList.GroupBy(t => t.EmployeeName);
 
             var startedTaskCountByEmployee = startedTasksForWeek.GroupBy(t => t.Employee.FirstName + " " + t.Employee.LastName)
                                              .Select(g => new
@@ -411,7 +445,7 @@ namespace IntegratedImplementation.Services.Task
                                                 })
                                                 .ToList();
 
-
+            
 
             var document = Document
                 .Create(d =>
@@ -420,35 +454,205 @@ namespace IntegratedImplementation.Services.Task
                     {
                         p.Margin(1, QuestPDF.Infrastructure.Unit.Inch);
 
-                        p.Header()
-                        .Text("DAFTech TEAM MANAGMENT WEEKLY REPORT")
-                        .FontSize(28)
-                        .SemiBold();
-
-                        p.Content()
-                        .Column(c =>
+                        
+                        p.Header().Column(column =>
                         {
-                            c.Spacing(0.5f, QuestPDF.Infrastructure.Unit.Inch);
+                            column.Item().Row(row =>
+                            {
+                                row.Spacing(50);
 
-                            c.Item()
-                            .AspectRatio(16 / 9f)
-                            .Image(Placeholders.Image);
+                                row.RelativeItem().PaddingTop(-10).Text("Daftech Weekly Task Report").Style(Typography.Title);
+                                row.ConstantItem(90).MaxHeight(30).Component<ImagePlaceholder>();
+                            });
 
+                            column.Item().PaddingVertical(15).Border(1f).BorderColor(Colors.Blue.Lighten1).ExtendHorizontal();
+
+                           
+                           
                         });
 
-                        p.Footer()
-                        .AlignCenter()
-                        .Text(t =>
+                        p.Content().Column(c =>
                         {
-                            t.DefaultTextStyle(x => x.FontSize(18));
-                            t.CurrentPageNumber();
-                            t.Span("/");
-                            t.TotalPages();
-                        }); 
+                            c.Item().Grid(grid =>
+                            {
+                                grid.Columns(2);
+                                grid.Spacing(5);
+                                grid.Item(2).Text(text =>
+                                {
+                                    text.Span("Tasks Ended this week ").Bold().Style(Typography.Headline);
+
+                                });
+                                grid.Item(2).PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Grey.Medium);
+
+                                foreach (var field in finishedTaskCountByEmployee)
+                                {
+                                    grid.Item().Text(text =>
+                                    {
+                                        text.Span($"{field.EmployeeName}: ").SemiBold();
+                                        text.Span(field.TaskCount.ToString());
+                                    });
+                                }
+                                if(finishedTaskCountByEmployee.Count() == 0)
+                                {
+                                    grid.Item().Text(text =>
+                                    {
+                                        text.Span("No Data Avaialble ").SemiBold();
+                                        
+                                    });
+
+                                }
+                                grid.Columns(2);
+                                grid.Spacing(5);
+                                grid.Item(2).Text(text =>
+                                {
+                                    text.Span("Tasks Started this week ").Bold().Style(Typography.Headline);
+
+                                });
+                                grid.Item(2).PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Grey.Medium);
+
+                                foreach (var field in startedTaskCountByEmployee)
+                                {
+                                    grid.Item().Text(text =>
+                                    {
+                                        text.Span($"{field.EmployeeName}: ").SemiBold();
+                                        text.Span(field.TaskCount.ToString());
+                                    });
+                                }
+                                if (startedTaskCountByEmployee.Count() == 0)
+                                {
+                                    grid.Item().Text(text =>
+                                    {
+                                        text.Span("No Data Avaialble ").SemiBold();
+
+                                    });
+
+                                }
+
+                                grid.Columns(2);
+                                grid.Spacing(5);
+                                grid.Item(2).Text(text =>
+                                {
+                                    text.Span("Tasks Completed this week ").Bold().Style(Typography.Headline);
+
+                                });
+                                grid.Item(2).PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Grey.Medium);
+
+                                foreach (var field in completedTaskCountByEmployee)
+                                {
+                                    grid.Item().Text(text =>
+                                    {
+                                        text.Span($"{field.EmployeeName}: ").SemiBold();
+                                        text.Span(field.CompletedTaskCount.ToString());
+                                    });
+                                }
+                                if (completedTaskCountByEmployee.Count() == 0)
+                                {
+                                    grid.Item().Text(text =>
+                                    {
+                                        text.Span("No Data Avaialble ").SemiBold();
+
+                                    });
+
+                                }
+
+                                grid.Columns(2);
+                                grid.Spacing(5);
+                                grid.Item(2).Text(text =>
+                                {
+                                    text.Span("Tasks In Progess this week ").Bold().Style(Typography.Headline);
+
+                                });
+                                grid.Item(2).PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Grey.Medium);
+                                foreach (var field in inprogressTaskCountByEmployee)
+                                {
+                                    grid.Item().Text(text =>
+                                    {
+                                        text.Span($"{field.EmployeeName}: ").SemiBold();
+                                        text.Span(field.InprogressTaskCount.ToString());
+                                    });
+                                }
+                                if (inprogressTaskCountByEmployee.Count() == 0)
+                                {
+                                    grid.Item().Text(text =>
+                                    {
+                                        text.Span("No Data Avaialble ").SemiBold();
+
+                                    });
+
+                                }
+                                grid.Columns(2);
+                                grid.Spacing(5);
+                                grid.Item(2).Text(text =>
+                                {
+                                    text.Span("Tasks Not Started this week ").Bold().Style(Typography.Headline);
+
+                                });
+                                grid.Item(2).PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Grey.Medium);
+                                foreach (var field in notstartedTaskCountByEmployee)
+                                {
+                                    grid.Item().Text(text =>
+                                    {
+                                        text.Span($"{field.EmployeeName}: ").SemiBold();
+                                        text.Span(field.NotstartedTaskCount.ToString());
+                                    });
+                                }
+                                if (notstartedTaskCountByEmployee.Count() == 0)
+                                {
+                                    grid.Item().Text(text =>
+                                    {
+                                        text.Span("No Data Avaialble ").SemiBold();
+
+                                    });
+
+                                }
+
+                            });
+
+                            c.Item().PageBreak();
+
+                            c.Item().Table(table =>
+                            {
+                                table.ColumnsDefinition(columns =>
+                                {
+                                    columns.RelativeColumn(3);
+                                    columns.RelativeColumn(3);
+                                    columns.RelativeColumn(3);
+                                    columns.RelativeColumn(3);
+                                });
+
+
+                                foreach (var employeeTasks in finishedTasksForWeekList2)
+                                {
+
+                                    table.Cell().ColumnSpan(4).LabelCell(employeeTasks.Key);
+                                    table.Cell().LabelCell("Task-Name");
+                                    table.Cell().LabelCell("Task-Description");
+                                    table.Cell().LabelCell("Task-Status");
+                                    table.Cell().LabelCell("Task-End Date");
+                                    foreach (var task in employeeTasks)
+                                    {
+                                        table.Cell().ValueCell().Text(task.TaskName).Style(Typography.Normal);
+                                        table.Cell().ValueCell().Text(task.TaskDescription).Style(Typography.Normal);
+                                        table.Cell().ValueCell().Text(task.TaskStatuses).Style(Typography.Normal);
+                                        table.Cell().ValueCell().Text(task.EndDate).Style(Typography.Normal);
+                                    }
+                                }
+                            });
+                        });
+
+
+                        p.Footer().AlignCenter().Text(text =>
+                        {
+                            text.CurrentPageNumber();
+                            text.Span(" / ");
+                            text.TotalPages();
+                        });
                     });
                 });
-            
-            
+
+
+
+
             var memoryStream = new MemoryStream();
             document.GeneratePdf(memoryStream);
             memoryStream.Position = 0;
@@ -456,11 +660,12 @@ namespace IntegratedImplementation.Services.Task
             // Create an IFormFile instance from the MemoryStream
             var formFile = new FormFile(memoryStream, 0, memoryStream.Length, "myFileName.pdf", "myFileName.pdf");
 
-            var path = _generalConfig.UploadFiles(formFile, "WEEKLY-REPORT", "WeeklyReport").Result.ToString();
+            var path = _generalConfig.UploadFiles(formFile, $"WEEKLY-REPORT-{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")}", "WeeklyReport").Result.ToString();
 
+            
 
-
-
+ 
         }
+        
     }
 }

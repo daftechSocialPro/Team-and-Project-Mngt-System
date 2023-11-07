@@ -1,6 +1,7 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.Project;
+using IntegratedImplementation.DTOS.Task;
 using IntegratedImplementation.DTOS.Team;
 using IntegratedImplementation.Interfaces.Project;
 using Microsoft.AspNetCore.Mvc;
@@ -78,6 +79,14 @@ namespace IntegratedDigitalAPI.Controllers.Project
                 return BadRequest();
             }
         }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteProject(Guid projectId)
+        {
+            return Ok(await _projectService.DeleteProject(projectId));
+        }
+
         [HttpGet("GetProjectSelectList")]
         [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetProjectSelectList()

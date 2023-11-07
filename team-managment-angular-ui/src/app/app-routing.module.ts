@@ -8,9 +8,7 @@ import { UsersComponent } from './pages/users/users.component';
 import { TeamComponent } from './pages/team/team.component';
 import { ProjectComponent } from './pages/project/project.component';
 import { UserService } from './services/user.service';
-
 import { TaskComponent } from './pages/task/task.component';
-
 import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NoticeComponent } from './pages/notice/notice.component';
@@ -40,11 +38,11 @@ import { ComplaintDetailComponent } from './pages/complaint/complaint-detail/com
                     { path: 'projectdetail/:projectId',component:ProjectDetailComponent },
                     { path: 'clientdetail/:clientId',component:ClientDetailComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]} },
                     { path: 'complaintdetail/:complaintId',component:ComplaintDetailComponent,canActivate: [AuthGuard],data:{permittedRoles:["Admin"]} },
-                                       
+                                    
                 ]
 
             },
-                        
+                       
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
             { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'notfound', component: NotfoundComponent },

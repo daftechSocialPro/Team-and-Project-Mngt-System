@@ -406,6 +406,30 @@ namespace IntegratedImplementation.Services.Project
          
         }
 
+        public async Task<ResponseMessage> DeleteProject(Guid projectId)
+        {
+            var project = await _dbContext.Projects.Where(x => x.Id.Equals(projectId)).FirstAsync();
+
+            if (project != null)
+            {
+                _dbContext.Projects.Remove(project);
+
+                await _dbContext.SaveChangesAsync();
+
+                return new ResponseMessage
+                {
+                    Message = "Project Deleted Successfully",
+                    Success = true
+                };
+
+            }
+            return new ResponseMessage
+            {
+                Message = "Project Not Found",
+                Success = false
+            };
+
+        }
 
 
     }

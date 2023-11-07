@@ -14,6 +14,7 @@ namespace IntegratedImplementation.Interfaces.Complaint
         Task<ComplaintGetDto> GetComplaint(Guid id);
         Task<ResponseMessage> AddComplaint(ComplaintPostDto addComplaint);
         Task<ResponseMessage> EditComplaint(ComplaintPostDto editComplaint);
+        Task<ResponseMessage> DeleteComplaint(Guid complaintId);
         Task<ResponseMessage> AssignAsTask(AssignComplaintDto complain);
     }
 }

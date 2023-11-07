@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
+
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.Client
@@ -190,6 +190,31 @@ namespace IntegratedImplementation.Services.Client
                     Success = false
                 };
             }
+
+        }
+
+        public async Task<ResponseMessage> DeleteClient(Guid clientId)
+        {
+            var client = await _dbContext.Clients.Where(x => x.Id.Equals(clientId)).FirstAsync();
+
+            if (client != null)
+            {
+                _dbContext.Clients.Remove(client);
+
+                await _dbContext.SaveChangesAsync();
+
+                return new ResponseMessage
+                {
+                    Message = "Client Deleted Successfully",
+                    Success = true
+                };
+
+            }
+            return new ResponseMessage
+            {
+                Message = "Client Not Found",
+                Success = false
+            };
 
         }
 

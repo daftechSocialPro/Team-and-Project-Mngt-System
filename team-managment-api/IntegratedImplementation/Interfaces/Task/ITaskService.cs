@@ -16,6 +16,7 @@ namespace IntegratedImplementation.Interfaces.Task
         Task<ResponseMessage> AddTask(TaskPostDto addTask);
         Task<ResponseMessage> EditTask(TaskPostDto editTask);
         Task<ResponseMessage> ChangeStatus(TaskStatusDto editStatus);
+        Task<ResponseMessage> DeleteTask(Guid taskId);
         Task<List<TaskGetDto>> GetPendingCompletedTasks();
         System.Threading.Tasks.Task GenerateWeeklyReport();
 

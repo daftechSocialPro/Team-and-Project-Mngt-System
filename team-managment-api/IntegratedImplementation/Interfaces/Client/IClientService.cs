@@ -15,6 +15,7 @@ namespace IntegratedImplementation.Interfaces.Client
         Task<ClientGetDto> GetClient(Guid id);
         Task<ResponseMessage> AddClient(ClientPostDto addClient);
         Task<ResponseMessage> EditClient(ClientPostDto editClient);
+        Task<ResponseMessage> DeleteClient(Guid clientId);
         Task<ResponseMessage> AddContactToClient(List<AddToClientDto> addToClient);
         Task<List<SelectListDto>> GetClientNoUser();
 
