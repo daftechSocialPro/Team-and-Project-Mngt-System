@@ -1,5 +1,6 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Client;
+using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.DTOS.Project;
 using IntegratedImplementation.DTOS.Team;
@@ -36,7 +37,7 @@ namespace IntegratedDigitalAPI.Controllers.Client
             return Ok(await _clientService.GetClient(id));
         }
         [HttpGet("getClientNoUser")]
-        [ProducesResponseType(typeof(EmployeeGetDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetClientNoUser()
         {
             return Ok(await _clientService.GetClientNoUser());
@@ -88,6 +89,13 @@ namespace IntegratedDigitalAPI.Controllers.Client
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet("getClientSelectList")]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetClientSelectList()
+        {
+            return Ok(await _clientService.GetClientSelectList());
         }
     }
 }

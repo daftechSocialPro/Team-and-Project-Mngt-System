@@ -1,0 +1,47 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title"> Update User</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+    <div class="card">
+        
+        <form [formGroup]="editUserForm" (submit)="onSubmit()">
+            <div class="p-fluid p-formgrid grid">
+                
+                <div class="field col-12 md:col-6">
+                    <label htmlFor="lastname2">Username</label>
+                    <input pInputText id="lastname2" formControlName="Username" type="text" />
+                </div>
+
+                <div class="field col-12 md:col-6">
+                    <label htmlFor="lastname2">User Type</label>
+                    <p-dropdown [options]="statusDropdownItems" optionLabel="name" [showClear]="true" placeholder="Select User Type"
+                    formControlName="UserStatus"></p-dropdown>
+                </div>
+                
+                
+                
+                
+                    <button (click)="showFields = true" *ngIf="!showFields">Show Fields</button>
+                
+                    
+                    <div *ngIf="showFields" class="field col-12 md:col-6">
+                        <label htmlFor="firstname2">New Password </label>
+                        <input pInputText id="firstname2" formControlName="NewPassword" type="password" />
+                    </div>
+                    
+                    <div *ngIf="showFields" class="field col-12 md:col-6">
+                        <label htmlFor="firstname2">Confirm Password </label>
+                        <input pInputText id="firstname2" formControlName="ConfirmPassword" type="password" />
+                    </div>
+                    
+                
+                
+                
+                <hr />
+                <button pButton type="submit" [disabled]="!editUserForm.valid" label="Submit"></button>
+                
+            </div>
+        </form>
+    </div>
+</div>

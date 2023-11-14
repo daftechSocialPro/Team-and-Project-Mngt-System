@@ -14,15 +14,13 @@ using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Helper.ChatHub;
 using Microsoft.AspNetCore.SignalR;
 using Hangfire;
-using QuestPDF;
 using QuestPDF.Fluent;
-using QuestPDF.Previewer;
 using QuestPDF.Helpers;
-using System.IO;
 using Microsoft.AspNetCore.Http;
-using System.ComponentModel;
 using IntegratedImplementation.Helper;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using QuestPDF.Infrastructure;
+using Microsoft.AspNetCore.Hosting;
 
 namespace IntegratedImplementation.Services.Task
 {
@@ -34,20 +32,21 @@ namespace IntegratedImplementation.Services.Task
             public List<TaskGetDto> tasks { get; set; }
         }
         private readonly ApplicationDbContext _dbContext;
-
+        private readonly IWebHostEnvironment _env;
         private readonly IMapper _mapper;
         private readonly IEmployeeService _employeeService;
         private readonly IGeneralConfigService _generalConfig;
         private IHubContext<ChatHub, IChatHubInterface> _chatService;
         
 
-        public TaskService(ApplicationDbContext dbContext, IMapper mapper, IEmployeeService employeeService, IGeneralConfigService generalConfigService, IHubContext<ChatHub, IChatHubInterface> chatService)
+        public TaskService(ApplicationDbContext dbContext, IMapper mapper, IEmployeeService employeeService, IGeneralConfigService generalConfigService, IHubContext<ChatHub, IChatHubInterface> chatService, IWebHostEnvironment env)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _employeeService = employeeService;
             _generalConfig = generalConfigService;
             _chatService = chatService;
+            _env = env;
         }
 
         public async Task<TaskGetDto> GetTask(Guid taskId)
@@ -339,6 +338,10 @@ namespace IntegratedImplementation.Services.Task
             }
             if (editStatus.TaskStatuses == "COMPLETE" && (editStatus.TaskApproval == "APPROVED" || editStatus.TaskApproval == "REJECTED"))
             {
+                if (editStatus.ComplaintId != null && editStatus.TaskApproval == "APPROVED") 
+                {                               
+                    
+                }
                 var task2 = await GetTask(editStatus.Id);
                 await _chatService.Clients.Group(task2.EmployeeId.ToString()).getUserTaskNotice(task2, editStatus.TaskApproval);
             }
@@ -364,7 +367,7 @@ namespace IntegratedImplementation.Services.Task
         public async Task<ResponseMessage> DeleteTask(Guid taskId)
         {
             var task = await _dbContext.Tasks.Where(x => x.Id.Equals(taskId)).FirstAsync();
-
+            
             if (task != null)
             {
                  _dbContext.Tasks.Remove(task);
@@ -445,14 +448,26 @@ namespace IntegratedImplementation.Services.Task
                                                 })
                                                 .ToList();
 
-            
+
+            var employeePercentages = finishedTaskCountByEmployee.Select(finishedTask => {
+                var completedTask = completedTaskCountByEmployee.FirstOrDefault(c => c.EmployeeName == finishedTask.EmployeeName);
+                double percentage = completedTask != null ? (double)completedTask.CompletedTaskCount / finishedTask.TaskCount * 100 : 0;
+                return new
+                {
+                    EmployeeName = finishedTask.EmployeeName,
+                    CompletionPercentage = percentage
+                };
+            }).ToList();
+
+            var imagePath = Path.Combine(_env.WebRootPath, "logo.png");
+            var image = Image.FromFile(imagePath);
 
             var document = Document
                 .Create(d =>
                 {
                     d.Page(p =>
                     {
-                        p.Margin(1, QuestPDF.Infrastructure.Unit.Inch);
+                        p.Margin(1, Unit.Inch);
 
                         
                         p.Header().Column(column =>
@@ -461,8 +476,8 @@ namespace IntegratedImplementation.Services.Task
                             {
                                 row.Spacing(50);
 
-                                row.RelativeItem().PaddingTop(-10).Text("Daftech Weekly Task Report").Style(Typography.Title);
-                                row.ConstantItem(90).MaxHeight(30).Component<ImagePlaceholder>();
+                                row.RelativeItem().PaddingTop(-10).Text("Daftech Weekly Report").Style(Typography.Title);
+                                row.ConstantItem(90).Image(image) ;
                             });
 
                             column.Item().PaddingVertical(15).Border(1f).BorderColor(Colors.Blue.Lighten1).ExtendHorizontal();
@@ -475,6 +490,32 @@ namespace IntegratedImplementation.Services.Task
                         {
                             c.Item().Grid(grid =>
                             {
+                                grid.Columns(2);
+                                grid.Spacing(5);
+                                grid.Item(2).Text(text =>
+                                {
+                                    text.Span("Tasks Completion percent this week ").Bold().Style(Typography.Headline);
+
+                                });
+                                grid.Item(2).PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Grey.Medium);
+
+                                foreach (var field in employeePercentages)
+                                {
+                                    grid.Item().Text(text =>
+                                    {
+                                        text.Span($"{field.EmployeeName}: ").SemiBold();
+                                        text.Span($"{field.CompletionPercentage.ToString()} %");
+                                    });
+                                }
+                                if (finishedTaskCountByEmployee.Count() == 0)
+                                {
+                                    grid.Item().Text(text =>
+                                    {
+                                        text.Span("No Data Avaialble ").SemiBold();
+
+                                    });
+
+                                }
                                 grid.Columns(2);
                                 grid.Spacing(5);
                                 grid.Item(2).Text(text =>
@@ -609,6 +650,7 @@ namespace IntegratedImplementation.Services.Task
                             });
 
                             c.Item().PageBreak();
+
 
                             c.Item().Table(table =>
                             {

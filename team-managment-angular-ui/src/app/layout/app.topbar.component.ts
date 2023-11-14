@@ -95,7 +95,7 @@ export class AppTopBarComponent implements OnInit {
             if(res==='task'){
               this.tasks.push(result) 
               this.tasks.reverse();
-              this.seen = true
+              //this.seen = true
             }
             if(res === 'rmTask'){
               const index = this.tasks.findIndex(task => task.id === result.id);

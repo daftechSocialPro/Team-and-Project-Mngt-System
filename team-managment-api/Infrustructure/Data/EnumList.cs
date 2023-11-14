@@ -148,7 +148,9 @@ namespace IntegratedInfrustructure.Data
         }
         public enum ComplaintType
         {
-            NEW
+            SYSTEMERROR,
+            SUPPORT,
+            OTHER
 
         }
         public enum ComplaintStatus

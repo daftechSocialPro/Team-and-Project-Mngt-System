@@ -16,6 +16,9 @@ export class UserService {
   getUserList (){
     return this.http.get<any>(this.BaseURI+"/api/Authentication/GetUserList")
   }
+  getUser (id: string){
+    return this.http.get<any>(this.BaseURI+"/api/Authentication/GetUser?id=" + id)
+  }
   roleMatch(allowedRoles: any): boolean {
 
     var isMatch = false;
@@ -79,6 +82,9 @@ export class UserService {
     return this.http.post<any>(this.BaseURI+"/api/Authentication/ChangePassword",changePassword)
   }
 
+  updateUser(data : any){
+    return this.http.put<any>(this.BaseURI + "/api/Authentication/UpdateUser",data) 
+  }
 
 }
 export interface UserView {

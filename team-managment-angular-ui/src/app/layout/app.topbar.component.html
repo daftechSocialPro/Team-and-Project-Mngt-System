@@ -23,7 +23,7 @@
 
     <button class="p-link layout-topbar-button" (click)="op2.toggle($event); seen=false">
       <i class="pi pi-bell"></i>
-      <span *ngIf="seen && allowedRoles(['Admin'])" class="badge">{{tasks.length + notices.length}}</span>
+      <span *ngIf="allowedRoles(['Admin'])" class="badge">{{tasks.length}}</span>
       <span *ngIf="seen && !allowedRoles(['Admin'])" class="badge">{{notices.length}}</span>
       
       <span>Notifications</span>

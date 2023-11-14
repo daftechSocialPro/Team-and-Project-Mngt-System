@@ -54,5 +54,25 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
             return File(bytes, mimeType);
 
         }
+
+
+
+        [HttpGet("weeklyreports")]
+        public IActionResult GetFolderContents([FromServices] IWebHostEnvironment env)
+        {
+            var directoryPath = Path.Combine(env.WebRootPath, "WeeklyReport");
+            if (!Directory.Exists(directoryPath))
+            {
+                return NotFound();
+            }
+
+            var fileInfos = Directory.EnumerateFiles(directoryPath).Select(filePath => new FileInfo(filePath));
+            var fileDetails = fileInfos.Select(fileInfo => new
+            {
+                Name = fileInfo.Name,
+                Path = fileInfo.FullName.Replace(env.ContentRootPath, "").TrimStart('\\')
+            });
+            return Ok(fileDetails);
+        }
     }
 }

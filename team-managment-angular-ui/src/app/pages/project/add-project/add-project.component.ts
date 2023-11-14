@@ -7,6 +7,7 @@ import { EmployeeService } from 'src/app/services/employee.service';
 import { UserService, UserView } from 'src/app/services/user.service';
 import { TeamService } from 'src/app/services/team.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-add-project',
@@ -19,6 +20,8 @@ export class AddProjectComponent implements OnInit {
   employeesSelectList: SelectItem[] = []
   employeesSelectedList: string[] = []
   teamsSelectList: SelectItem[] = []
+  clientSelectList: SelectItem[] = []
+  clientSelectedList: string[] = []
 
   assignedToDropdownItems = [
     { name: '', code: '' },
@@ -46,7 +49,8 @@ export class AddProjectComponent implements OnInit {
     private employeeService: EmployeeService,
     private teamService: TeamService,
     private commonService: CommonService,
-    private activeModal: NgbActiveModal
+    private activeModal: NgbActiveModal,
+    private clientService: ClientService
     
     ) { }
 
@@ -54,6 +58,7 @@ export class AddProjectComponent implements OnInit {
 
     this.user = this.userService.getCurrentUser()
     this.getEmployeesSelectList()
+    this.getClientsSelectList()
     this.getTeamSelectList()
     this.ProjectForm = this.formBuilder.group({
       ProjectName: [null, Validators.required],
@@ -64,6 +69,7 @@ export class AddProjectComponent implements OnInit {
       AssignedTo: [null, Validators.required],
       TeamId: [''],
       ProjectEmployees: [''],
+      ProjectClients: [''],
       GitHubLink: [''],
       
     
@@ -86,6 +92,7 @@ export class AddProjectComponent implements OnInit {
           TeamId:this.ProjectForm.value.TeamId,
           GitHubLink:this.ProjectForm.value.GitHubLink,
           CreatedById:this.user.UserID,
+          
         }
       }
       else{
@@ -113,7 +120,9 @@ export class AddProjectComponent implements OnInit {
       for (var i = 0; i < this.uploadedFiles.length; i++) {
         formData.append("ProjectFiles", this.uploadedFiles[i]);
       }
-      
+      for (var i = 0; i < this.clientSelectedList.length; i++) {
+        formData.append("ProjectClients", this.clientSelectedList[i]);
+      }
 
 
       this.projectService.addProject(formData).subscribe({
@@ -151,6 +160,15 @@ export class AddProjectComponent implements OnInit {
       }
     })
   }
+
+  getClientsSelectList() {
+    this.clientService.getClientsSelectList().subscribe({
+      next: (res) => {
+        this.clientSelectList = res.map(item => ({ value: item.id, label: item.name, imagePath: item.imagePath }));
+      }
+    })
+  }
+
   getTeamSelectList() {
     this.teamService.getTeamSelectList().subscribe({
       next: (res) => {
@@ -163,6 +181,11 @@ export class AddProjectComponent implements OnInit {
     
     this.employeesSelectedList = event.value.map(item => (item.value))
   
+  }
+
+  SelectItems2(event: any)
+  {
+    this.clientSelectedList = event.value.map(item => (item.value))
   }
   
   showInput()

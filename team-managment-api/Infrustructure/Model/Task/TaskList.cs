@@ -3,6 +3,7 @@ using static IntegratedInfrustructure.Data.EnumList;
 using IntegratedInfrustructure.Model.Project;
 using IntegratedInfrustructure.Model.HRM;
 using System.ComponentModel.DataAnnotations.Schema;
+using IntegratedInfrustructure.Model.Complaint;
 
 namespace IntegratedInfrustructure.Model.Task
 {
@@ -25,9 +26,12 @@ namespace IntegratedInfrustructure.Model.Task
         public TaskPriority TaskPriority { get; set; }
         public virtual EmployeeList Employee { get; set; }
         public Guid EmployeeId { get; set; } 
-        public virtual ProjectList Project { get; set; }
+        public virtual ProjectList? Project { get; set; }
         public Guid? ProjectId { get; set; }
+        public virtual ComplaintList? Complaint { get; set; }   
+        public Guid? ComplaintId { get; set; }
         public string? FilePath { get; set; }
+        public bool IsSeen { get; set; }
         public TaskApproval TaskApproval { get; set; }
         public string? RejectionRemark { get; set; }
     }

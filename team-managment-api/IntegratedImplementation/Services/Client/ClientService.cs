@@ -259,7 +259,7 @@ namespace IntegratedImplementation.Services.Client
         }
         public async Task<List<SelectListDto>> GetClientNoUser()
         {
-            var users = _userManager.Users.Select(x => x.ClientId).ToList();
+            var users = _userManager.Users.Where(x => x.ClientId != null).Select(x => x.ClientId).ToList();
 
             var clients = await _dbContext.Clients
                 .Where(e => !users.Contains(e.Id))
@@ -268,7 +268,14 @@ namespace IntegratedImplementation.Services.Client
 
             return clients;
         }
+        public async Task<List<SelectListDto>> GetClientSelectList()
+        {
 
+            var clients = await _dbContext.Clients.ProjectTo<SelectListDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            return clients;
+        }
+        
 
     }
 }

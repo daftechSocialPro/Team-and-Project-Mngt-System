@@ -16,7 +16,7 @@ export class ViewTaskComponent implements OnInit {
   type: string = '';
   pdflink: string = '';
   taskApprovalDropDown = [
-    { name: 'PENDING', code: 'PENDING'},
+    
     { name: 'APPROVED', code: 'APPROVED'},
     { name: 'REJECTED', code: 'REJECTED'}
   ]
@@ -31,10 +31,10 @@ export class ViewTaskComponent implements OnInit {
     ngOnInit(): void {
       console.log(this.task)
       this.TaskApprovalForm = this.formBuilder.group({
-        TaskApproval: [null, Validators.required],
+        TaskApproval: ['', Validators.required],
         RejectionRemark: [null]
       })
-      this.TaskApprovalForm.controls['TaskApproval'].setValue(this.taskApprovalDropDown.find(u => u.name === this.task.taskApproval) )
+      //this.TaskApprovalForm.controls['TaskApproval'].setValue(this.taskApprovalDropDown.find(u => u.name === this.task.taskApproval) )
       
     }
     
@@ -55,8 +55,10 @@ export class ViewTaskComponent implements OnInit {
           id:this.task.id,
           taskStatuses:this.task.taskStatuses,
           taskApproval: this.TaskApprovalForm.value.TaskApproval.name ,
-          rejectionRemark: this.TaskApprovalForm.value.RejectionRemark
+          rejectionRemark: this.TaskApprovalForm.value.RejectionRemark,
+          complaintId: this.task.complaintId
         }
+        
         
         this.taskService.updateStatus(taskApproval).subscribe({
           next: (res) => {

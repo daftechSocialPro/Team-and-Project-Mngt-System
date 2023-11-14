@@ -198,7 +198,7 @@ namespace IntegratedImplementation.Services.HRM
 
         public async Task<List<SelectListDto>> GetEmployeeNoUser()
         {
-            var users = _userManager.Users.Select(x => x.EmployeeId).ToList();
+            var users = _userManager.Users.Where(x => x.EmployeeId != null).Select(x => x.EmployeeId).ToList();
                 
             var employees = await _dbContext.Employees
                 .Where(e => !users.Contains(e.Id))

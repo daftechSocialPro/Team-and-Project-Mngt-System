@@ -42,12 +42,19 @@ namespace ERPSystems.Controllers.Authentication
             }
         }
 
+        
 
         [HttpGet]
         [ProducesResponseType(typeof(UserListDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetUserList()
         {
            return Ok(await _authenticationService.GetUserList());
+        }
+        [HttpGet]
+        [ProducesResponseType(typeof(UserListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetUser(string id)
+        {
+            return Ok(await _authenticationService.GetUser(id));
         }
 
         [HttpGet]
@@ -132,11 +139,26 @@ namespace ERPSystems.Controllers.Authentication
         //    }
         //}
         [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto model)
         {
             if (ModelState.IsValid)
             {
                 return Ok(await _authenticationService.ChangePassword(model));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateUser(EditUserDto model)
+        {
+            if(ModelState.IsValid)
+            {
+                return Ok(await _authenticationService.EditUser(model));
             }
             else
             {

@@ -41,6 +41,9 @@ export class CommonService {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url)
   }
   
+  getReportFiles() {
+    return this.http.get(this.baseUrlPdf +'/wwwroot/WeeklyReport');
+  }
   
   getCurrentLocation() {
     return new Promise((resolve, reject) => {

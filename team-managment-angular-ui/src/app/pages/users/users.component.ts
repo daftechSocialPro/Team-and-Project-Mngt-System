@@ -4,6 +4,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { UserService } from 'src/app/services/user.service';
 import { ManageRolesComponent } from './manage-roles/manage-roles.component';
 import { AddUserComponent } from './add-user/add-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 @Component({
   selector: 'app-users',
@@ -43,4 +44,10 @@ export class UsersComponent implements OnInit {
     modalRef.componentInstance.userId = userId
     modalRef.result.then(()=>{this.getUserList()})
   }
+  editUser(user){
+    let modalRef= this.modalSerivce.open(EditUserComponent,{size:'lg',backdrop:'static'})
+    modalRef.componentInstance.user1 = user
+    modalRef.result.then(()=>{this.getUserList()})
+  }
+
 }

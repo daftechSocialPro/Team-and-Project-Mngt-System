@@ -7,34 +7,49 @@
 
     <form [formGroup]="userForm" (submit)="onSubmit()">
         <div class="p-fluid p-formgrid grid">
-
-            <div class="field col-12 md:col-6">
-                <label htmlFor="firstname2">Employee</label>
-
-
-                <p-dropdown [options]="employeesNoUsers" formControlName="employeeId" placeholder="Select a Employee"
-                    [showClear]="true"></p-dropdown>
-
-            </div>
-            <div class="field col-12 md:col-6">
-                <label htmlFor="firstname2">Roles </label>
-                <p-dropdown [options]="userRoles" formControlName="roles" placeholder="Select a Role"
-                [showClear]="true"></p-dropdown>
-  
-            </div>
-            <div class="field col-12 md:col-4">
-                <label htmlFor="lastname2">Username</label>
-                <input pInputText id="lastname2" formControlName="userName" type="text" />
-            </div>
-            <div class="field col-12 md:col-4">
-                <label htmlFor="firstname2">Password </label>
-                <input pInputText id="firstname2" formControlName="password" type="password" />
-            </div>
-            <div class="field col-12 md:col-4">
-                <label htmlFor="firstname2">Confirm Password </label>
-                <input pInputText id="firstname2" formControlName="confirmPassword" type="password" />
-            </div>
             
+                <div class="field col-12 md:col-4">
+                    <label htmlFor="lastname2">User Type</label>
+                    <p-dropdown [options]="assignedToDropdownItems" optionLabel="name" [showClear]="true" placeholder="Select User Type"
+                        formControlName="userType"></p-dropdown>
+                </div>
+
+                <div *ngIf="showInput() === 'EMPLOYEE'" class="field col-12 md:col-4">
+                    <label htmlFor="firstname2">Employee</label>
+
+                    <p-dropdown [options]="employeesNoUsers" formControlName="employeeId" placeholder="Select a Employee"
+                        [showClear]="true"></p-dropdown>
+
+                </div>
+                <div *ngIf="showInput() === 'CLIENT'" class="field col-12 md:col-4">
+                    <label htmlFor="firstname2">Client</label>
+
+                    <p-dropdown [options]="clientssNoUsers" formControlName="clientId" placeholder="Select a Client"
+                        [showClear]="true"></p-dropdown>
+
+                </div>
+
+                <div *ngIf="showInput() === 'EMPLOYEE'" class="field col-12 md:col-4">
+                    <label htmlFor="firstname2">Roles </label>
+                    <p-dropdown [options]="userRoles" formControlName="roles" placeholder="Select a Role"
+                    [showClear]="true"></p-dropdown>
+    
+                </div>
+            
+            <div class="row">
+                <div class="field col-12 md:col-4">
+                    <label htmlFor="lastname2">Username</label>
+                    <input pInputText id="lastname2" formControlName="userName" type="text" />
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label htmlFor="firstname2">Password </label>
+                    <input pInputText id="firstname2" formControlName="password" type="password" />
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label htmlFor="firstname2">Confirm Password </label>
+                    <input pInputText id="firstname2" formControlName="confirmPassword" type="password" />
+                </div>
+            </div>
             
             
             <hr />

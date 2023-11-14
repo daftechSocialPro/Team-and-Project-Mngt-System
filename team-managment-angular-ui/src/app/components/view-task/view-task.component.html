@@ -45,7 +45,7 @@
 
           <div class="field col-12">
             <label for="state">Task Approval Status</label>
-            <p-dropdown [options]="taskApprovalDropDown" optionLabel="name" formControlName="TaskApproval"
+            <p-dropdown [options]="taskApprovalDropDown" optionLabel="name" formControlName="TaskApproval" [showClear]="true"
               placeholder="Select Task Status"></p-dropdown>
           </div>
           <div *ngIf="showInput() === 'REJECTED'" class="field col-12 md:col-6">

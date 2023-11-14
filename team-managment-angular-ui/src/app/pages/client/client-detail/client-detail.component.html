@@ -34,9 +34,9 @@
                   </div>
                   <div style="display: flex; flex-direction: column;">
                     <span style="margin-left: 8px;" class="font-semibold">{{client.name}} Projects:</span>
-                    <div style="margin-left: 10px;">
-                      <span *ngFor="let project of client.projects">
-                        <i class="pi pi-folder"></i> {{ project }}
+                    <div style="margin-left: 115px;">
+                      <span *ngFor="let project of client.projectClients"> 
+                        <i class="pi pi-folder"></i> {{ project.projectName }}
                       </span>
                     </div>
                   </div>

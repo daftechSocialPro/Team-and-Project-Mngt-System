@@ -66,4 +66,13 @@ namespace Implementation.DTOS.Authentication
         public string NewPassword { get; set; }
     }
 
+    public class EditUserDto
+    {
+        [Required]
+        public string UserId { get; set; }
+        public string UserName { get; set; } = null!;
+        public string RowStatus { get; set; }
+        public string? changePassword { get; set; }
+    }
+
 }

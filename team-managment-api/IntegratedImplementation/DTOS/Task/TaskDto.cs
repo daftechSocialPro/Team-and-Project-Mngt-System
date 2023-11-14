@@ -29,6 +29,7 @@ namespace IntegratedImplementation.DTOS.Task
         public DateTime CreatedDate { get; set; }
         public string? RejectionRemark { get; set; }
         public List<TaskFileGetDto>? TaskFiles { get; set; }
+        public Guid? ComplaintId { get; set; }
 
 
     }
@@ -47,6 +48,7 @@ namespace IntegratedImplementation.DTOS.Task
         public string? ProjectName { get; set; }
         public string? EmployeeName { get; set; }
         public List<IFormFile>? TaskFiles { get; set; }
+        public Guid? ComplaintId { get; set; }
 
     }
 
@@ -55,8 +57,10 @@ namespace IntegratedImplementation.DTOS.Task
         public Guid Id { get; set; }
         public string TaskStatuses { get; set; }
         public bool IsOnHold { get; set; }
+        public bool IsSeen { get; set; }
         public string TaskApproval { get; set; }
         public string? RejectionRemark { get; set; }
+        public Guid? ComplaintId { get; set; }
     }
 
 }

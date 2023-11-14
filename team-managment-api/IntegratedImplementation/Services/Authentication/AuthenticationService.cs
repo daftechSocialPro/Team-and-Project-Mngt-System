@@ -358,6 +358,7 @@ namespace Implementation.Services.Authentication
         public async Task<ResponseMessage> AssignRole(UserRoleDto userRole)
         {
             var currentUser = await _userManager.Users.FirstOrDefaultAsync(x=>x.Id==userRole.UserId);
+            
 
             if (currentUser != null)
             {
@@ -409,19 +410,19 @@ namespace Implementation.Services.Authentication
         public async Task<ResponseMessage> ChangePassword(ChangePasswordDto model)
         {
             var user = await _userManager.FindByIdAsync(model.UserId);
-
+            
             if (user == null)
             {
                 return new ResponseMessage
                 {
 
                     Success = false,
-                    Message = "User not found."
+                    Message = "User not found"
                 };
             }
             
             var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
-
+           
             if (!result.Succeeded)
             {
                 return new ResponseMessage
@@ -432,6 +433,115 @@ namespace Implementation.Services.Authentication
             }
 
             return new ResponseMessage { Message = "Password changed successfully.", Success = true };
+        }
+
+        public async Task<ResponseMessage> EditUser(EditUserDto model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            if (user != null)
+            {
+                
+                user.UserName = model.UserName;
+                user.RowStatus = Enum.Parse<RowStatus>(model.RowStatus);
+                var result = await _userManager.UpdateAsync(user);
+                await _dbContext.SaveChangesAsync();
+
+                if (model.changePassword != null)
+                {
+                    await _userManager.RemovePasswordAsync(user);
+
+                    
+                    var results = await _userManager.AddPasswordAsync(user, model.changePassword);
+
+                    if (!results.Succeeded)
+                    {
+                        return new ResponseMessage
+                        {
+                            Success = false,
+                            Message = results.Errors.ToString()
+                        };
+                    }
+                }
+                if (result.Succeeded)
+                {
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = "User Updated Successfully"
+                    };
+                }
+                else
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = result.Errors.ToString()
+                    };
+                }
+                
+
+            }
+
+            return new ResponseMessage
+            {
+                Success = false,
+                Message = "User not found"
+            };
+            
+
+        }
+
+        public async Task<UserListDto> GetUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return null; 
+            }
+
+            UserListDto userListt = null;
+
+            if (user.EmployeeId != null)
+            {
+                var employee = _dbContext.Employees.Find(user.EmployeeId);
+                if (employee != null)
+                {
+                    userListt = new UserListDto()
+                    {
+                        Id = user.Id,
+                        EmployeeId = (Guid)user.EmployeeId,
+                        UserName = user.UserName,
+                        Name = $"{employee.FirstName} {employee.LastName}",
+                        Status = user.RowStatus.ToString(),
+                        ImagePath = employee.ImagePath,
+                        Email = employee.Email,
+                    };
+                }
+            }
+            else if (user.ClientId != null)
+            {
+                var client = _dbContext.Clients.Find(user.ClientId);
+                if (client != null)
+                {
+                    userListt = new UserListDto()
+                    {
+                        Id = user.Id,
+                        ClientId = (Guid)user.ClientId,
+                        UserName = user.UserName,
+                        Name = client.Name,
+                        Status = user.RowStatus.ToString(),
+                        ImagePath = client.ImagePath,
+                        Email = client.Email,
+                    };
+                }
+            }
+
+            if (userListt != null)
+            {
+                userListt.Roles = await GetAssignedRoles(user.Id, 1);
+            }
+
+            return userListt;
         }
     }
 }

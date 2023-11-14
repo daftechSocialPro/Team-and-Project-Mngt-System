@@ -15,13 +15,6 @@ using IntegratedInfrustructure.Model.Complaint;
 using IntegratedInfrustructure.Model.Task;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic.FileIO;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.Complaint
@@ -214,7 +207,7 @@ namespace IntegratedImplementation.Services.Complaint
                         TaskDescription = complain.Complaint.Description,
                         CreatedById = complain.CreatedById,
                         ProjectName = complain.Complaint.Project.ProjectName,
-                        //TaskFiles = complain.Complaint.ComplaintFiles
+                        ComplaintId = complain.Complaint.Id
 
                     };
                     var result = await _complaintService.AddTask(complainTask);

@@ -22,7 +22,7 @@ namespace IntegratedImplementation.DTOS.Client
         public IFormFile? Image { get; set; } = null!;
         public string? ImagePath { get; set; } = null!;
         public List<ClientFileGetDto>? ClientFiles { get; set; }
-        public List<ProjectGetDto>? Projects { get; set; }
+        public List<ProjectGetDto>? ProjectClients { get; set; }
         public List<AddToClientDto>? ClientContacts { get; set; }
     }
     public class ClientPostDto

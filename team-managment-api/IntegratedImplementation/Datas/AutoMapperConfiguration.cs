@@ -126,6 +126,14 @@ namespace IntegratedImplementation.Datas
             CreateMap<ClientList, SelectListDto>();
             CreateMap<TaskFile, TaskFileGetDto>();
             CreateMap<ProjectFile, ProjectFileGetDto>();
+            CreateMap<ProjectClient, ProjectGetDto>()
+                .ForMember(a => a.ProjectName, e => e.MapFrom(mfg => mfg.Project.ProjectName))
+                .ForMember(a => a.Description, e => e.MapFrom(mfg => mfg.Project.Description))
+                .ForMember(a => a.AssignedDate, e => e.MapFrom(mfg => mfg.Project.AssignedDate))
+                .ForMember(a => a.DueDate, e => e.MapFrom(mfg => mfg.Project.DueDate))
+                .ForMember(a => a.ProjectStatus, e => e.MapFrom(mfg => mfg.Project.ProjectStatus))
+                .ForMember(a => a.AssignedTo, e => e.MapFrom(mfg => mfg.Project.AssignedTo));
+                
 
 
         }

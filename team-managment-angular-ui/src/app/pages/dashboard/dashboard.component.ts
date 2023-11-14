@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit, AfterViewInit{
   expProjectProgress: any[]=[];
   currentDate: Date;
   OverallProgress:any
-
+  files: any[] = [];
 
   constructor(
     private userService:UserService,
@@ -59,6 +59,12 @@ export class DashboardComponent implements OnInit, AfterViewInit{
 
     this.currentDate= new Date()
     this.getOverallProgress()
+    this.commonService.getReportFiles()
+      .subscribe((files: any[]) => {
+        this.files = files;
+        console.log('this.files: ', this.files);
+        
+      });
     
 
 

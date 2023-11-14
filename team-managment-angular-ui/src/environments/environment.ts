@@ -7,7 +7,7 @@ export const environment = {
    baseUrl:'http://192.168.0.15:6363'
    //baseUrl:'http://197.156.93.75:8082'//daftech social
    //baseUrl:'http://192.168.1.10:8086'//daftech engineering
-  //baseUrl:'http://localhost:5267'
+    // baseUrl:'http://localhost:5267'
 };
 
 /*

@@ -33,5 +33,14 @@ export class ClientService {
     return this.http.put<any>(this.BaseURI+'/api/Client',formData);
   }
 
+  getClientsSelectList(){
+
+    return this.http.get<any>(this.BaseURI + '/api/Client/getClientSelectList')
+  }
+
+  getClientNouser(){
+
+    return this.http.get<any>(this.BaseURI + '/api/Client/getClientNoUser')
+  }
 }
 

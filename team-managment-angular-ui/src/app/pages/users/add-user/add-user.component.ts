@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService, SelectItem } from 'primeng/api';
+import { ClientService } from 'src/app/services/client.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { UserService, UserView } from 'src/app/services/user.service';
 
@@ -17,8 +18,11 @@ export class AddUserComponent implements OnInit {
   user !: UserView
   userForm !: FormGroup;
   employeesNoUsers: SelectItem[] = []
+  clientssNoUsers: SelectItem[] = []
   userRoles: any[] = []
-  
+  assignedToDropdownItems = [
+    { name: 'CLIENT', code: 'CLIENT' },
+    { name: 'EMPLOYEE', code: 'EMPLOYEE' }]
   
 
   ngOnInit(): void {
@@ -26,14 +30,17 @@ export class AddUserComponent implements OnInit {
     this.user = this.userService.getCurrentUser();
 
     this.userForm = this.formBuilder.group({
-      employeeId: [null, Validators.required],
+      employeeId: [null],
+      clientId: [null],
       userName: [null, Validators.required],
       password: [null, Validators.required],
       confirmPassword: [null, Validators.required],
-      roles: [null, Validators.required],
+      roles: [null],
+      userType: [null, Validators.required],
     })
 
     this.getEmployeeNouser()
+    this.getClientNouser()
     this.getUserRoles()
   }
 
@@ -42,7 +49,8 @@ export class AddUserComponent implements OnInit {
     private userService: UserService,
     private employeeService: EmployeeService,
     private messageService: MessageService,
-    private activeModal: NgbActiveModal) { }
+    private activeModal: NgbActiveModal,
+    private clientService : ClientService) { }
 
   onSubmit() {
 
@@ -51,13 +59,19 @@ export class AddUserComponent implements OnInit {
         
       return
     }
+    
     if (this.userForm.valid) {
       const value = {
+        clientId: this.userForm.value.clientId,
         employeeId: this.userForm.value.employeeId,
         userName: this.userForm.value.userName,
         password: this.userForm.value.password,
         roles: this.userForm.value.roles,
       }
+      if(this.userForm.value.roles === null){
+        value.roles = "CLIENT"
+      }
+
       this.userService.addUser(value).subscribe({
 
         next: (res) => {
@@ -93,15 +107,29 @@ export class AddUserComponent implements OnInit {
     })
   }
 
+  getClientNouser() {
+    this.clientService.getClientNouser().subscribe({
+      next: (res) => {
+        this.clientssNoUsers = res.map(item => ({ value: item.id, label: item.name }));
+      }
+    })
+  }
   getUserRoles() {
     this.userService.getUserRoles().subscribe({
       next: (res) => {
         this.userRoles = res.map(item => ({ value: item.name, label: item.name }));
-        
+               
       }
     })
   }
 
+  showInput()
+  {
+    if (this.userForm.value.userType !== null){
+      return this.userForm.value.userType.name
+    }
+
+  }
 
   closeModal()
   {
