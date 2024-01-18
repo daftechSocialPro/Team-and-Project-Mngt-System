@@ -1,5 +1,4 @@
 ﻿using Implementation.DTOS.Authentication;
-
 using Implementation.Helper;
 using Implementation.Interfaces.Authentication;
 using IntegratedInfrustructure.Data;
@@ -26,15 +25,12 @@ namespace Implementation.Services.Authentication
         private readonly ApplicationDbContext _dbContext;
       
         public AuthenticationService(UserManager<ApplicationUser> userManager,
-            
-            ApplicationDbContext dbContext,
-         
-              RoleManager<IdentityRole> roleManager)
+                                     ApplicationDbContext dbContext,
+                                     RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _dbContext = dbContext;
-     
         }
 
 
